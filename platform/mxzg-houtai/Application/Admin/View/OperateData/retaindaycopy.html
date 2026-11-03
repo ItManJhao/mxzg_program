@@ -1,0 +1,164 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>运营数据--每日留存（每12分钟更新一次数据）</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('OperateData/RetainDayCopy')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">渠道</label>
+                                            <select class="form-control" name="c_son_id">
+                                                <option value="0">请选择子渠道</option>
+                                                <volist name="channels" id="channels_vo">
+                                                    <eq name="channels_vo.id" value="$search_params.c_son_id">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <select class="form-control" name="sid">
+                                                <option value="0">请选择服务器</option>
+                                                <volist name="servers" id="servers_vo">
+                                                    <eq name="servers_vo.id" value="$search_params.sid">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">开始时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            <label class="control-label" style="padding-left: 5px;">结束时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['end_time']}">
+
+                                            <label class="control-label" style="padding-left: 7px;">留存类型</label>
+                                            <select class="form-control" name="retain_type">
+                                                <option value="1" <if condition="$search_params['retain_type'] == 1"> selected </if>>注册留存</option>
+                                                <option value="2" <if condition="$search_params['retain_type'] == 2"> selected </if>>创角留存</option>
+                                                <option value="3" <if condition="$search_params['retain_type'] == 3"> selected </if>>付费留存</option>
+                                                <option value="4" <if condition="$search_params['retain_type'] == 4"> selected </if>>新增付费留存</option>
+                                                <option value="5" <if condition="$search_params['retain_type'] == 5"> selected </if>>老用户留存</option>
+                                                <option value="6" <if condition="$search_params['retain_type'] == 6"> selected </if>>设备留存</option>
+                                            </select>
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>日期</th>
+                                                        <th>
+                                                            <if condition="$search_params['retain_type'] == 1">注册数
+                                                                <elseif condition="$search_params['retain_type'] == 2"/>创角数
+                                                                <elseif condition="$search_params['retain_type'] == 3"/>付费数
+                                                                <elseif condition="$search_params['retain_type'] == 4"/>新增付费数
+                                                                <elseif condition="$search_params['retain_type'] == 5"/>老用户数
+                                                                <elseif condition="$search_params['retain_type'] == 6"/>设备数
+                                                                <else/>未知
+                                                            </if>
+                                                        </th>
+                                                        <th>次日留存</th>
+                                                        <th>3日留存</th>
+                                                        <th>4日留存</th>
+                                                        <th>5日留存</th>
+                                                        <th>6日留存</th>
+                                                        <th>7日留存</th>
+                                                        <th>10日留存</th>
+                                                        <th>14日留存</th>
+                                                        <th>21日留存</th>
+                                                        <th>30日留存</th>
+                                                        <th>60日留存</th>
+                                                        <th>90日留存</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row">
+                                                            <td>{$vo.date}</td>
+                                                            <td>{$vo.num}</td>
+                                                            <td>{$vo['one_day_retain']}</td>
+                                                            <td>{$vo['three_day_retain']}</td>
+                                                            <td>{$vo['four_day_retain']}</td>
+                                                            <td>{$vo['five_day_retain']}</td>
+                                                            <td>{$vo['six_day_retain']}</td>
+                                                            <td>{$vo['seven_day_retain']}</td>
+                                                            <td>{$vo['ten_day_retain']}</td>
+                                                            <td>{$vo['fourteen_day_retain']}</td>
+                                                            <td>{$vo['twenty_one_day_retain']}</td>
+                                                            <td>{$vo['thirty_day_retain']}</td>
+                                                            <td>{$vo['sixty_day_retain']}</td>
+                                                            <td>{$vo['ninety_day_retain']}</td>
+                                                        </tr>
+                                                    </volist>
+                                                    </tbody>
+                                                </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                            <script>
+                                                // 点击分页触发的事件
+                                                $(".pagination a").click(function(){
+                                                    url = $(this).attr('href');
+                                                    ajax_get_table('formSearch',url);
+                                                    return false;
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,url){
+        // cur_page = page; //当前页面 保存为全局变量
+        // var info = $('#page_info').val();
+        $.ajax({
+            type : "POST",
+            url:url,
+            data : $('#'+form).serialize(),// 你的formid
+            success: function(data){
+                $("#ajaxList").html('');
+                $("#ajaxList").append(data);
+            }
+        });
+        return false;
+    }
+
+</script>
+
+<include file="Public:footer" />

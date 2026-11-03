@@ -1,0 +1,26 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion099GMsg";
+import "Object.proto";
+
+//领取那个免费的
+//76544
+message GReqHeroWorthFreeRequest {
+	optional int32 idx = 1;
+}
+
+//76544
+message GResHeroWorthFreeResponse {
+	repeated PSMapData list = 1;  // 购买信息更新
+}
+
+//76545
+message GReqHeroWorthGiftInfo{
+	
+}
+
+//76545
+message GResHeroWorthGiftInfo{
+	optional int64 hero_id = 1;		// 本期对应的英雄
+	repeated PSMapData list = 2;	// 购买信息 key->idx val->count
+}

@@ -1,0 +1,35 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion084GMsg";
+
+message PSThreeDayRechargeInfo {
+    optional int32 day = 1; //充值天数
+    optional int64 recharge = 2;
+}
+
+//活动数据
+//76060
+message GReqThreeDay {
+}
+//76060
+message GResThreeDay {
+    optional int32 curr_day = 1; //当前天数
+    repeated int32 reward_record = 2; //领奖记录
+    repeated PSThreeDayRechargeInfo recharge_info = 3; //充值信息
+}
+
+//领取奖励
+//76061
+message GReqThreeDayGet {
+    optional int32 idx = 1;
+}
+//76061
+message GResThreeDayGet {
+    optional int32 idx = 1;
+}
+
+//更新充值金额
+//76062
+message GResThreeDayUpdateRecharge {
+    optional PSThreeDayRechargeInfo recharge_info = 1; //充值信息
+}

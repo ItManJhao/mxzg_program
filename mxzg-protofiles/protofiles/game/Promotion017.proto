@@ -1,0 +1,28 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion017GMsg";
+import "Object.proto";
+
+//限时累充
+//13085
+message GReqLimitedtimeRechargeReward
+{
+}
+//13085
+message GResLimitedtimeRechargeReward
+{
+	optional int64 rmb = 1;
+	repeated PSMapData list = 2;
+}
+
+//领取限时兑换的累充活动
+//13070
+message GReqPropomtionLimitedtimeReward
+{
+	optional int32 idx = 1;	//奖励ID
+}
+//13070
+message GResPropomtionLimitedtimeReward
+{
+	
+}

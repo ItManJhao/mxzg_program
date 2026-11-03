@@ -1,0 +1,27 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion048GMsg";
+
+message ResPromotionRewardData {
+    optional int32 index = 1;
+    optional int32 is_reward = 2;
+}
+
+//每周累充列表
+//13015
+message GReqRechargeWeekList {
+}
+//13015
+message GResRechargeWeekList {
+    optional int32 completed = 1;
+    repeated ResPromotionRewardData list = 2;
+}
+
+//领取充值奖励
+//13016
+message GReqRechargeWeekGain {
+    optional int32 idx = 1;
+}
+//13016
+message GResRechargeWeekGain {
+}

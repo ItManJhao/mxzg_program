@@ -1,0 +1,71 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroCommentGMsg";
+
+message PBHeroDetailComment {
+    optional int64 like_count = 1; //喜欢计数
+    optional int64 hate_count = 2; //不喜欢计数
+    optional int64 rid = 3; //角色id
+    optional int32 server_id = 4; //服务器
+    optional string name = 5; //名字
+    optional string context = 6; //评论内容
+    optional string comment_id = 7; //评论id
+    optional int32 like_state = 8; //喜好状态：0，未操作，1，喜欢，2讨厌
+    optional int32 comment_time = 9; //评论时间
+}
+
+message PBHeroCommentData {
+    optional int32 hero_type = 1; //英雄类型
+    optional int64 like_count = 2; //英雄点赞数
+    repeated PBHeroDetailComment comments = 3; //评论列表
+    optional int32 comment_count = 4; //自己已经评论次数
+    optional bool had_like = 5; //是否已经点赞
+}
+
+//获取英雄评论数据
+//71101
+message GReqGetData {
+    optional int32 hero_type = 1;
+}
+
+//71101
+message GResGetData {
+    optional PBHeroCommentData hero_comment_data = 1;
+}
+
+//点赞英雄
+//71102
+message GReqLikeHero {
+    optional int32 hero_type = 1;
+}
+
+//71102
+message GResLikeHero {
+    optional PBHeroCommentData comments = 1;
+}
+
+//评论
+//71103
+message GReqComment {
+    optional int32 hero_type = 1; //英雄类型
+    optional string context = 2; //评论id
+}
+
+//71103
+message GResComment {
+    optional PBHeroCommentData comments = 1;
+}
+
+//点赞评论
+//71104
+message GReqLikeComment {
+    optional int32 hero_type = 1; //英雄类型
+    optional string comment_id = 2; //评论id
+    optional int32 like_state = 3; //1喜欢，2,讨厌；
+}
+
+//71104
+message GResLikeComment {
+    optional PBHeroCommentData comments = 1;
+}
+

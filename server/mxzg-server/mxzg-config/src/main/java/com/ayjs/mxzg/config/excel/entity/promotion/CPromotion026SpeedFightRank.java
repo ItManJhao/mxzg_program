@@ -1,0 +1,24 @@
+package com.ayjs.mxzg.config.excel.entity.promotion;
+
+import com.ayjs.mxzg.common.excel.BaseExcelModel;
+import com.ayjs.mxzg.config.struct.ImmutableThing;
+import com.google.common.collect.ImmutableList;
+import lombok.Getter;
+
+/**
+ * 快速之王排行榜配置表
+ * 
+ * 
+ */
+@Getter
+public class CPromotion026SpeedFightRank implements BaseExcelModel {
+	private int idx;
+	private int turns;
+	private int rank_low;
+	private int rank_up;
+    private ImmutableList<ImmutableThing> reward;
+	@Override
+	public int getExcelId() {
+		return idx;
+	}
+}

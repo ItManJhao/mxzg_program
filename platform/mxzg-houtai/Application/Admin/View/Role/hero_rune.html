@@ -1,0 +1,57 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>英雄-精灵信息</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('Role/hero_rune')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>精灵ID</th>
+                                            <th>精灵名称</th>
+                                            <th>品质</th>
+                                            <th>位置</th>
+                                            <th>能力id</th>
+                                            <th>属性与技能</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <volist name="hero_rune" id="hero_rune_vo">
+                                                <tr role="row">
+                                                    <td>{$hero_rune_vo.type_id}</td>
+                                                    <td>{$hero_rune_vo.type_name}</td>
+                                                    <td>{$hero_rune_vo.quality}</td>
+                                                    <td>{$hero_rune_vo.place}</td>
+                                                    <td>{$hero_rune_vo.ability_id}</td>
+                                                    <td>{$hero_rune_vo.skill}</td>
+                                                </tr>
+                                            </volist>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+
+</script>
+
+
+<include file="Public:footer" />

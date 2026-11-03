@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">夢境元素使</string>
+    <string name="facebook_app_id">835821456924539</string>
+    <string name="fb_login_protocol_scheme">fb835821456924539</string>
+    <string name="server_client_id">699344456179-df0ksm4hecnaebngh242l9cv7k86q36o.apps.googleusercontent.com</string>
+    <string name="fb_senderid">194858549498</string>
+    <string name="appsf_dev_key">hwt9m9RDe4EjQwcRhz8xUZ</string>
+    <string name="isopen_bugly">1</string>
+    <string name="bugly_appid">5d22a8a8a1</string>
+    <string name="agent_id">100</string>
+    <string name="site_id">100</string>
+    <string name="sdk_version">v1.4.0</string>
+    <string-array name="google_play_inapp">
+        <item>qyzh.game.600</item>
+        <item>qyzh.game.1200</item>
+        <item>qyzh.game.1800</item>
+        <item>qyzh.game.3000</item>
+        <item>qyzh.game.5000</item>
+        <item>qyzh.game.6000</item>
+        <item>qyzh.game.6800</item>
+        <item>qyzh.game.9800</item>
+        <item>qyzh.game.12800</item>
+        <item>qyzh.game.19800</item>
+        <item>qyzh.game.28800</item>
+        <item>qyzh.game.32800</item>
+        <item>qyzh.game.44800</item>
+        <item>qyzh.game.66800</item>
+    </string-array>
+</resources>

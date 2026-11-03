@@ -1,0 +1,364 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ChampionGMsg";
+import "Battle.proto";
+
+message PSChampionBiu
+{
+	optional string content = 1;	//内容
+	optional int64 rid = 2;			//玩家ID
+}
+
+
+message PSChampionRank
+{
+	optional int64 rid = 1;			//玩家ID
+	optional string name = 2;		//玩家名字
+	optional int32 like = 3;		//点赞数
+	optional int32 image_id = 4;	//英雄形象
+	optional int32 rank = 5;		//排名
+	optional int32 robot = 6;		//是否机器人，0不是，1是
+}
+
+message PSChampionRanker
+{
+	optional int64 rid = 1;			//玩家ID
+	optional string name = 2;		//玩家名字
+	optional int32 like = 3;		//点赞数
+	optional int32 rank = 4;		//排名
+	optional int32 level = 5;		//
+	optional int32 head_id = 6;		//
+	optional int32 border_id = 7;	//
+	optional int32 point = 8;		//选拔赛分数
+	optional int32 fighting = 9;	//战斗力
+	optional int32 robot = 10;		//是否机器人，0不是，1是
+}
+
+
+message PSChampionHero
+{
+	optional int32 hero_type = 1;	//英雄类型
+	optional int32 level = 2;		//等级
+	optional int32 stage = 3;		//阶级
+	optional int32 star = 4;		//星级
+	optional int32 pos = 5;			//站位，前端排序
+	optional int64 id = 6;			//英雄ID
+	optional int32 fashion_id = 7;	//皮肤（时装）id
+}
+
+message PSChampionFormation
+{
+	optional int64 rid = 1;				//参赛者ID，玩家ID或者机器人ID
+	optional string name = 2;			//名字
+	optional int32 level = 3;			//角色等级
+	optional int32 head_id = 4;			//头像
+	optional int32 border_id = 5;		//头像框
+	optional int32 fighting = 6;		//战斗力
+	repeated PSChampionHero heros = 7;	//参战英雄
+	optional int32 robot = 8;			//是否机器人，0玩家，1机器人
+	optional int32 formation_id = 9;	//阵法ID
+	optional bool assistance_unlock = 10;	//是否解锁了援助
+}
+
+message PSChampionKnockoutBattle
+{
+	optional string atk_name = 1;
+	optional string def_name = 2;
+	optional int64 bid = 3;			//比赛ID
+	optional int32 battle_round = 4;//比赛所属的战斗阶段，32、16、8、4、2
+	optional int32 which_win = 5;	//胜利方，1进攻方胜利，2防守方胜利
+	optional string battle_id = 6;	//战斗ID
+	optional int32 win_head = 7;
+	optional int32 win_border = 8;
+	optional int64 atk_rid = 9;		//进攻方ID
+	optional int64 def_rid = 10;	//防守方ID
+}
+
+message PSChampionGuess
+{
+	optional int64 bid = 1;						//比赛ID
+	optional string battle_id = 2;				//战斗ID
+	optional int32 guess_type = 3;				//竞猜哪一边胜利，1进攻方，2防守方
+	optional int64 guess_coin = 4;				//玩家投注的竞猜币
+	optional int64 delta = 5;					//战斗结算后竞猜币的变化量
+	optional PSChampionFormation attacker = 6;	//进攻方
+	optional PSChampionFormation defender = 7;	//防守方
+	optional int32 period = 8;					//冠军赛当前赛程，0空闲，1选拔赛，2淘汰赛
+	optional int32 battle_round = 9;			//比赛所属的战斗阶段，32、16、8、4、2
+	optional int32 which_win = 10;				//胜利方，1进攻方胜利，2防守方胜利，0未有胜负
+	optional BattleLog battle_log = 11;			//血量统计
+}
+
+message PSChampionBattle
+{
+	optional int64 bid = 1;						//比赛ID
+	optional string battle_id = 2;				//战斗ID
+	optional int32 add_point = 3;				//胜利方增加的积分，需要结合which_win来处理正负
+	optional PSChampionFormation attacker = 4;	//进攻方
+	optional PSChampionFormation defender = 5;	//防守方
+	optional int32 which_win = 6;				//胜利方，1进攻方胜利，2防守方胜利，0未有胜负
+	optional int32 period = 7;					//冠军赛当前赛程，0空闲，1选拔赛，2淘汰赛
+	optional int32 battle_round = 8;			//比赛所属的战斗阶段，32、16、8、4、2
+	optional BattleLog battle_log = 9;			//血量统计
+}
+
+message PSChampionMyResult
+{
+	optional int32 rank = 1;		//名次
+	optional int32 battle_num = 2;	//战斗场数
+	optional int32 win_num = 3;		//胜利场数
+}
+
+//查看冠军赛信息
+//41001
+message GReqScanChampion
+{
+}
+//41001
+message GResScanChampion
+{
+	optional int32 like = 1;			//我的被点赞次数
+	optional int32 period = 2;			//冠军赛当前赛程，0空闲，1选拔赛，2淘汰赛
+	optional int32 rank = 3;			//我的当前排名，0未上榜
+	optional int32 his_rank = 4;		//我的历史最高排名
+	optional int32 start_time = 5;		//赛季开始时间
+	optional int32 end_time = 6;		//赛季结束时间
+	repeated PSChampionRank ranks = 7;	//前3排名
+	repeated int64 like_rank = 8;		//已经点赞的玩家
+	optional int32 biu_cd = 9;			//弹幕冷却时间
+	optional int32 show_round = 10;		//是否需要请求展示最新一期冠军赛冠军界面，0不需要，1需要
+	optional PSChampionMyResult result = 11;//我的最新一期成绩信息，为空时不展示
+	optional int32 battle_start_time = 12;	//本届比赛战斗开始时间，start_time<------未开始------->battle_start_time<------已结束------->end_time
+}
+
+//查看我的竞赛信息
+//41002
+message GReqMyChampionBattle
+{
+}
+//41002
+message GResMyChampionBattle
+{
+	optional int32 period = 1;					//当前赛程，1选拔赛，2淘汰赛
+	optional int32 battle_round = 2;			//当前的战斗回合
+	optional int32 next_time = 3;				//下一阶段的时间
+	optional PSChampionFormation attacker = 4;	//进攻方
+	optional PSChampionFormation defender = 5;	//防守方
+	optional int64 bid = 6;						//比赛ID，通过此ID查询战斗ID，再进行战斗回放，为0没有战斗
+	optional string battle_id = 7;				//战斗ID，已经战斗过的比赛才有战斗ID，当在界面中等待倒计时需要用比赛ID进行查询再进行回放，注意判断空
+	optional int32 which_win = 8;				//哪边胜利，1进攻方胜利，2防守方胜利，0未有胜负结果
+	optional int32 stage = 9;					//比赛阶段，0匹配、1准备、2竞猜、3战斗
+}
+
+//查看竞猜的比赛信息
+//41003
+message GReqGuessChampionBattle
+{
+}
+//41003
+message GResGuessChampionBattle
+{
+	optional int32 period = 1;					//当前赛程，1选拔赛，2淘汰赛
+	optional int32 battle_round = 2;			//当前的战斗回合
+	optional int32 next_time = 3;				//下一阶段的时间
+	optional PSChampionFormation attacker = 4;	//进攻方
+	optional PSChampionFormation defender = 5;	//防守方
+	optional int64 guess_coin = 6;				//我的竞猜币数量
+	optional int64 atk_coin = 7;				//进攻方当前的竞猜币数量
+	optional int64 def_coin = 8;				//防守方当前的竞猜币数量
+	optional int32 is_guess = 9;				//是否已经参与本场竞猜，0未参与，1已参与
+	optional int64 bid = 10;					//比赛ID，通过此ID查询战斗ID，再进行战斗回放
+	optional int32 which_win = 11;				//哪边胜利，1进攻方胜利，2防守方胜利，0未有胜负结果
+	optional string battle_id = 12;				//战斗ID
+	optional int32 stage = 13;					//比赛阶段，0匹配、1准备、2竞猜、3战斗
+	optional int32 guess_type = 14;				//竞猜哪一边胜利，1进攻方，2防守方，先判断is_guess
+}
+
+//比赛竞猜
+//41004
+message GReqGuessOneBattle
+{
+	optional int32 type = 1;		//竞猜哪一边胜利，1进攻方，2防守方
+	optional int64 guess_coin = 2;	//投注竞猜币数量
+}
+//41004
+message GResGuessOneBattle
+{
+	optional int64 guess_coin = 1;	//玩家剩余的竞猜币
+}
+
+//通过比赛ID查询战斗ID
+//41005
+message GReqGetChampionBattle
+{
+	optional int64 bid = 1;
+}
+//41005
+message GResGetChampionBattle
+{
+	optional string battle_id = 1;
+}
+
+
+//查看冠军赛32强信息
+//41006
+message GReqScanChampionKnockout
+{
+}
+//41006
+message GResScanChampionKnockout
+{
+	optional int64 guess_id = 1;				//正在进行竞猜的比赛ID
+	optional int32 battle_round = 2;			//比赛轮次，32、16、8、4、2
+	optional int32 next_time = 3;				//下一阶段的时间
+	repeated PSChampionKnockoutBattle battles = 4;	//比赛列表
+	optional int32 stage = 5;					//比赛阶段，0匹配、1准备、2竞猜、3战斗
+}
+
+//冠军点赞
+//41007
+message GReqChampionLike
+{
+	optional int64 rid = 1;	//点赞的角色ID
+}
+//41007
+message GResChampionLike
+{
+	optional int64 rid = 1;	//点赞的角色ID
+}
+
+//冠军赛发弹幕
+//41008
+message GReqChampionBiubiu
+{
+	optional string content = 1;
+}
+//41008
+message GResChampionBiubiu
+{
+	optional int32 biu_cd = 1;		//发弹幕冷却时间
+}
+
+//请求弹幕列表
+//41009
+message GReqChampionBiuList
+{
+}
+//41009
+message GResChampionBiuList
+{
+	repeated PSChampionBiu content = 1;	//弹幕列表
+}
+
+//有新弹幕时候的推送
+//41010
+message GResChampionBiuChange
+{
+	optional PSChampionBiu content = 1;	//新的弹幕内容
+}
+
+//玩家的竞猜列表
+//41011
+message GReqChampionGuessList
+{
+}
+//41011
+message GResChampionGuessList
+{
+	repeated PSChampionGuess record = 1;	//竞猜记录
+}
+
+//竞猜比赛中奖推送
+//41012
+message GResChampionGuessWin
+{
+	optional int32 period = 1;			//比赛进程
+	optional int32 battle_round = 2;	//比赛回合
+	optional int64 gain_coin = 3;		//获得的竞猜币数量
+}
+
+//请求我的比赛列表
+//41013
+message GReqScanMyChampionBattle
+{
+}
+//41013
+message GResScanMyChampionBattle
+{
+	repeated PSChampionBattle battles = 1;	//比赛列表
+}
+
+//冠军赛阶段变化的推送
+//41014
+message GResChampionStageChange
+{
+}
+
+//冠军赛排行榜
+//41015
+message GReqChampionRank
+{
+}
+//41015
+message GResChampionRank
+{
+	repeated PSChampionRanker ranks = 1;	//排行榜数据
+}
+
+//推送冠军赛结束
+//41016
+message GResChampionEnd
+{
+}
+
+//请求最新一期冠军赛冠军信息
+//41017
+message GReqChampionShowTop
+{
+}
+//41017
+message GResChampionShowTop
+{
+	repeated PSChampionRanker ranks = 1;	//排行榜数据
+	optional int32 time = 2;				//比赛时间
+}
+
+//标记已经展示过玩家的最新一期比赛结果
+//41018
+message GReqChampionShowMyResult
+{
+}
+//41018
+message GResChampionShowMyResult
+{
+}
+
+//竞猜投注广播
+//41019
+message GResChampionGuessBroadcast
+{
+	optional int32 type = 1;		//竞猜哪一边胜利，1进攻方，2防守方
+	optional int64 guess_coin = 2;	//投注竞猜币数量
+}
+
+//冠军赛保存阵容后发送
+//41020
+message GReqChampionSaveFormation
+{
+}
+//41020
+message GResChampionSaveFormation
+{
+}
+
+//某个战斗阵容发生改变时推送，推送给对战的双方，用于刷新41002
+//41021
+message GResChampionFormationChange
+{
+}
+
+//清空弹幕
+//41022
+message GResChampionCleanBiu
+{
+}

@@ -1,0 +1,34 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ObjectGMsg";
+
+message PSBackpackData {
+    optional int64 id = 1; //物品ID
+    optional int32 type = 2; //物品类型
+    optional int64 num = 3; //物品数量
+    optional int32 star = 4; //星级
+}
+
+message PSMapData {
+    optional int32 key = 1; //键
+    optional int32 value = 2; //值
+}
+
+message PSTaskProgress {
+    optional int32 idx = 1; //任务idx
+    optional int64 progress = 2; //进度
+    optional bool reward = 3; //是否领奖
+}
+
+// 2数据组合
+message PSTuple2Data {
+    optional int32 key = 1; //键
+    optional int64 value = 2; //值
+}
+
+// 3数据组合
+message PSTuple3Data {
+    optional int32 key = 1; //键
+    optional int64 value1 = 2; //值1
+    optional int64 value2 = 3; //值2
+}

@@ -1,0 +1,27 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion023GMsg";
+import "Object.proto";
+
+//查看每日累充信息
+//13341
+message GReqMonthGiftData
+{
+}
+
+//13341
+message GResMonthGiftData
+{
+	repeated PSMapData list = 1;	//限购信息
+}
+
+//领取0元的
+//13342
+message GReqMonthGiftReward {
+
+} 
+
+//13342
+message GResMonthGiftReward {
+	optional PSMapData data = 1;	// 更新这个档位信息
+}

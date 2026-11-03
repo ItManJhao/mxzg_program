@@ -1,0 +1,187 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>背包信息</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('Role/back_pack')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+
+                                    <p style="color: red;">装备</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>装备ID</th>
+                                            <th>装备名称</th>
+                                            <th>品质</th>
+                                            <th>数量</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <volist name="type_label_1" id="type_label_1_vo">
+                                                <tr role="row">
+                                                    <td>{$type_label_1_vo.id}</td>
+                                                    <td>{$type_label_1_vo.name}</td>
+                                                    <td>{$type_label_1_vo.quality}</td>
+                                                    <td>{$type_label_1_vo.num}</td>
+                                                </tr>
+                                            </volist>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">道具</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>道具ID</th>
+                                            <th>装备名称</th>
+                                            <th>品质</th>
+                                            <th>数量</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <volist name="type_label_2" id="type_label_2_vo">
+                                            <tr role="row">
+                                                <td>{$type_label_2_vo.id}</td>
+                                                <td>{$type_label_2_vo.name}</td>
+                                                <td>{$type_label_2_vo.quality}</td>
+                                                <td>{$type_label_2_vo.num}</td>
+                                            </tr>
+                                        </volist>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">碎片</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>碎片ID</th>
+                                            <th>装备名称</th>
+                                            <th>品质</th>
+                                            <th>数量</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <volist name="type_label_3" id="type_label_3_vo">
+                                            <tr role="row">
+                                                <td>{$type_label_3_vo.id}</td>
+                                                <td>{$type_label_3_vo.name}</td>
+                                                <td>{$type_label_3_vo.quality}</td>
+                                                <td>{$type_label_3_vo.num}</td>
+                                            </tr>
+                                        </volist>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">特殊</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>道具ID</th>
+                                            <th>装备名称</th>
+                                            <th>品质</th>
+                                            <th>数量</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <volist name="type_label_4" id="type_label_4_vo">
+                                            <tr role="row">
+                                                <td>{$type_label_4_vo.id}</td>
+                                                <td>{$type_label_4_vo.name}</td>
+                                                <td>{$type_label_4_vo.quality}</td>
+                                                <td>{$type_label_4_vo.num}</td>
+                                            </tr>
+                                        </volist>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">宝石</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>道具ID</th>
+                                            <th>装备名称</th>
+                                            <th>品质</th>
+                                            <th>数量</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <volist name="type_label_5" id="type_label_5_vo">
+                                            <tr role="row">
+                                                <td>{$type_label_5_vo.id}</td>
+                                                <td>{$type_label_5_vo.name}</td>
+                                                <td>{$type_label_5_vo.quality}</td>
+                                                <td>{$type_label_5_vo.num}</td>
+                                            </tr>
+                                        </volist>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">神装</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>道具ID</th>
+                                            <th>装备名称</th>
+                                            <th>品质</th>
+                                            <th>数量</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <volist name="type_label_6" id="type_label_6_vo">
+                                            <tr role="row">
+                                                <td>{$type_label_6_vo.id}</td>
+                                                <td>{$type_label_6_vo.name}</td>
+                                                <td>{$type_label_6_vo.quality}</td>
+                                                <td>{$type_label_6_vo.num}</td>
+                                            </tr>
+                                        </volist>
+                                        </tbody>
+                                    </table>
+
+
+                                    <p style="color: red;">宠物</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>宠物ID</th>
+                                            <th>宠物名称</th>
+                                            <th>品质</th>
+                                            <th>数量</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <volist name="type_label_8" id="type_label_8_vo">
+                                            <tr role="row">
+                                                <td>{$type_label_8_vo.id}</td>
+                                                <td>{$type_label_8_vo.name}</td>
+                                                <td>{$type_label_8_vo.quality}</td>
+                                                <td>{$type_label_8_vo.num}</td>
+                                            </tr>
+                                        </volist>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+
+</script>
+
+
+<include file="Public:footer" />

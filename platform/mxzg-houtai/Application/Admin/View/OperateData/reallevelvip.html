@@ -1,0 +1,123 @@
+<include file="Public:header" />
+
+<script src="/Public/static/admin/js/plugins/echarts/echarts.min.js"></script>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>每日在线峰值</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('OperateData/RealLevelVip')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <select class="form-control" name="sid">
+                                                <option value="0">请选择服务器</option>
+                                                <volist name="servers" id="servers_vo">
+                                                    <eq name="servers_vo.id" value="$search_params.sid">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 7px;">分布类型</label>
+                                            <select class="form-control" name="type" >
+                                                <option value="1" <if condition="$search_params['type'] == 1"> selected </if>>角色等级</option>
+                                                <option value="2" <if condition="$search_params['type'] == 2"> selected </if>>vip等级</option>
+                                            </select>
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>等级</th>
+                                                            <th>角色数</th>
+                                                            <th>角色数占比</th>
+                                                            <th>充值金额</th>
+                                                            <th>充值金额占比</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                        <volist name="list" id="vo">
+                                                            <tr role="row">
+                                                                <td>{$vo.role_level}</td>
+                                                                <td>{$vo.total_role_num}</td>
+                                                                <td>{$vo.total_role_num_retain}%</td>
+                                                                <td>{$vo.total_money}</td>
+                                                                <td>{$vo.total_money_retain}%</td>
+                                                            </tr>
+                                                        </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+ 
+<script>
+    
+    $(function(){
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+    });
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+
+</script>
+
+<include file="Public:footer" />

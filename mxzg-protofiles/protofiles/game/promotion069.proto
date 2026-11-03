@@ -1,0 +1,41 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "promotion069GMsg";
+
+//奖励领取时间
+message PSGetRewardInfo {
+    optional int32 idx = 1;
+    optional int32 status = 2;
+}
+//充值档次奖励是否已领取完
+message PSTypeRewardInfo {
+    optional int32 type = 1;
+    optional int32 status = 2; //0未领取完。1已领取完
+}
+
+//超值礼包数据
+//14400
+message GReqRechargeGiftInfo {
+
+}
+//14400
+message GResRechargeGiftInfo {
+    optional int32 open_time = 1;
+    optional int32 recharge = 2;
+    repeated int32 reward_ids = 3; //只返回已激活的，已领取的奖励集
+    repeated PSGetRewardInfo reward_list = 4; //只返回已激活的，奖励领取状态
+    repeated PSTypeRewardInfo type_list = 5;
+}
+
+//领取超值礼包奖励
+//14401
+message GReqGetRechargeGiftReward {
+    optional int32 type = 1; //档次类型
+}
+//14401
+message GResGetRechargeGiftReward {
+    repeated int32 reward_ids = 1; //领取的奖励集
+}
+
+
+

@@ -1,0 +1,115 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>玩家报错日志</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('GameErrorLog/RoleErrorLog')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">服务器</label>
+                                            <input type="hidden" name="sid" value="{$search_params['sid']}">
+                                            <select class="selectpicker form-control sid" data-style="btn-info" data-title="请选择服务器" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="servers" id="servers_vo">
+                                                    <if condition="!empty($search_params['sid']) && in_array($servers_vo['id'],explode(',', $search_params['sid']))">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label">角色id</label>
+                                            <input type="text" placeholder="精确搜索" name="rid" value="{$search_params.rid}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">类名</label>
+                                            <input type="text" placeholder="精确搜索" name="className" value="{$search_params.className}" style="width: 120px;" class="form-control">
+
+                                            <label class="control-label" style="padding-left: 5px;">开始时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            <label class="control-label" style="padding-left: 5px;">结束时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['end_time']}">
+                                            
+                                            <button type="button" style="float:right; margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >服务器：</label>
+                                                <span class="sid-text">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>主键ID</th>
+                                                                <th>服务器id-服务器名称</th>
+                                                                <th>角色id</th>
+                                                                <th>异常类--类名--方法--异常行数</th>
+                                                                <th>异常信息</th>
+                                                                <th>堆栈信息</th>
+                                                                <th>时间</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                            <volist name="list" id="vo">
+                                                                <tr role="row"> 
+                                                                    <td>{$vo.id}</td>
+                                                                    <td>{$vo.sid}</br>{$vo.server_name}</td>
+                                                                    <td>{$vo.rid}</td>
+                                                                    <td>{$vo.exceptionName}</br>{$vo.className}</br>{$vo.methodName}</br>{$vo.lineNumber}</td>
+                                                                    <td>{$vo.message}</td>
+                                                                    <td>{$vo.stackTrace}</td>
+                                                                    <td>{:date('Y-m-d H:i:s', $vo['time'])}</td>
+                                                                </tr>
+                                                            </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+ 
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+    $(".sid").on('change',function(e){
+        doMultipleSelection(this, 'sid');
+    })
+    $(function(){
+        doMultipleSelection($('.sid'), 'sid');
+    });
+
+</script>
+
+<include file="Public:footer" />

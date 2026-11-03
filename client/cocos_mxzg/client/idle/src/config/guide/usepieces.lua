@@ -1,0 +1,32 @@
+local data = {
+	-- 检查是否有碎片
+	{call = "waitSceneLoadingEnd"},
+	{call = "wait", time=300},
+	{call = "closeOtherWindow"},
+	{call = "wait", time=10},
+	{call = "findNodeByName",name="main_chat"},
+	{call = "setNodeVisible",visible=0},
+	{call = "checkFile",check_type="usepieces",item_type=20104004, mission_hero_config=1,num=30,r_beg=0,r_end=999},
+	{call = "openNPCLayer", auto=1,music="music/guide001.mp3",npc_name="Misa",content=930030042},
+	{call = "openNPCLayer", auto=1,music="music/guide008.mp3",npc_name="Misa",content=930030043},
+	{call = "checkLayerType", layer_type=MainSceneType.BACKPACK_LAYER, r_beg=1, r_end=2},
+	{call = "findSpriteByFileName", plist="ccbi-res/main-scene-lang.plist",getParent=1,file="main-scene-lang/spr-backpack.png"},
+	{call = "createMask"},
+	{call = "wait", time=300},
+	{call = "findNodeByName",name="btn_piece"},
+	-- {call = "findSpriteByFileName", plist="ccbi-res/common-ui.plist",getParent=1,node_cache=1,file="button/btn-tab-1.png",count=2},
+	-- 打开碎片
+	{call = "createMask",bubble=930030046, anchor={x=0.35,y=0}},
+	{call = "wait", time=10},
+	{call = "wait", time=1},
+	{call = "findSpriteByFileName", plist="ccbi-res/hero-icon-1.plist",getParent=1, file="hero-icon/20104004.png", mission_hero_config=1},
+	{call = "createMask",bubble=930030047, anchor={x=0.35,y=0}},
+	{call = "wait", time=300},
+	{call = "findSpriteByFileName", plist="ccbi-res/common-ui.plist",getParent=1,file="button/btn-old-1.png",count=2},
+	{call = "createMask"},
+	{call = "waitRecv", protocol=5008},
+	{call = "wait", time=300,finial=1},
+	{call = "findSpriteByFileName",plist="ccbi-res/common-ui.plist",getParent=1,file="button/btn-buy-2.png"},
+	{call = "createMask",mask=false},
+}
+return data

@@ -1,0 +1,19 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ClergyGMsg";
+
+//解锁神职等级
+//46001
+message GReqUnlockClergyLevel{
+    optional int32 clergy_level = 1;
+}
+//46001
+message GResUnlockClergyLevel{
+    optional int32 clergy_level = 1;
+}
+
+//推送神职经验变动
+//46002
+message GResClergyExpChange{
+    optional int64 clergy_exp = 1;
+}

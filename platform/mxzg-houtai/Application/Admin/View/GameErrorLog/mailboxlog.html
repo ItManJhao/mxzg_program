@@ -1,0 +1,102 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>后台发送邮件记录</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('GameErrorLog/MailboxLog')}" method="get" class="form-horizontal form-inline">
+
+                                            <label class="control-label">接收人邮箱</label>
+                                            <input type="text" placeholder="精确搜索" name="to_mail" value="{$search_params.to_mail}" style="width: 120px;" class="form-control">
+                                            <label class="control-label" style="padding-left: 7px;">状态</label>
+                                            <select class="form-control" name="status">
+                                                <option value="-1" <if condition="$search_params['status'] == -1"> selected </if>>请选择</option>
+                                                <option value="1" <if condition="$search_params['status'] == 1"> selected </if>>发送成功</option>
+                                                <option value="0" <if condition="$search_params['status'] == 0"> selected </if>>发送失败</option>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">开始时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            <label class="control-label" style="padding-left: 5px;">结束时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['end_time']}">
+                                            
+                                            <button type="button" style="float:right; margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>主键ID</th>
+                                                                <th>接收人邮箱</th>
+                                                                <th>邮件标题</th>
+                                                                <th>邮件内容</th>
+                                                                <th>状态</th>
+                                                                <th>发送时间</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                            <volist name="list" id="vo">
+                                                                <tr role="row"> 
+                                                                    <td>{$vo.id}</td>
+                                                                    <td>{$vo.to_mail}</td>
+                                                                    <td>{$vo.mail_title}</td>
+                                                                    <td>{$vo.mail_content}</td>
+                                                                    <td>
+                                                                        <if condition="$vo['status'] == 1">发送成功
+                                                                            <else/>发送失败
+                                                                        </if>
+                                                                    </td>
+                                                                    <td>{:date('Y-m-d H:i:s', $vo['created_at'])}</td>
+                                                                </tr>
+                                                            </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+ 
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+    $(".sid").on('change',function(e){
+        doMultipleSelection(this, 'sid');
+    })
+    $(function(){
+        doMultipleSelection($('.sid'), 'sid');
+    });
+
+</script>
+
+<include file="Public:footer" />

@@ -1,0 +1,1 @@
+cocos luacompile -s /Users/windy/Development/cocos_mxzg/client/idle/src -d /Users/windy/Development/cocos_mxzg/doc/增量更新文件/214/src -e -k 5c44afa98c8 -b c91b5eceab5

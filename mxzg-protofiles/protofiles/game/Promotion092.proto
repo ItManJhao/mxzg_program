@@ -1,0 +1,102 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion092GMsg";
+
+import "Object.proto";
+
+message PSDeliverCountRank {
+    optional int64 player_id = 1; //玩家ID
+    optional string name = 2; //玩家名字
+    optional int32 level = 3; //玩家等级
+    optional int32 head_id = 4; //玩家头像
+    optional int32 server_id = 5; //大区（服务器区号）.
+    optional int32 count = 6; //次数
+    optional int32 rank = 7; //排名
+}
+
+message PSHeroScoreRank {
+    optional int32 hero_type = 1;
+    optional int32 score = 2; //积分
+    optional int32 rank = 3; //排名
+}
+
+//女神献花
+//数据
+//76231
+message GReqDeliverFlowerGetData {
+
+}
+
+//76231
+message GResDeliverFlowerGetData {
+    repeated PSMapData hero_scores = 1; //英雄积分列表《hero_type,score》
+    repeated int32 count_reward_idx=2;//达标奖励列表
+    optional int32 deliver_count=3;//献花次数
+    optional int32 buy_count=4;//购买次数
+}
+
+//献花
+//76232
+message GReqDeliverFlower {
+    optional int32 hero_type = 1; //英雄类型
+    optional int32 count = 2; //送花次数
+}
+//76232
+message GResDeliverFlower {
+    optional PSMapData hero_score = 1; //英雄积分《hero_type,score》
+    optional int32 deliver_count=2;//献花次数
+}
+
+//选择英雄
+//76233
+message GReqDeliverFlowerSelectHero {
+    repeated int32 hero_type = 1;
+}
+//76233
+message GResDeliverFlowerSelectHero {
+    repeated PSMapData hero_scores = 1; //英雄积分列表《hero_type,score》
+}
+//献花次数排行
+//76234
+message GReqDeliverCountRank {
+}
+
+//76234
+message GResDeliverCountRank {
+    repeated PSDeliverCountRank list = 1;
+    optional PSDeliverCountRank self = 2;
+}
+
+//英雄积分排行
+//76235
+message GReqHeroScoreRank {
+}
+
+//76235
+message GResHeroScoreRank {
+    repeated PSHeroScoreRank list = 1;
+}
+
+//购买献花
+//76236
+message GReqBuyFlower {
+    optional int32 count = 1; //购买数量
+}
+
+//76236
+message GResBuyFlower {
+    optional int32 buy_count=1;//购买次数
+}
+
+//献花次数达标奖励
+//76237
+message GReqDeliverFlowerCountReward {
+    optional int32 idx = 1; //表id
+}
+
+//76237
+message GResDeliverFlowerCountReward {
+    optional int32 idx = 1; //表id
+}
+
+

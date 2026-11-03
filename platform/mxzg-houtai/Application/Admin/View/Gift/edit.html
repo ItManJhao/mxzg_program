@@ -1,0 +1,299 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑礼包</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('gift/ajax_updata')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                        <div class="tab-pane active">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>礼包主键ID：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" value="{$gift_info.id}" type="text" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>礼包名称：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="name" value="{$gift_info.name}" type="text" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>备注：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="note" value="{$gift_info.note}" type="text" >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>礼包类型：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control gift_type" name="type" disabled>
+                                        <option value="all" <if condition="$gift_info['type'] == -1"> selected </if>>请选择礼包类型</option>
+                                        <option value="0" <if condition="$gift_info['type'] == 0"> selected </if>>普通码</option>
+                                        <option value="1" <if condition="$gift_info['type'] == 1"> selected </if>>通码</option>
+                                        <option value="2" <if condition="$gift_info['type'] == 2"> selected </if>>固定码</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group set_code">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>固定兑换码：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="set_code" type="text" value="{$gift_info.code}" required="" aria-required="true" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>设备类型：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="device_type">
+                                        <option value="0" <if condition="$gift_info['device_type'] == 0"> selected </if>>所有设备类型</option>
+                                        <option value="1" <if condition="$gift_info['device_type'] == 1"> selected </if>>安卓</option>
+                                        <option value="2" <if condition="$gift_info['device_type'] == 2"> selected </if>>ios</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group gift_num">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>礼包数量：</label>
+                                <div class="col-sm-8">
+                                    <input style="width: 150px;" class="configInput form-control" disabled name="num" value="{$gift_info.num}" type="number" min="0" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group gift_num">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>可使用次数：</label>
+                                <div class="col-sm-8">
+                                    <input style="width: 150px;" class="configInput form-control" name="use_num" value="{$gift_info.use_num}" type="number" min="0" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-8">
+                                    <label class="checkbox-inline i-checks">
+                                        <input type="radio" name="status" value="1" <if condition="$gift_info['status'] == 1"> checked="checked" </if> >生效</label>
+                                    <label class="checkbox-inline i-checks">
+                                        <input type="radio" name="status" value="0" <if condition="$gift_info['status'] == 0"> checked="checked" </if> >失效</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>渠道：</label>
+                                <div class="col-sm-8">
+                                    <div class="check-channels">
+                                        <div class="checkbox checkbox-inline">
+                                            <label>
+                                                <input style="width: 21px;height: 21px;" class="channel-check-all" type="checkbox">
+                                                全选
+                                            </label>
+                                        </div>
+                                        <div></div>
+                                        <div class="checkbox checkbox-inline">
+                                            <volist name="channels" id="channels_vo">
+                                                <label>
+                                                    <input style="width: 21px;height: 21px;" type="checkbox" class="channel-check" name="c_son_ids[]" value="{$channels_vo['id']}"  <if condition="in_array($channels_vo['id'], $gift_info['c_son_id'])"> checked  </if>>
+                                                    {$channels_vo['name']}
+                                                </label>
+                                            </volist>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否全服：</label>
+                                <div class="col-sm-8">
+                                    <label class="checkbox-inline i-checks">
+                                        <input type="radio" name="is_all_server" value="1" <if condition="$gift_info['is_all_server'] == 1"> checked="checked" </if> >全服适用</label>
+                                    <label class="checkbox-inline i-checks">
+                                        <input type="radio" name="is_all_server" value="0" <if condition="$gift_info['is_all_server'] == 0"> checked="checked" </if> >服务器适用</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>服务器：</label>
+                                <div class="col-sm-8">
+                                    <volist name="server_list" id="server_list_vo">
+                                        <div class="check-servers">
+                                            <div class="checkbox checkbox-inline">
+                                                <label>
+                                                    <input style="width: 21px;height: 21px;" class="check-all" type="checkbox" >
+                                                    全选
+                                                </label>
+                                            </div>
+                                            <div></div>
+                                            <div class="checkbox checkbox-inline">
+                                                <volist name="server_list_vo" id="server_list_vo_vo">
+                                                    <label>
+                                                        <input style="width: 21px;height: 21px;" class="server-check"  type="checkbox" name="server_ids[]" value="{$server_list_vo_vo['id']}"  <if condition="in_array($server_list_vo_vo['id'], $gift_info['sid'])"> checked  </if>>
+                                                        {$server_list_vo_vo['server_name']}
+                                                    </label>
+                                                </volist>
+                                            </div>
+                                        </div>
+                                    </volist>
+                                    
+                                </div>
+                            </div>
+
+
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>vip等级区间：</label>-->
+<!--                                <div class="col-sm-8">-->
+<!--                                    <input style="width: 150px;" class="configInput form-control" name="vip[]" value="{$gift_info.vip_start}" type="number" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" required="" aria-required="true">-->
+<!--                                    &#45;&#45;-->
+<!--                                    <input style="width: 150px;" class="configInput form-control" name="vip[]" value="{$gift_info.vip_end}" type="number" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" required="" aria-required="true">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>等级区间：</label>-->
+<!--                                <div class="col-sm-8">-->
+<!--                                    <input style="width: 150px;" class="configInput form-control" name="level[]" value="{$gift_info.level_start}" type="number" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" required="" aria-required="true">-->
+<!--                                    &#45;&#45;-->
+<!--                                    <input style="width: 150px;" class="configInput form-control" name="level[]" value="{$gift_info.level_end}" type="number" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" required="" aria-required="true">-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>开始时间：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{:date('Y-m-d H:i:s', $gift_info['start_time'])}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>结束时间：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{:date('Y-m-d H:i:s', $gift_info['end_time'])}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">选择道具：</label>
+                                <div class="col-sm-8 class-item">
+                                    <a class="add_item"><i class="fa fa-plus"></i>添加道具</a>
+                                    <p></p>
+                                    <volist name="gift_item_data" id="gift_item_data_vo">
+                                        <div class="col-sm-10">
+                                            <a style="width: 80px; float: left;" class="del_item"><i class="fa fa-minus-square"></i>删除道具</a>
+                                            
+                                            <input type="hidden" name="item_type[]" value="{$gift_item_data_vo.item_type}">
+                                            <select class="selectpicker form-control item_type" data-style="btn-info" data-title="请选择道具" data-live-search="true" >
+                                                <volist name="item_data" id="item_data_vo">
+                                                    <eq name="item_data_vo.id" value="$gift_item_data_vo.item_type">
+                                                        <option value="{$item_data_vo.id}" selected>{$item_data_vo.id}--{$item_data_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$item_data_vo.id}">{$item_data_vo.id}--{$item_data_vo.name}</option>
+                                                    </eq>
+                                                </volist>
+                                            </select>
+                                            <input style="width: 90px; float: left;" class="configInput form-control" name="gift_item_num[]" value="{$gift_item_data_vo.item_num}" type="number" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,"")">
+
+                                        </div>
+                                    </volist>
+                                </div>
+                            </div>
+              
+                        </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <input type="hidden" name="id" value="{$gift_info.id}">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('gift/ajax_updata')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+
+    var data_str = '<?php echo json_encode($item_data); ?>';
+    data_object = JSON.parse(data_str);
+
+    $(function(){
+        giftType($('.gift_type'));
+
+        $(".check-channels").each(function(){
+            var check_channels = $(this).find(".channel-check").first();
+            isCheckAlls('channel-check-all','channel-check', check_channels);
+        });
+        $(".check-servers").each(function(){
+            var check_servcers = $(this).find(".server-check").first();
+            isCheckAlls('check-all','server-check', check_servcers);
+        });
+
+        //判断是不是全选
+        $(".channel-check").click(function(){    
+            isCheckAlls('channel-check-all','channel-check', $(this));
+        });
+        $(".channel-check-all").click(function () {
+            doCheckAlls('channel-check-all', 'channel-check', $(this));
+        });
+
+        $(".server-check").click(function(){    
+            isCheckAlls('check-all','server-check', $(this));
+        });
+        $(".check-all").click(function () {
+            doCheckAlls('check-all', 'server-check', $(this));
+        });
+
+        
+    });
+    $ (function () {
+        $(document).on('change', ".item_type", function(e){
+            var sid_str = '';
+            $(this).find("option:selected").each(function () {
+                sid_str += $(this).val() + ",";
+            })
+            if(sid_str != ''){
+                sid_str = sid_str.slice(0,-1);
+            }
+            $(this).parent().prev().val(sid_str);
+            // doMultipleSelection(this, 'product_id');
+        })
+
+        $(document).on('click', '.add_item', function() {
+            var htmladd="";
+            htmladd +='<div class="col-sm-10">';
+            htmladd +='<a style="width: 80px; float: left;" class="del_item"><i class="fa fa-minus-square"></i>删除道具</a>';
+            htmladd +='<input type="hidden" name="item_type[]" value="">';
+            htmladd +='<select class="selectpicker form-control item_type" data-style="btn-info" data-title="请选择道具" data-live-search="true">';
+            htmladd +='<volist name="item_data" id="item_data_vo">';
+            htmladd +='<option value="{$item_data_vo.id}">{$item_data_vo.id}--{$item_data_vo.name}</option>';
+            htmladd +='</volist></select>';
+            htmladd +='<input style="width: 90px; float: left;" class="configInput form-control" name="gift_item_num[]" type="number" min="1" onkeyup="this.value=value.replace(/^(0+)|[^\d]+/g,"")">';
+            htmladd +='</div>';
+            $('.class-item').append(htmladd);
+            $('.item_type').selectpicker('refresh');
+            // upitem($('.item_type_type:last'));
+        });
+        $(document).on('click', '.del_item', function() {
+            $(this).parent().remove();
+        });
+    });
+
+    function giftType(obj){
+        var selectedValue = $(obj).val();
+        if(selectedValue == 1){     //通码，隐藏礼包的兑换码个数设置
+            $(".set_code").hide();
+            $(".gift_num").hide();
+        }else if(selectedValue == 2){     //固定码，手动填写固定码，隐藏礼包的兑换码个数设置
+            $(".set_code").show();
+            $(".gift_num").hide();
+        }else{
+            $(".set_code").hide();
+            $(".gift_num").show();
+        }
+    }
+
+</script>
+<script src="/Public/static/admin/js/item.js"></script>
+
+
+<include file="Public:footer" />

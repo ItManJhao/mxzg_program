@@ -1,0 +1,59 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "DailyDungeonGMsg";
+import "Object.proto";
+import "Battle.proto";
+
+
+message GReqDailyDungeonData
+{
+	optional int32 mission_type = 1; //副本类型1 金币副本， 2经验副本， 3英雄副本，4羁绊副本，5精灵（符文）副本，6宠物副本
+	optional int32 count = 2; //今天已经攻打多少次日常副本(VIP等级会增加通关次数)
+	optional int32 mission = 3; //当前打到那一关了
+}
+
+//19001
+message GReqDailyDungeonList {
+}
+//19001
+message GResDailyDungeonList {
+	repeated GReqDailyDungeonData list = 1; //副本数据
+}
+
+//19002
+message GReqDailyDungeonEnd
+{
+	optional int32 mission_id = 1; //关卡
+	optional int32 mission_type = 2; //副本类型1 金币副本， 2经验副本， 3英雄副本，4羁绊副本，5精灵（符文）副本，6宠物副本
+	optional int32 sweep = 3; // 扫荡0,正常战斗，1扫荡
+}
+//19002
+message GResDailyDungeonEnd
+{
+	optional int32 mission_id = 1; //关卡id
+	optional int32 mission_type = 2; //副本类型1 金币副本， 2经验副本， 3英雄副本，4羁绊副本，5精灵（符文）副本，6宠物副本
+	repeated PSBackpackData list = 3; //奖励列表
+	optional BattleReport report = 4; //战报
+	optional int32 chance_status = 5;      //神职概率是否触发
+}
+
+//19003
+message GResDailyDungeonSweep
+{
+	optional int32 mission_type = 1; //副本类型1 金币副本， 2经验副本， 3英雄副本，4羁绊副本，5精灵（符文）副本，6宠物副本
+	repeated PSBackpackData list = 2; //奖励列表
+	optional int32 chance_status = 3;      //神职概率是否触发
+}
+
+// 扫荡所有一键扫荡
+//19004
+message GReqDailySweepAll {
+    optional int32 mission_type = 1; //副本类型1 金币副本， 2经验副本， 3英雄副本，4羁绊副本，5精灵（符文）副本，6宠物副本
+}
+//19004
+message GResDailySweepAll {
+	optional int32 mission_type = 1; //副本类型1 金币副本， 2经验副本， 3英雄副本，4羁绊副本，5精灵（符文）副本，6宠物副本
+    repeated PSBackpackData list = 2; //奖励列表
+    optional int32 chance_status = 3; //神职概率是否触发
+    optional int32 count = 4;         //今天已经打过的次数
+}

@@ -1,0 +1,29 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion051GMsg";
+
+
+//节日七天登陆
+//52001
+message GReqFestivalLoginInfo {
+}
+//52001
+message GResFestivalLoginInfo {
+    optional int32 day = 1;//累登天数
+    repeated int32 reward_list = 2;//已领取奖励id集
+}
+
+//领取登陆奖励
+//52002
+message GReqFestivalLoginReward {
+    optional int32 day = 1;//领取第N天奖励
+}
+//52002
+message GResFestivalLoginReward {
+}
+
+//跨天在线更新登陆天数
+//52003
+message GResFestivalLoginUpdate{
+    optional int32 day = 1;//已登陆天数
+}

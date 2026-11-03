@@ -1,0 +1,28 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion052GMsg";
+
+message GResDevelopGiftData {
+    optional int32 type = 1; // 类型
+    optional int32 level = 2; // 级别
+}
+//养成礼包列表
+//44001
+message GReqDevelopGiftList {
+}
+//44001
+message GResDevelopGiftList {
+    optional int32 refresh_date_time =1; // 刷新时间
+    repeated GResDevelopGiftData data = 2; // 礼包列表
+}
+
+//购买礼包
+//44002
+message GReqBuyDevelopGift {
+    optional int32 type = 1; // 类型
+    optional int32 level = 2; // 级别
+}
+//44002
+message GResBuyDevelopGift {
+    optional GResDevelopGiftData data = 1; // 礼包
+}

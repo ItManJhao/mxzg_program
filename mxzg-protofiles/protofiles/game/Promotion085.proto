@@ -1,0 +1,46 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion085GMsg";
+
+import "Promotion070.proto";
+
+//圣诞连线
+//数据
+//76081
+message GReqChristmasMissionGetDataInfo {
+
+}
+//76081
+message GResChristmasMissionGetDataInfo {
+    repeated PSMission mission = 1; //任务记录
+    repeated int32 mission_box_reward_record = 2; //任务次数领奖记录
+    optional int32 open_day = 3; //开启天数
+}
+
+//领取任务奖励
+//76082
+message GReqChristmasMissionGetMission {
+    optional int32 idx = 1;
+}
+
+//76082
+message GResChristmasMissionGetMission {
+    optional PSMission mission_info = 1;
+}
+
+//更新任务
+//76083
+message GResChristmasMissionUpdateProcess {
+    repeated PSMission mission = 1; //更新记录
+}
+
+//领取任务箱子奖励
+//76084
+message GReqChristmasMissionGetMissionBox {
+    optional int32 idx = 1;
+}
+
+//76084
+message GResChristmasMissionGetMissionBox {
+    optional int32 idx = 1;
+}

@@ -1,0 +1,67 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>角色替换日志</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form method="post" enctype="multipart/form-data" id="form-order">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>A角色id</th>
+                                                    <th>A角色名字</th>
+                                                    <th>B角色id</th>
+                                                    <th>B角色名字</th>
+                                                    <th>操作人</th>
+                                                    <th>操作时间</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ajaxList">
+                                            <volist name="role_replace_log" id="role_replace_log_vo">
+                                                <tr role="row">
+                                                    <td>{$role_replace_log_vo.one_role_id}</td>
+                                                    <td>{$role_replace_log_vo.one_role_name}</td>
+                                                    <td>{$role_replace_log_vo.two_role_id}</td>
+                                                    <td>{$role_replace_log_vo.two_role_name}</td>
+                                                    <td>{$role_replace_log_vo.admin_name}</td>
+                                                    <td>{:date('Y-m-d H:i:s',$role_replace_log_vo['created_at'])}</td>
+                                                </tr>
+                                            </volist>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                    <div>
+                                        <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                    </div>
+                                    <script>
+                                        // 点击分页触发的事件
+                                        // $(".pagination a").click(function(){
+                                        //     url = $(this).attr('href');
+                                        //     ajax_get_table('formSearch',url);
+                                        //     return false;
+                                        // });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+
+</script>
+
+
+<include file="Public:footer" />

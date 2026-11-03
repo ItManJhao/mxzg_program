@@ -1,0 +1,20 @@
+<div class="col-sm-8">
+    <volist name="server_list" id="server_list_vo">
+        <div>
+            <div class="checkbox">
+                <label>
+                    <input style="width: 21px;height: 21px;" class="check-all" type="checkbox" >
+                    全选
+                </label>
+            </div>
+            <div class="checkbox checkbox-inline">
+                <volist name="server_list_vo" id="server_list_vo_vo">
+                    <label>
+                        <input style="width: 21px;height: 21px;" type="checkbox" class="server-check" name="server_ids[]" value="{$server_list_vo_vo['id']}"  >
+                        {$server_list_vo_vo['server_name']}
+                    </label>
+                </volist>
+            </div>
+        </div>
+    </volist>
+</div>

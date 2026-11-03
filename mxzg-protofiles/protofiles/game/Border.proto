@@ -1,0 +1,46 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "BroderGMsg";
+
+message PSBorderUnit {
+    optional int32 id = 1;
+//    optional int32 expire_time = 2; //过期时间，-1代表永久激活
+    optional int32 active_state = 2; //0未激活，1激活
+}
+
+//32001
+message GReqBorderData {
+
+}
+//32001
+message GResBorderData {
+    repeated PSBorderUnit units = 1; //头像框列表
+}
+
+//激活头像框
+//
+//message GResActiveBorder{
+//	optional int32 idx=1;
+//}
+
+//激活头像
+//32002
+message GReqActiveBorder {
+    optional int32 idx = 1;
+}
+
+//激活头像返回
+//32002
+message GResActiveBorder {
+    optional PSBorderUnit unit = 1;
+}
+
+//32003
+message GReqUseBorder {
+    optional int32 idx = 1; //头像框id
+}
+
+//32003
+message GResUseBorder {
+    optional int32 idx = 1; //头像框id
+}

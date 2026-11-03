@@ -1,0 +1,36 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion088GMsg";
+
+//圣诞礼盒
+//数据
+//76141
+message GReqChristmasScoreInfo {
+
+}
+//76141
+message GResChristmasScoreInfo {
+    optional int32 score = 1; //积分
+}
+
+//兑换积分
+//76142
+message GReqChristmasExchangeScore {
+
+}
+
+//76142
+message GResChristmasExchangeScore {
+    optional int32 score = 1;
+}
+
+//开宝箱
+//76143
+message GReqChristmasBox {
+
+}
+
+//76143
+message GResChristmasBox {
+    optional int32 score = 1;
+}

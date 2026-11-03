@@ -1,0 +1,34 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion105GMsg";
+
+import "Object.proto";
+
+//77101
+message GReqForeverWellInfo{
+
+}
+
+//77101
+message GResForeverWellInfo {
+	optional int32 cur_level = 1;	// 当前的层数
+	repeated PSMapData reward_record = 2;	// 奖励记录
+}
+
+//77102
+message GReqForeverReward {
+	optional int32 idx = 1;		// 配置表idx
+}
+
+//77102
+message GResForeverReward {
+	optional PSMapData reward_record = 1;	// 奖励记录
+}
+
+//层数更新的时候推送
+//77103
+message GForeverWellMessage {
+	optional int32 cur_level = 1;	// 当前的层数
+}
+
+

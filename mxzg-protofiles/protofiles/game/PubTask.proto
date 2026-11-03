@@ -1,0 +1,108 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "PubTaskGMsg";
+import "Object.proto";
+
+//酒馆任务数据
+message ResPubTaskData
+{
+	optional int64 task_id = 1; 	//id
+	optional int32 task_type = 2;	//类型
+	optional int32 used_time = 3;	//完成时间，0待派遣
+	optional int32 task_lock = 4;   //任务锁状态。1已上锁，0未上锁。
+	repeated int64 heroIds = 5;		//英雄ID
+
+}
+
+//酒馆任务
+//13021
+message GReqPubTaskList
+{
+}
+//13021
+message GResPubTaskList
+{
+	/*optional int32 task_count = 1;//任务总数
+	optional int32 can_do_num = 2;//可接任务个数*/
+	optional int32 free_refresh = 1;//剩余的免费刷新次数
+	repeated ResPubTaskData list = 2;//任务列表
+	optional int32 luxury = 3;	//是否拥有豪华酒馆特权，0没有，1有
+	optional int32 high = 4;	//是否拥有高级酒馆特权，0没有，1有
+	optional int64 adventure_count = 5;	//冒险点数
+}
+
+//酒馆刷新
+//13022
+message GReqPubTaskRefresh
+{
+	//optional PSRefreshType index = 1;//刷新方式
+}
+//13022
+message GResPubTaskRefresh
+{
+	optional int32 free_refresh = 1;//剩余的免费刷新次数
+	repeated ResPubTaskData list = 2;//任务列表
+	optional int32 luxury = 3;	//是否拥有豪华酒馆特权，0没有，1有
+	optional int32 high = 4;	//是否拥有高级酒馆特权，0没有，1有
+}
+
+//派遣任务
+//13023
+message GReqPubTaskStart
+{
+	optional int64 task_id = 1;//任务ID
+	repeated int64 hero_id = 2; // 英雄列表
+}
+//13023
+message GResPubTaskStart
+{
+	optional int64 task_id = 1;//任务ID
+}
+
+//领取酒馆任务奖领
+//13024
+message GReqPubTaskAward
+{
+	optional int64 task_id = 1;//任务ID
+}
+//13024
+message GResPubTaskAward
+{
+	optional int64 task_id = 1;//任务ID
+	optional int32 used_gem = 2;
+	repeated PSBackpackData list = 3;//奖励内容
+}
+
+//任务上锁或解锁
+//13026
+message GReqLockUpPubTask{
+    optional int64 task_id = 1;//任务id
+    optional int32 task_lock = 2;// 1给任务上锁，0为给任务解锁
+}
+//13026
+message GResLockUpPubTask{
+    optional int64 task_id = 1; //任务id
+    optional int32 task_lock = 2; //任务锁状态。1已上锁，0未上锁。
+}
+
+enum PSRefreshType {
+	FREE_REFRESH = 1; //免费刷新
+	ITEM_REFRESH = 2; //道具刷新
+	GEM_REFRESH = 3; //钻石刷新
+}
+
+//冒险点数变动推送
+//13027
+message GResPubAdventureCount{
+	optional int64 adventure_count = 1;
+}
+
+//一键领取
+//13028
+message GReqOneKeyGetReward{
+
+}
+//13028
+message GResOneKeyGetReward{
+	repeated ResPubTaskData list = 1;//剩余的任务列表
+}

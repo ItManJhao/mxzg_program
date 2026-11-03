@@ -1,0 +1,53 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加活动类型</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('activeType/ajax_add')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>活动类型id：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" name="id" type="text" required="" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>活动类型名称：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" name="name" type="text" required="" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>活动类型描述：</label>
+                                    <div class="col-sm-8">
+                                        <textarea placeholder="请输入内容" name="desc" class="configInput form-control" required="" aria-required="true"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('activeType/ajax_add')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+
+</script>
+
+
+<include file="Public:footer" />

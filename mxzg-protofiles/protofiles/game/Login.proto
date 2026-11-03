@@ -1,0 +1,79 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "LoginGMsg";
+
+//登录
+//1001
+message GReqLogin
+{
+	optional int32 server_id 	= 1; //服务器ID
+	optional int64 user_id 		= 2; //userId
+	optional int32 platform 	= 3; //1:安卓，2:IOS，3:H5
+	optional int64 game_id 		= 4; //游戏id
+	optional string login_token = 5; //用户登录时从SDK客户端获取到的LoginToken
+	optional string sign 		= 6; //sign
+	optional string device_id 	= 7; //设备id
+	optional string push_token 	= 8; //推送token
+}
+//1001
+message GResLogin
+{
+	optional int64 rid = 1;			//玩家ID，为0未创建账号
+	optional int64 server_time = 2;	//服务器时间
+	optional int32 status = 3;		//账号状态，0正常，1被封号
+	optional int32 offset_utc = 4;	//服务器时间和格林标准时间差(时区差正或者负 单位秒)
+
+}
+
+//创号
+//1002
+message GReqInit
+{
+	optional string nick = 1;		//昵称
+	optional int32 lang = 2;		//语言
+	optional int32 platform = 3;	//1:安卓，2:IOS，3:H5
+	optional string place = 4;		//渠道标识
+	optional string device_id = 5;	//设备id
+	optional int64 share_rid = 6;	//分享角色id
+}
+//1002
+message GResInit
+{
+	optional int64 rid = 1;			//玩家ID
+}
+
+//下线
+//1003
+message GReqOffline
+{
+}
+//1003
+message GResOffline
+{
+	optional int32 type = 1;	//下线方式，1异地登录，2系统踢，其它状态后续定义
+}
+
+//心跳
+//1004
+message GReqHeartBeat
+{
+}
+//1004
+message GResHeartBeat
+{
+	optional int64 server_time = 1;	//服务器时间
+}
+
+//前端推送错误日志
+//1005
+message GReqError
+{
+	optional string error = 1;	//前端错误日志
+}
+//后端推送错误提示
+//1005
+message GResError
+{
+	optional int32 error = 1;	//错误编码
+	repeated string params = 2;	//参数
+}

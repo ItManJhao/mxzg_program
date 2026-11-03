@@ -1,0 +1,104 @@
+
+jiban.png
+size: 600,598
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+A2
+  rotate: false
+  xy: 2, 427
+  size: 511, 169
+  orig: 511, 169
+  offset: 0, 0
+  index: -1
+A3
+  rotate: true
+  xy: 2, 29
+  size: 396, 303
+  orig: 396, 303
+  offset: 0, 0
+  index: -1
+A6
+  rotate: true
+  xy: 467, 280
+  size: 145, 128
+  orig: 145, 128
+  offset: 0, 0
+  index: -1
+baise
+  rotate: false
+  xy: 467, 150
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+jue
+  rotate: true
+  xy: 515, 521
+  size: 75, 83
+  orig: 128, 128
+  offset: 26, 26
+  index: -1
+li1
+  rotate: false
+  xy: 77, 11
+  size: 14, 16
+  orig: 16, 18
+  offset: 1, 1
+  index: -1
+li2
+  rotate: false
+  xy: 60, 11
+  size: 15, 16
+  orig: 17, 18
+  offset: 1, 1
+  index: -1
+li3
+  rotate: true
+  xy: 24, 5
+  size: 22, 16
+  orig: 24, 18
+  offset: 1, 1
+  index: -1
+li4
+  rotate: true
+  xy: 2, 4
+  size: 23, 20
+  orig: 25, 22
+  offset: 1, 1
+  index: -1
+li5
+  rotate: false
+  xy: 42, 11
+  size: 16, 16
+  orig: 18, 18
+  offset: 1, 1
+  index: -1
+li6
+  rotate: false
+  xy: 93, 11
+  size: 14, 16
+  orig: 16, 18
+  offset: 1, 1
+  index: -1
+xing
+  rotate: false
+  xy: 515, 467
+  size: 53, 52
+  orig: 128, 128
+  offset: 37, 38
+  index: -1
+yun
+  rotate: true
+  xy: 467, 32
+  size: 116, 120
+  orig: 128, 128
+  offset: 6, 4
+  index: -1
+zhu
+  rotate: true
+  xy: 307, 114
+  size: 311, 158
+  orig: 312, 159
+  offset: 0, 1
+  index: -1

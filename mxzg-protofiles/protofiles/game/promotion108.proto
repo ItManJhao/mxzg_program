@@ -1,0 +1,25 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "BountyHuntingGMsg";
+
+
+//赏金猎魔信息
+//78301
+message GReqBountyHuntingInfo {
+	
+}
+
+//78301
+message GResBountyHuntingInfo {
+	optional int64 damage_max = 1;	//今日最高伤害
+}
+
+// 挑战
+//78302
+message GReqBountyHuntingChallenge {
+}
+
+//78302
+message GResBountyHuntingChallenge {
+	optional int64 damage_max = 1;	//今日最高伤害
+}

@@ -1,0 +1,83 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "PetGMsg";
+
+//宠物信息
+message PSPetInfo {
+    optional int64 pet_id = 1;
+    optional int32 sys_id = 2;
+    optional int64 hero_id = 3;
+    optional int32 level = 4;
+}
+
+//宠物信息列表
+//74100
+message GReqPetInfoList {
+
+}
+//74100
+message GResPetInfoList {
+    repeated PSPetInfo list = 1;
+}
+
+//宠物升级
+//74101
+message GReqPetUpLevel {
+    optional int64 pet_id = 1;//升级本体
+    repeated int64 pet_list = 2;//升级素材
+
+}
+//74101
+message GResPetUpLevel {
+    optional PSPetInfo pet = 1;
+}
+
+//宠物携带
+//74102
+message GReqCarryPet{
+    optional int64 hero_id = 1;
+    optional int64 pet_id = 2;
+}
+//74102
+message GResCarryPet{
+    optional int64 hero_id = 1;
+    optional PSPetInfo pet = 2;
+    optional int64 old_pet = 3;//原先携带的宠物
+}
+
+//宠物卸下
+//74103
+message GReqDisboardPet{
+    optional int64 hero_id = 1;
+    optional int64 pet_id = 2;
+}
+//74103
+message GResDisboardPet{
+    optional int64 hero_id = 1;
+    optional int64 pet_id = 2;
+}
+
+//宠物图鉴
+//74104
+message GReqPetIllustrate{
+
+}
+//74104
+message GResPetIllustrate{
+    repeated int32 pet_types = 1;//已解锁宠物图鉴
+}
+
+//宠物添加背包
+//74105
+message GResAddPetInfo{
+    repeated PSPetInfo list = 1;
+}
+
+//宠物删除背包
+//74106
+message GResDelPetInfo{
+    repeated int64 pet_ids = 1;
+}
+
+
+

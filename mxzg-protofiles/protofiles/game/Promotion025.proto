@@ -1,0 +1,42 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion025GMsg";
+import "Pvp.proto";
+import "Object.proto";
+
+//查看点金信息
+//13361
+message GReqBuyGoldCountData
+{
+}
+//13361
+message GResBuyGoldCountData
+{
+	optional int32 count = 1;	//次数
+	repeated PSMapData list = 2;//已领取奖励信息
+}
+
+//领取点金奖励
+//13362
+message GReqGetBuyGoldReward
+{
+	optional int32 idx = 1;	//奖励ID
+}
+//13362
+message GResGetBuyGoldReward
+{
+	optional int32 idx = 1;	//奖励ID
+}
+
+//查看点金排行榜
+//13363
+message GReqScanBuyGoldRank
+{
+	
+}
+//13363
+message GResScanBuyGoldRank
+{
+	optional int32 my_rank = 1;			//我的排名，0未进榜
+	repeated PSRankPlayerData list = 2;	//排行榜
+}

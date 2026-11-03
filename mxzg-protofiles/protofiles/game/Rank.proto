@@ -1,0 +1,216 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "RankGMsg";
+import "Pvp.proto";
+
+//message PSRankPlayerData {
+//    optional int64 player_id = 1; //玩家ID
+//    optional string name = 2; // 玩家名字
+//    optional int64 clan_id = 3; //公会ID
+//    optional string clan_name = 4; // 玩家战盟名
+//    optional int32 clan_icon_id = 5; //公会图标
+//    optional int32 level = 6; //玩家等级
+//    optional int32 head_id = 7; //玩家头像
+//    optional int32 complece_time = 8; //通关时间
+//    optional int32 score = 9; //玩家积分
+//    optional int32 combat_num = 10; //战斗力
+//    optional int32 server_id = 11; //大区（服务器区号）
+//    optional int32 rank = 12; //玩家排名
+//}
+
+
+//请求公会排行
+//11001
+message GReqClanRank
+{
+}
+//11001
+message GResClanRank
+{
+    repeated PSClanRankData list = 1;
+    optional PSClanRankData psClanRankData = 2;
+}
+
+//幻境之塔排行榜
+//11003
+message GReqTowerRank {
+}
+//11003
+message GResTowerRank {
+    repeated PSRankPlayerData list = 1;
+    optional PSRankPlayerData self_data = 2;
+}
+
+//PVP排行榜
+//11004
+message GReqPvpRankList {
+}
+//11004
+message GResPvpRankList {
+    repeated PSRankPlayerData list = 1;
+    optional PSRankPlayerData self_data = 2;
+}
+
+//剧情排行榜
+//11005
+message GReqRankChapterList {
+}
+//11005
+message GResRankChapterList {
+    repeated PSRankPlayerData list = 1;
+    optional PSRankPlayerData self_data = 2;
+}
+
+//战斗力排行榜
+//11006
+message GReqFightingRankList {
+}
+//11006
+message GResFightingRankList {
+    repeated PSRankPlayerData list = 1;
+    optional PSRankPlayerData self_data = 2;
+}
+
+//地牢排行榜
+//11011
+message GReqDungeonRankList {
+}
+//11011
+message GResDungeonRankList {
+    repeated PSRankPlayerData list = 1;
+    optional PSRankPlayerData self_data = 2;
+}
+
+//跨服战斗力排行榜
+//11012
+message GReqCrossFightingRankList {
+}
+//11012
+message GResCrossFightingRankList {
+    repeated PSRankPlayerData list = 1;
+    optional PSRankPlayerData self_data = 2;
+}
+
+
+//请求跨服公会排行
+//11013
+message GReqCrossClanRank
+{
+}
+//11013
+message GResCrossClanRank
+{
+    repeated PSClanRankData list = 1;
+    optional PSClanRankData psClanRankData = 2;
+}
+
+//诸神遗迹排行榜
+//11014
+message GReqGodRelicRank
+{
+}
+//11014
+message GResGodRelicRank
+{
+    repeated PSRankPlayerData list = 1;
+    optional PSRankPlayerData self = 2;
+}
+
+//赏金猎魔跨服排行
+//11015
+message GReqBountyHuntingRank{
+
+}
+
+//11015
+message GResBountyHuntingRank
+{
+    repeated PSRankPlayerData list = 1;
+    optional PSRankPlayerData self = 2;
+}
+
+
+//膜拜列表
+//11100
+message GReqRankWorshipList {
+}
+//11100
+message GResRankWorshipList {
+    repeated int32 list = 1;
+}
+
+//膜拜
+//11101
+message GReqRankWorship {
+    optional int32 type = 1;
+    optional int64 rid = 2;
+}
+//11101
+message GResRankWorship {
+
+}
+
+//11102
+message ResRankWorshipOffline{
+    repeated ResRankWorshipData list=1;
+}
+
+
+message ResRankWorshipData {
+    optional int32 type=1;//1.战力；2.竞技；3.公会；4.幻境；5.地牢；6.点石成金；7.苏战之王；8.试炼之路；9.酒馆常客；10.公会世界BOSS角色积分排行；11.公会世界BOSS公会积分排行
+    optional string nick=2;
+}
+
+// 排行榜奖励榜单角色信息
+message PSRankRoleInfo {
+    optional int32 rank = 1; 		    //排名
+    optional int64 rid = 2; 		    //玩家ID
+    optional string name = 3; 			//玩家名字
+    optional int32 level = 4; 			//玩家等级
+    optional int32 head_id = 5; 		//玩家头像
+    optional int32 border_id = 6;		//头像框id
+    optional int32 date_time = 7;		//时间
+}
+// 排行榜领奖信息
+message PSRankRewardInfo {
+    optional int32 progress_value = 1;    //进度值
+    optional int32 status = 2;            //领取状态0未领1已领
+    optional PSRankRoleInfo info = 3;   //玩家信息
+}
+//排行榜领奖进度信息
+//11103
+message GReqRankReward {
+    optional int32 type = 1;//类型战力1，幻境4，主线关卡15
+}
+//11103
+message GResRankReward {
+    repeated PSRankRewardInfo list = 1;// 列表
+    optional int32 type = 2;//类型战力1，幻境4，主线关卡15
+}
+
+//排行榜领奖前几名信息
+//11104
+message GReqRankRewardTop {
+    optional int32 type = 1;//类型战力1，幻境4，主线关卡15
+    optional int32 progress_value = 2;// 进度值
+}
+//11104
+message GResRankRewardTop {
+    repeated PSRankRoleInfo info = 3;//玩家信息
+}
+
+//排行榜领奖领取
+//11105
+message GReqRankRewardGet {
+    optional int32 type = 1;//类型战力1，幻境4，主线关卡15
+    optional int32 progress_value = 2;// 进度值
+}
+//11105
+message GResRankRewardGet {
+}
+
+//排行榜是否有进度达成--请求协议暂时不用
+//11106
+message GResRankProgress {
+    optional int32 update = 2;//是否有新的目标达成，1有，0没有
+}

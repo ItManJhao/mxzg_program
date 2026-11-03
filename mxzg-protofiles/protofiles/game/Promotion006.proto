@@ -1,0 +1,42 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion006GMsg";
+
+message ResInvestData
+{
+	optional int32 type = 1;		//类型21:128   22:328
+	optional int32 receive_day = 2;	//已领取到的天数
+	optional int32 reach_day = 3;	//可领取到的天数
+	optional bool is_today_got = 4;//今天是否已领取
+}
+
+
+//查看月卡基金信息
+//13062
+message GReqInvestList
+{
+}
+//13062
+message GResInvestList
+{
+    optional int32 status = 1;// 0未购买，1已购买
+    optional int32 start_time = 2;//图标显示开始时间
+    optional int32 end_time = 3;//图标显示结束时间
+	repeated ResInvestData list = 4;//基金奖励领取进度
+}
+
+
+//领取月卡基金奖励
+//13063
+message GReqInvestGain
+{
+	optional int32 type = 1; //21:128   22:328
+}
+//13063
+message GResInvestGain
+{
+	optional int32 type = 1;		//类型21:128   22:328
+	optional int32 receive_day = 2;	//已经领取到的天数
+	optional int32 reach_day = 3;	//可领取到的天数
+	optional bool is_today_got = 4;//今天是否已领取
+}

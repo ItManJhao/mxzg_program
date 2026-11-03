@@ -1,0 +1,69 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion097GMsg";
+
+
+//五一抽奖
+//数据
+//76305
+message GReqLaborDayLuckDrawGetDataInfo {
+
+}
+
+//76305
+message GResLaborDayLuckDrawGetDataInfo {
+    optional int32 cur_round = 1;	// 当前轮次
+    repeated int32 reward_record = 2;	// 已领取奖励位置
+    optional int32 reset_times = 3;		// 剩余重置次数
+	repeated LaborDayLuckDrawData rewards = 4;	// 所选奖励列表
+	optional int32 times = 5;	// 玩家当轮次第几次抽奖
+
+}
+
+//请求抽奖
+//76306
+message GReqLaborDayLuckDraw {
+	
+}
+
+//76306
+message GResLaborDayLuckDraw {
+	repeated int32 reward_record = 1;	// 奖励记录更新
+	optional LaborDayLuckDrawData reward = 2;	// 抽到的奖励数据
+}
+
+// 奖励自选
+//76307
+message GReqLaborDayLuckDrawChoice {
+	optional int32 position = 1;	// 替换奖励对应的位置
+	optional int32 item_id = 2;		// 替换的道具id
+}
+
+//76307
+message GResLaborDayLuckDrawChoice {
+	repeated LaborDayLuckDrawData rewards = 1;	// 所选奖励列表
+	optional int32 position = 2;			// 更换的位置
+}
+
+message LaborDayLuckDrawData {
+	optional int64 id = 1;			//物品ID
+	optional int32 type = 2;		//物品类型
+	optional int64 num = 3;  		//物品数量
+	optional int32 star = 4;		//星级
+	optional int32 position = 5;	//位置 
+}
+
+//76308
+message GReqLaborDayLuckDrawReset {
+	
+}
+
+//76308
+message GResLaborDayLuckDrawReset {
+    optional int32 cur_round = 1;	// 当前轮次
+    repeated int32 reward_record = 2;	// 已领取奖励位置
+    optional int32 reset_times = 3;		// 剩余重置次数
+	repeated LaborDayLuckDrawData rewards = 4;	// 所选奖励列表
+	optional int32 times = 5;	// 玩家当轮次第几次抽奖
+
+}

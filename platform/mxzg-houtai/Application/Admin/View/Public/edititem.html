@@ -1,0 +1,31 @@
+<div class="form-group">
+    <label class="col-sm-2 control-label">选择道具：</label>
+    <div class="col-sm-8 class-item">
+        <a class="add_item"><i class="fa fa-plus"></i>添加道具</a>
+        <p></p>
+        <volist name="gift_item_data" id="gift_item_data_vo">
+            <div class="col-sm-10">
+                <a style="width: 80px; float: left;" class="del_item"><i class="fa fa-minus-square"></i>删除道具</a>
+                <select style="width: 110px; float: left;" class="form-control" name="item_type_type[]" onchange="upitem(this)">
+                    <volist name="item_type_type" id="item_type_type_vo">
+                        <eq name="item_type_type_vo.id" value="$gift_item_data_vo.item_type_type">
+                            <option value="{$item_type_type_vo.id}" selected>{$item_type_type_vo.name}</option>
+                            <else />
+                            <option value="{$item_type_type_vo.id}">{$item_type_type_vo.name}</option>
+                        </eq>
+                    </volist>
+                </select>
+                <select style="width: 240px; float: left;" class="form-control" name="gift_item[]">
+                    <volist name="gift_item_data_vo['item_data']" id="item_data_voo">
+                        <eq name="item_data_voo.id" value="$gift_item_data_vo.item_type">
+                            <option value="{$item_data_voo.id}" selected>{$item_data_voo.id}--{$item_data_voo.name}</option>
+                            <else />
+                            <option value="{$item_data_voo.id}">{$item_data_voo.id}--{$item_data_voo.name}</option>
+                        </eq>
+                    </volist>
+                </select>
+                <input style="width: 90px; float: left;" class="configInput form-control" name="gift_item_num[]" value="{$gift_item_data_vo.item_num}" type="number" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,"")">
+            </div>
+        </volist>
+    </div>
+</div>

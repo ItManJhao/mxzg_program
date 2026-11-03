@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>hero-icon/spr-default.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{36,48}</string>
+                <key>spriteSourceSize</key>
+                <string>{36,48}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{36,48}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>hero-icon.pvr.ccz</string>
+            <key>size</key>
+            <string>{48,48}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:233688473564ef7eefa79e0936fc064d:c5f561c8d7f3246febc145b9750e509b:1bb1df0fdb9c82b1ac7834210906fdd2$</string>
+            <key>textureFileName</key>
+            <string>hero-icon.pvr.ccz</string>
+        </dict>
+    </dict>
+</plist>

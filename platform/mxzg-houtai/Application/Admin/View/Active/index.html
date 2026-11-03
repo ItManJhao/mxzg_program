@@ -1,0 +1,147 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>活动列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('active/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label" style="margin-left: 10px;">活动类型：</label>
+                                            <select class="form-control" name="type_id">
+                                                <option value="0">请选择类型</option>
+                                                <volist name="active_type" id="active_type_vo">
+                                                    <eq name="active_type_vo.id" value="$search_params.type_id">
+                                                        <option value="{$active_type_vo.id}" selected>{$active_type_vo.id}--{$active_type_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$active_type_vo.id}">{$active_type_vo.id}--{$active_type_vo.name}</option>
+                                                    </eq>
+                                                </volist>
+                                            </select>
+                                            <label style="padding-left: 20px;" class="control-label" style="margin-left: 10px;">活动状态：</label>
+                                            <select class="form-control" name="status">
+                                                <option <if condition="$search_params['status'] == 0"> selected </if> value="0">请选择状态</option>
+                                                <option <if condition="$search_params['status'] == 1"> selected </if> value="1">未发送服务器</option>
+                                                <option <if condition="$search_params['status'] == 2"> selected </if> value="2">未开始</option>
+                                                <option <if condition="$search_params['status'] == 3"> selected </if> value="3">正在进行</option>
+                                                <option <if condition="$search_params['status'] == 4"> selected </if> value="4">结束，未清除</option>
+                                                <option <if condition="$search_params['status'] == 5"> selected </if> value="5">已清除</option>
+                                            </select>
+                                            <label style="padding-left: 20px;" class="control-label">活动id：</label>
+                                            <input type="text" style="margin-top: 10px;" placeholder="精准搜索" name="id" value="{$search_params.id}" style="width: 120px;" class="form-control">&nbsp;
+                                            <label style="padding-left: 20px;" class="control-label">活动名字：</label>
+                                            <input type="text" style="margin-top: 10px;" placeholder="模糊搜索" name="name" value="{$search_params.name}" style="width: 120px;" class="form-control">&nbsp;
+                                            <button type="button" style="margin-left:30px;float: right;margin-top: 10px;" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <button onclick="openYemian('{:U('active/add')}','添加活动')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>添加</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" οnsubmit="return false;" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>活动名称</th>
+                                                        <th>活动类型</th>
+                                                        <th>开始时间</th>
+                                                        <th>结束时间</th>
+                                                        <th>清除时间</th>
+                                                        <th>状态</th>
+                                                        <th>备注</th>
+                                                        <th>操作</th>
+                                                        <th>特殊操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row"> 
+                                                            <td>{$vo.id}</td>
+                                                            <td>{$vo.name}</td>
+                                                            <td>{$vo.type_id}--{$vo.type_name}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['start_time'])}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['end_time'])}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['clear_time'])}</td>
+                                                            <td>{$vo.status_name}</td>
+                                                            <td>{$vo.desc}</td>
+<!--                                                            <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>-->
+                                                            <td>
+                                                                <a class="btn btn-primary" href="javascript:;" title="编辑" onclick="openYemian('/admin.php/active/edit?id={$vo.id}','编辑活动内容')" ><i class="fa fa-pencil">编辑</i></a>
+                                                                <a class="btn btn-danger" href="javascript:void(0)" title="删除" data-url="{:U('Active/ajax_delete')}" data-id="{$vo.id}"  onclick="ActiveDelete(this,'确定删除吗？','{:U('Active/ajax_delete')}')" ><i class="fa fa-trash-o"></i>删除</a>
+                                                                <a class="btn btn-primary" href="/Uploads/Excel/{$vo.data_file}" download="{$vo.data_file}" title="下载活动数据" ><i class="fa fa-cloud-download">下载活动数据</i></a>
+                                                            </td>
+                                                            <td>
+                                                                <a class="btn btn-primary" href="javascript:;" title="发送服务器" onclick="openYemian('/admin.php/active/server?id={$vo.id}','发送服务器')" >发送服务器</a>
+                                                                <a class="btn btn-primary" href="javascript:;" title="发送服务器日志" onclick="openYemian('/admin.php/active/send_server_log?active_id={$vo.id}','发送服务器日志')" >发送服务器日志</a>
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    //删除活动
+    function ActiveDelete(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var id=$(obj).attr("data-id");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {id:id},
+                dataType : "json",
+                success:function(data){
+                    // top.layer.alert(data.message, {icon: 6});
+                    if (data.status == 0) { //删除失败
+                        top.layer.alert(data.message, {icon: 6});
+                    } else {                //删除成功
+                        top.layer.alert(data.message, {icon: 6});
+                        window.location.reload();
+                    }
+                    
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+
+</script>
+
+<include file="Public:footer" />
+

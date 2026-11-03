@@ -1,0 +1,89 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "AliceUnicorn";
+
+message PBUnicornRareAttr{
+    optional int32 place=1;
+    optional int32 attr_type=2;//属性类型
+    optional int64 attr_value=3;//属性值
+}
+
+message PBUnicornData{
+    optional int32 grade=1;//当前阶数
+    optional int32 strengthen_lv=2;//强化等级
+    repeated PBUnicornRareAttr rare_attr=3;//稀有属性信息
+    repeated PBUnicornRareAttr wash_rare_attr=4;//洗练未保存
+    optional int64 hero_id=5;
+}
+
+
+//爱丽丝独角兽信息
+//76601
+message GReqAliceUnicornData{
+    optional int32 page = 1; // 页码
+}
+
+//76601
+message GResAliceUnicornData{
+    optional int32 page = 1; // 页码，所有数据传完之后，page为-1；
+    repeated PBUnicornData unicorn_data=2;//独角兽信息
+}
+
+//爱丽丝独角兽强化
+//76602
+message GReqAliceUnicornStrength{
+    optional int64 hero_id=1;
+}
+
+//76602
+message GResAliceUnicornStrength{
+    optional int64 hero_id=1;
+    optional int32 strengthen_lv=2;//强化等级
+}
+
+//爱丽丝独角兽突破
+//76603
+message GReqAliceUnicornUpGrade{
+     optional int64 hero_id=1;
+}
+
+//76603
+message GResAliceUnicornUpGrade{
+    optional PBUnicornData unicorn_data=1;
+}
+
+//爱丽丝独角兽洗练
+//76604
+message GReqAliceUnicornWash{
+    optional int64 hero_id=1;
+    repeated int32 lock_grade=2;//锁定的阶级
+}
+
+//76604
+message GResAliceUnicornWash{
+    optional int64 hero_id=1;
+    repeated PBUnicornRareAttr rare_attr=2;//稀有属性信息
+}
+
+//爱丽丝独角兽重置
+//76605
+message GReqAliceUnicornReset{
+     optional int64 hero_id=1;
+}
+
+//76605
+message GResAliceUnicornReset{
+    optional PBUnicornData unicorn_data=1;
+}
+
+//爱丽丝独角兽洗练保存
+//76606
+message GReqAliceUnicornWashSave{
+    optional int64 hero_id=1;
+}
+
+//76606
+message GResAliceUnicornWashSave{
+    optional int64 hero_id=1;
+}
+

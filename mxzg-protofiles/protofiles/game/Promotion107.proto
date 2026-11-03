@@ -1,0 +1,39 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ExpeditionAssembleGMsg";
+
+import "Object.proto";
+
+
+//获得抽卡基本数据
+//78201
+message GReqExpeditionAssembleInfo {
+}
+
+//78201
+message GResExpeditionAssembleInfo {
+	optional int32 times = 1;	//今日已用钻石抽奖次数
+	repeated PSMapData choice = 2;	// 玩家自选的奖励
+}
+
+//抽卡
+//78202
+message GReqExpeditionAssembleDraw {
+	optional int32 one_key = 1;	// 十连抽的时候为1
+}
+
+//78202
+message GResExpeditionAssembleDraw {
+	optional int32 times = 1;	// 今日已用钻石抽奖次数
+}
+
+//玩家自选奖励
+//78203
+message GReqExpedtionAssembleChoice {
+	repeated PSMapData choice = 1;	// key->位置 val->配置表idx
+}
+
+//78203
+message GResExpeditionAssembleChoice {
+	repeated PSMapData choice = 1;	// key->位置 val->配置表idx
+}

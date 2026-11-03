@@ -1,0 +1,36 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion072GMsg";
+import "Object.proto";
+
+//诸神祭坛信息
+message PSZSJTInfo{
+    optional int32 floor = 1; //当前层数
+    optional int32 moneyDrawNum = 2; //钻石抽奖次数
+}
+
+//获取诸神祭坛数据
+//75121
+message GReqZSJTInfo{
+
+}
+
+//75121
+message GResZSJTInfo{
+    optional PSZSJTInfo info = 1; //诸神祭坛数据
+}
+
+
+//诸神祭坛抽奖
+//75122
+message GReqZSJTLuckDraw{
+    optional int32 type = 1; //抽奖类型，1:1次道具抽奖  2：多次道具抽奖  3：钻石抽奖
+}
+
+//75122
+message GResZSJTLuckDraw{
+    optional PSZSJTInfo info = 1; //诸神祭坛数据
+    repeated PSBackpackData rewards = 2;//抽奖获取的道具
+    repeated int32 floors = 3; //此次抽奖解锁的楼层，按解锁顺序（3、4、1），表示此次抽奖解锁了3、4、1层，包含4层，循环解锁到第1层，说明重置了祭坛，需要播放烟花;没有数据表示没有解锁楼层
+    repeated int32 idx = 4;//抽奖id集合，对应promotion072reward 表idx
+}

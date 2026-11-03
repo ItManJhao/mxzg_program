@@ -1,0 +1,149 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>充值数据--玩家充值排行</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('RechargeData/RechargeRanking')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <select class="form-control" name="sid">
+                                                <option value="0">请选择服务器</option>
+                                                <volist name="servers" id="servers_vo">
+                                                    <eq name="servers_vo.id" value="$search_params.sid">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">开始时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            <label class="control-label" style="padding-left: 5px;">结束时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['end_time']}">
+
+
+                                            <label class="control-label" style="padding-left: 7px;">充值总额区间</label>
+                                            <input style="width: 150px;" class="configInput form-control" name="money_start" type="number" min="1" value="{$search_params['money_start']}" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,"")" required="" aria-required="true">
+                                            ~~<input style="width: 150px;" class="configInput form-control" name="money_end" type="number" min="1" value="{$search_params['money_end']}" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,"")" required="" aria-required="true">
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>排序</th>
+                                                            <th>角色ID</th>
+                                                            <th>角色名称</th>
+                                                            <th>账号ID</th>
+                                                            <th>角色等级</th>
+                                                            <th>总战力</th>
+                                                            <th>VIP等级</th>
+                                                            <th>持有钻石数</th>
+                                                            <th>累计充值</th>
+                                                            <th>累计充值次数</th>
+                                                            <th>累计充值天数</th>
+                                                            <th>创角时间</th>
+                                                            <th>首充时间</th>
+                                                            <th>首充金额</th>
+                                                            <th>今日充值</th>
+                                                            <th>最后充值时间</th>
+                                                            <th>最后在线时间</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                        <volist name="list" id="vo">
+                                                            <tr role="row">
+                                                                <td>{$i}</td>
+                                                                <td>{$vo.rid}</td>
+                                                                <td>{$vo.nick}</td>
+                                                                <td>{$vo.user_id}</td>
+                                                                <td>{$vo.level}</td>
+                                                                <td>{$vo.fighting}</td>
+                                                                <td>{$vo.goddess_vip}</td>
+                                                                <td>{$vo.gem}</td>
+                                                                <td>{$vo.total_money}</td>
+                                                                <td>{$vo.total_count}</td>
+                                                                <td>{$vo.date_count}</td>
+                                                                <td>{$vo.create_date}</td>
+                                                                <td>{$vo.date_first}</td>
+                                                                <td>{$vo.money_first}</td>
+                                                                <td>{$vo.pay_money_today}</td>
+                                                                <td>{$vo.date_end}</td>
+                                                                <td>{$vo.last_login_date}</td>
+                                                            </tr>
+                                                        </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(function(){
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+    });
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+
+</script>
+
+<include file="Public:footer" />

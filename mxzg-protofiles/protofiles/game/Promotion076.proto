@@ -1,0 +1,38 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion076GMsg";
+
+//数据
+//75821
+message GReqMidFashionGetDataInfo {
+
+}
+
+//皮肤激活也会推送这条协议
+//75821
+message GResMidFashionGetDataInfo {
+    repeated int32 fashion_count_reward = 1; //皮肤数量领奖记录
+    repeated int32 forever_active = 2; //永久激活列表promotion076exchangerewardconfig.idx
+}
+
+//领取皮肤数量奖励
+//75822
+message GReqMidFashionGetFashionCount {
+    optional int32 idx = 1;
+}
+
+//75822
+message GResMidFashionGetFashionCount {
+    optional int32 idx = 1;
+}
+
+//兑换皮肤
+//75823
+message GReqMidFashionExchangeFashion {
+    optional int32 idx = 1;
+}
+
+//75823
+message GResMidFashionExchangeFashion {
+    repeated int32 fashion_count_reward = 1; //皮肤数量领奖记录
+}

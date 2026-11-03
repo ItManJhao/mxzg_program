@@ -1,0 +1,28 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion041GMsg";
+import "Object.proto";
+
+//先知馈赠活动列表
+//13076
+message GReqProphecyList
+{
+}
+//13076
+message GResProphecyList
+{
+	optional int32 nvalue = 4;
+	repeated PSMapData list = 5;
+    optional int32 round = 6;
+}
+
+//领取先知馈赠活动奖励
+//13077
+message GReqProphecyTimesGift
+{
+	optional int32 idx = 1;
+}
+//13077
+message GResProphecyTimesGift
+{
+}

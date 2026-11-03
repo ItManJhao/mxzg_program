@@ -1,0 +1,180 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion104GMsg";
+
+import "Battle.proto";
+import "Object.proto";
+import "Hero.proto";
+
+message PBGodsSportsHero{
+    optional int32 hero_type=1; //类型
+    optional int32 level=2;     //等级
+    optional int32 star=3;      //星级
+    optional int32 is_hot=4;    //热门
+    // 增加天赋技能id TODO
+}
+
+message PBGodsSportsRank{
+    optional int64 rid=1;       //玩家id
+    optional int32 server_id=2;//服务器id
+    optional int32 head_id=3;   //头像
+    optional int32 broad_id=4;  //头像框
+    optional string name=5;     //玩家名
+    optional int32 rank=6;      //排名
+    optional int32 win_times=7;//胜利场次
+    optional int32 total_score=8;//总积分
+}
+
+message PBGodsSportsBattleResult {
+    optional int32 win_times=1;         //胜场
+    optional int32 continuous_win_times=2;//连胜场次
+    optional int32 total_score=3;       //累计积分
+    optional int64 result_id=4;         //战斗结果编号
+}
+
+
+//76610
+message GReqGodsSportsInfo{
+}
+
+//76610
+message GResGodsSportsInfo{
+	optional int32 select_status = 1;	    // 12选6状态0:未接受，1:已接受
+	optional int32 buy_ticket_times = 2;	// 当天购买门票次数
+	optional int32 win_times = 3;	        // 当前轮次累计赢次数
+	optional int32 lose_times = 4;	        // 当前轮次累计失败次数
+	optional int64 total_score = 5;	        // 本次活动总积分
+	optional int32 rank = 6;	            // 排名
+	optional int32 continuous_win_times = 7;// 连续胜利次数
+	repeated PBGodsSportsHero hero_list = 8;// 已选择可上阵的英雄列表
+}
+
+//购买门票
+//76611
+message GReqGodsSportsBuyTicket{
+}
+
+//76611
+message GResGodsSportsBuyTicket{
+	optional int32 select_status = 1;	    // 12选6状态0:未接受，1:已接受
+}
+
+//保存阵容
+//76612
+message GReqGodsSportsSaveLineUp{
+    optional PSLineUpData lineData = 1;
+}
+//76612
+message GResGodsSportsSaveLineUp{
+}
+
+// 可选英雄列表-12选6 总英雄池
+//76613
+message GReqGodsSportsHeroPool{
+}
+//76613
+message GResGodsSportsHeroPool{
+    repeated PBGodsSportsHero hero_list=1; // 可选英雄列表
+}
+
+// 一轮结算
+//76614
+message GReqGodsSportsTurnEnd{
+}
+//76614
+message GResGodsSportsTurnEnd{
+}
+
+// 12选6选英雄
+//76615
+message GReqGodsSportsSelectHero{
+    repeated int32 hero_types=1;    //选择的英雄id集合
+}
+//76615
+message GResGodsSportsSelectHero{
+    repeated PBGodsSportsHero hero_list = 1;// 已选择可上阵的英雄列表
+}
+
+// 英雄详细信息
+//76616
+message GReqGodsSportsHeroDetailInfo{
+    optional int32 hero_type=1;//类型
+}
+//76616
+message GResGodsSportsHeroDetailInfo{
+    optional PSHeroDetail detail = 1;
+    optional int64 fighting=2;
+}
+
+// 匹配战斗
+//76617
+message GReqGodsSportsBattleMatch{
+}
+//76617
+message GResGodsSportsBattleMatch{
+    optional int64 hero_id = 1;
+    optional int64 atk = 2; //攻击力
+    optional int64 def = 3; //防御力
+    optional int64 hp = 4; //血量
+}
+
+// 进入战斗，战斗结束返回可选英雄池
+//76618
+message GReqGodsSportsBattle{
+}
+//76618
+message GResGodsSportsBattle{
+    repeated BattleReport report=1;//战报
+    optional bool had_pass=2;//已经首通
+    repeated PSBackpackData reward=3;//奖励
+}
+
+// 战斗结束选择英雄列表
+//76619
+message GReqGodsSportsBattleEndHero{
+}
+//76619
+message GResGodsSportsBattleEndHero{
+    repeated PBGodsSportsHero hero_list=1; // 已选择英雄列表
+}
+
+// 英雄配置天赋技能
+//76620
+message GReqGodsSportsSelectTalents{
+     repeated int32 talent_id = 1;//天赋id列表
+}
+//76620
+message GResGodsSportsSelectTalents{
+}
+
+// 排行榜信息
+//76621
+message GReqGodsSportsRankList{
+
+}
+//76621
+message GResGodsSportsRankList{
+    repeated PBGodsSportsRank list = 1; // 排行榜
+    optional PBGodsSportsRank self = 2; // 排行榜自己信息
+}
+
+// 历史战绩
+//76622
+message GReqGodsSportsBattleResultList{
+
+}
+//76622
+message GResGodsSportsBattleResultList{
+    repeated PBGodsSportsBattleResult list = 1; // 历史战绩
+}
+
+// 战斗结束选择英雄
+//76623
+message GReqGodsSportsBattleEndSelectHero{
+    repeated int32 hero_types = 1;    //选择的英雄id集合
+}
+
+//76623
+message GResGodsSportsBattleEndSelectHero{
+    repeated PBGodsSportsHero hero_list = 1;// 已选择可上阵的英雄列表
+}

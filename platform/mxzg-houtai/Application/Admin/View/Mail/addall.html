@@ -1,0 +1,179 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加邮件</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('mail/ajax_add')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+                                <div class="tab-pane active">
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>邮件发送类型：</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="type" >
+                                                <option value="1">全服发送</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group all-server" >
+                                        <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>区服：</label>
+
+                                        <!-- 服务器全选html代码 -->
+                                        <include file="Public:servercheckall" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">邮件模板：</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="mail_template_id" onchange="upmail(this)">
+                                                <option value="0">请选择邮件模板</option>
+                                                <volist name="mail_templates" id="mail_templates_vo" >
+                                                    <option value="{$mail_templates_vo.id}">{$mail_templates_vo.title}</option>
+                                                </volist>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>标题：</label>
+                                        <div class="col-sm-8">
+                                            <input class="configInput form-control title" name="title" type="text" required="" aria-required="true">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>内容：</label>
+                                        <div class="col-sm-8">
+                                            <textarea placeholder="请输入内容" name="content" class="configInput form-control content" required="" aria-required="true"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">选择道具：</label>
+                                        <div class="col-sm-8 class-item item-fuzhi">
+                                            <a class="add_item"><i class="fa fa-plus"></i>添加道具</a>
+                                            <p></p>
+                                            <div class="col-sm-10">
+                                                <a style="width: 80px; float: left;" class="del_item"><i class="fa fa-minus-square"></i>删除道具</a>
+
+                                                <input type="hidden" name="item_type[]" value="">
+                                                <select class="selectpicker form-control item_type" data-style="btn-info" data-title="请选择道具" data-live-search="true" >
+                                                    <volist name="item_data" id="item_data_vo">
+                                                        <option value="{$item_data_vo.id}">{$item_data_vo.id}--{$item_data_vo.name}</option>
+                                                    </volist>
+                                                </select>
+                                                <input style="width: 90px; float: left;" class="configInput form-control" name="gift_item_num[]" type="number" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,"")">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('mail/ajax_add')}')" type="button">提交</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<!-- <script src="/Public/static/admin/js/item.js"></script> -->
+<script language="javascript">
+
+    var data_str = '<?php echo json_encode($item_data); ?>';
+    data_object = JSON.parse(data_str);
+
+    // var item_data_str = '<?php echo json_encode($item_data); ?>';
+    // item_data_object = JSON.parse(item_data_str);
+
+    var mail_templates_str = '<?php echo json_encode($mail_templates); ?>';
+    mail_templates_str = mail_templates_str.replace(/\n/g,"\\n").replace(/\r/g,"\\r");
+    mail_templates_object = JSON.parse(mail_templates_str);
+
+    $ (function () {
+        $(document).on('change', ".item_type", function(e){
+            var sid_str = '';
+            $(this).find("option:selected").each(function () {
+                sid_str += $(this).val() + ",";
+            })
+            if(sid_str != ''){
+                sid_str = sid_str.slice(0,-1);
+            }
+            $(this).parent().prev().val(sid_str);
+            // doMultipleSelection(this, 'product_id');
+        })
+
+        $(document).on('click', '.add_item', function() {
+            var htmladd="";
+            htmladd +='<div class="col-sm-10">';
+            htmladd +='<a style="width: 80px; float: left;" class="del_item"><i class="fa fa-minus-square"></i>删除道具</a>';
+            htmladd +='<input type="hidden" name="item_type[]" value="">';
+            htmladd +='<select class="selectpicker form-control item_type" data-style="btn-info" data-title="请选择道具" data-live-search="true">';
+            htmladd +='<volist name="item_data" id="item_data_vo">';
+            htmladd +='<option value="{$item_data_vo.id}">{$item_data_vo.id}--{$item_data_vo.name}</option>';
+            htmladd +='</volist></select>';
+            htmladd +='<input style="width: 90px; float: left;" class="configInput form-control" name="gift_item_num[]" type="number" min="1" onkeyup="this.value=value.replace(/^(0+)|[^\d]+/g,"")">';
+            htmladd +='</div>';
+            $('.class-item').append(htmladd);
+            $('.item_type').selectpicker('refresh');
+            // upitem($('.item_type_type:last'));
+        });
+        $(document).on('click', '.del_item', function() {
+            $(this).parent().remove();
+        });
+    });
+
+    function upmail(obj){
+        // //获取所选值
+        var selectedValue = $(obj).val();
+        // console.log(selectedValue);
+        // console.log(mail_templates_object[selectedValue]);
+        $(".title").val(mail_templates_object[selectedValue].title);
+        $(".content").val(mail_templates_object[selectedValue].content);
+
+        var item_html = "";
+        item_html = '<a class="add_item"><i class="fa fa-plus"></i>添加道具</a><p></p>';
+        $.each(mail_templates_object[selectedValue].item_data, function (key, item) {
+            // console.log(key);
+            // console.log(item);
+            item_html +='<div class="col-sm-10">';
+            item_html +='<a style="width: 80px; float: left;" class="del_item"><i class="fa fa-minus-square"></i>删除道具</a>';
+            item_html +='<input type="hidden" name="item_type[]" value="' + item.item_type + '">';
+            item_html +='<select class="selectpicker form-control item_type" data-style="btn-info" data-title="请选择道具" data-live-search="true" >';
+            $.each(data_object, function (key_son, item_son) {
+                if(item.item_type == item_son.id){
+                    item_html +='<option value="' + item_son.id + '" selected>' + item_son.id + '--' + item_son.name + '</option>';
+                }else{
+                    item_html +='<option value="' + item_son.id + '">' + item_son.id + '--' + item_son.name + '</option>';
+                }
+            });
+            item_html +='</select>';
+            item_html +='<input style="width: 90px; float: left;" class="configInput form-control" value="' + item.item_num + '" name="gift_item_num[]" type="number" min="1" onkeyup="this.value=value.replace(/^(0+)|[^\d]+/g,"")">';
+            item_html +='</div>';
+        });
+        $(".item-fuzhi").empty();
+        $(".item-fuzhi").append(item_html);
+        $('.item_type').selectpicker('refresh');
+    }
+
+</script>
+<!-- 服务器全选js代码 -->
+<script type="text/javascript" src="/Public/static/admin/js/servercheckall.js"></script>
+
+
+
+<include file="Public:footer" />

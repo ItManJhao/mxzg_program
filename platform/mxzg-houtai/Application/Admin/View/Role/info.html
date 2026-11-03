@@ -1,0 +1,405 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>角色基本信息</h5>
+                </div>
+                <div class="ibox-content">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-1">基本信息</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-2">养成信息</a></li>
+                    </ul>
+                    <br/>
+                    <div class="row">
+                        <form action="{:U('Role/info')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <p style="color: red;">注册信息</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>账号id</th>
+                                                <th>创号时间</th>
+                                                <th>渠道名称</th>
+                                                <th>子渠道名称</th>
+                                                <th>设备类型</th>
+                                                <th>注册账号时长</th>
+                                                <th>账号类型</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr role="row">
+                                                <td>{$user_info.id}</td>
+                                                <td>{:date('Y-m-d H:i:s',$user_info['created_at'])}</td>
+                                                <td>{$user_info.channel_name}</td>
+                                                <td>{$user_info.channel_name_son}</td>
+                                                <td><if condition="$user_info['device_type'] == 1">安卓<elseif condition="$user_info['device_type'] == 2"/>ios<else/>无</if></td>
+                                                <td>{$user_info.created_time}</td>
+                                                <td><if condition="$user_info['is_white'] == 1">白名单<else/>普通玩家</if></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">角色信息</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>角色id</th>
+                                            <th>角色名称</th>
+                                            <th>创角时间</th>
+                                            <th>区服id</th>
+                                            <th>等级</th>
+                                            <th>经验值</th>
+                                            <th>钻石</th>
+                                            <th>金币</th>
+                                            <th>英雄经验</th>
+                                            <th>总战力</th>
+                                            <th>vip等级</th>
+                                            <th>背包信息</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <td>{$role_info.id}</td>
+                                            <td>{$role_info.nick}</td>
+                                            <td>{:getMsecToMescdate($role_info['create_time'])}</td>
+                                            <td>{$role_info.server_id}</td>
+                                            <td>{$role_info.level}</td>
+                                            <td>{$role_info.exp}</td>
+                                            <td>{$role_info.gem}</td>
+                                            <td>{$role_info.gold}</td>
+                                            <td>{$role_info.hero_exp}</td>
+                                            <td>{$role_info.fighting}</td>
+                                            <td>{$role_info.goddess_vip}</td>
+                                            <td>
+                                                <a class="btn btn-primary" href="javascript:;" title="背包信息" onclick="openYemian('/admin.php/Role/back_pack?id={$role_info.id}&sid={$role_info.server_id}','背包信息')"><i class="fa fa-pencil"></i>背包信息</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">登录和在线信息</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>最近登录时间</th>
+                                            <th>最近下线时间</th>
+                                            <th>最近登录ip</th>
+                                            <th>下线时长</th>
+                                            <th>是否在线</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <td>{:getMsecToMescdate($role_info['last_login_time'])}</td>
+                                            <td>{:getMsecToMescdate($role_info['last_offline_time'])}</td>
+                                            <td>{$role_info.ip}</td>
+                                            <td>{$role_info.offline_time}</td>
+                                            <td><if condition="$role_info['online'] == 1">在线<else/>离线</if></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">充值信息</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>累计充值金额</th>
+                                            <th>剩余钻石</th>
+                                            <th>最近充值时间</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <td>{$role_charge_data['total_recharge']/100}</td>
+                                            <td>{$role_info.gem}</td>
+                                            <td>{:getMsecToMescdate($role_charge_data['recharge_time'])}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">羁绊信息</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>羁绊等级</th>
+                                                <th>技能等级</th>
+                                                <th>突破等级</th>
+                                                <th>洗练等级</th>
+                                                <th>铸魂次数</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr role="row">
+                                                <td>{$fetter_goddess_info.level}</td>
+                                                <td>{$fetter_goddess_info.skill_level}</td>
+                                                <td>{$fetter_goddess_info.uplimit_level}</td>
+                                                <td>{$fetter_goddess_info.wash_level}</td>
+                                                <td>{$fetter_goddess_info.soul_level}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">幻化信息</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>幻化女神</th>
+                                                <th>幻化女神的任务</th>
+                                                <th>使用的幻化女神</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr role="row">
+                                                <td>{$goddess_fashion_info.active_type}</td>
+                                                <td>{$goddess_fashion_info.task_reward}</td>
+                                                <td>{$goddess_fashion_info.curr_use}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">公会信息</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>公会ID</th>
+                                            <th>公会名称</th>
+                                            <th>公会等级</th>
+                                            <th>职位</th>
+                                            <th>加入时间</th>
+                                            <th>公会科技</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <td>{$clan_info.id}</td>
+                                            <td>{$clan_info.clan_name}</td>
+                                            <td>{$clan_info.clan_level}</td>
+                                            <td><if condition="$role_clan_info['position'] == 1">会长<elseif condition="$role_clan_info['position'] == 2"/>副会长<elseif condition="$role_clan_info['position'] == 3"/>普通成员<else/>未知</if></td>
+                                            <td>{:getMsecToMescdate($role_clan_info['join_time'])}</td>
+                                            <td>
+                                                <a class="btn btn-primary" href="javascript:;" title="公会科技" onclick="openYemian('/admin.php/Role/clan_skill?id={$role_info.id}&sid={$role_info.server_id}','公会科技')"><i class="fa fa-pencil"></i>公会科技</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">副本信息</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>金币副本</th>
+                                            <th>经验副本</th>
+                                            <th>英雄副本</th>
+                                            <th>羁绊副本</th>
+                                            <th>精灵副本</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <td>{$daily_dungeon_info.1}</td>
+                                            <td>{$daily_dungeon_info.2}</td>
+                                            <td>{$daily_dungeon_info.3}</td>
+                                            <td>{$daily_dungeon_info.4}</td>
+                                            <td>{$daily_dungeon_info.5}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">玩法信息-关卡数</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>幻境之塔</th>
+                                            <th>关卡</th>
+                                            <th>勇者试炼</th>
+                                            <th>月神庇护所</th>
+                                            <th>诸神遗迹</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <td>{$tower_info.stage}</td>
+                                            <td>{$role_mission_info.chapter_id}</td>
+                                            <td>{$adven_mission_info.mission_id}</td>
+                                            <td>{$dungeon_info.stage}</td>
+                                            <td>{$god_relic_info.max_chapter}-{$god_relic_info.max_lv}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">积分</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>竞技场</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <td>{$role_info.max_cup}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">星盘数据</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <volist name="astrolabe_title" id="astrolabe_title_vo">
+                                                <th>{$astrolabe_title_vo}</th>
+                                            </volist>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <volist name="astrolabe_data" id="astrolabe_data_vo">
+                                                <td>{$astrolabe_data_vo}</td>
+                                            </volist>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <p style="color: red;">圣龙数据</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>等级</th>
+                                            <th>阶级</th>
+                                            <volist name="dragon_data['attribute_key']" id="attribute_key_vo">
+                                                <th>{$attribute_key_vo}</th>
+                                            </volist>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <td>{$dragon_data.level}</td>
+                                            <td>{$dragon_data.grade}</td>
+                                            <volist name="dragon_data['attribute_val']" id="attribute_val_vo">
+                                                <td>{$attribute_val_vo}</td>
+                                            </volist>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <volist name="holy_things_key" id="holy_things_key_vo">
+                                                <th>{$holy_things_key_vo}</th>
+                                            </volist>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <volist name="holy_things_data" id="holy_things_data_vo">
+                                                <tr role="row">
+                                                    <volist name="holy_things_data_vo" id="holy_things_data_vo_vo">
+                                                        <td>{$holy_things_data_vo_vo}</td>
+                                                    </volist>
+                                                </tr>
+                                            </volist>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <div id="tab-2" class="tab-pane">
+
+                                    <p style="color: red;">英雄信息</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>英雄ID</th>
+                                            <th>英雄名称</th>
+                                            <th>元素</th>
+                                            <th>职业</th>
+                                            <th>等级</th>
+                                            <th>阶级</th>
+                                            <th>星级</th>
+                                            <th>总战力</th>
+                                            <th>获得时间</th>
+                                            <th>上阵详情</th>
+                                            <th>天赋领悟</th>
+                                            <th>皮肤</th>
+                                            <th>装备</th>
+                                            <th>精灵</th>
+                                            <th>宝石</th>
+                                            <th>神装</th>
+                                            <th>灵器</th>
+                                            <th>宠物</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <volist name="hero_data" id="hero_vo">
+                                            <tr role="row">
+                                                <td>{$hero_vo.type}</td>
+                                                <td>{$hero_vo.type_name}</td>
+                                                <td>
+                                                    <if condition="$hero_vo['elem'] == 1">火
+                                                        <elseif condition="$hero_vo['elem'] == 2"/>水
+                                                        <elseif condition="$hero_vo['elem'] == 3"/>木
+                                                        <elseif condition="$hero_vo['elem'] == 4"/>光
+                                                        <elseif condition="$hero_vo['elem'] == 5"/>暗
+                                                        <else/>无
+                                                    </if>
+                                                </td>
+                                                <td>
+                                                    <if condition="$hero_vo['occupation'] == 1">战士
+                                                        <elseif condition="$hero_vo['occupation'] == 2"/>法师
+                                                        <elseif condition="$hero_vo['occupation'] == 3"/>牧师
+                                                        <elseif condition="$hero_vo['occupation'] == 4"/>坦克
+                                                        <else/>无
+                                                    </if>
+                                                </td>
+                                                <td>{$hero_vo.level}</td>
+                                                <td>{$hero_vo.stage}</td>
+                                                <td>{$hero_vo.star}</td>
+                                                <td>{$hero_vo.fighting}</td>
+                                                <td>{:date('Y-m-d H:i:s', $hero_vo['create_time'])}</td>
+                                                <td>{$hero_vo.line_up}</td>
+                                                <td>{$hero_vo.talents}</td>
+                                                <td>{$hero_vo.fashion_id}</td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="javascript:;" title="装备" onclick="openYemian('/admin.php/Role/hero_equip?hero_id={$hero_vo.id}&sid={$role_info.server_id}','装备')"><i class="fa fa-pencil"></i>查看</a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="javascript:;" title="精灵" onclick="openYemian('/admin.php/Role/hero_rune?hero_id={$hero_vo.id}&sid={$role_info.server_id}','精灵')"><i class="fa fa-pencil"></i>查看</a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="javascript:;" title="宝石" onclick="openYemian('/admin.php/Role/hero_jewel?hero_id={$hero_vo.id}&sid={$role_info.server_id}','宝石')"><i class="fa fa-pencil"></i>查看</a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="javascript:;" title="神装" onclick="openYemian('/admin.php/Role/hero_god_equip?hero_id={$hero_vo.id}&sid={$role_info.server_id}','神装')"><i class="fa fa-pencil"></i>查看</a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="javascript:;" title="灵器" onclick="openYemian('/admin.php/Role/hero_reiki_equip?hero_id={$hero_vo.id}&sid={$role_info.server_id}','灵器')"><i class="fa fa-pencil"></i>查看</a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="javascript:;" title="宠物" onclick="openYemian('/admin.php/Role/hero_pet?hero_id={$hero_vo.id}&sid={$role_info.server_id}','宠物')"><i class="fa fa-pencil"></i>查看</a>
+                                                </td>
+                                            </tr>
+                                        </volist>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+
+</script>
+
+<include file="Public:footer" />

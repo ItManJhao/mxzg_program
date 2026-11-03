@@ -1,0 +1,30 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "SignInGMsg";
+
+//签到列表
+//13010
+message GReqSignInList
+{
+}
+
+//13010
+message GResSignInList
+{
+	optional int32 days = 1;		//已登录天数
+	optional int32 newServer = 2;	//是否新开服，0不是，1是
+	optional int32 month = 3;		//服务器当前月份
+	repeated int32 data = 4;		//已领取的奖励
+}
+
+//签到奖励
+//13011
+message GReqSignInAward {
+	optional int32 day = 1;	// 第几天
+}
+
+//13011
+message GResSignInAward
+{
+	optional int32 data = 1;	// 更新这一天的数据
+}

@@ -1,0 +1,59 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加封禁</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('userServer/ajax_oprate')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                            <div class="tab-pane active">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>角色id：</label>
+                                    <div class="col-sm-8">
+                                        <textarea style="width: 500px;height: 200px;" placeholder="请输入内容" name="role_id" class="configInput form-control" required="" aria-required="true">{$rid}</textarea>
+                                        <span>多个用英文逗号隔开</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">类型：</label>
+                                    <div class="col-sm-8">
+                                        <input name="type" type="radio" value="1" checked aria-required="true">封号&nbsp;&nbsp;&nbsp;
+                                        <input name="type" type="radio" value="2" aria-required="true">禁言
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>封号/禁言时间：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{:date('Y-m-d H:i:s')}">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('userServer/ajax_oprate')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+
+</script>
+
+
+<include file="Public:footer" />

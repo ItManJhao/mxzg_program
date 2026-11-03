@@ -1,0 +1,129 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "TowerGMsg";
+import "Object.proto";
+import "Battle.proto";
+
+// 通关日志
+message TowerLog {
+    optional string battle_id = 1; //战报id
+    optional int32 duration = 2; //通关时长
+    optional int32 ability = 3; //通关战力
+    optional string role_name = 4; //角色名
+    optional int32 head_id = 5; //头像
+    optional int32 border_id = 6; //头像框
+}
+
+//幻境之塔数据
+//3200
+message GReqTowerData {
+}
+//3200
+message GResTowerData {
+    optional int32 stage = 1; //当前处于那一层
+    optional int32 energy = 2; //剩余体力值（弃用）
+    optional int32 energy_time = 3; //上一次恢复体力的时间（弃用）
+    optional int32 sweep_times = 4; //当前已扫荡次数（应改为剩余扫荡次数）
+    optional int32 king_open = 5; //试炼王者开启状态1已开启
+    optional int32 buy_sweep_times = 6; //剩余可购买的扫荡次数
+
+}
+
+//查看通关记录
+//3201
+message GReqTowerLog {
+    optional int32 stage = 1; //当前处于那一层
+}
+//3201
+message GResTowerLog {
+    optional int32 stage = 1; //当前处于那一层
+    optional TowerLog fastest = 2; //最快通关
+    optional TowerLog lowest = 3; //最低战力
+    optional TowerLog self = 4; //自己的通关战报
+}
+
+//购买幻境之塔扫荡次数
+//3202
+message GReqTowerEnergyBuy {
+    optional int32 num = 1; //购买的数量（弃用）
+}
+//3202
+message GResTowerEnergyBuy {
+    optional int32 sweep_times = 1; //剩余扫荡次数
+	optional int32 buy_sweep_times = 2; //剩余可购买的扫荡次数
+}
+
+//查看已领取的首通奖励
+//3203
+message GReqTowerRewardList {
+}
+//3203
+message GResTowerRewardList {
+    repeated int32 list = 1;
+}
+
+//领取首通奖励
+//3204
+message GReqTowerFirstReward {
+    optional int32 idx = 1; //奖励ID
+}
+//3204
+message GResTowerFirstReward {
+    optional int32 idx = 1; //奖励ID
+}
+
+//攻打幻境之塔
+//3205
+message GReqTowerBattle {
+    optional int32 stage = 1; //层数
+}
+//3205
+message GResTowerBattle {
+    optional int32 stage = 1; //下一挑战层数
+    optional int32 energy = 2; //体力值（弃用）
+    optional int32 energy_time = 3; //上一次恢复体力的时间（弃用）
+    repeated PSBackpackData items = 4; //奖励
+    optional BattleReport report = 5; //战报
+}
+
+//幻镜之塔扫荡
+//3206
+message GReqTowerSweep {
+}
+//3206
+message GResTowerSweep {
+    optional int32 sweep_times = 1; //当前已扫荡次数（改为剩余扫荡次数）
+    optional int32 energy = 2; //体力值（弃用）
+	optional int32 buy_sweep_times = 3; //剩余可购买的扫荡次数
+}
+
+//请求编辑阵容的战斗
+//3220
+message GReqEditBattle {
+    optional string battle_info = 1; // 阵容信息
+}
+
+//请求编辑阵容的战斗
+//3220
+message GResEditBattle {
+    optional BattleReport report = 1; // 战报
+}
+
+//试炼王者列表信息
+//3221
+message GReqTowerKingList {
+}
+//3221
+message GResTowerKingList {
+    repeated PSMapData list = 1; // 领取状态 missionId --> 状态:1已领取，没数据就是没领取
+}
+
+//试炼王者领奖
+//3222
+message GReqTowerKingReward {
+    optional int32 mission_id = 1; //层级id
+}
+//3222
+message GResTowerKingReward {
+    optional int32 mission_id = 1; //层级id
+}

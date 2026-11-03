@@ -1,0 +1,13 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "MarqueeGMsg";
+
+//跑马灯
+//35001
+message GResMarquee
+{
+    optional string msg = 1;	//跑马灯内容
+    optional int32 id = 2;		//跑马灯ID
+    optional int32 idx = 3;		//notice配置表ID
+    repeated string params = 4;	//参数
+}

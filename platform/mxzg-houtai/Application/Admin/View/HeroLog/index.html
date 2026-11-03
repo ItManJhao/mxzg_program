@@ -1,0 +1,247 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>英雄获得/消耗列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('HeroLog/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">角色id</label>
+                                            <input type="text" placeholder="精确搜索" name="role_id" value="{$search_params.role_id}" style="width: 120px;" class="form-control">
+                                            <label class="control-label" style="padding-left: 5px;">操作类型</label>
+                                            <select class="form-control oprate" name="oprate">
+                                                <option <if condition="$search_params['oprate'] == 'all'"> selected </if> value="all">请选择</option>
+                                                <option <if condition="$search_params['oprate'] == 1"> selected </if> value="1">获得</option>
+                                                <option <if condition="$search_params['oprate'] == 2"> selected </if> value="2">消耗</option>
+                                            </select>
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <select class="form-control sid" name="sid">
+                                                <option value="0">请选择服务器</option>
+                                                <volist name="servers" id="servers_vo">
+                                                    <eq name="servers_vo.id" value="$search_params.sid">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+                                            <label class="control-label" style="padding-left: 5px;">操作途径</label>
+                                            <input type="hidden" name="game_event" value="{$search_params['game_event']}">
+                                            <select class="selectpicker form-control game_event" data-style="btn-info" data-title="请选择操作途径" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="event_list" id="event_list_vo">
+                                                    <if condition="!empty($search_params['game_event']) && in_array($event_list_vo['id'],explode(',', $search_params['game_event']))">
+                                                        <option value="{$event_list_vo.id}" selected>{$event_list_vo.id}--{$event_list_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$event_list_vo.id}">{$event_list_vo.id}--{$event_list_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+                                            <label class="control-label" style="padding-left: 5px;">英雄</label>
+                                            <input type="hidden" name="hero_id" value="{$search_params['hero_id']}">
+                                            <select class="selectpicker form-control hero_id" data-style="btn-info" data-title="请选择英雄" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="hero_list" id="hero_list_vo">
+                                                    <if condition="!empty($search_params['hero_id']) && in_array($hero_list_vo['id'],explode(',', $search_params['hero_id']))">
+                                                        <option value="{$hero_list_vo.id}" selected>{$hero_list_vo.id}--{$hero_list_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$hero_list_vo.id}">{$hero_list_vo.id}--{$hero_list_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">开始时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            <label class="control-label" style="padding-left: 5px;">结束时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['end_time']}">
+
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <div style="height: 30px;">
+                                            <a class="btn btn-primary export" href="javascript:void(0);" style="float: right;margin-right:10px;" title="导出" ><i class="fa fa-cloud-download"></i>导出</a>
+                                            <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        </div>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >来源：</label>
+                                                <span class="game_event-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >来源：</label>
+                                                <span class="hero_id-text">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>角色id</th>
+                                                                <th>角色名称</th>
+                                                                <th>子渠道</th>
+                                                                <th>大渠道</th>
+                                                                <th>账号id</th>
+                                                                <th>区服id</th>
+                                                                <th>角色等级</th>
+                                                                <th>操作类型</th>
+                                                                <th>操作途径</th>
+                                                                <th>英雄名称</th>
+                                                                <th>等级</th>
+                                                                <th>星级</th>
+                                                                <th>阶级</th>
+                                                                <th>元素</th>
+                                                                <th>职业</th>
+                                                                <th>操作时间</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                            <volist name="list" id="vo">
+                                                                <tr role="row"> 
+                                                                    <td>{$vo.rid}</td>
+                                                                    <td>{$vo.role_name}</td>
+                                                                    <td>{$vo.channel_name_son}</td>
+                                                                    <td>{$vo.channel_name}</td>
+                                                                    <td>{$vo.user_id}</td>
+                                                                    <td>{$search_params.sid}</td>
+                                                                    <td>{$vo.role_level}</td>
+                                                                    <td>{$vo.oprate}</td>
+                                                                    <td>{$vo.event}--{$vo.event_desc}</td>
+                                                                    <td>{$vo.hero_name}</td>
+                                                                    <td>{$vo.level}</td>
+                                                                    <td>{$vo.star}</td>
+                                                                    <td>{$vo.stage}</td>
+                                                                    <td>
+                                                                        <if condition="$vo['elem'] == 1">火
+                                                                            <elseif condition="$vo['elem'] == 2"/>水
+                                                                            <elseif condition="$vo['elem'] == 3"/>木
+                                                                            <elseif condition="$vo['elem'] == 4"/>光
+                                                                            <elseif condition="$vo['elem'] == 5"/>暗
+                                                                            <else/>无
+                                                                        </if>
+                                                                    </td>
+                                                                    <td>
+                                                                        <if condition="$vo['occupation'] == 1">战士
+                                                                            <elseif condition="$vo['occupation'] == 2"/>法师
+                                                                            <elseif condition="$vo['occupation'] == 3"/>牧师
+                                                                            <elseif condition="$vo['occupation'] == 4"/>刺客
+                                                                            <elseif condition="$vo['occupation'] == 5"/>游侠
+                                                                            <else/>无
+                                                                        </if>
+                                                                    </td>
+                                                                    <td>{:date('Y-m-d H:i:s', $vo['time'])}</td>
+                                                                </tr>
+                                                            </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(function(){
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+        doMultipleSelection($('.game_event'), 'game_event');
+        doMultipleSelection($('.hero_id'), 'hero_id');
+    });
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+    $(".game_event").on('change',function(e){
+        doMultipleSelection(this, 'game_event');
+    })
+    $(".hero_id").on('change',function(e){
+        doMultipleSelection(this, 'hero_id');
+    })
+
+    function offline(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var role_id=$(obj).attr("data-id");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {role_id:role_id},
+                dataType : "json",
+                success:function(data){
+                    if (data.status == 0) {
+                        top.layer.msg(data.message);
+                    } else {
+                        top.layer.msg(data.message);
+                        // $(obj).parent().parent().remove();
+                    }
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+    $(".export").click(function(){
+        var c_son_id = $("input[ name='c_son_id' ]").val();
+        var sid = $(".sid option:selected").val();
+        var role_id = $(" input[ name='role_id' ] ").val();
+        var oprate = $(".oprate option:selected").val();
+        var game_event = $("input[ name='game_event' ]").val();
+        var start_time = $("#start_time").val();
+        var end_time = $("#end_time").val();
+        window.location.href="/admin.php/HeroLog/export?c_son_id=" + c_son_id + "&sid=" + sid + "&game_event=" + game_event + "&role_id=" + role_id + "&event=" + event + "&oprate=" + oprate + "&start_time=" + start_time + "&end_time=" + end_time;
+    });
+</script>
+
+<include file="Public:footer" />

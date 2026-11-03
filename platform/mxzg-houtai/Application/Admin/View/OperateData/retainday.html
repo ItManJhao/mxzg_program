@@ -1,0 +1,405 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>运营数据--每日留存（每17分钟更新一次数据）</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('OperateData/RetainDay')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <input type="hidden" name="sid" value="{$search_params['sid']}">
+                                            <select class="selectpicker form-control sid" data-style="btn-info" data-title="请选择服务器" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="servers" id="servers_vo">
+                                                    <if condition="!empty($search_params['sid']) && in_array($servers_vo['id'],explode(',', $search_params['sid']))">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">开始时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            <label class="control-label" style="padding-left: 5px;">结束时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['end_time']}">
+
+                                            <label class="control-label" style="padding-left: 7px;">留存类型</label>
+                                            <select class="form-control" name="retain_type">
+                                                <option value="1" <if condition="$search_params['retain_type'] == 1"> selected </if>>注册留存</option>
+                                                <option value="2" <if condition="$search_params['retain_type'] == 2"> selected </if>>创角留存</option>
+                                                <option value="3" <if condition="$search_params['retain_type'] == 3"> selected </if>>付费留存</option>
+                                                <option value="4" <if condition="$search_params['retain_type'] == 4"> selected </if>>新增付费留存</option>
+                                                <option value="5" <if condition="$search_params['retain_type'] == 5"> selected </if>>老用户留存</option>
+                                                <option value="6" <if condition="$search_params['retain_type'] == 6"> selected </if>>设备留存</option>
+                                            </select>
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <div style="margin-top: 12px;"  >
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="16-30数据展开" onclick="dataForward(1)" ><i class="fa fa-fast-forward"></i>16-30数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="16-30数据隐藏" onclick="dataBackward(1)" ><i class="fa fa-fast-backward"></i>16-30数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="31-45数据展开" onclick="dataForward(2)" ><i class="fa fa-fast-forward"></i>31-45数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="31-45数据隐藏" onclick="dataBackward(2)" ><i class="fa fa-fast-backward"></i>31-45数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="46-60数据展开" onclick="dataForward(3)" ><i class="fa fa-fast-forward"></i>46-60数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="46-60数据隐藏" onclick="dataBackward(3)" ><i class="fa fa-fast-backward"></i>46-60数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="61-75数据展开" onclick="dataForward(4)" ><i class="fa fa-fast-forward"></i>61-75数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="61-75数据隐藏" onclick="dataBackward(4)" ><i class="fa fa-fast-backward"></i>61-75数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="76-90数据展开" onclick="dataForward(5)" ><i class="fa fa-fast-forward"></i>76-90数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="76-90数据隐藏" onclick="dataBackward(5)" ><i class="fa fa-fast-backward"></i>76-90数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="91-153数据展开" onclick="dataForward(6)" ><i class="fa fa-fast-forward"></i>91-153数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="91-153数据隐藏" onclick="dataBackward(6)" ><i class="fa fa-fast-backward"></i>91-153数据隐藏</a>
+                                        </div>
+
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >服务器：</label>
+                                                <span class="sid-text">
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>日期</th>
+                                                        <th>
+                                                            <if condition="$search_params['retain_type'] == 1">注册数
+                                                                <elseif condition="$search_params['retain_type'] == 2"/>创角数
+                                                                <elseif condition="$search_params['retain_type'] == 3"/>付费数
+                                                                <elseif condition="$search_params['retain_type'] == 4"/>新增付费数
+                                                                <elseif condition="$search_params['retain_type'] == 5"/>老用户数
+                                                                <elseif condition="$search_params['retain_type'] == 6"/>设备数
+                                                                <else/>未知
+                                                            </if>
+                                                        </th>
+                                                        <th>次日留存</th>
+                                                        <th>3日留存</th>
+                                                        <th>4日留存</th>
+                                                        <th>5日留存</th>
+                                                        <th>6日留存</th>
+                                                        <th>7日留存</th>
+                                                        <th>8日留存</th>
+                                                        <th>9日留存</th>
+                                                        <th>10日留存</th>
+                                                        <th>11日留存</th>
+                                                        <th>12日留存</th>
+                                                        <th>13日留存</th>
+                                                        <th>14日留存</th>
+                                                        <th>15日留存</th>
+
+                                                        <th class="hide-data-one">16日留存</th>
+                                                        <th class="hide-data-one">17日留存</th>
+                                                        <th class="hide-data-one">18日留存</th>
+                                                        <th class="hide-data-one">19日留存</th>
+                                                        <th class="hide-data-one">20日留存</th>
+                                                        <th class="hide-data-one">21日留存</th>
+                                                        <th class="hide-data-one">22日留存</th>
+                                                        <th class="hide-data-one">23日留存</th>
+                                                        <th class="hide-data-one">24日留存</th>
+                                                        <th class="hide-data-one">25日留存</th>
+                                                        <th class="hide-data-one">26日留存</th>
+                                                        <th class="hide-data-one">27日留存</th>
+                                                        <th class="hide-data-one">28日留存</th>
+                                                        <th class="hide-data-one">29日留存</th>
+                                                        <th class="hide-data-one">30日留存</th>
+
+                                                        <th class="hide-data-two">31日留存</th>
+                                                        <th class="hide-data-two">32日留存</th>
+                                                        <th class="hide-data-two">33日留存</th>
+                                                        <th class="hide-data-two">34日留存</th>
+                                                        <th class="hide-data-two">35日留存</th>
+                                                        <th class="hide-data-two">36日留存</th>
+                                                        <th class="hide-data-two">37日留存</th>
+                                                        <th class="hide-data-two">38日留存</th>
+                                                        <th class="hide-data-two">39日留存</th>
+                                                        <th class="hide-data-two">40日留存</th>
+                                                        <th class="hide-data-two">41日留存</th>
+                                                        <th class="hide-data-two">42日留存</th>
+                                                        <th class="hide-data-two">43日留存</th>
+                                                        <th class="hide-data-two">44日留存</th>
+                                                        <th class="hide-data-two">45日留存</th>
+
+                                                        <th class="hide-data-three">46日留存</th>
+                                                        <th class="hide-data-three">47日留存</th>
+                                                        <th class="hide-data-three">48日留存</th>
+                                                        <th class="hide-data-three">49日留存</th>
+                                                        <th class="hide-data-three">50日留存</th>
+                                                        <th class="hide-data-three">51日留存</th>
+                                                        <th class="hide-data-three">52日留存</th>
+                                                        <th class="hide-data-three">53日留存</th>
+                                                        <th class="hide-data-three">54日留存</th>
+                                                        <th class="hide-data-three">55日留存</th>
+                                                        <th class="hide-data-three">56日留存</th>
+                                                        <th class="hide-data-three">57日留存</th>
+                                                        <th class="hide-data-three">58日留存</th>
+                                                        <th class="hide-data-three">59日留存</th>
+                                                        <th class="hide-data-three">60日留存</th>
+
+                                                        <th class="hide-data-four">61日留存</th>
+                                                        <th class="hide-data-four">62日留存</th>
+                                                        <th class="hide-data-four">63日留存</th>
+                                                        <th class="hide-data-four">64日留存</th>
+                                                        <th class="hide-data-four">65日留存</th>
+                                                        <th class="hide-data-four">66日留存</th>
+                                                        <th class="hide-data-four">67日留存</th>
+                                                        <th class="hide-data-four">68日留存</th>
+                                                        <th class="hide-data-four">69日留存</th>
+                                                        <th class="hide-data-four">70日留存</th>
+                                                        <th class="hide-data-four">71日留存</th>
+                                                        <th class="hide-data-four">72日留存</th>
+                                                        <th class="hide-data-four">73日留存</th>
+                                                        <th class="hide-data-four">74日留存</th>
+                                                        <th class="hide-data-four">75日留存</th>
+
+                                                        <th class="hide-data-five">76日留存</th>
+                                                        <th class="hide-data-five">77日留存</th>
+                                                        <th class="hide-data-five">78日留存</th>
+                                                        <th class="hide-data-five">79日留存</th>
+                                                        <th class="hide-data-five">80日留存</th>
+                                                        <th class="hide-data-five">81日留存</th>
+                                                        <th class="hide-data-five">82日留存</th>
+                                                        <th class="hide-data-five">83日留存</th>
+                                                        <th class="hide-data-five">84日留存</th>
+                                                        <th class="hide-data-five">85日留存</th>
+                                                        <th class="hide-data-five">86日留存</th>
+                                                        <th class="hide-data-five">87日留存</th>
+                                                        <th class="hide-data-five">88日留存</th>
+                                                        <th class="hide-data-five">89日留存</th>
+                                                        <th class="hide-data-five">90日留存</th>
+
+                                                        <th class="hide-data-six">97日留存</th>
+                                                        <th class="hide-data-six">104日留存</th>
+                                                        <th class="hide-data-six">111日留存</th>
+                                                        <th class="hide-data-six">118日留存</th>
+                                                        <th class="hide-data-six">125日留存</th>
+                                                        <th class="hide-data-six">132日留存</th>
+                                                        <th class="hide-data-six">139日留存</th>
+                                                        <th class="hide-data-six">146日留存</th>
+                                                        <th class="hide-data-six">153日留存</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row">
+                                                            <td>{$vo.date}</td>
+                                                            <td>{$vo.num}</td>
+                                                            <td>{$vo['one_day_retain']}</td>
+                                                            <td>{$vo['three_day_retain']}</td>
+                                                            <td>{$vo['four_day_retain']}</td>
+                                                            <td>{$vo['five_day_retain']}</td>
+                                                            <td>{$vo['six_day_retain']}</td>
+                                                            <td>{$vo['seven_day_retain']}</td>
+                                                            <td>{$vo['eight_day_retain']}</td>
+                                                            <td>{$vo['nine_day_retain']}</td>
+                                                            <td>{$vo['ten_day_retain']}</td>
+                                                            <td>{$vo['eleven_day_retain']}</td>
+                                                            <td>{$vo['twelve_day_retain']}</td>
+                                                            <td>{$vo['thirteen_day_retain']}</td>
+                                                            <td>{$vo['fourteen_day_retain']}</td>
+                                                            <td>{$vo['fifteen_day_retain']}</td>
+
+                                                            <td class="hide-data-one">{$vo.sixteen_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.seventeen_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.eighteen_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.nineteen_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.twenty_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.twenty_one_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.twenty_two_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.twenty_three_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.twenty_four_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.twenty_five_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.twenty_six_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.twenty_seven_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.twenty_eight_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.twenty_nine_day_retain}</td>
+                                                            <td class="hide-data-one">{$vo.thirty_day_retain}</td>
+
+                                                            <td class="hide-data-two">{$vo.thirty_one_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.thirty_two_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.thirty_three_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.thirty_four_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.thirty_five_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.thirty_six_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.thirty_seven_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.thirty_eight_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.thirty_nine_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.forty_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.forty_one_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.forty_two_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.forty_three_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.forty_four_day_retain}</td>
+                                                            <td class="hide-data-two">{$vo.forty_five_day_retain}</td>
+
+                                                            <td class="hide-data-three">{$vo.forty_six_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.forty_seven_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.forty_eight_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.forty_nine_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.fifty_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.fifty_one_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.fifty_two_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.fifty_three_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.fifty_four_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.fifty_five_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.fifty_six_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.fifty_seven_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.fifty_eight_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.fifty_nine_day_retain}</td>
+                                                            <td class="hide-data-three">{$vo.sixty_day_retain}</td>
+
+                                                            <td class="hide-data-four">{$vo.sixty_one_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.sixty_two_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.sixty_three_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.sixty_four_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.sixty_five_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.sixty_six_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.sixty_seven_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.sixty_eight_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.sixty_nine_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.seventy_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.seventy_one_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.seventy_two_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.seventy_three_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.seventy_four_day_retain}</td>
+                                                            <td class="hide-data-four">{$vo.seventy_five_day_retain}</td>
+
+                                                            <td class="hide-data-five">{$vo.seventy_six_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.seventy_seven_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.seventy_eight_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.seventy_nine_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.eighty_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.eighty_one_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.eighty_two_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.eighty_three_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.eighty_four_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.eighty_five_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.eighty_six_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.eighty_seven_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.eighty_eight_day_retain}</td>
+                                                            <td class="hide-data-five">{$vo.ninety_day_retain}</td>
+
+                                                            <td class="hide-data-six">{$vo.ninety_seven_day_retain}</td>
+                                                            <td class="hide-data-six">{$vo.hundred_four_day_retain}</td>
+                                                            <td class="hide-data-six">{$vo.hundred_eleven_day_retain}</td>
+                                                            <td class="hide-data-six">{$vo.hundred_eighteen_day_retain}</td>
+                                                            <td class="hide-data-six">{$vo.hundred_twenty_five_day_retain}</td>
+                                                            <td class="hide-data-six">{$vo.hundred_thirty_two_day_retain}</td>
+                                                            <td class="hide-data-six">{$vo.hundred_thirty_nine_day_retain}</td>
+                                                            <td class="hide-data-six">{$vo.hundred_forty_six_day_retain}</td>
+                                                            <td class="hide-data-six">{$vo.hundred_fifty_three_day_retain}</td>
+                                                        </tr>
+                                                    </volist>
+                                                    </tbody>
+                                                </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(function(){
+        $(".hide-data-one").hide();     //数据隐藏
+        $(".hide-data-two").hide();     //数据隐藏
+        $(".hide-data-three").hide();     //数据隐藏
+        $(".hide-data-four").hide();     //数据隐藏
+        $(".hide-data-five").hide();     //数据隐藏
+        $(".hide-data-six").hide();     //数据隐藏
+        doMultipleSelection($('.sid'), 'sid');
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+    });
+    $(".sid").on('change',function(e){
+        doMultipleSelection(this, 'sid');
+    })
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    //数据展开
+    function dataForward(num){
+        if(num == 1){
+            $(".hide-data-one").show();
+        }else if(num == 2){
+            $(".hide-data-two").show();
+        }else if(num == 3){
+            $(".hide-data-three").show();
+        }else if(num == 4){
+            $(".hide-data-four").show();
+        }else if(num == 5){
+            $(".hide-data-five").show();
+        }else{
+            $(".hide-data-six").show();
+        }
+    }
+    //数据隐藏
+    function dataBackward(num){
+        if(num == 1){
+            $(".hide-data-one").hide();
+        }else if(num == 2){
+            $(".hide-data-two").hide();
+        }else if(num == 3){
+            $(".hide-data-three").hide();
+        }else if(num == 4){
+            $(".hide-data-four").hide();
+        }else if(num == 5){
+            $(".hide-data-five").hide();
+        }else{
+            $(".hide-data-six").hide();
+        }
+    }
+
+</script>
+
+<include file="Public:footer" />

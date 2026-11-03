@@ -1,0 +1,31 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion020GMsg";
+import "Object.proto";
+
+//查看每日礼包信息
+//就协议20007
+//13311
+message GReqDailyGiftData {
+
+}
+
+//13311
+message GResDailyGiftData
+{
+	optional int32 has_reward = 1;
+	repeated PSMapData data = 2;	//已经购买的商品信息，ID跟数量
+}
+
+//领取每日礼包免费奖励
+//旧协议20007
+//13312
+message GReqDailyGiftReward {
+
+}
+
+//13312
+message GResDailyGiftReward
+{
+	optional int32 has_reward = 1;	//是否有每日礼包，0未领取，1已领取
+}

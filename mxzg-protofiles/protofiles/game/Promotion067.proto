@@ -1,0 +1,58 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "promotion067GMsg";
+
+import "Object.proto";
+
+//赐福数据
+message PSBlessingData{
+    optional string nick = 1;//昵称
+    optional int32 idx = 2;//获得道具，奖池配置表idx
+}
+
+//周末锦鲤
+//13280
+message GReqWeekendKoiInfo {
+
+}
+//13280
+message GResWeekendKoiInfo {
+   optional int32 turns = 1;//轮次
+   optional int32 blessing_num = 2;//赐福令已使用次数
+   optional int32 buy_limit = 3;//礼包购买次数
+   optional string koi_nick = 4;//未开奖为空
+}
+
+//周末锦鲤赐福记录
+//13281
+message GReqBlessingInfo{
+
+}
+//13281
+message GResBlessingInfo{
+    repeated PSBlessingData list = 1;//赐福记录
+}
+
+//赐福抽奖
+//13282
+message GReqUseBlessing{
+
+}
+//13282
+message GResUseBlessing{
+    optional int32 blessing_num = 1;//赐福令已使用次数
+    optional int32 idx = 2; //奖励id
+    repeated PSBackpackData item = 3;   //奖励列表
+}
+
+//推送本期锦鲤
+//13283
+message GResKoiNick{
+    optional string koi_nick = 1;
+}
+
+//推送礼包购买次数
+//13284
+message GResBuyProduct{
+    optional int32 buy_limit = 1;
+}

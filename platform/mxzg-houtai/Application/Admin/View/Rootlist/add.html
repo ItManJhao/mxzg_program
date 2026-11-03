@@ -1,0 +1,305 @@
+<include file="Public:header" />
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+    });
+</script>
+<style>
+    label {
+        font-weight: normal;
+    }
+    ul.group-list {
+        width: 96%;
+        min-width: 1000px;
+        margin: auto 5px;
+        list-style: disc outside none;
+    }
+    ul.group-list li {
+        white-space: nowrap;
+        float: left;
+        width: 150px;
+        height: 25px;
+        padding: 3px 5px;
+        list-style-type: none;
+        list-style-position: outside;
+        border: 0px;
+        margin: 0px;
+    }
+    th.title {
+        background: #F3F3F3;
+        border-bottom: 1px solid #D7D7D7;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+    .table tbody tr th,.table tbody tr td{
+        vertical-align :middle;
+        text-align: center;
+    }
+</style>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加权限</h5>
+                </div>
+                <div class="ibox-content">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-1"> 基本信息</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-2">勾选权限</a>
+                        </li>
+                    </ul>
+                    <br/>
+                    <div class="row">
+                        <form action="{:U('rootlist/ajax_add')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                        <div id="tab-1" class="tab-pane active">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">权限组：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="name" type="text" value="{$re.name}" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-8">
+                                    <input name="status" type="radio" value="1" checked aria-required="true">开&nbsp;&nbsp;&nbsp;
+                                    <input name="status" type="radio" value="0" aria-required="true">关
+                                </div>
+                            </div>
+              
+                        </div>
+                        
+                        <div id="tab-2" class="tab-pane">
+                             
+
+                            <!-- <div class="form-group">
+                                <label class="col-sm-2 control-label">授权渠道：</label>
+                                <div class="col-sm-8">
+                                    <div style="margin-bottom: 5px;display: block;"><input data-status="0" name="channels_id[]" value="-1" id="channels_id_all" onclick="check_all('#channels_id',this,0)" type="checkbox">全选</div>
+                                    <div id="channels_id">
+                                        <volist name="channels" id="channels">
+                                            <div class="all" style="margin-left: 20px;margin-bottom: 5px;display: block;">
+                                                <input type="checkbox" class="max" name="channels_id[]" id="channels_id{$channels.id}_1" value="{$channels.id}" data-status="0" onclick="check_all('#channels_id{$channels.id}',this,2)">{$channels.name}
+                                                <div class="all2" id="channels_id{$channels.id}" style="margin-left: 20px;margin-bottom: 5px;display: block;">
+                                                    <volist name="min_channels" id="vo">
+                                                        <input class="channels_input" type="checkbox" name="channels_id[]" value="{$vo.id}">{$vo.name}&nbsp;&nbsp;
+                                                    </volist>
+                                                </div>
+                                            </div>
+                                        </volist>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">授权菜单：</label>
+                                <div class="col-sm-8">
+                                    <div style="margin-bottom: 5px;display: block;"><input data-status="0" name="menu_id[]" value="-1" id="menu_id_all" onclick="check_all('#menu_id',this,1)" type="checkbox">全选</div>
+                                    <div id="menu_id">
+                                        <volist name="menu" id="menu">
+                                            <div class="all" style="margin-left: 20px;margin-bottom: 5px;display: block;">
+                                                <input type="checkbox" class="max" name="menu_id[]" id="menu_id{$menu.id}_1" value="{$menu.id}" data-status="0" onclick="check_all('#menu_id{$menu.id}',this,2)">{$menu.name}
+                                                <?php 
+                                                    $pid = $menu['id']; 
+                                                    $min_menu = M('bms_nav')->where('status = 1 and pid = '.$pid.' and type = 0')->order('`orderby` asc,id asc')->field('id,name')->select();
+                                                ?>
+                                                <div class="all2" id="menu_id{$menu.id}" style="margin-left: 20px;margin-bottom: 5px;display: block;">
+                                                    <volist name="min_menu" id="vo">
+                                                        <input class="menu_input" type="checkbox" name="menu_id[]" value="{$vo.id}">{$vo.name}&nbsp;&nbsp;
+                                                    </volist>
+                                                </div>
+                                            </div>
+                                        </volist>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <input type="hidden" name="id" value="{$re.id}">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('rootlist/ajax_add')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+ 
+ 
+    function check_all(ids,obj,type){
+    
+        if ($(obj).attr('data-status') == 0) {
+ 
+            $(ids).children('input[type="checkbox"]').prop("checked", true);
+            $(ids).children('.all').children('input[type="checkbox"]').prop("checked", true);
+            $(ids).children('.all').children('.all2').children('input[type="checkbox"]').prop("checked", true);
+            if (type == 1) {
+                $(ids).children('.all').children('.max').attr('data-status',1);
+            }
+            $(obj).attr('data-status',1);
+
+        }else{
+            $(ids).children('input[type="checkbox"]').prop("checked", false);
+            $(ids).children('.all').children('input[type="checkbox"]').prop("checked", false);
+            $(ids).children('.all').children('.all2').children('input[type="checkbox"]').prop("checked", false);
+            if (type == 1) {
+                $(ids).children('.all').children('.max').attr('data-status',0);
+            }
+            $(obj).attr('data-status',0);
+        }
+
+        check_ids_all();
+        check_ids_alls();
+        check_ids_allss();
+    }
+
+    function check_ids_alls(){
+        var num = 0;
+        var nums = 0;
+        $('#function_id').children('.all').children('input[type="checkbox"]').each(function(){
+            num++;
+            if ($(this).is(':checked')) {
+                nums++;
+            }
+        })
+        if (num != nums) {
+            $('#function_id_all').attr('data-status',0).prop("checked", false);
+        }else{
+            $('#function_id_all').attr('data-status',1).prop("checked", true);
+        }
+    }
+
+     function check_ids_allss(){
+        var num = 0;
+        var nums = 0;
+        $('#channels_id').children('.all').children('input[type="checkbox"]').each(function(){
+            num++;
+            if ($(this).is(':checked')) {
+                nums++;
+            }
+        })
+        $('#channels_id').children('.all').children('.all2').children('input[type="checkbox"]').each(function(){
+            num++;
+            if ($(this).is(':checked')) {
+                nums++;
+            }
+        })
+        if (num != nums) {
+            $('#channels_id_all').attr('data-status',0).prop("checked", false);
+        }else{
+            $('#channels_id_all').attr('data-status',1).prop("checked", true);
+        }
+    }
+
+    function check_ids_all(){
+        var num = 0;
+        var nums = 0;
+        $('#menu_id').children('.all').children('input[type="checkbox"]').each(function(){
+            num++;
+            if ($(this).is(':checked')) {
+                nums++;
+            }
+        })
+        $('#menu_id').children('.all').children('.all2').children('input[type="checkbox"]').each(function(){
+            num++;
+            if ($(this).is(':checked')) {
+                nums++;
+            }
+        })
+        if (num != nums) {
+            $('#menu_id_all').attr('data-status',0).prop("checked", false);
+        }else{
+            $('#menu_id_all').attr('data-status',1).prop("checked", true);
+        }
+    }
+
+    $('.menu_input').click(function(){
+        var nums = 0;
+        var num = 0;
+        check_ids_all();
+
+        $(this).parent().children('input[type="checkbox"]').each(function(){
+            num++;
+            if ($(this).is(':checked')) {
+                nums++;
+            }
+        })
+        if (nums == 0) {
+            $('#'+$(this).parent().attr('id')+'_1').attr('data-status',0).prop("checked", false);
+             check_ids_all();
+        }
+        if (nums == num) {
+            check_ids_all();
+            $('#'+$(this).parent().attr('id')+'_1').attr('data-status',1).prop("checked", true);
+             check_ids_all();
+        }
+    })
+
+    $('.function_input').click(function(){
+        check_ids_alls();
+        var nums = 0;
+        var num = 0;
+        $(this).parent().children('input[type="checkbox"]').each(function(){
+            num++;
+            if ($(this).is(':checked')) {
+                nums++;
+            }
+        })
+        if (nums == 0) {
+            $('#'+$(this).parent().attr('id')+'_1').attr('data-status',0).prop("checked", false);
+            check_ids_alls();
+        }
+        if (nums == num) {
+            $('#'+$(this).parent().attr('id')+'_1').attr('data-status',1).prop("checked", true);
+            check_ids_alls();
+        }
+    })
+
+    $('.channels_input').click(function(){
+        check_ids_allss();
+        var nums = 0;
+        var num = 0;
+        $(this).parent().children('input[type="checkbox"]').each(function(){
+            num++;
+            if ($(this).is(':checked')) {
+                nums++;
+            }
+        })
+        if (nums == 0) {
+            $('#'+$(this).parent().attr('id')+'_1').attr('data-status',0).prop("checked", false);
+             check_ids_allss();
+        }
+        if (nums == num) {
+            $('#'+$(this).parent().attr('id')+'_1').attr('data-status',1).prop("checked", true);
+             check_ids_allss();
+        }
+    })
+
+
+</script>
+    
+    <script>
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    </script>
+
+
+<include file="Public:footer" />

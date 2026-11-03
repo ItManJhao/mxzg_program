@@ -1,0 +1,164 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>游戏数据--道具每日库存统计</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('GameData/ItemDay')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <input type="hidden" name="sid" value="{$search_params['sid']}">
+                                            <select class="selectpicker form-control sid" data-style="btn-info" data-title="请选择服务器" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="servers" id="servers_vo">
+                                                    <if condition="!empty($search_params['sid']) && in_array($servers_vo['id'],explode(',', $search_params['sid']))">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">日期</label>
+                                            <input class="form-control" style="width: 160px;" id="today_date" name="today_date" type="text" onclick="laydate({elem: '#today_date', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['today_date']}">
+
+
+                                            <label class="control-label" style="padding-left: 5px;">道具</label>
+                                            <input type="hidden" name="item_type" value="{$search_params['item_type']}">
+                                            <select class="selectpicker form-control item_type" data-style="btn-info" data-title="请选择道具" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="item_list" id="item_list_vo">
+                                                    <if condition="!empty($search_params['item_type']) && in_array($item_list_vo['id'],explode(',', $search_params['item_type']))">
+                                                        <option value="{$item_list_vo.id}" selected>{$item_list_vo.id}--{$item_list_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$item_list_vo.id}">{$item_list_vo.id}--{$item_list_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >服务器：</label>
+                                                <span class="sid-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >道具：</label>
+                                                <span class="item_type-text">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>道具ID</th>
+                                                            <th>道具名称</th>
+                                                            <th>品质</th>
+                                                            <th>累计获得数量</th>
+                                                            <th>累计消耗数量</th>
+                                                            <th>剩余库存</th>
+                                                            <th>拥有玩家数</th>
+                                                            <th>人均拥有数</th>
+                                                            <th>活跃人数</th>
+                                                            <th>活跃库存</th>
+                                                            <th>去新活跃人数</th>
+                                                            <th>去新人均库存</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                        <volist name="list" id="vo">
+                                                            <tr role="row">
+                                                                <td>{$vo.item_type}</td>
+                                                                <td>{$vo.item_name}</td>
+                                                                <td>{$vo.item_quality}</td>
+                                                                <td>{$vo.get_num_total}</td>
+                                                                <td>{$vo.out_num_total}</td>
+                                                                <td>{$vo.surplus_num_total}</td>
+                                                                <td>{$vo.surplus_role_total}</td>
+                                                                <td>{$vo.surplus_num_avg}</td>
+                                                                <td>{$vo.active_role_total}</td>
+                                                                <td>{$vo.active_num_total}</td>
+                                                                <td>{$vo.old_active_role_total}</td>
+                                                                <td>{$vo.old_active_num_avg}</td>
+                                                            </tr>
+                                                        </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(function(){
+        doMultipleSelection($('.sid'), 'sid');
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+        doMultipleSelection($('.item_type'), 'item_type');
+    });
+    $(".sid").on('change',function(e){
+        doMultipleSelection(this, 'sid');
+    })
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+    $(".item_type").on('change',function(e){
+        doMultipleSelection(this, 'item_type');
+    })
+
+</script>
+
+<include file="Public:footer" />

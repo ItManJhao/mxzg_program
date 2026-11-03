@@ -1,0 +1,27 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "RealNameGMsg";
+
+
+//请求信息
+//77301
+message GReqRealNameAuthenticationData {
+
+}
+
+//77301
+message GResRealNameAuthenticationData{
+	optional int32 state = 1;	// 0未领取 1已领取
+}
+
+
+//77302
+message GReqRealNameAuthenticationReward {
+	
+}
+
+//77302
+message GResRealNameAuthenticationReward {
+
+	optional int32 state = 1;	// 0未领取 1已领取
+}

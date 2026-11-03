@@ -1,0 +1,62 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "StavesGMsg";
+
+message PBStavesDetailData{
+    optional int32 elem = 1;                //圣物类型
+    optional int32 level = 2;               //圣物等级
+    optional int32 order = 3;               //圣物阶数
+    optional int32 orderNum = 4;            //圣物进阶次数
+    optional int32 haveExperience = 5;      //圣物当前拥有的经验
+    optional int32 unlock = 6;              // 是否解锁
+}
+
+//获取圣物信息
+//77001
+message GReqGetStavesData{
+}
+//77001
+message GResGetStavesData{
+    repeated PBStavesDetailData stavesData = 1;//圣物信息
+}
+
+//圣物升级
+//77002
+message GReqStavesLevelUp{
+    optional int32 elem = 1;          //升级圣物的类型
+}
+//77002
+message GResStavesLevelUp{
+    optional PBStavesDetailData stavesData = 1;//圣物信息
+}
+
+//圣物进阶
+//77003
+message GReqStavesOrderUp{
+    optional int32 elem = 1;
+}
+//77003
+message GResStavesOrderUp{
+    optional PBStavesDetailData stavesData = 1;//圣物信息
+}
+
+//圣物阶级重置
+//77004
+message GReqStavesOrderReset{
+    optional int32 elem = 1;
+}
+//77004
+message GResStavesOrderReset{
+    optional PBStavesDetailData stavesData = 1;//圣物信息
+}
+
+//77005
+message GReqStavesUnlock {
+    optional int32 ele = 1; // 解锁类型
+    optional int64 hero_id = 2; // 消耗的英雄唯一id
+}
+
+//77005
+message GResStavesUnlock {
+    optional PBStavesDetailData stavesData = 1;//圣物信息
+}

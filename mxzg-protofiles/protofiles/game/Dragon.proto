@@ -1,0 +1,184 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "DragonGMsg";
+import "Object.proto";
+
+
+//圣物槽位数据
+message PSDragonSlot
+{
+	optional int32 id = 1;		//槽位ID
+	optional int32 sys_id = 2;	//槽位中的圣物ID
+}
+
+//鉴定数据
+message PSDragonIdentity
+{
+	optional int32 type = 1;		//鉴定类型，1普通鉴定，2特权鉴定
+	optional int32 start_time = 2;	//鉴定开始时间
+	optional int32 level = 3;		//鉴定级别，1、2、3
+	optional int32 speed_add = 4;	//鉴定增加加速鉴定值
+}
+
+message PSDragonChoose
+{
+	optional int32 slot = 1;	//位置ID，从1开始
+	repeated int64 hero_ids = 2;//选择消耗的英雄ID
+}
+
+//查看圣龙数据
+//59001
+message GReqDragonScanInfo
+{
+}
+//59001
+message GResDragonScanInfo
+{
+	optional int32 identify_level = 1;	//鉴定等级，源石鉴定的速度配置等级
+	optional int32 attr_level = 2;		//属性等级
+	repeated PSDragonIdentity identities = 3;//鉴定信息
+	repeated PSDragonSlot slots = 4;	//圣物槽位信息
+	optional int32 privilege_end_time = 5;	//特权结束时间
+}
+
+//放入源石
+//59002
+message GReqDragonPutStone
+{
+	optional int32 type = 1;	//鉴定类型，1普通鉴定，2特权鉴定
+	optional int32 level = 2;	//鉴定级别，1、2、3
+}
+//59002
+message GResDragonPutStone
+{
+	optional PSDragonIdentity identity = 1;	//鉴定信息
+}
+
+//提升鉴定等级
+//59003
+message GReqDragonUpgradeIdentity
+{
+	repeated PSDragonChoose choose = 1;	//选择消耗的英雄素材位置信息
+}
+//59003
+message GResDragonUpgradeIdentity
+{
+	optional int32 identify_level = 1;	//鉴定等级
+	repeated PSDragonIdentity identities = 2;	//鉴定信息
+}
+
+//加速鉴定
+//59005
+message GReqDragonSpeedUpIdentity
+{
+	optional int32 speed = 1;	//加速类型，1初级、2中级、3高级
+	optional int32 auto = 2;	//是否自动购买，1自动，其它不自动
+	optional int32 type = 3;	//鉴定类型，1普通鉴定，2特权鉴定
+}
+//59005
+message GResDragonSpeedUpIdentity
+{
+	optional PSDragonIdentity identity = 1;	//鉴定信息
+}
+
+//鉴定完成
+//59006
+message GReqDragonIdentityFinish
+{
+}
+//59006
+message GResDragonIdentityFinish
+{
+	repeated PSDragonIdentity identities = 1;	//鉴定信息
+	repeated PSBackpackData rewards = 2;		//鉴定后的产物
+}
+
+//提升圣龙等级
+//59007
+message GReqDragonUpgradeLevel
+{
+}
+//59007
+message GResDragonUpgradeLevel
+{
+	optional int32 attr_level = 1;	//属性等级
+	optional PSDragonSlot slot = 2;	//新增的槽位，没有开启新槽位时为空
+}
+
+//圣物替换，放上或脱下
+//59008
+message GReqDragonChange
+{
+	optional int32 slot_id = 1;	//槽位ID
+	optional int32 sys_id = 2;	//圣物ID
+}
+//59008
+message GResDragonChange
+{
+	optional PSDragonSlot slot = 1;	//槽位数据
+}
+
+//调整圣物顺序
+//59009
+message GReqDragonChangeSort
+{
+	repeated PSDragonSlot slots = 1;	//槽位数据
+}
+//59009
+message GResDragonChangeSort
+{
+	repeated PSDragonSlot slots = 1;	//槽位数据
+}
+
+//圣物图鉴
+//59010
+message GReqDragonCollection
+{
+}
+//59010
+message GResDragonCollection
+{
+	repeated int32 sys_id = 1;	//已经收集到的圣物ID
+}
+
+//圣物升星，圣物在背包中时
+//59011
+message GReqDragonUpStarInBag
+{
+	optional int32 sys_id = 1;	//圣物ID
+}
+//59011
+message GResDragonUpStarInBag
+{
+}
+
+//圣物升星，圣物在槽位上时
+//59012
+message GReqDragonUpStarInSlot
+{
+	optional int32 slot_id = 1;	//槽位ID
+}
+//59012
+message GResDragonUpStarInSlot
+{
+	optional PSDragonSlot slot = 1;	//槽位数据
+}
+
+
+//圣物分解
+//59013
+message GReqDragonResolve
+{
+	optional int32 sys_id = 1;	//圣物ID
+	optional int64 num = 2;		//分解数量
+}
+//59013
+message GResDragonResolve
+{
+}
+
+//鉴定完成的推送
+//59014
+message GResDragonFinishNotice
+{
+}

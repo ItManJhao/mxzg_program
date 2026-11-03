@@ -1,0 +1,27 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion100GMsg";
+import "Object.proto";
+
+//76546
+message GReqHeroStarUpInfo{
+	
+}
+
+//76546
+message GResHeroStarUpInfo{
+	optional int64 hero_id = 1;			// 本期的英雄id
+	optional int32 hero_star = 2;		// 星级
+	repeated int32 receive_list = 3;	// 已经领取过的免费奖励
+	repeated PSMapData list = 4;		// key->idx val-> count
+}
+
+//76547
+message GReqHeroStarUpReceive{
+	optional int32 idx = 1;	// 领取的idx
+}
+
+//76547
+message GResHeroStarUpReceive{
+	optional int32 idx = 1;	// idx
+}

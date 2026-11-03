@@ -1,0 +1,98 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion064GMsg";
+import "Object.proto";
+
+//已翻牌的网格信息
+message PSGridInfo{
+    optional int32 grid_idx = 1;//网格排序id
+    optional int32 reward_idx = 2;//开启的奖励配置idx
+}
+
+//龙舟任务数据
+//13250
+message GReqDragonBoatTaskInfo{
+
+}
+//13250
+message GResDragonBoatTaskInfo{
+    optional int32 day_turns = 1;//第几轮任务
+    repeated PSTaskProgress task_list = 2; //任务进度
+    repeated int32 box_rewards = 3; //已领取宝箱
+    repeated int32 reward_ids = 4;//已领取的任务奖励的idx,
+
+    optional int32 grid_turns = 5;//网格轮次
+    optional int32 ultimate_id = 6;//特殊奖励idx
+    repeated PSGridInfo grids = 7;//已翻牌网格信息
+
+    repeated PSMapData buy = 8;//商品购买记录
+}
+
+
+//刷新龙舟翻牌网格数据
+//13251
+message GReqDragonBoatCards{
+
+}
+//13251
+message GResDragonBoatCards{
+    optional int32 grid_turns = 1;//网格轮次
+    optional int32 ultimate_id = 2;//特殊奖励idx
+    repeated PSGridInfo grids = 3;//已翻牌网格信息
+}
+
+//刷新龙舟商品购买信息
+//13252
+message GResDragonBoatBuyInfo{
+    repeated PSMapData buy = 1;//商品购买记录
+}
+
+//领取任务奖励
+//13253
+message GReqGetTaskReward{
+    optional int32 idx =1;
+}
+//13253
+message GResGetTaskReward{
+    repeated int32 reward_ids = 1;//已领取的任务奖励的idx,
+}
+
+//领取宝箱奖励
+//13254
+message GReqGetBoxReward{
+    optional int32 idx = 1;
+}
+//13254
+message GResGetBoxReward{
+    repeated int32 box_rewards = 1; //已领取宝箱
+}
+
+//选择翻牌特殊奖励
+//13255
+message GReqChooseUltimateReward{
+    optional int32 idx = 1;
+}
+//13255
+message GResChooseUltimateReward{
+    optional int32 idx = 1;
+}
+
+//翻牌
+//13256
+message GReqTurnOverCard{
+    optional int32 grid_idx = 1;
+}
+//13256
+message GResTurnOverCard{
+   repeated PSGridInfo grids = 1;//网格信息
+   optional int32 grid_id = 2;
+   optional int32 reward_idx = 3;//开启的奖励配置idx
+   optional int32 status = 4;//当前轮卡牌是否已全部翻完，1为是，0为否。
+}
+
+//推送任务进度
+//13257
+message GResTaskProgress{
+    repeated PSTaskProgress task = 1; //任务进度
+}
+

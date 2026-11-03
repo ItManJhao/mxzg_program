@@ -1,0 +1,550 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "PinnacleGMsg";
+import "Battle.proto";
+import "Object.proto";
+
+message PSPinnacleBiu
+{
+	optional string content = 1;	//内容
+	optional int64 rid = 2;			//玩家ID
+}
+
+
+message PSPinnacleRank
+{
+	optional int64 rid = 1;			//玩家ID
+	optional string name = 2;		//玩家名字
+	optional int32 like = 3;		//点赞数
+	optional int32 image_id = 4;	//英雄形象
+	optional int32 rank = 5;		//排名
+	optional int32 robot = 6;		//是否机器人，0不是，1是
+}
+
+message PSPinnacleRanker
+{
+	optional int64 rid = 1;			//玩家ID
+	optional string name = 2;		//玩家名字
+	optional int32 like = 3;		//点赞数
+	optional int32 rank = 4;		//排名
+	optional int32 level = 5;		//等级
+	optional int32 head_id = 6;		//头像
+	optional int32 border_id = 7;	//头像框
+	optional int32 fighting = 8;	//战斗力
+	optional int32 point = 9;		//选拔赛分数
+	optional int32 server_id = 10;	//分区id
+	optional int32 image_id = 11;	//形象id
+	optional int32 stage_id = 12;	//段位
+	optional string clan_name = 13;		//工会名字
+}
+
+
+message PSPinnacleHero
+{
+	optional int32 hero_type = 1;	//英雄类型
+	optional int32 level = 2;		//等级
+	optional int32 stage = 3;		//阶级
+	optional int32 star = 4;		//星级
+	optional int32 pos = 5;			//站位，前端排序
+	optional int64 id = 6;			//英雄ID
+	optional int32 fashion_id = 7;	//皮肤（时装）id
+}
+
+message PSPinnacleFormation
+{
+	optional int64 rid = 1;				//参赛者ID，玩家ID或者机器人ID
+	optional string name = 2;			//名字
+	optional int32 level = 3;			//角色等级
+	optional int32 head_id = 4;			//头像
+	optional int32 border_id = 5;		//头像框
+	optional int32 fighting = 6;		//战斗力
+	repeated PSPinnacleHero heros = 7;	//参战英雄
+	optional int32 formation_id = 8;	//阵法ID
+}
+
+message PSPinnacleKnockoutBattle
+{
+	optional string atk_name = 1;
+	optional string def_name = 2;
+	optional int64 bid = 3;			//比赛ID
+	optional int32 battle_round = 4;//比赛所属的战斗阶段，32、16、8、4、2
+	optional int32 which_win = 5;	//胜利方，1进攻方胜利，2防守方胜利
+	optional string battle_id = 6;	//战斗ID
+	optional int32 win_head = 7;
+	optional int32 win_border = 8;
+	optional int64 atk_rid = 9;		//进攻方ID
+	optional int64 def_rid = 10;	//防守方ID
+}
+
+message PSPinnacleGuess
+{
+	optional int64 bid = 1;						//比赛ID
+	optional string battle_id = 2;				//战斗ID
+	optional int32 guess_type = 3;				//竞猜哪一边胜利，1进攻方，2防守方
+	optional int64 guess_coin = 4;				//玩家投注的竞猜币
+	optional int64 delta = 5;					//战斗结算后竞猜币的变化量
+	optional PSPinnacleFormation attacker = 6;	//进攻方
+	optional PSPinnacleFormation defender = 7;	//防守方
+	optional int32 period = 8;					//巅峰赛当前赛程，0空闲，1选拔赛，2淘汰赛
+	optional int32 battle_round = 9;			//比赛所属的战斗阶段，32、16、8、4、2
+	optional int32 which_win = 10;				//胜利方，1进攻方胜利，2防守方胜利，0未有胜负
+	optional BattleLog battle_log = 11;			//血量统计
+}
+
+message PSPinnacleBattle
+{
+	optional int64 bid = 1;						//比赛ID
+	optional string battle_id = 2;				//战斗ID
+	optional int32 add_point = 3;				//胜利方增加的积分，需要结合which_win来处理正负
+	optional PSPinnacleFormation attacker = 4;	//进攻方
+	optional PSPinnacleFormation defender = 5;	//防守方
+	optional int32 which_win = 6;				//胜利方，1进攻方胜利，2防守方胜利，0未有胜负
+	optional int32 period = 7;					//巅峰赛当前赛程，0空闲，1选拔赛，2淘汰赛
+	optional int32 battle_round = 8;			//比赛所属的战斗阶段，32、16、8、4、2
+	optional BattleLog battle_log = 9;			//血量统计
+}
+
+message PSPinnacleMyResult
+{
+	optional int32 rank = 1;		//名次
+	optional int32 battle_num = 2;	//战斗场数
+	optional int32 win_num = 3;		//胜利场数
+}
+
+// 我的记录
+message PSMyRecord
+{
+	optional int32 rank = 1;		//自己改变后的名次
+	optional string name = 2;		//名称
+	optional int32 server_id = 3;	//服务器id
+	optional int32 head_id = 4;		//头像
+	optional int32 border_id = 5;	//头像框
+	optional bool win = 6;			//是否胜利
+	optional string battle_id = 7;	//战场id
+	optional int32 fighting = 8;	//战力
+	optional int32 battle_time = 9;	//战斗时间
+	optional int64 rid = 10;		//对方id
+	optional bool attack = 11;		//是否是攻方
+	optional int32 level = 12;		//等级
+	optional int32 old_rank = 13;	//等级
+}
+
+// 大神风采
+message PSGreatDemeanor
+{
+	optional string battle_id = 1;	//战场id
+	optional int32 battle_time = 2;	//战斗时间
+	optional bool win = 3;		//是否胜利
+	optional int32 attacker_rank = 4;		//挑战前的名次
+	optional string attacker_name = 5;		//名称
+	optional int32 attacker_server_id = 6;	//服务器id
+	optional int32 attacker_head_id = 7;		//头像
+	optional int32 attacker_border_id = 8;	//头像框
+	optional int32 defender_rank = 9;		//改变后的名次
+	optional string defender_name = 10;		//名称
+	optional int32 defender_server_id = 11;	//服务器id
+	optional int32 defender_head_id = 12;	//头像
+	optional int32 defender_border_id = 13;	//头像框
+	optional int32 attacker_rid = 14;		//攻方rid
+	optional int32 defender_rid = 15;		//守方rid
+
+}
+
+message PSPreliminariesRoleInfo {
+	optional int64 rid = 1; //玩家id
+	optional string nick = 2; //玩家名字
+	optional int32 image_id = 3; //玩家形象
+	optional int32 border_id = 4; //头像框
+	optional int32 head_id = 5; //头像id
+	optional int32 ladder_rank = 6; //天梯排名
+	optional int32 server_id = 7; //服务器
+	optional int64 fight = 8; //战力
+	optional int32 level = 9; //玩家等级
+}
+
+//获取预赛信息
+//72501
+message GReqPreliminaries{
+}
+
+//获取预赛信息
+//72501
+message GResPreliminaries{
+	optional int32 rank = 1;		//名次
+	optional int32 remaining_times = 2;	//剩余次数
+	optional int32 remaining_purchases = 3;		//剩余购买次数
+	optional int32 refresh_cool = 4;   // 刷新冷却时间
+	repeated PSPreliminariesRoleInfo opponent = 5;	//对手列表
+	repeated int64 like_rank = 6;		//已经点赞的玩家
+}
+
+//刷新对手
+//72502
+message GReqRefreshOpponent
+{
+}
+
+//刷新对手
+//72502
+message GResRefreshOpponent
+{
+	repeated PSPreliminariesRoleInfo opponent = 1;	//对手列表
+}
+
+//挑战对手
+//72503
+message GReqChallengeOpponent
+{
+	optional int64 rid = 1;
+	optional int32 rank = 2;
+}
+
+//挑战对手
+//72503
+message GResChallengeOpponent
+{
+	required BattleReport report = 1;       // 战报
+	repeated PSBackpackData reward = 2;	    //奖励
+	optional int32 atk_rank = 3;        //攻方挑战后排名
+	optional int32 def_rank = 4;        //守方挑战后的排名
+	optional int32 remaining_times = 5;	//剩余次数
+	repeated PSPreliminariesRoleInfo opponent = 6;	//对手列表
+	optional int32 language_id = 7;      //语言包key，改值不为0则提示该语言
+	optional int32 atk_old_rank = 8;     //攻方挑战前排名
+}
+
+//购买次数
+//72504
+message GReqPreliminariesPurchases
+{
+
+}
+
+//购买次数
+//72504
+message GResPreliminariesPurchases
+{
+	optional int32 remaining_times = 1;	//剩余次数
+	optional int32 remaining_purchases = 2;		//剩余购买次数
+}
+
+//挑战记录
+//72505
+message GReqPreliminariesRecord
+{
+}
+
+//预赛记录列表
+//72505
+message GResPreliminariesRecord
+{
+	repeated PSMyRecord record = 1;
+}
+
+//挑战记录
+//72506
+message GReqGreatDemeanor
+{
+}
+
+//预赛记录列表
+//72506
+message GResGreatDemeanor
+{
+	repeated PSGreatDemeanor demeanor = 1;
+}
+
+//查询玩家阵容数据
+//72507
+message GReqPinnacleLineUpData {
+	optional int64 rid = 1;
+}
+
+//返回玩家阵容
+//72507
+message GResPinnacleLineData {
+	optional int32 fight = 1; //阵容战斗力
+	repeated PSPinnacleHero heros = 2;	//参战英雄
+	optional int32 formation_id = 3;	//阵容ID
+}
+
+
+//预赛排行榜
+//72508
+message GReqPreliminariesRank
+{
+}
+//72508
+message GResPreliminariesRank
+{
+	repeated PSPinnacleRanker ranks = 1;	//排行榜数据
+}
+
+//排行榜点赞
+//72509
+message GReqPreliminariesLike
+{
+	optional int64 rid = 1;	//点赞的角色ID
+	optional int32 server_id = 2;	//被点赞的玩家所属的服务器
+}
+//72509
+message GResPreliminariesLike
+{
+	optional int64 rid = 1;	//点赞的角色ID
+}
+
+
+//查看巅峰赛信息
+//72301
+message GReqScanPinnacle
+{
+}
+//72301
+message GResScanPinnacle
+{
+	optional int32 like = 1;			//我的被点赞次数
+	optional int32 period = 2;			//巅峰赛当前赛程，0空闲，1选拔赛，2淘汰赛
+	optional int32 rank = 3;			//我的当前排名，0未上榜
+	optional int32 his_rank = 4;		//我的历史最高排名
+	optional int32 start_time = 5;		//赛季开始时间
+	optional int32 end_time = 6;		//赛季结束时间
+	repeated int64 like_rank = 7;		//已经点赞的玩家
+	optional int32 biu_cd = 8;			//弹幕冷却时间
+	optional int32 show_round = 9;		//是否需要请求展示最新一期巅峰赛冠军界面，0不需要，1需要
+	optional PSPinnacleMyResult result = 10;//我的最新一期成绩信息，为空时不展示
+	optional int32 battle_start_time = 11;	//本届比赛战斗开始时间，start_time<------未开始------->battle_start_time<------已结束------->end_time
+	optional int32 battle_round = 12;	//当前的战斗回合
+}
+
+//查看我的竞赛信息
+//72302
+message GReqMyPinnacleBattle
+{
+}
+//72302
+message GResMyPinnacleBattle
+{
+	optional int32 period = 1;					//当前赛程，1选拔赛，2淘汰赛
+	optional int32 battle_round = 2;			//当前的战斗回合
+	optional int32 next_time = 3;				//下一阶段的时间
+	optional PSPinnacleFormation attacker = 4;	//进攻方
+	optional PSPinnacleFormation defender = 5;	//防守方
+	optional int64 bid = 6;						//比赛ID，通过此ID查询战斗ID，再进行战斗回放，为0没有战斗
+	optional string battle_id = 7;				//战斗ID，已经战斗过的比赛才有战斗ID，当在界面中等待倒计时需要用比赛ID进行查询再进行回放，注意判断空
+	optional int32 which_win = 8;				//哪边胜利，1进攻方胜利，2防守方胜利，0未有胜负结果
+	optional int32 stage = 9;					//比赛阶段，0匹配、1准备、2竞猜、3战斗
+}
+
+//查看竞猜的比赛信息
+//72303
+message GReqGuessPinnacleBattle
+{
+}
+//72303
+message GResGuessPinnacleBattle
+{
+	optional int32 period = 1;					//当前赛程，1选拔赛，2淘汰赛
+	optional int32 battle_round = 2;			//当前的战斗回合
+	optional int32 next_time = 3;				//下一阶段的时间
+	optional PSPinnacleFormation attacker = 4;	//进攻方
+	optional PSPinnacleFormation defender = 5;	//防守方
+	optional int64 guess_coin = 6;				//我的竞猜币数量
+	optional int64 atk_coin = 7;				//进攻方当前的竞猜币数量
+	optional int64 def_coin = 8;				//防守方当前的竞猜币数量
+	optional int32 is_guess = 9;				//是否已经参与本场竞猜，0未参与，1已参与
+	optional int64 bid = 10;					//比赛ID，通过此ID查询战斗ID，再进行战斗回放
+	optional int32 which_win = 11;				//哪边胜利，1进攻方胜利，2防守方胜利，0未有胜负结果
+	optional string battle_id = 12;				//战斗ID
+	optional int32 stage = 13;					//比赛阶段，0匹配、1准备、2竞猜、3战斗
+	optional int32 guess_type = 14;				//竞猜哪一边胜利，1进攻方，2防守方，先判断is_guess
+}
+
+//比赛竞猜
+//72304
+message GReqGuess
+{
+	optional int32 type = 1;		//竞猜哪一边胜利，1进攻方，2防守方
+	optional int64 guess_coin = 2;	//投注竞猜币数量
+}
+//72304
+message GResGuess
+{
+	optional int64 guess_coin = 1;	//玩家剩余的竞猜币
+}
+
+
+//通过比赛ID查询战斗ID
+//72305
+message GReqGetPinnacleBattle
+{
+	optional int64 bid = 1;
+}
+//72305
+message GResGetPinnacleBattle
+{
+	optional string battle_id = 1;
+}
+
+
+//查看巅峰赛32强信息
+//72306
+message GReqScanPinnacleKnockout
+{
+}
+//72306
+message GResScanPinnacleKnockout
+{
+	optional int64 guess_id = 1;				//正在进行竞猜的比赛ID
+	optional int32 battle_round = 2;			//比赛轮次，32、16、8、4、2
+	optional int32 next_time = 3;				//下一阶段的时间
+	repeated PSPinnacleKnockoutBattle battles = 4;	//比赛列表
+	optional int32 stage = 5;					//比赛阶段，0匹配、1准备、2竞猜、3战斗
+}
+
+//冠军点赞
+//72307
+message GReqPinnacleLike
+{
+	optional int64 rid = 1;	//点赞的角色ID
+}
+//72307
+message GResPinnacleLike
+{
+	optional int64 rid = 1;	//点赞的角色ID
+}
+
+//巅峰赛发弹幕
+//72308
+message GReqPinnacleBiubiu
+{
+	optional string content = 1;
+}
+//72308
+message GResPinnacleBiubiu
+{
+	optional int32 biu_cd = 1;		//发弹幕冷却时间
+}
+
+//请求弹幕列表
+//72309
+message GReqPinnacleBiuList
+{
+}
+//72309
+message GResPinnacleBiuList
+{
+	repeated PSPinnacleBiu content = 1;	//弹幕列表
+}
+
+//有新弹幕时候的推送
+//72310
+message GResPinnacleBiuChange
+{
+	optional PSPinnacleBiu content = 1;	//新的弹幕内容
+}
+
+//玩家的竞猜列表
+//72311
+message GReqPinnacleGuessList
+{
+}
+//72311
+message GResPinnacleGuessList
+{
+	repeated PSPinnacleGuess record = 1;	//竞猜记录
+}
+
+//竞猜比赛中奖推送
+//72312
+message GResPinnacleGuessWin
+{
+	optional int32 period = 1;			//比赛进程
+	optional int32 battle_round = 2;	//比赛回合
+	optional int64 gain_coin = 3;		//获得的竞猜币数量
+}
+
+//请求我的比赛列表
+//72313
+message GReqScanMyPinnacleBattle
+{
+}
+//72313
+message GResScanMyPinnacleBattle
+{
+	repeated PSPinnacleBattle battles = 1;	//比赛列表
+}
+
+//巅峰赛阶段变化的推送
+//72314
+message GResPinnacleStageChange
+{
+}
+
+//巅峰赛排行榜
+//72315
+message GReqPinnacleRank
+{
+}
+//72315
+message GResPinnacleRank
+{
+	repeated PSPinnacleRanker ranks = 1;	//排行榜数据
+}
+
+//推送巅峰赛结束
+//72316
+message GResPinnacleEnd
+{
+}
+
+//请求最新一期巅峰赛冠军信息
+//72317
+message GReqPinnacleShowTop
+{
+}
+//72317
+message GResPinnacleShowTop
+{
+	repeated PSPinnacleRanker ranks = 1;	//排行榜数据
+	optional int32 time = 2;				//比赛时间
+}
+
+//标记已经展示过玩家的最新一期比赛结果
+//72318
+message GReqPinnacleShowMyResult
+{
+}
+//72318
+message GResPinnacleShowMyResult
+{
+}
+
+//竞猜投注广播
+//72319
+message GResPinnacleGuessBroadcast
+{
+	optional int32 type = 1;		//竞猜哪一边胜利，1进攻方，2防守方
+	optional int64 guess_coin = 2;	//投注竞猜币数量
+}
+
+//巅峰赛保存阵容后发送
+//72320
+message GReqPinnacleSaveFormation
+{
+}
+//72320
+message GResPinnacleSaveFormation
+{
+}
+
+//某个战斗阵容发生改变时推送，推送给对战的双方
+//72321
+message GResPinnacleFormationChange
+{
+}
+
+//清空弹幕
+//72322
+message GResPinnacleCleanBiu
+{
+}

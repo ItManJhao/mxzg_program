@@ -1,0 +1,89 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion090GMsg";
+import "Object.proto";
+
+//活动通行证列表
+//76190
+message GReqTPermitList{
+
+}
+//76190
+message GResTPermitList{
+    optional int32 level = 1;//活动等级
+    optional int32 exp = 2;//活动经验值
+    optional int32 buy_privilege = 3;//特权购买状态，1为己购买，0为未购买
+    repeated int32 finish_reward = 4;//已领取的等级普通奖励
+    repeated int32 privilege_reward = 5;//已领取的等级特权奖励
+    repeated int32 task_idx = 6;//已领取奖励的任务idx
+    repeated PSMapData task_list = 7;//任务进度
+    optional int32 status = 8;//活动是否已弹窗提醒，1为已提醒，0为未提醒
+    optional int32 day_end_time = 9;
+    optional int32 week_end_time = 10;
+}
+
+//购买活动通行证等级
+//76191
+message GReqTPermitBuyLevel{
+    optional int32 level = 1;//购买等级量
+}
+//76191
+message GResTPermitBuyLevel{
+    optional int32 level = 1;//购买后的等级
+    optional int32 exp = 2;//经验
+}
+
+//领取通行证等级奖励(单个)
+//76192
+message GReqTPermitLevelReward{
+    optional int32 level = 1;//领取的等级
+}
+//76192
+message GResTPermitLevelReward{
+   repeated int32 finish_reward = 1;//已领取的等级普通奖励
+   repeated int32 privilege_reward = 2;//已领取的等级特权奖励
+}
+
+//一键领取通行证奖励
+//76193
+message GReqTPermitAllReward{
+
+}
+//76193
+message GResTPermitAllReward{
+    repeated int32 finish_reward = 1;//已领取的等级普通奖励
+    repeated int32 privilege_reward = 2;//已领取的等级特权奖励
+}
+
+//领取通行证任务奖励
+//76194
+message GReqTPermitTaskReward{
+    optional int32 idx = 1;//领取的活动idx
+}
+//76194
+message GResTPermitTaskReward{
+    optional int32 level = 1;//等级
+    optional int32 exp = 2;//经验值
+    optional int32 idx = 3;//idx
+}
+
+//任务更新
+//76195
+message GResTPermitDayTaskProgress{
+    repeated PSMapData task_progress = 1;//任务进度
+}
+
+//购买通行证特权返回
+//76196
+message GResTPermitPrivilege{
+    optional int32 level = 1;//等级
+    optional int32 exp = 2;//经验值
+    repeated int32 privilege_reward = 3;//已领取的特权奖励
+    optional int32 buy_privilege = 4;//特权购买状态，1为己购买，0为未购买
+}
+
+//修改弹窗提示状态
+//76197
+message GReqTPermitRemind{
+
+}

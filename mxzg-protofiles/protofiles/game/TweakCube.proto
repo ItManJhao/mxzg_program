@@ -1,0 +1,113 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "TweakCubeGMsg";
+
+//魔方数据
+//75501
+message GReqTweakCube {
+
+}
+//魔方数据，当数据变化的时候，也会主动推送，比如玩家升级英雄等级，导致魔方等级变化时，会主动推送
+//75501
+message GResTweakCube {
+    repeated int64 rank_hero = 1; //魔方供奉英雄列表
+    optional int32 open_count = 2; //开启槽位数量
+    repeated PSTrench trench = 3; //槽位信息
+}
+
+//添加至槽位
+//75502
+message GReqTrenchAddHero {
+    optional int32 trench_index = 1; //从1开始
+    optional int64 hero_id = 2;
+    optional int32 tweak_cube_lv = 3;
+}
+//75502
+message GResTrenchAddHero {
+    optional PSTrench trench = 1;
+
+}
+
+//卸下
+//75503
+message GReqTrenchRemoveHero {
+    optional int32 trench_index = 1; //从1开始
+}
+//75503
+message GResTrenchRemoveHero {
+    optional PSTrench trench = 1;
+}
+
+//开槽位
+//75504
+message GReqTrenchOpen {
+}
+//75504
+message GResTrenchOpen {
+    optional PSTrench trench = 1; //当前开启的格子
+    optional int32 open_count = 2; //开启数量
+}
+
+//清除cd
+//75505
+message GReqTrenchClearCd {
+    optional int32 trench_index = 1;
+}
+//75505
+message GResTrenchClearCd {
+    optional PSTrench trench = 1; //当前开启的格子
+}
+
+
+
+//更新魔方槽位里面的英雄魔方等级
+//75506
+message GResUpdateHeroTweakCube {
+    repeated PSHeroTweakCubeLv update = 1;
+}
+
+//查看地煞数据
+//75521
+message GReqDiShaScan {
+}
+//75521
+message GResDiShaScan {
+	repeated PSDiShaData diShas = 1;
+}
+//地煞升级
+//75522
+message GReqDiShaLevelUp {
+	optional int32 type = 1;
+}
+//75522
+message GResDiShaLevelUp {
+	optional PSDiShaData diSha = 1;
+}
+//地煞重置
+//75523
+message GReqDiShaReset {
+	optional int32 type = 1;
+}
+//75523
+message GResDiShaReset {
+	optional PSDiShaData diSha = 1;
+}
+
+
+message PSTrench {
+    optional int32 index = 1; 			//格子索引，1开始
+    optional int32 last_change_time = 2;//上次英雄改变时间
+    optional int64 hero_id = 3;			//上阵英雄id，0代表未上阵
+}
+
+message PSHeroTweakCubeLv {
+    optional int64 hero_id = 1;
+    optional int32 lv = 2; 		//魔方等级
+    optional int32 stage = 3;	//魔方阶级
+}
+
+//地煞数据
+message PSDiShaData {
+	optional int32 type = 1;	//地煞类型
+	optional int32 level = 2;	//地煞等级
+}

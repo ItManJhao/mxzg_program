@@ -1,0 +1,538 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ClanGMsg";
+
+import "Object.proto";
+
+message ResClanMemberData
+{
+	optional int64 rid = 1;
+    optional string nick = 2;
+    optional int32 photo = 3;//头像
+    optional int32 rank = 4;
+    optional int32 level = 5;
+    optional int32 damage = 6;//成员战斗力
+    optional int32 position = 7;// 0：无效，1：会长；2：副会长 3：普通成员
+	optional int32 border_id = 8;//头像框
+	optional int32 online_status = 9; // 在线状态
+	optional int32 offline_time = 10; // 离线时间
+	optional int64 today_donate = 11;	//今天捐献
+	optional int64 total_donate = 12;	//历史捐献
+	optional int32 lively_level = 13;	//活跃等级
+}
+
+message PSClanSkillData
+{
+	optional int32 profession_type = 1;//职业类型
+	optional int32 stage = 2;//技能层数
+	optional int32 elem_idx = 3;//技能对应层数的点亮到的属性idx
+}
+
+message ResClanSearchData
+{
+	optional int64 clan_id = 1;	//军团ID
+	optional int32 clan_level = 2;
+	optional int32 clan_photo = 3;
+	optional string clan_name = 4;	//军团名称
+	optional int32 clan_member_num = 5;	//军团人数
+	optional int32 role_level = 6;  //限制加入角色等级
+    optional bool is_approve = 7;   //是否需要验证
+    optional string president_name = 8;   //会长名称
+}
+
+message ResClanMsgInfoData
+{
+	optional int64 member_id = 1;//被操作人ID
+	optional int64 manager_id = 2;//操作人ID
+	optional int32 info_type = 3; //1. 同意成员申请 2. 退出军团 3. 管理员踢掉成员 4. 成员被升职  5.降职 6.加入军团 8：击杀的副本boss类型；9：进行捐献类型10：会长职位自动转让 11,公会战记录，12，公会boss购买buff 13，公会boss攻击记录，14，公会boss扫荡记录
+	optional string member_name = 4; // 被操作人名
+	optional string manager_name = 5; // 操作人名
+	optional int32 value = 6; // 操作类型 。例：升降职：填写升降职的职位。击杀BOSS：填写BOSS配置表的编号ID而非类型ID。捐献：填写捐献类型
+	optional int32 time = 7; // 操作时间
+	repeated int64 arg = 8;// 额外参数顺序放置
+}
+
+message ResClanReqMsgData
+{
+	optional int64 role_id = 1; // 玩家id
+	optional int32 level = 2; // 玩家等级
+	optional int32 photo = 3;//玩家头像
+	optional string nick = 4; // 操作人名
+	optional int32 damage = 5;
+	optional int32 border_id = 6;       //头像框
+	optional int32 online_status = 7;   // 在线状态
+    optional int32 offline_time = 8;    // 离线时间
+}
+
+message PSClanRankDamageData
+{
+	optional int32 rank = 1; //排名
+	optional int64 rid = 2; //玩家ID
+	optional int32 photo = 3;//玩家头像
+    optional string nick = 4; // 玩家名字
+    optional int32 level = 5;//等级
+    optional int64 damage = 6;//副本造成的伤害
+	optional int32 border_id = 7;//头像框
+}
+
+message PSClanDonateData
+{
+	optional int32 order_type = 1;//订单类型
+	optional int32 complete_time = 2;//上次完成时间
+}
+
+message PSClanDonateTotalData
+{
+	optional int32 reward_idx = 1;//领奖索引
+	optional int32 complete_time = 2;//上次领奖时间
+}
+
+//获取下一次允许加入公会时间
+//7000
+message GReqQuitClanTime{
+}
+//7000
+message GResQuitClanTime{
+    optional int32 time = 1;//下一次允许加入公会时间
+}
+
+//公会信息
+//7001
+message GReqClanInfo
+{
+	optional int64 clan_id = 1;
+}
+//7001
+message GResClanInfo
+{
+	optional int64 clan_id = 1;
+	optional int32 clan_photo = 2; 
+	optional int32 clan_level = 3;
+	optional int32 clan_exp = 4;
+	optional string clan_desc = 5;    // 军团简介
+	optional string clan_name = 6;
+	repeated ResClanMemberData list = 7;
+	optional int32 role_level = 8;  //限制加入角色等级
+    optional bool is_approve = 9;   //是否需要验证
+    optional int32 recruit_times = 10;   //已发送招募次数
+}
+
+//创建公会
+//7002
+message GReqClanCreate
+{
+	optional string clan_name = 1;
+	optional int32 clan_photo = 2;
+	optional string clan_notice = 3;
+    optional int32 role_level = 4;  //角色等级限制
+    optional bool is_approve = 5;   //是否需要验证
+}
+//7002
+message GResClanCreate
+{
+	optional int32 error_code = 1; // 0：创建成功   1：已加入公会  2：公会名字为空  3： 公会名字含有敏感字符  4：公会公告含有特殊字符 5:名字重复，6：宝石不够 7:贵族等级不够
+	optional int64 clan_id = 2;
+}
+
+//公会搜索
+//7003
+message GReqClanSearch
+{
+	optional int32 search_type = 1;
+	optional string clan_name = 2;
+}
+//7003
+message GResClanSearch
+{
+	optional int32 search_type = 1;
+    repeated ResClanSearchData list = 2;
+}
+
+//加入公会
+//7004
+message GReqClanJoin
+{
+	optional int64 clan_id = 1;
+}
+//7004
+message GResClanJoin
+{
+	optional int64 clan_id = 1;
+	optional int32 join_type = 2;	//0：加入成功， 1：待审核， 2：申请失败 3:公会人数已满
+}
+
+
+//退出公会
+//7005
+message GReqClanQuit
+{
+}
+//7005
+message GResClanQuit
+{
+	optional int32 quit_type = 1;//0：退出成功，1退出失败
+}
+
+//公会消息
+//7006
+message GReqClanMsgInfo
+{
+}
+//7006
+message GResClanMsgInfo
+{
+	repeated ResClanMsgInfoData list = 1;
+}
+
+//公会成员申请列表
+//7007
+message GReqClanReqMsgInfo
+{
+}
+//7007
+message GResClanReqMsgInfo
+{
+	repeated ResClanReqMsgData list = 1;	//消息
+}
+
+//公会消息处理
+//7008
+message GReqClanReqAgree
+{
+	optional int64 member_id = 1; // 玩家ID
+	optional int32 agree_status = 2; // 同意状态 1：同意 0:忽略
+}
+//7008
+message GResClanReqAgree
+{
+	optional int64 clan_id = 1; // 申请者 接收到的军团id
+}
+
+//刷新公会信息
+//7009
+message GResUpdateAllClanInfo
+{
+
+}
+
+//修改公会消息
+//7010
+message GReqClanChangInfo
+{
+	optional int32 clan_photo = 1;
+    optional string clan_desc = 2;
+}
+//7010
+message GResClanChangInfo
+{
+}
+
+//升职或降职操作
+//7011
+message GReqClanChangePos
+{
+	optional int64 member_id = 1;
+    optional int32 type = 2; // 1升，0降, 2踢出 3升为会长
+}
+//7011
+message GResClanChangePos
+{	optional int32 status = 1;//// 1成功 ，0失败, 2被踢出 3：会会该职位数量已达上限
+}
+
+//同意申请加入公会后返回
+//7012
+message GResClanAgree{
+    optional string nick = 1;//申请人昵称
+    optional int32 status = 2;// 0：拒绝，1同意
+}
+
+
+//请求公会伤害排行
+//7022
+message GReqClanRankDamage
+{
+}
+//7022
+message GResClanRankDamage
+{
+	repeated PSClanRankDamageData list = 1;
+}
+
+//公会技能
+//7031
+message GReqClanSkillList
+{
+}
+//7031
+message GResClanSkillList
+{
+    optional int32 next_refresh_times = 1;//下一次重启数
+	repeated PSClanSkillData list = 2;
+}
+
+//点亮公会技能
+//7032
+message GReqClanSkillLight
+{
+	optional int32 profession_type = 1;//点亮的职业类型
+}
+//7032
+message GResClanSkillLight
+{
+}
+
+//公会技能重置
+//7033
+message GReqClanRemoveSkill{
+    optional int32 profession_type = 1;//重置的职业类型
+}
+//7033
+message GResClanRemoveSkill{
+
+}
+
+//公会捐献
+//7041
+message GReqClanDonateList
+{
+}
+//7041
+message GResClanDonateList
+{
+	optional int32 total_donate_num = 1;//公会捐献总数
+	optional int32 donate_thing = 2;		//玩家今天已经捐献的类型，0为未捐献
+	repeated int32 total_donate_list = 3;//已领取的宝箱列表
+}
+
+//捐献
+//7042
+message GReqClanDonate
+{
+	optional int32 order_type = 1;//捐献类型 
+}
+//7042
+message GResClanDonate
+{
+}
+
+//捐献总次数领奖
+//7043
+message GReqClanTotalDonateReward
+{
+	optional int32 reward_idx = 1;
+}
+//7043
+message GResClanTotalDonateReward
+{
+}
+//公会改名
+//7054
+message GReqClanRenamingCard
+{
+    optional string nick = 1;//新昵称
+    optional bool is_gem = 2;//是否用钻石改名
+}
+//7054
+message GResClanRenamingCard
+{
+    optional string nick = 1;
+}
+
+//公会入会条件修改
+//7055
+message GReqClanJoinRequirement
+{
+    optional int32 role_level = 1;  //角色等级
+    optional bool is_approve = 2;   //是否需要验证
+}
+//7055
+message GResClanJoinRequirement
+{
+    optional int32 role_level = 1;  //角色等级
+    optional bool is_approve = 2;   //是否需要验证
+}
+
+//发布公会招募信息
+//7056
+message GReqClanRecruit
+{
+    optional bool is_cost = 1;   //是否需要花费
+}
+//7056
+message GResClanRecruit
+{
+}
+
+//公会解散
+//7057
+message GReqClanDissolve
+{
+}
+//7057
+message GResClanDissolve
+{
+}
+
+//公会弹劾会长
+//7058
+message GReqClanImpeach
+{
+    optional int64 president_rid = 1;   //会长角色id
+}
+//7058
+message GResClanImpeach
+{
+}
+
+//会长发公会邮件
+//7059
+message GReqClanSendMail
+{
+    optional string title = 1;      //邮件标题
+    optional string context = 2;   //邮件内容
+}
+//7059
+message GResClanSendMail
+{
+}
+
+//工会战，捐献，boss未参与的人员信息
+//7062
+message GReqClanNotCompleteTask
+{
+    optional int32 type = 1;   //类型1工会战，2捐献，3公会boss
+}
+//7062
+message GResClanNotCompleteTask
+{
+    repeated ResClanMemberData list = 1;// 成员列表
+}
+
+//公会活跃信息
+//7063
+message GReqClanLivenessInfo
+{
+}
+//7063
+message GResClanLivenessInfo
+{
+    optional int32 level = 1;//等级
+    optional int32 value = 2;//活跃进度
+    optional int32 daily_value = 3;//今天活跃进度
+    optional int32 week_value = 4;//本周活跃进度
+    repeated PSMapData list = 5;// 任务列表idx --> 次数times
+}
+
+//公会活跃等级领奖
+//7064
+message GReqClanLivenessReward
+{
+    optional int32 level = 1;//升级领奖等级
+}
+//7064
+message GResClanLivenessReward
+{
+    optional int32 level = 1;//最新等级
+    optional int32 value = 2;//活跃进度
+}
+
+message PSClanRedPacketSendData
+{
+	optional int32 type = 1;//红包类型
+	optional int32 num = 2;//已发次数
+	optional int32 snatch_num = 3;//已抢红包次数
+}
+
+message PSClanRedPacketData
+{
+	optional int64 id = 1;          //红包id
+	optional int32 buy_gem_id = 2;   //红包商品id
+	optional int32 snatch_times = 3;  //已抢次数
+	optional int64 rid = 4;         //发红包角色id
+    optional string nick = 5;       //发红包角色名
+    optional int32 photo = 6;       //头像
+    optional int32 border_id = 7;   //头像框
+    optional int32 date_time = 8;  //时间
+    optional int32 state = 9;       //状态，0未领取，1已领取
+    optional int32 position = 10;   // 0：无效，1：会长；2：副会长 3：普通成员
+    optional int32 level = 11;      // 角色等级
+}
+
+message PSClanRedPacketRecord
+{
+	optional int64 rid = 1;         //抢红包角色id
+    optional string nick = 2;       //抢红包角色名
+    optional int32 photo = 3;       //头像
+    optional int32 border_id = 4;   //头像框
+	optional int32 item_id = 5;     //抢到货币类型
+	optional int32 snatch_num = 6;  //抢到金额
+	optional int32 date_time = 7;   //时间
+}
+message PSClanRedPacketRankInfo
+{
+	optional int64 rid = 1;         //抢红包角色id
+    optional string nick = 2;       //抢红包角色名
+    optional int32 photo = 3;       //头像
+    optional int32 border_id = 4;   //头像框
+	optional int32 rank = 5;        //排名
+	optional int32 send_money = 6;  //发送总价值
+	optional int32 send_times = 7;  //发送红包数量
+	optional int32 level = 8;       //角色等级
+}
+
+//公会已发送的红包信息
+//7071
+message GReqClanRedPacketSendInfo
+{
+}
+//7071
+message GResClanRedPacketSendInfo
+{
+    repeated PSClanRedPacketSendData list = 1;// 红包信息
+}
+
+//公会红包列表
+//7072
+message GReqClanRedPacket
+{
+}
+//7072
+message GResClanRedPacket
+{
+    repeated PSClanRedPacketData list = 1;// 红包信息
+}
+
+//抢红包
+//7073
+message GReqClanSnatchRedPacket
+{
+    optional int64 id = 1;   //红包id
+}
+//7073
+message GResClanSnatchRedPacket
+{
+    repeated PSClanRedPacketRecord list = 1;// 红包被抢记录
+}
+
+//单个红包详情
+//7074
+message GReqClanRedPacketDetail
+{
+    optional int64 id = 1;   //红包id
+}
+//7074
+message GResClanRedPacketDetail
+{
+    repeated PSClanRedPacketRecord list = 1;// 红包被抢记录
+}
+
+//红包排名
+//7075
+message GReqClanRedPacketRank
+{
+}
+//7075
+message GResClanRedPacketRank
+{
+    repeated PSClanRedPacketRankInfo list = 1;// 红包排名
+}

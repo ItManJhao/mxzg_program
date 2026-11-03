@@ -1,0 +1,60 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>开放式特殊请求</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('reloadConfig/ajax_OpenReload')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                            <div class="tab-pane active">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>服务器：</label>
+
+                                    <!-- 服务器全选html代码 -->
+                                    <include file="Public:servercheckall" />
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>路由和参数：</label>
+                                    <div class="col-sm-8">
+                                        <textarea placeholder="路由和参数" name="reload" class="configInput form-control" required="" aria-required="true"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>注释：</label>
+                                    <div class="col-sm-8">
+                                        <p style="color:red;font-size: 20px;">路由和参数例如：/patch/loadpatch/?aa=11&bb=22</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('reloadConfig/ajax_OpenReload')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+
+<!-- 服务器全选js代码 -->
+<script type="text/javascript" src="/Public/static/admin/js/servercheckall.js"></script>    
+<script language="javascript">
+
+    
+</script>
+
+
+<include file="Public:footer" />

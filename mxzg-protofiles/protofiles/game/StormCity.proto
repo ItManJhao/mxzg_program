@@ -1,0 +1,320 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "StormCityGMsg";
+
+import "Battle.proto";
+
+//查看赛程信息
+//78001
+message GReqStormCityScanSchedule
+{
+}
+//78001
+message GResStormCityScanSchedule
+{
+	optional int32 stage = 1;				//当前阶段
+	optional int32 round_start_time = 2;	//本轮活动开始时间，秒数
+	optional int32 match_start_time = 3;	//匹配开始时间，秒数
+	optional int32 prepare_start_time = 4;	//准备开始时间，秒数
+	optional int32 trip_start_time = 5;		//行军开始时间，秒数
+	optional int32 battle_start_time = 6;	//战斗开始时间，秒数
+	optional int32 round_end_time = 7;		//本轮活动结束时间，秒数
+	optional int32 match_server = 8;		//匹配到的服务器ID
+	optional bool match_mirror = 9;			//是否匹配到镜像联军
+	optional bool signed = 10;				//是否已报名
+}
+
+//报名
+//78002
+message GReqStormCitySign
+{
+}
+//78002
+message GResStormCitySign
+{
+}
+
+//保存编队，在发送了通用的布阵保存协议之后，需要多发一次此协议
+//78003
+message GReqStormCitySaveFormation
+{
+}
+//78003
+message GResStormCitySaveFormation
+{
+}
+
+//查看分路布设
+//78004
+message GReqStormCityScanRoadAssign
+{
+	optional int32 road = 1;	//路号，1左，2中，3右
+}
+//78004
+message GResStormCityScanRoadAssign
+{
+	optional int32 my_road = 1;	//我当前布设在的路号，-1没有报名，0没有布设到路上
+	repeated PbStormCityCompetitor competitors = 2;	//本路的参赛者列表，包含自己
+}
+
+//指派分路
+//78005
+message GReqStormCityAssignRoad
+{
+	optional int32 road = 1;	//路号，1左，2中，3右
+}
+//78005
+message GResStormCityAssignRoad
+{
+	optional int32 road = 1;	//路号，1左，2中，3右
+}
+
+//查看三路的战斗概况
+//78006
+message GReqStormCityScanThreeRoad
+{
+}
+//78006
+message GResStormCityScanThreeRoad
+{
+	optional int32 atk_star = 1;		//进攻方获得的星星数
+	optional int32 def_star = 2;		//防守方获得的星星数
+	repeated PbStormCityRoadResume roads = 3;	//三路的概要信息
+}
+
+//查看某路的当前详细战况
+//78007
+message GReqStormCityScanRoadDetail
+{
+	optional int32 road = 1;	//路号，1左，2中，3右
+}
+//78007
+message GResStormCityScanRoadDetail
+{
+	optional PbStormCityRoadResume road = 1;			//本路的概要信息
+	repeated PbStormCityBattle battles = 2;				//对战列表
+	repeated PbStormCityCompetitor atk_waitings = 3;	//进攻方待战列表
+	repeated PbStormCityCompetitor def_waitings = 4;	//防守方待战列表
+}
+
+//查看某路的历史战况
+//78008
+message GReqStormCityScanRoadHistory
+{
+	optional int32 road = 1;	//路号，1左，2中，3右
+}
+//78008
+message GResStormCityScanRoadHistory
+{
+	optional PbStormCityRoadResume road = 1;//本路的概要信息
+	repeated PbStormCityBattle battles = 2;	//对战列表
+}
+
+//查看杀敌排行
+//78009
+message GReqStormCityScanKillRank
+{
+}
+//78009
+message GResStormCityScanKillRank
+{
+	repeated PbStormCityCompetitor competitors = 1;	//参赛者列表，已排序
+}
+
+//查看当前竞猜比赛
+//78010
+message GReqStormCityScanGuessBattle
+{
+}
+//78010
+message GResStormCityScanGuessBattle
+{
+	optional PbStormCityBattleDetail battle = 1;
+	optional int32 atk_odds = 2;		//进攻方的赔率，万分比
+	optional int32 def_odds = 3;		//防守方的赔率，万分比
+	optional int32 stage = 4;			//当前阶段
+	optional int32 stage_end_time = 5;	//当前阶段的结束时间
+	optional int32 coin = 6;			//我的奖金数
+	optional int64 cid = 7;				//竞猜了哪个参赛者，0为未竞猜
+}
+
+//竞猜比赛
+//78011
+message GReqStormCityGuess
+{
+	optional int32 bet_coin = 1;	//下注的奖金数
+	optional int32 cid = 2;			//下注哪个参赛者
+}
+//78011
+message GResStormCityGuess
+{
+	optional int32 atk_odds = 1;	//进攻方的赔率
+	optional int32 def_odds = 2;	//防守方的赔率
+	optional int32 coin = 3;		//我的奖金数
+	optional int64 cid = 4;			//竞猜了哪个参赛者，0为未竞猜
+}
+
+//查看我的竞猜
+//78012
+message GReqStormCityMyGuess
+{
+}
+//78012
+message GResStormCityMyGuess
+{
+	repeated PbStormCityGuessLog guess_logs = 1;//竞猜记录
+}
+
+//查看行军日志
+//78013
+message GReqStormCityScanTripLog
+{
+}
+//78013
+message GResStormCityScanTripLog
+{
+	repeated PbStormCityTripLog trip_logs = 1;//行军记录
+	optional bool has_reward = 2;			//是否有奖励
+}
+
+//领取行军奖励
+//78014
+message GReqStormCityTakeTripReward
+{
+}
+//78014
+message GResStormCityTakeTripReward
+{
+	repeated PbStormCityTripLog trip_logs = 1;//行军记录
+}
+
+//查看某一场对战的详细信息
+//78015
+message GReqStormCityScanBattleDetail
+{
+	optional int64 bid = 1;	//比赛ID
+}
+//78015
+message GResStormCityScanBattleDetail
+{
+	optional PbStormCityBattleDetail battle = 1;
+}
+
+//阶段变化推送
+//78016
+message GResStormCityStageTransform
+{
+}
+
+//活动结束推送
+//78017
+message GResStormCityEnd
+{
+}
+
+//竞猜广播推送
+//78018
+message GResStomCityGuessBroadcastMessage
+{
+	optional int32 atk_odds = 1;		//进攻方的赔率，万分比
+	optional int32 def_odds = 2;		//防守方的赔率，万分比
+}
+
+
+enum PbStormCityStage
+{
+	IDLE = 0;			//空闲
+	SIGN = 1;			//报名
+	MATCH = 2;			//匹配
+	PREPARE = 3;		//准备
+	TRIP = 4;			//行军
+	BATTLE_MATCH = 5;	//战斗匹配阶段
+	BATTLE_GUESS = 6;	//战斗竞猜阶段
+	BATTLE_WATCH = 7;	//战斗观看阶段
+	BATTLE_SETTLE = 8;	//战斗结算阶段
+}
+
+//暴风城之战参赛者
+message PbStormCityCompetitor
+{
+	optional int64 rid = 1;		//玩家ID，0为联军镜像
+	optional string nick = 2;	//名字
+	optional int32 level = 3;	//等级
+	optional int32 head_id = 4;	//头像ID
+	optional int32 border_id = 5;	//头像框ID
+	optional int32 fighting = 6;	//战斗力
+	optional int32 labor = 7;		//体力值
+	optional int32 server_id = 9;	//所在的服务器ID
+	optional int32 kill = 10;		//杀敌数
+	optional int64 cid = 11;		//参赛者唯一ID
+}
+//暴风城之战参赛者完整信息
+message PbStormCityCompetitorDetail
+{
+	optional PbStormCityCompetitor competitor = 1;	//参赛者信息
+	repeated PbStormCityHero heroes = 2;			//上阵英雄列表
+}
+
+//暴风城之战英雄
+message PbStormCityHero
+{
+	optional int32 hero_type = 1;	//英雄类型
+	optional int32 level = 2;		//等级
+	optional int32 stage = 3;		//阶级
+	optional int32 star = 4;		//星级
+	optional int32 pos = 5;			//站位，前端排序
+	optional int64 id = 6;			//英雄ID
+	optional int32 fashion_id = 7;	//皮肤（时装）ID
+	optional int64 max_hp = 8;		//最大血量
+	optional int64 curr_hp = 9;		//当前血量
+}
+
+//某路的概要信息
+message PbStormCityRoadResume
+{
+	optional int32 road = 1;		//路号
+	optional int32 atk_alive = 2;	//进攻方存活队伍数
+	optional int32 atk_count = 3;	//进攻方布设队伍数
+	optional int32 atk_server = 4;	//进攻方所在服务器ID
+	optional int32 def_alive = 5;	//防守方存活队伍数
+	optional int32 def_count = 6;	//防守方布设队伍数
+	optional int32 def_server = 7;	//防守方所在服务器ID，为0时做迷雾效果
+}
+
+//某一场战斗
+message PbStormCityBattle
+{
+	optional int64 bid = 1;						//比赛ID
+	optional string battle_id = 2;				//战斗ID
+	optional PbStormCityCompetitor attacker = 3;//进攻方
+	optional PbStormCityCompetitor defender = 4;//防守方
+	optional int32 which_win = 5;				//胜利方，1进攻方胜利，2防守方胜利，0未有胜负
+	optional int32 battle_round = 6;			//比赛所在的轮数
+}
+
+//某一场战斗，完整信息
+message PbStormCityBattleDetail
+{
+	optional int64 bid = 1;						//比赛ID
+	optional string battle_id = 2;				//战斗ID
+	optional PbStormCityCompetitorDetail attacker = 3;//进攻方
+	optional PbStormCityCompetitorDetail defender = 4;//防守方
+	optional int32 which_win = 5;				//胜利方，1进攻方胜利，2防守方胜利，0未有胜负
+	optional int32 battle_round = 6;			//比赛所在的轮数
+}
+
+//竞猜记录
+message PbStormCityGuessLog
+{
+	optional PbStormCityBattle battle = 1;	//战斗
+	optional BattleLog battle_log = 2;		//血量统计
+	optional int32 guess_win = 3;			//竞猜获得，正数获得，负数失去
+}
+
+//行军记录
+message PbStormCityTripLog
+{
+	optional int32 message_id = 1;	//消息类型
+	optional int32 item_type = 2;	//奖励ID
+	optional int64 item_num = 3;	//奖励数量
+}

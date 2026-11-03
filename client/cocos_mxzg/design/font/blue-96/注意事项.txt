@@ -1,0 +1,1 @@
+导出FNT文件后..需要将FNT文件中的face="XXXX"改成face="Arial",暂时没有解决办法

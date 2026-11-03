@@ -1,0 +1,127 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "VideoGMsg";
+import "Battle.proto";
+
+message PSVideo
+{
+	optional int64 id = 1;				//数据ID
+	optional int32 type = 2;            //录像馆类型，1竞技场，2世界BOSS，3冠军赛，4跨服天梯
+	optional int32 subtype = 3;         //录像的小类型，比如冠军赛的选拔赛，32强，16强等等
+	optional int32 time = 4;            //录像产生的时间
+	optional BattleLog battle_log = 5;  //战斗统计数据
+	optional int64 hall_id = 6;			//系统录像ID，当收藏的数据来源于系统记录时，hall_id不为0，存在hall_id跟person_id同时不为0的情况，因为个人记录的来源就是系统记录
+	optional int64 person_id = 7;		//个人录像ID，当收藏的数据来源于个人记录时，person_id不为0
+	optional int64 keep_id = 8;			//对应的个人收藏ID，当收藏ID不为0时，表示该数据有被收藏过
+    optional int32 like_num = 9;	//点赞次数
+    optional int32 play_num = 10;	//播放次数
+    optional int32 share_num = 11;	//分享次数
+    optional int64 attacker_extra = 12;//进攻方额外数据，擂台天梯战报存排名
+    optional int64 defender_extra = 13;//防守方额外数据，擂台天梯战报存排名
+    optional bool is_like = 14;	    //是否点赞
+}
+
+//查看系统录像数据
+//42001
+message GReqVideos
+{
+    optional int32 type = 1; //录像类型(1竞技场，2世界Boss，3冠军赛，4跨服天梯， 5切磋)
+    optional bool new_hero = 2;	//是否新英雄
+    optional bool week_hot = 3;	//是否本周热点
+}
+//42001
+message GResVideos
+{
+    optional int32 type = 1; 		//录像类型(1竞技场，2世界Boss，3冠军赛，4跨服天梯， 5切磋)
+    repeated PSVideo videos = 2;	//战斗录像信息列表
+    optional int32 like_times = 3;	//已点赞次数
+    optional bool new_hero = 4;	//是否新英雄
+    optional bool week_hot = 5;	//是否本周热点
+}
+
+//查看个人录像数据
+//42002
+message GReqMyVideos
+{
+	optional int32 kind = 1;	//1个人记录，2个人收藏
+}
+//42002
+message GResMyVideos
+{
+    optional int32 kind = 1;		//1个人记录，2个人收藏
+    repeated PSVideo videos = 2;	//战斗录像信息列表
+}
+
+//收藏
+//42003
+message GReqKeepFavorite
+{
+	optional int32 keep_type = 1;	//1系统录像，2个人录像
+    optional int64 id = 2;			//录像ID
+}
+//42003
+message GResKeepFavorite
+{
+	optional PSVideo video = 1;	//个人录像数据
+}
+
+//删除收藏
+//42004
+message GReqDeleteFavorite
+{
+    optional int64 keep_id = 1; //个人录像ID
+}
+//42004
+message GResDeleteFavorite
+{
+	optional int64 keep_id = 1; //个人录像ID
+}
+
+//战斗分享
+//42005
+message GReqBattleShare
+{
+    optional string battleId = 1;	//分享的战斗id
+    optional int32 channel = 2;		//分享到的聊天频道（2世界，3公会，6跨服）
+}
+//42005
+message GResBattleShare
+{
+}
+
+//录像馆中的战斗分享
+//42006
+message GReqVideoShare
+{
+	optional int32 type = 1;		//1系统录像、2个人录像
+    optional int64 id = 2;			//分享的录像ID
+    optional int32 channel = 3;		//分享到的聊天频道（2世界，3公会，6跨服）
+}
+//42006
+message GResVideoShare
+{
+}
+
+//观看分享
+//42007
+message GReqScanShare
+{
+	optional string share_id = 1;	//分享ID
+}
+//42007
+message GResScanShare
+{
+	optional BattleReport report = 1;	//战报
+}
+
+//录像馆中的战斗点赞
+//42008
+message GReqVideoLike
+{
+    optional int64 video_id = 2;			//点赞的录像ID
+}
+//42008
+message GResVideoLike
+{
+    optional int64 like_times = 2;			//已点赞次数
+}

@@ -1,0 +1,20 @@
+
+qyjs.png
+size: 300,298
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+lizi
+  rotate: false
+  xy: 2, 190
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+qyjs
+  rotate: false
+  xy: 2, 217
+  size: 296, 79
+  orig: 296, 79
+  offset: 0, 0
+  index: -1

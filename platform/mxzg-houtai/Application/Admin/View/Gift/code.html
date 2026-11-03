@@ -1,0 +1,102 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>兑换码</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="panel-body">
+                                    <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('gift/code')}" method="get" class="form-horizontal form-inline">
+                                        <input class="gift_id" type="hidden" name="gift_id" value="{$search_params.gift_id}">
+                                        <label style="padding-left: 20px;" class="control-label">角色id：</label>
+                                        <input type="text" style="margin-top: 10px;" placeholder="精准搜索" name="role_id" value="{$search_params.role_id}" style="width: 120px;" class="form-control">&nbsp;
+                                        <button type="button" style="margin-left:30px;float: right;margin-top: 10px;" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                    </form>
+                                </div>
+
+                                <div style="float: left;margin-left:30px;">
+                                    <a class="btn btn-primary" href="javascript:;" title="追加兑换码" onclick="openYemian('/admin.php/gift/addcode?gift_id={$search_params.gift_id}','兑换码')" >追加兑换码</a>
+                                </div>
+
+                                <div style="float: right;margin-right:20px;">
+                                    <a class="btn btn-primary export" href="javascript:void(0);" title="导出" ><i class="fa fa-cloud-download"></i>导出</a>
+<!--                                    <a onclick="openYemian('{:U('gift/export')}','导出')" type="button" class="btn btn-primary" ><i class="fa fa-arrow-circle-down"></i>导出</a>-->
+                                </div>
+
+                                <div style="float: right;margin-right:25px;">
+                                    <input class="mark" type="text" placeholder="" style="width: 120px;" class="form-control">
+                                </div>
+                                <div style="float: right;font-size:18px;padding-top: 5px;">
+                                    <label class="control-label">追加标识：</label>
+                                </div>
+                                
+                                <div class="col-sm-12">
+                                    <form method="post" enctype="multipart/form-data" id="form-order">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                <th>激活码</th>
+                                                <th>使用角色</th>
+                                                <th>使用时间</th>
+                                                <th>追加标识</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ajaxList">
+                                            <volist name="gift_code" id="gift_code_vo">
+                                                <tr role="row">
+                                                    <td>{$gift_code_vo.code}</td>
+                                                    <td>{$gift_code_vo.role_id}--{$gift_code_vo.role_name}</td>
+                                                    <td>{:date('Y-m-d H:i:s',$gift_code_vo['use_time'])}</td>
+                                                    <td>{$gift_code_vo.mark}</td>
+                                                </tr>
+                                            </volist>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                    <div>
+                                        <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                    </div>
+                                    <script>
+                                        // 点击分页触发的事件
+                                        // $(".pagination a").click(function(){
+                                        //     url = $(this).attr('href');
+                                        //     ajax_get_table('formSearch',url);
+                                        //     return false;
+                                        // });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(".export").click(function(){
+        var gift_id = $(".gift_id").val();
+        var mark = $(".mark").val();
+        window.location.href="/admin.php/gift/exportcode?gift_id=" + gift_id + "&mark=" + mark;
+        // alert(gift_id);
+        // alert(mark);
+        // $.get('/admin.php/gift/exportcode',{gift_id:gift_id,mark:mark},function(res){
+        //     alert(222);
+        // });
+
+    });
+
+</script>
+
+
+<include file="Public:footer" />

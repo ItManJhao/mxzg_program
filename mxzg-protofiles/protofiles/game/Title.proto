@@ -1,0 +1,20 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "TitleGMsg";
+
+message PSTitle
+{
+	optional int32 idx = 1;			//
+	optional int32 end_time = 2;	//-1永久，0未激活，具体时间戳为到期时间
+}
+
+//请求称号列表
+//55001
+message GReqScanTitleList
+{
+}
+//55001
+message GResScanTitleList
+{
+	repeated PSTitle titles = 1;	//称号列表
+}

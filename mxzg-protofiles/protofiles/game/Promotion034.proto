@@ -1,0 +1,66 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion034GMsg";
+import "Battle.proto";
+import "Object.proto";
+
+//关卡信息
+message PSLevelData {
+    optional int32 type = 1;
+    optional int32 level = 2;
+    optional int32 hp = 3; //万分比
+}
+
+//诸神之战数据请求
+//13150
+message GReqZhuShenData {
+
+}
+//13150
+message GResZhuShenData {
+    repeated PSLevelData levelData = 4; //关卡等级信息
+}
+//诸神之战关卡信息更新
+//13151
+//message GResUpdateLevelData {
+//    optional int32 PSLevelData=1;
+//    optional
+//}
+
+//13152
+message GReqBuyItem {
+    //    optional int32 item_id=1;//道具id
+    optional int32 count = 1; //购买数量
+}
+
+//诸神参加战斗,扫荡
+//13153
+message GReqZhuShenBattle {
+    optional int32 mission_type = 1;
+    optional int32 mission_id = 2;
+    optional int32 sweep_count = 3;
+}
+
+//13153
+message GResZhuShenBattle {
+    optional BattleReport report = 1; //战报
+    optional PSLevelData levelData = 2; // 当前关卡，关卡信息
+    repeated PSBackpackData rewards = 3; // 奖励
+    optional int64 damage_value = 4; //伤害值
+    optional int32 sweep_count = 5; //扫荡次数
+    optional int64 total_hp = 6; //剩余总血量
+}
+
+////诸神扫荡
+////13153
+//message GReqZhuShenSweep {
+//    optional int32 mission_type = 1;
+//    optional int32 mission_id = 2;
+//    optional int32 sweep_count = 3;
+//}
+//
+////13153
+//message GResZhuShenSweep {
+//    optional int64 damage_value = 1;
+//    optional PSLevelData levelData = 2;
+//}

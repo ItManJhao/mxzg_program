@@ -1,0 +1,67 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "AstrolabeGMsg";
+import "Object.proto";
+
+//星盘数据
+//68001
+message GReqAstrolabeData {
+}
+
+//68001
+message GResAstrolabeData {
+    optional int32 max_star = 1; //最大星级
+    repeated PSMapData active = 2; //激活列表《idx,skillId》，不用选择技能，skillId为0
+    repeated int32 active_elem = 3; //激活元素
+    optional bool active_astrolabe = 4; //是否激活星盘，true激活
+}
+
+//激活元素
+//68002
+message GReqAstrolabeActiveElem {
+}
+
+//68002
+message GResAstrolabeActiveElem {
+    optional int32 active_elem = 1; //激活元素
+    optional bool active_astrolabe = 2; //是否激活星盘
+}
+
+//点亮
+//68003
+message GReqAstrolabeLight {
+    optional int32 idx = 1; //astrolabe.xlsx的idx
+    optional int32 skill_id = 2; //技能id
+}
+
+//68003
+message GResAstrolabeLight {
+    repeated PSMapData active = 2; //激活列表《idx,skillId》，不用选择技能，skillId为0
+}
+
+//重置
+//68004
+message GReqAstrolabeReset {
+}
+
+//68004
+message GResAstrolabeReset {
+    repeated PSMapData active = 1; //激活列表《idx,skillId》，不用选择技能，skillId为0
+}
+
+//更新最大星级数
+//68005
+message GResAstrolabeUpdateMaxStar {
+    optional int32 max_star = 1; //最大星级数
+}
+
+//解锁元素盘
+//68006
+message GReqAstrolabeUnlockElem {
+
+}
+
+//68006
+message GResAstrolabeUnlockElem {
+    optional bool active_astrolabe = 1; //是否激活星盘
+}

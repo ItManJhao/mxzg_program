@@ -1,0 +1,45 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion080GMsg";
+
+import "Promotion070.proto";
+
+//数据
+//75941
+message GReqHalloweenMissionGetDataInfo {
+
+}
+//75941
+message GResHalloweenMissionGetDataInfo {
+    repeated PSMission mission = 1; //任务记录
+    repeated int32 mission_box_reward_record = 2; //任务次数领奖记录
+    optional int32 open_day = 3; //开启天数
+}
+
+//领取任务奖励
+//75942
+message GReqHalloweenMissionGetMission {
+    optional int32 idx = 1;
+}
+
+//75942
+message GResHalloweenMissionGetMission {
+    optional PSMission mission_info = 1;
+}
+
+//更新任务
+//75943
+message GResHalloweenMissionUpdateProcess {
+    repeated PSMission mission = 1; //更新记录
+}
+
+//领取任务箱子奖励
+//75944
+message GReqHalloweenMissionGetMissionBox {
+    optional int32 idx = 1;
+}
+
+//75944
+message GResHalloweenMissionGetMissionBox {
+    optional int32 idx = 1;
+}

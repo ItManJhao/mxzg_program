@@ -1,0 +1,120 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑邮件模板</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('mailtemplate/ajax_updata')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                        <div class="tab-pane active">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>模板主键ID：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" value="{$mail_template_info.id}" type="text" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>标题：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="title" value="{$mail_template_info.title}" type="text" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>内容：</label>
+                                <div class="col-sm-8">
+                                    <textarea placeholder="请输入内容" name="content" class="configInput form-control" required="" aria-required="true">{$mail_template_info.content}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">选择道具：</label>
+                                <div class="col-sm-8 class-item  item-fuzhi">
+                                    <a class="add_item"><i class="fa fa-plus"></i>添加道具</a>
+                                    <p></p>
+                                    <volist name="gift_item_data" id="gift_item_data_vo">
+                                        <div class="col-sm-10">
+                                            <a style="width: 80px; float: left;" class="del_item"><i class="fa fa-minus-square"></i>删除道具</a>
+                                            
+                                            <input type="hidden" name="item_type[]" value="{$gift_item_data_vo.item_type}">
+                                            <select class="selectpicker form-control item_type" data-style="btn-info" data-title="请选择道具" data-live-search="true" >
+                                                <volist name="item_data" id="item_data_vo">
+                                                    <eq name="item_data_vo.id" value="$gift_item_data_vo.item_type">
+                                                        <option value="{$item_data_vo.id}" selected>{$item_data_vo.id}--{$item_data_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$item_data_vo.id}">{$item_data_vo.id}--{$item_data_vo.name}</option>
+                                                    </eq>
+                                                </volist>
+                                            </select>
+                                            <input style="width: 90px; float: left;" class="configInput form-control" name="gift_item_num[]" value="{$gift_item_data_vo.item_num}" type="number" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,"")">
+                                        
+                                        </div>
+                                    </volist>
+                                </div>
+                            </div>
+                            <!-- <include file="Public:edititem" /> -->
+              
+                        </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <input type="hidden" name="id" value="{$mail_template_info.id}">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('mailtemplate/ajax_updata')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+
+    $ (function () {
+
+        $(document).on('change', ".item_type", function(e){
+            var sid_str = '';
+            $(this).find("option:selected").each(function () {
+                sid_str += $(this).val() + ",";
+            })
+            if(sid_str != ''){
+                sid_str = sid_str.slice(0,-1);
+            }
+            $(this).parent().prev().val(sid_str);
+            // doMultipleSelection(this, 'product_id');
+        })
+
+        $(document).on('click', '.add_item', function() {
+            var htmladd="";
+            htmladd +='<div class="col-sm-10">';
+            htmladd +='<a style="width: 80px; float: left;" class="del_item"><i class="fa fa-minus-square"></i>删除道具</a>';
+            htmladd +='<input type="hidden" name="item_type[]" value="">';
+            htmladd +='<select class="selectpicker form-control item_type" data-style="btn-info" data-title="请选择道具" data-live-search="true">';
+            htmladd +='<volist name="item_data" id="item_data_vo">';
+            htmladd +='<option value="{$item_data_vo.id}">{$item_data_vo.id}--{$item_data_vo.name}</option>';
+            htmladd +='</volist></select>';
+            htmladd +='<input style="width: 90px; float: left;" class="configInput form-control" name="gift_item_num[]" type="number" min="1" onkeyup="this.value=value.replace(/^(0+)|[^\d]+/g,"")">';
+            htmladd +='</div>';
+            $('.class-item').append(htmladd);
+            $('.item_type').selectpicker('refresh');
+            // upitem($('.item_type_type:last'));
+        });
+        $(document).on('click', '.del_item', function() {
+            $(this).parent().remove();
+        });
+    });
+
+
+</script>
+<!-- <script src="/Public/static/admin/js/item.js"></script> -->
+
+<include file="Public:footer" />

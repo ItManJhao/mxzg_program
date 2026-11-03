@@ -1,0 +1,104 @@
+
+ZDKS.png
+size: 705,705
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+B1
+  rotate: false
+  xy: 497, 501
+  size: 182, 202
+  orig: 248, 242
+  offset: 34, 22
+  index: -1
+B2
+  rotate: false
+  xy: 2, 2
+  size: 238, 213
+  orig: 248, 242
+  offset: 2, 13
+  index: -1
+B3
+  rotate: false
+  xy: 252, 233
+  size: 240, 226
+  orig: 248, 242
+  offset: 1, 6
+  index: -1
+B4
+  rotate: false
+  xy: 252, 461
+  size: 243, 242
+  orig: 248, 242
+  offset: 1, 0
+  index: -1
+B5
+  rotate: false
+  xy: 2, 461
+  size: 248, 242
+  orig: 248, 242
+  offset: 0, 0
+  index: -1
+B6
+  rotate: false
+  xy: 2, 217
+  size: 248, 242
+  orig: 248, 242
+  offset: 0, 0
+  index: -1
+S1
+  rotate: false
+  xy: 497, 453
+  size: 174, 46
+  orig: 177, 86
+  offset: 2, 17
+  index: -1
+S2
+  rotate: false
+  xy: 242, 36
+  size: 177, 60
+  orig: 177, 86
+  offset: 0, 3
+  index: -1
+S3
+  rotate: false
+  xy: 494, 244
+  size: 174, 45
+  orig: 177, 86
+  offset: 2, 15
+  index: -1
+S4
+  rotate: false
+  xy: 421, 38
+  size: 172, 58
+  orig: 177, 86
+  offset: 4, 10
+  index: -1
+fazhen
+  rotate: false
+  xy: 494, 291
+  size: 162, 160
+  orig: 182, 198
+  offset: 15, 13
+  index: -1
+line
+  rotate: false
+  xy: 242, 2
+  size: 170, 32
+  orig: 197, 70
+  offset: 10, 17
+  index: -1
+zdks1
+  rotate: false
+  xy: 252, 172
+  size: 256, 59
+  orig: 256, 90
+  offset: 0, 26
+  index: -1
+zdks2
+  rotate: false
+  xy: 242, 98
+  size: 385, 72
+  orig: 416, 160
+  offset: 13, 16
+  index: -1

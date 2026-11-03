@@ -1,0 +1,6 @@
+framework module Innovate {
+  umbrella header "Innovate.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,134 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>英雄评论</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('HeroComment/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label" style="padding-left: 5px;">英雄</label>
+                                            <input type="hidden" name="hero_ids" value="{$search_params['hero_ids']}">
+                                            <select class="selectpicker form-control hero_ids" data-style="btn-info" data-title="请选择英雄" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="hero_list" id="hero_list_vo">
+                                                    <if condition="!empty($search_params['hero_ids']) && in_array($hero_list_vo['id'],explode(',', $search_params['hero_ids']))">
+                                                        <option value="{$hero_list_vo.id}" selected>{$hero_list_vo.id}--{$hero_list_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$hero_list_vo.id}">{$hero_list_vo.id}--{$hero_list_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >英雄：</label>
+                                                <span class="hero_ids-text">
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="5%">评论ID</th>
+                                                        <th>角色id</th>
+                                                        <th>评论内容</th>
+                                                        <th>评论赞同数</th>
+                                                        <th>评论不赞同数</th>
+                                                        <th>英雄id</th>
+                                                        <th>英雄名称</th>
+                                                        <th>评论个数</th>
+                                                        <th>英雄喜欢次数</th>
+                                                        <th>评论时间</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="list_vo">
+                                                        <tr role="row"> 
+                                                            <td>{$list_vo.id}</td>
+                                                            <td>{$list_vo.rid}</td>
+                                                            <td>{$list_vo.context}</td>
+                                                            <td>{$list_vo.likeCount}</td>
+                                                            <td>{$list_vo.hateCount}</td>
+                                                            <td>{$list_vo.hero_id}</td>
+                                                            <td>{$list_vo.hero_name}</td>
+                                                            <td>{$list_vo.idCount}</td>
+                                                            <td>{$list_vo.likeCounts}</td>
+                                                            <td>{$list_vo.localDateTime}</td>
+                                                            <td>
+                                                                <a class="btn btn-danger" href="javascript:void(0)" title="删除" data-url="{:U('HeroComment/ajax_delComment')}" data-heroid="{$list_vo.hero_id}" data-commentid="{$list_vo.id}"  onclick="CommentDelete(this,'确定删除吗？','{:U('HeroComment/ajax_delComment')}')" ><i class="fa fa-trash-o"></i>删除</a>
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(".hero_ids").on('change',function(e){
+        doMultipleSelection(this, 'hero_ids');
+    })
+    $(function(){
+        doMultipleSelection($('.hero_ids'), 'hero_ids');
+    });
+
+    function CommentDelete(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var hero_id=$(obj).attr("data-heroid");
+            var comment_id=$(obj).attr("data-commentid");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {hero_id:hero_id,comment_id:comment_id},
+                dataType : "json",
+                success:function(data){
+                    top.layer.alert(data.message, {icon: 6});
+                    window.location.reload();
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+</script>
+
+
+<include file="Public:footer" />

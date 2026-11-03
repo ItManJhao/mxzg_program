@@ -1,0 +1,83 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroTalentGMsg";
+
+//英雄天赋
+message PSHeroTalent
+{
+	optional int32 slot = 1;		//槽位号
+	optional int32 skill_id = 2;	//技能ID
+	optional int32 level = 3;		//技能等级
+}
+
+//领悟天赋
+//4301
+message GReqHeroTalentLearn
+{
+	optional int64 hero_id = 1;		//英雄ID
+	optional int32 slot = 2;		//槽位号
+	optional int32 skill_id = 3;	//技能ID
+}
+//4301
+message GResHeroTalentLearn
+{
+	optional int64 hero_id = 1;			//英雄ID
+	optional PSHeroTalent talent = 2;	//天赋数据
+}
+
+//升级天赋
+//4302
+message GReqHeroTalentUpgrade
+{
+	optional int64 hero_id = 1;		//英雄ID
+	optional int32 slot = 2;		//槽位号
+}
+//4302
+message GResHeroTalentUpgrade
+{
+	optional int64 hero_id = 1;			//英雄ID
+	optional PSHeroTalent talent = 2;	//天赋数据
+}
+
+//遗忘天赋
+//4303
+message GReqHeroTalentForget
+{
+	optional int64 hero_id = 1;		//英雄ID
+	optional int32 slot = 2;		//槽位号
+}
+//4303
+message GResHeroTalentForget
+{
+	optional int64 hero_id = 1;			//英雄ID
+	optional PSHeroTalent talent = 2;	//天赋数据
+}
+
+//重置天赋
+//4304
+message GReqHeroTalentReset
+{
+	optional int64 hero_id = 1;		//英雄ID
+	optional int32 slot = 2;		//槽位号
+}
+//4304
+message GResHeroTalentReset
+{
+	optional int64 hero_id = 1;			//英雄ID
+	optional PSHeroTalent talent = 2;	//天赋数据
+}
+
+//洗练天赋
+//4305
+message GReqHeroTalentRefine
+{
+	optional int64 hero_id = 1;		//英雄ID
+	optional int32 slot = 2;		//槽位号
+	optional int32 skill_id = 3;		//技能id
+}
+//4305
+message GResHeroTalentRefine
+{
+	optional int64 hero_id = 1;			//英雄ID
+	optional PSHeroTalent talent = 2;	//天赋数据
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>契约召唤管理后台</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/Public/static/admin/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="/Public/static/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Morris -->
+    <link href="/Public/static/admin/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+
+    <!-- Gritter -->
+    <link href="/Public/static/admin/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+    <link href="/Public/static/admin/css/animate.css" rel="stylesheet">
+    <link href="/Public/static/admin/css/style.css?v=4.0.0" rel="stylesheet"><base target="_blank">
+
+    <!-- 全局js -->
+    <script src="/Public/static/admin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/Public/static/admin/js/bootstrap.min.js?v=3.3.5"></script>
+
+
+
+    <!-- Flot -->
+    <script src="/Public/static/admin/js/plugins/flot/jquery.flot.js"></script>
+    <script src="/Public/static/admin/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="/Public/static/admin/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="/Public/static/admin/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="/Public/static/admin/js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="/Public/static/admin/js/plugins/flot/jquery.flot.symbol.js"></script>
+
+    <!-- Peity -->
+    <script src="/Public/static/admin/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="/Public/static/admin/js/demo/peity-demo.js"></script>
+
+    <!-- 自定义js -->
+    <script src="/Public/static/admin/js/content.js?v=1.0.0"></script>
+
+
+    <!-- jQuery UI -->
+    <script src="/Public/static/admin/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+    <!-- Jvectormap -->
+    <script src="/Public/static/admin/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="/Public/static/admin/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+    <!-- EayPIE -->
+    <script src="/Public/static/admin/js/plugins/easypiechart/jquery.easypiechart.js"></script>
+
+    <!-- Sparkline -->
+    <script src="/Public/static/admin/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Sparkline demo data  -->
+    <script src="/Public/static/admin/js/demo/sparkline-demo.js"></script>
+    <style>
+        .ibox-content a{display: block;}
+        a{color: #666;}
+    </style>
+</head>
+
+<body class="gray-bg">
+    <!-- <div style="width:100%;height:100%;background-image:url(/Public/static/admin/images/hy.jpg);background-size:cover;background-repeat:no-repeat;"></div> -->
+    <div class="wrapper wrapper-content">
+        <div class="row">
+ 
+            <div class="col-sm-3" style="width: auto;">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <!-- <span class="label label-success pull-right">记录</span> -->
+                        <h5>管理人：{$user.name}，欢迎来到《契约召唤》GM操作后台！</h5>
+                    </div>
+<!--                     <div class="ibox-content">
+                        <a href="{:U('Admin/Article/articleList')}" target="_self"><h1 class="no-margins">{$data.article_num}篇</h1>
+                            <small>文章数</small></a>
+                    </div>
+                    <div class="ibox-content">
+                        <a><h1 class="no-margins">{$data.admin_num}个</h1>
+                            <small>管理员数</small></a>
+                    </div> -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

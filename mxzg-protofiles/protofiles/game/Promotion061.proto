@@ -1,0 +1,46 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion061GMsg";
+import "Object.proto";
+
+//三日任务数据
+//13230
+message GReqThreeDayTaskData {
+}
+//13230
+message GResThreeDayTaskData {
+    optional int32 day = 1; //当前任务第几天
+    repeated PSTaskProgress task_list = 2; //任务进度
+    repeated int32 reward_idx = 3; //已领取的任务奖励集
+    repeated int32 ultimate_reward_idx = 4;//已领取的终极奖励（天数）
+}
+
+//领取三天任务奖励
+//13231
+message GReqThreeDayTaskReward{
+    optional int32 idx = 1;
+}
+//13231
+message GResThreeDayTaskReward{
+    repeated int32 idx = 1; //已领取的任务奖励集
+}
+
+//领取三天任务终极奖励
+//13232
+message GReqThreeDayTaskUltimateReward{
+    optional int32 day = 1;
+}
+//13232
+message GResThreeDayTaskUltimateReward{
+    repeated int32 day = 1; //已领取的终极奖励集
+}
+
+
+//推送目标进度更新
+//13233
+message GResUpdateThreeDayTask {
+    repeated PSTaskProgress update_tasks = 1; //任务更新
+}
+
+
+

@@ -1,0 +1,55 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion081GMsg";
+
+import "Promotion070.proto";
+import "Object.proto";
+
+//数据
+//76001
+message GReqBlackFiveMissionGetDataInfo {
+
+}
+//76001
+message GResBlackFiveMissionGetDataInfo {
+    repeated PSMission mission = 1; //任务记录
+    repeated int32 mission_box_reward_record = 2; //任务次数领奖记录
+    optional int32 mission_reward_count = 3; //任务领取数量
+    repeated PSMapData buy = 4; //购买记录
+}
+
+//领取任务奖励
+//76002
+message GReqBlackFiveMissionGetMission {
+    optional int32 idx = 1;
+}
+
+//76002
+message GResBlackFiveMissionGetMission {
+    optional PSMission mission_info = 1;
+    optional int32 mission_reward_count = 2;
+}
+
+//更新任务
+//76003
+message GResBlackFiveMissionUpdateProcess {
+    repeated PSMission mission = 1; //更新记录
+}
+
+//领取任务箱子奖励
+//76004
+message GReqBlackFiveMissionGetMissionBox {
+    optional int32 idx = 1;
+}
+
+//76004
+message GResBlackFiveMissionGetMissionBox {
+    optional int32 idx = 1;
+}
+
+//购买礼包返回
+//76005
+message GResBlackFiveMissionGiftBuy {
+    optional PSMapData buy = 1; //购买记录
+}
+

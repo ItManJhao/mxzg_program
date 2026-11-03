@@ -1,0 +1,26 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion022GMsg";
+
+//查看每日累充信息
+//13331
+message GReqDailyTotalChargeData
+{
+}
+//13331
+message GResDailyTotalChargeData
+{
+	optional int64 money = 1;	//已充值的金额，单位分
+	repeated int32 list = 2;	//已领取的奖励
+}
+
+//领取每日累充奖励
+//13332
+message GReqDailyTotalChargeReward
+{
+	optional int32 idx = 1;	//
+}
+//13332
+message GResDailyTotalChargeReward
+{
+}

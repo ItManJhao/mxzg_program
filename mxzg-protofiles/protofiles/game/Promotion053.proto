@@ -1,0 +1,82 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion053GMsg";
+import "Object.proto";
+
+//活动通行证列表
+//13190
+message GReqTrafficPermitList {
+
+}
+//13190
+message GResTrafficPermitList {
+    optional int32 level = 1; //活动等级
+    optional int32 exp = 2; //活动经验值
+    optional int32 buy_privilege = 3; //特权购买状态，1为己购买，0为未购买
+    repeated PSMapData task_list = 4; //任务进度
+    repeated int32 task_idx = 5; //已领取奖励的任务idx
+    optional int32 round = 7; //轮次
+    optional int32 status = 8; //活动是否已弹窗提醒，1为已提醒，0为未提醒
+    optional int32 day_end_time = 9;
+    optional int32 week_end_time = 10;
+}
+
+//购买活动通行证等级
+//13191
+message GReqBuyTrafficPermitLevel {
+    optional int32 level = 1; //购买等级量
+}
+
+//13191
+message GResBuyTrafficPermitLevel {
+    optional int32 level = 1; //购买后的等级
+    optional int32 exp = 2; //经验
+    repeated PSMapData reward_record = 3; // 奖励
+}
+
+//领取通行证任务奖励
+//13194
+message GReqTrafficPermitTaskReward {
+    optional int32 idx = 1; //领取的活动idx
+}
+
+//13194
+message GResTrafficPermitTaskReward {
+    optional int32 level = 1; //等级
+    optional int32 exp = 2; //经验值
+    optional int32 idx = 3; //idx
+
+}
+
+//任务更新
+//13195
+message GResDayTaskProgress {
+    repeated PSMapData task_progress = 1; //任务进度
+}
+
+//购买通行证特权返回
+//13196
+message GResTrafficPermitPrivilege {
+    optional int32 level = 1; //等级
+    optional int32 exp = 2; //经验值
+    optional int32 buy_privilege = 3; //特权购买状态，1为己购买，0为未购买
+}
+
+//修改弹窗提示状态
+//13197
+message GReqTrafficPermitRemind {
+
+}
+
+
+//13198
+message GReqTrafficPermitBuyPoint {
+    optional int32 times = 1;   // 购买多少次
+}
+
+//13198
+message GResTrafficPermitBuyPoint {
+    optional int32 level = 1; //购买后的等级
+    optional int32 exp = 2; //经验
+    repeated PSMapData reward_record = 3; // 奖励
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="600" shutdownHook="disable">
+    <Properties>
+        <Property name="LOG_HOME">logs</Property>
+        <Property name="LOG_PATTERN">%highlight{%d{yyyy-MM-dd HH:mm:ss:SSS} %-5p [%10.10t] %-25.25C{1.}.%-15.15M:%-4.4L %X{rid} | %m%n}
+            <!--        <Property name="LOG_PATTERN">%highlight{%d{yyyy-MM-dd HH:mm:ss:SSS} %-5p [%thread] %C.%M:%L %X{rid} | %m%n}-->
+        </Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+        </Console>
+
+        <RollingRandomAccessFile name="ServiceAppender" fileName="${sys:logPath:-logs}/info.log"
+                                 filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/info-%d{yyyy-MM-dd}-%i.log.gz">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="1024 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="9999"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="ServiceErrorAppender" fileName="${sys:logPath:-logs}/error.log"
+                                 filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/error-%d{yyyy-MM-dd}-%i.log.gz">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="1024 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="9999"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+        <root level="DEBUG">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="ServiceAppender"/>
+            <appender-ref ref="ServiceErrorAppender"/>
+        </root>
+
+        <logger name="org.springframework" level="info"/>
+        <logger name="io.netty" level="info"/>
+        <logger name="io.lettuce" level="info"/>
+        <logger name="org.eclipse.jetty" level="info"/>
+    </Loggers>
+</Configuration>

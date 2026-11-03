@@ -1,0 +1,271 @@
+
+
+/*Cửa sổ nổi*/
+"personal" = "Account";
+"community" = "FB";
+"customer" = "CSKH";
+"prize" = "Quà";
+"switch" = "Đổi";
+"other" = "Khác";
+
+
+"register placeHoder" = "Hãy nhập tài khoản";
+"register password" = "Hãy nhập mật khẩu";
+
+"remember password" = "Nhớ mật khẩu";
+"login" = "Đăng nhập";
+"account login" = "Đăng nhập tài khoản";
+"register" = "Đăng ký";
+
+"facebook" = "Facebook";
+"google" = "Google";
+"tourists" = "Tourists";
+
+"isLogin" = "Đang đăng nhập...";
+"register members" = "Đăng ký hội viên";
+
+
+"account limit" = "Chỉ chữ, số, gạch dưới";
+"password limit" = "Tối thiểu 6 kí tự";
+"confirm" = "Xác nhận";
+"cancel" = "Hủy";
+
+"protocol policy" = "Tôi đã đọc và đồng ý với Điều khoản dịch vụ và Chính sách bảo mật";
+"service policy" = "Điều khoản dịch vụ";
+"privacy policy" = "Chính sách bảo mật";
+
+
+"forget password" = "Quên mật khẩu";
+"forget password tips" = "Nhập tài khoản bạn muốn tìm lại mật khẩu vào bên dưới";
+"please input account" = "Hãy nhập tài khoản";
+"no bind phone or email" = "Bạn chưa gắn phương thức để tìm lại mật khẩu, hãy liên hệ CSKH";
+"find password" = "Tìm lại mật khẩu";
+"find password tips" = "Bạn có thể dùng cách sau để reset mật khẩu";
+"phone" = "Số điện thoại";
+"email" = "Hòm thư bảo mật";
+
+"has send reset message" = "Mã xác nhận reset mật khẩu đã gửi đến điện thoại của bạn";
+"has send bind message" = "Mã xác nhận qua đã gửi đến điện thoại của bạn";
+"has send unbind message" = "Mã xác nhận bỏ liên kết đã gửi đến điện thoại của bạn";
+
+"has send reset email" = "Thư reset mật khẩu đã gửi đến hòm thư của bạn";
+"has send bind email" = "Đã gửi thư gắn liên kết đến hòm thư của bạn";
+"has send unbind email" = "Đã gửi thư bỏ liên kết đến hòm thư của bạn";
+
+"code time limit" = "Mã xác nhận sẽ hết hạn sau 30 phút, hãy nhập mã bạn nhận được";
+"input code" = "Hãy xác nhận mã đã nhận";
+"repeat send code" = "Gửi lại";
+"reset password" = "Reset mật khẩu";
+
+"account error" = "Tài khoản đã nhập không hợp lệ";
+"password error" = "Nhập mật khẩu tối thiểu 6 số";
+"password different" = "Hai mật khẩu đã nhập khác nhau";
+"agree protocol" = "Vui lòng đồng ý với các điều khoản dịch vụ và chính sách bảo mật trước";
+
+
+"user center" = "Trung tâm người dùng";
+"account" = "Tài khoản";
+"modify password" = "Sửa mật khẩu";
+"bind email" = "Gắn hòm thư";
+"change email" = "Thay hòm thư";
+"phone authentication" = "Xác thực điện thoại";
+"change phone" = "Thay SĐT";
+"account upgrade" = "Nâng cấp tài khoản";
+
+
+"input old password" = "Hãy nhập mật khẩu cũ";
+"input new password" = "Hãy nhập mật khẩu mới";
+"input new password again" = "Hãy nhập lại mật khẩu mới";
+
+"bind email tips" = "Hãy xác minh 1 hòm thư thường dùng để tăng cường bảo mật tài khoản của bạn. Khi bạn quên mật khẩu, có thể reset mật khẩu nhanh qua hòm thư này!";
+"input email" = "Nhập hòm thư";
+"input validate email" = "Nhập hòm thư chính xác";
+"input code" = "Nhập mã xác nhận";
+"code is wrong" = "Mã xác nhận sai";
+
+"bind phone tips" = "Điền thông tin điện thoại để làm căn cứ quan trọng khi lấy lại tài khoản qua CSKH!";
+"input region" = "Chọn vùng";
+"input phone" = "Nhập SĐT";
+
+"operation success" = "Thao tác thành công";
+"has operation success" = "Đã thao tác thành công!";
+
+"upgrade success" = "Tài khoản đã nâng cấp thành tài khoản kênh";
+
+"welcome" = "Chào mừng quay lại";
+"noLogin" = "Chưa đăng nhập, hãy đăng nhập trước";
+"no init" = "Chưa khởi tạo, hãy gọi giao diện khởi tạo trước!";
+"login success" = "Đăng nhập thành công!";
+"logout success" = "Đăng xuất thành công!";
+
+"find new version" = "Có phiên bản mới";
+"new version tips" = "Để nâng cao trải nghiệm game, hãy tải phiên bản mới nhất!";
+"to update" = "Đi cập nhật";
+
+
+"Taiwan" = "Đài Loan 886";
+"China" = "Trung Quốc 86";
+"Malaysia" = "Malaysia 60";
+"Hong Kong" = "Hong Kong 852";
+"America" = "Mỹ 1";
+"Singapore" = "Singapore 65";
+"Vietnam" = "Việt Nam 84";
+"Macau" = "Ma Cao 853";
+"Australia" = "Úc 61";
+"Canada" = "Canada 1";
+"Philippines" = "Philippines 63";
+"Japan" = "Nhật Bản 81";
+"Thailand" = "Thái 66";
+"British" = "Anh 44";
+"Cambodia" = "Campuchia 855";
+"India" = "Ấn Độ 91";
+"Indonesia" = "Indonesia 62";
+"Korea" = "Hàn Quốc 82";
+"Germany" = "Đức 49";
+"New Zealand" = "New Zealand 64";
+
+
+"unknow" = "Lỗi không rõ";
+"clientInvalid" = "Tài khoản Apple hiện tại không thể mua hàng (nếu có thắc mắc, bạn có thể hỏi CSKH của Apple)";
+"paymentCancelled" = "Đơn hàng đã hủy";
+"paymentInvalid" = "Đơn hàng vô hiệu (nếu có thắc mắc, bạn có thể hỏi CSKH của Apple)";
+"paymentNotAllowed" = "Thiết bị Apple hiện tại không thể mua hàng (nếu có thắc mắc, bạn có thể hỏi CSKH của Apple)";
+"storeProductNotAvailable" = "Vật phẩm hiện tại không khả dụng";
+"networkConnectionFailed" = "Kết nối mạng thất bại";
+
+"abnormal" = "Bất thường";
+"customer service" = "Nếu bị trừ tiền, xin liên hệ CSKH để xử lý";
+"delivery failed" = "Giao hàng thất bại";
+
+"buying" = "Đang mua...";
+"redelivery" = "Bắt đầu gửi lại những giao dịch Apple bị lỗi...";
+"on delivery" = "Đang giao hàng...";
+"delivery completed" = "Giao hàng hoàn tất";
+"order" = "Đơn hàng";
+
+"is ordering" = "Đang tạo đơn hàng...";
+"product not available" = "Hiện chưa mở vật phẩm này"; //The goods are not yet available
+"not in-app purchases" = "Điện thoại của bạn chưa mở cho mua trong ứng dụng";//Your phone is not open for in-app purchases
+"request product infomation" = "Yêu cầu thông tin sản phẩm...";//Requesting product information...
+"request product fail" = "Yêu cầu danh sách sản phẩm thất bại";
+
+"recharge success" = "Nạp thành công";
+"recharge cancel" = "Hủy nạp";
+"recharge failed" = "Nạp thất bại";
+
+
+"get" = "Nhận";
+"has get" = "Đã nhận";
+"prize center" = "Trung tâm quà";
+"get record" = "Lịch sử nhận";
+
+"no activity" = "Hiện không có HĐ Quà";
+"no get record" = "Hiện không có Lịch sử nhận";
+
+"remain" = "Còn";
+"validity" = "Hạn dùng";
+"copy success" = "Copy thành công";
+"copy" = "Copy";
+
+"drag float tips" = "Kéo đến chỗ này để ẩn";
+
+"prize copy success" = "Giftcode copy thành công";
+"network error" = "Mạng dị thường, thử lại sau!";
+
+"service center" = "Trung tâm CSKH";
+"selected service way" = "Chọn cách liên hệ";
+"service email" = "Hòm thư CSKH";
+"online service"= "CSKH trực tuyến";
+"submit" = "Gửi";
+"complaint type" = "Loại khiếu nại";
+"title" = "Tiêu đề";
+
+"login question" = "Về Đăng nhập";
+"payment question" = "Về Nạp";
+"game question" = "Về Game";
+"account question" = "Về Tài khoản";
+"activity question" = "Về HĐ";
+"suggestion" = "Đề xuất";
+"other question" = "Khác";
+
+"selected images count" = "Đã chọn số lượng ảnh";
+"please select question type" = "Chọn loại khiếu nại";
+
+"please input question title" = "Nhập tiêu đề khiếu nại";
+"please input question content" = "Nhập nội dung khiếu nại";
+
+"submit success" = "Gửi thành công";
+"Has your problem been solved" = "Vấn đề của bạn đã được giải quyết chưa？";
+"submit questions tips" = "Bạn chưa gửi câu hỏi,\nbấm góc trên bên phải để hỏi CSKH nhé~";
+
+"yes" = "Rồi";
+"no" = "Chưa";
+
+"waiting" = "Đợi";
+"reply" = "Đã trả lời";
+"resolved" = "Đã xử lý";
+
+"picture is too big" = "Ảnh quá lớn";
+
+"save to the phone" = "Lưu ảnh về điện thoại";
+
+"save failure" = "Lưu thất bại";
+"save success" = "Lưu thành công";
+
+"uploading" = "Đang tải lên...";
+"send failure" = "Gửi thất bại";
+
+"prize code" = "Số sê-ri";
+
+"ad config empty" = "Cài đặt quảng cáo để trống";
+"no ad fill" = "Hiện không có quảng cáo, thử lại sau";
+
+"not fast click" = "Không bấm liên tục";
+"complete impress ads" = "Xem xong quảng cáo mới được nhận quà";
+
+"select fu ways" = "Chọn cách nạp";
+"appstore" = "App Store";
+"other methods" = "Nạp qua web chính thức (cộng thêm)";
+
+"no share config" = "Chưa cấu hình liên kết chia sẻ";
+"no thumbUp config" = "Chưa cấu hình liên kết bấm like";
+
+"customer service time" = "Thời gian làm việc của CSKH: Từ thứ Hai đến CN：9:00-18:00";
+
+"work order id" = "STT câu hỏi";
+"work order_id copy success" = "Copy thành công STT câu hỏi";
+
+"allow app track ad" = "Vui lòng tới Cài đặt-Quyền riêng tư-Theo dõi để cho phép theo dõi quảng cáo";
+"turn off limit track ad" = "Vui lòng tới Cài đặt-Quyền riêng tư-Quảng cáo để đóng Giới hạn theo dõi quảng cáo";
+
+"vi input emai" = "Nhập email";
+"vi input phone number" = "Nhập số điện thoại";
+"vi input fullname" = "Nhập họ tên";
+"vi input gender" = "Nhập giới tính";
+"vi input birthday" = "Nhập ngày sinh";
+"vi input address" = "Nhập địa chỉ";
+"vi input id number" = "Nhập số CMTND";
+"vi input issued on" = "Nhập ngày cấp CMTND";
+"vi input issued place" = "Nhập nơi cấp CMTND";
+
+"vi submit" = "Gửi đi";
+"vi submitting" = "Đang gửi";
+"vi submit succeess" = "Gửi thành công";
+"vi input emailOrphone" = "Xin nhập email hoặc SĐT di động";
+"vi input valid emailOrphone" = "Xin nhập email hoặc SĐT hợp lệ";
+"vi input valid email" = "Xin nhập email hợp lệ";
+"vi input valid phone" = "Vui lòng nhập SĐT di động hợp lệ";
+
+"vi finish" = "Xác nhận";
+"vi male" = "Nam";
+"vi female" = "Nữ";
+"vi not specified" = "Không xác định";
+"vi cancel" = "Huỷ";
+"vi title" = "Đăng ký";
+
+
+"service policy text" = "Điều khoản dịch vụ\nĐiều khoản này là hợp đồng giữa nền tảng thành viên (sau đây gọi là 'Bên A') và Công ty TNHH Hong Kong Feifan (sau đây gọi là 'Bên B') cho dịch vụ trò chơi được cung cấp bởi Bên B. Một khi bên A đã đăng ký là thành viên của Bên B, đồng nghĩa với việc Bên A đã đồng ý và tuân thủ tất cả điều khoản của Thỏa thuận sau;\nĐiều Khoản 1 Phạm Vi\nBên B cung cấp dịch vụ game di động và các dịch vụ liên quan của Bên A (sau đây gọi là Dịch Vụ này). Bên A sẽ tuân thủ đầy đủ hợp đồng này và quy tắc quản lý trò chơi. Các quyền và nghĩa vụ của cả hai bên liên quan đến Dịch Vụ này sẽ được quy định trong Thỏa thuận này.\nĐiều khoản 2 Nội dung dịch vụ\nNội dung cụ thể do Bên B cung cấp sẽ dựa theo điều kiện thực tế và sử dụng hệ điều hành riêng để cung cấp cho người dùng các nguồn tài nguyên trực tuyến thông qua Internet, bao gồm các công cụ thông tin, liên kết trò chơi, địa chỉ email, v.v. Trừ khi có quy định rõ ràng khác, bất cứ chức năng mới nâng cấp hoặc tăng cường dịch vụ hiện tại, bao gổm cả các sản phẩm mới, sẽ được áp dụng vô điều kiện cho các Điều khoản Dịch vụ này. Bên B có quyền mở rộng dịch vụ mà mình cung cấp và các chức năng dịch vụ này có thể được thay đổi theo thời gian. Các dịch vụ tính phí sẽ được thông báo trước khi khởi động dịch vụ, và thời gian thông báo trước sẽ được quy định bởi Bên B. Các dịch vụ miễn phí sẽ không được thông báo trừ khi Bên B thấy cần thiết.\nĐiều khoản 3 Tài Khoản Người Dùng (hay Tài khoản, Mật khẩu và Bảo mật của người dùng)\n 1. Đăng ký tài khoản người dùng\nNgười dùng phải đồng ý hoàn toàn tất cả điều khoản của Thỏa thuận này và hoàn tất thủ tục đăng ký. Sau khi người dùng đã đăng ký thành công, Bên B sẽ cung cấp Tài khoản người dùng và Mật khẩu tương ứng. Tài khoản và Mật khẩu người dùng sẽ được người dùng lưu giữ, người dùng phải có trách nhiệm cho tất cả các hoạt động và sự kiện được thực hiện bởi Tài khoản người dùng của mình.\n 2. Bảo quản tài khoản người dùng\n Để cung cấp dịch vụ này cho Bên A, Bên B sẽ không được tiết lộ tên, địa chỉ, địa chỉ thư điện tự, thư điện tử, số tài khoản, mật khẩu và các thông tin cá nhân khác của Bên A. Ngoại trừ:\n (1) Bên A cho phép Bên B tiết lộ thông tin cá nhân;\n ( 2) Luật pháp hoặc quy định hành chính liên quan yêu cầu Bên B tiết lộ dữ liệu cá nhân của Bên A;\n (3) Để bảo vệ quyền sở hữu trí tuệ và các quyền sở hữu tài sản khác của Bên B, có thể cần thiết phải tiết lộ dữ liệu cá nhân của Bên A.\nBên B sẽ thực hiện các biện pháp hợp lý về mặt thương mại để bảo vệ tính bảo mật và dự liệu cá nhân của Bên A. Bên A không được chuyển hoặc cho mượn tài khoản và mật khẩu cho mục đích sử dụng khác. Nếu Tài khoản và mật khẩu của Bên A bị sử dụng trái phép và bất kỳ hậu quả nào phát sinh từ đó do sự bất cẩn của Bên A, Bên B sẽ không có trách nhiệm cho bất cứ hậu quả nào phát sinh từ đó.\nĐiều Khoản 4 Nghĩa vụ của Bên A\n 1. Bên A sẽ phải tự cung cấp trang thiết bị liên quan đến dịch vụ (như máy tính và các thiết bị liên quan đến truy cập Internet) và chịu các khoản phí cần thiết (như cước phí điện thoại và cước phí Internet).\n 2. Bên A sẽ không sử dụng dịch vụ này hoặc tham gia vào các hoạt động của Bên B thông qua các cách không phù hợp hoặc không công bằng.\n 3. Bên A sẽ không can thiệp vào hoạt động cung cấp dịch vụ thông thường của Bên B, bao gồm nhưng không giới hạn với:\n (1) Bẻ khóa và chỉnh sửa chương trình do bên B cung cấp;\n (2) Tạo, sử dụng, phát hành, khuếch tán bất kỳ hỉnh thức công cụ hoặc chương trình phụ trợ (plug-in) để làm mất cân bằng trò chơi;\n (3) Sử dụng các lỗi và lỗ hổng (Bug) để phá vỡ quá trình hoạt đồng bình thường của trò chơi hoặc phát tán các lỗ hổng hoặc lỗi (Bug);\n (4) Thu thập dữ liệu cá nhân bất hợp pháp.\n 4. Bên A phải giữ cẩn thận số tài khoản và mất khẩu và hệ quả do rò rỉ tài khoản và mật khẩu do Bên A sẽ do Bên A chịu.\nĐiều Khoản 5 Bảo vệ quyền riêng tư\n 1. Bên B đảm bảo rằng Bên B sẽ không tiết lộ công khai hoặc cung cấp cho bên thứ ba dữ liệu đăng ký người dùng và nội dung không được công khai lưu trữ bởi người dùng khi cung cấp dịch vụ mạng.\n 2. Bên B có thể hợp tác với bên thứ ba để cung cấp cho người dùng dịch vụ mạng liên quan. Trong trường hợp này, nếu bên thứ ba đồng ý chịu trách nhiệm tương đương để bảo vệ quyền riêng tư của người dùng như Bên B, thì Bên B có thể cung cấp dữ liệu đăng ký người dùng v.v cho bên thứ ba.\nĐiều Khoản 6 Quản Lý Trò Chơi\nĐể điều chỉnh tiến trình trò chơi, Bên B sẽ thiết lập các quy tắc quản lý trò chơi công bằng, và Bên A sẽ phải tuân thủ các quy tắc quản lý trò chơi công bố bởi Bên B.\nNếu quy tắc quản lý trò chơi có các điều kiện sau đây, điều khoản sẽ không hợp lệ:\n 1. Vi phạm điều khoản của hợp đồng này.\n 2. Tước bỏ hoặc hạn chế quyền hợp đồng của Bên A.\nĐiều Khoản 7 Giới Hạn Bảo Đảm và Giới Hạn Trách Nhiệm\nĐối với dịch vụ này, Bên B sẽ chỉ thực hiện bảo đảm có giới hạn sau;\n 1. Những lời hứa dịch vụ đã thông báo cung cấp bởi Bên B;\n 2. Bên B trong phạm vi cho phép bởi lĩnh vực kinh doanh, chúng tôi sẽ cố gắng hết sức để giải quyết bất kỳ lỗi nào mà Bên A gặp phải trong quá trình cung cấp dịch vụ. Đồng thời, trong phạm vi tối đa mà pháp luật cho phép, Bên B sẽ không bảo đảm rằng dịch vụ được cung cấp sẽ thỏa mãn các yêu cầu của Bên A. Bên B sẽ không chịu trách nhiệm cho các thiệt hại hoặc yêu cầu gây ra bởi cách sử dụng dịch vụ này của Bên A (bao gồm nhưng không giới hạn thương tích cá nhân, rò rì quyền riêng tư, không thực hiện được trách nhiệm bao gồm tính toàn vẹn hoặc quan tâm hợp lý, sơ suất và bất kỳ mất mát tài chính hoặc các thiệt hại khác gây ra bởi tổn thất phi tiền tệ).\nĐiều Khoản 8. Lưu Trữ Và Hạn Chế Thông Tin Người Dùng\nBên B có quyền đánh giá hành vi người dùng có tuân thủ theo quyền được quy định trong các điều khoản dịch vụ này hay không. Nếu Bên B tin rằng người dùng vi phạm các điều khoản dịch vụ, Bên B có quyền xóa thông tin được đăng hoặc gửi bởi thogn tin người dùng, và thậm chí làm gián đoạn hoặc chám dứt cung cấp dịch vụ mạng. \nĐiều Khoản 9 Thay Đổi, Gian Đoạn Hoặc Chấm Dứt Dịch Vụ\n 1. Nếu dịch vụ mạng cần được dừng lại vì bảo trì hoặc nâng cấp hệ thống, Bên B sẽ thông báo trước càng nhanh càng tốt. \n 2. Bên B có quyền gián đoạn hoặc chấm dứt một phầm hoặc tất cả các dịch vụ mạng bất cứ lúc nào với lời thông báo trước hoặc nhắc nhở cho Bên A. Bất cứ sự mất mát gây ra bởi gián đoạn hoặc chấm dứt các dịch vụ, Bên B sẽ không cần thanh toán cho Bên A hoặc bất cứ bên thứ ba bất cứ trách nhiệm nào.\nĐiều Khoản 10 Chính Sách Phí Vật Tư\nBên B có quyền quyết định và điều chỉnh mức phí vật tư tiêu chuẩn và phương thức tính phí của dịch vụ này. Nếu giá cước được điều chỉnh, Bên B sẽ thông báo trên các trang web liên quan đến dịch vụ này trước khi lên lịch trình có hiệu lực.\nĐối với mức phí của Bên B cho dịch vụ này, Bên A nên mua dịch vụ này theo chính sách phí vật tư được xác định bởi Bên B. Nếu Bên A không thể mua dịch vụ theo chính sách phí vật tư xác định bởi Bên B, Bên B có thể ngay lập tức dừng cung cấp dịch vụ này cho Bên A.\nĐiều Khoản 11 Miễn Trừ Trách Nhiệm\n 1. Bên B không đảm bảo các điều sau đây:\n (1) Dịch vụ này sẽ không bị gián đoạn, được cung cấp kịp thời, an toàn, đáng tin cậy hoặc không có lỗi. \n (2) Nếu có người thứ ba can thiệp bất hợp pháp hoặc xâm phạm quyền của Bên A, và Bên B được thông báo bởi Bên A những gì đang xảy ra, Bên B sẽ hỗ trợ Bên A trong việc loại bỏ hoặc hỗ trợ tìm kiếm nguồn gốc của hành vi xâm phạm này.\n 2. Bên A đồng ý rõ rằng các rủi ro trong việc sử dụng dịch vụ mạng hoàn toàn do chính họ chịu. \nĐiều Khoản 12 Thiệt Hại\nNếu Bên A vi phạm hợp đồng hoặc các luật và quy định liên quan, Bên A sẽ phải chịu trách nhiệm cho những thiệt hại hoặc chi phí phái sinh gây ra cho Công ty mẹ, công ty con, các liên kết và công ty liên kết, nhân viên, đại lý và tất cả các trợ lý liên quan khác của Bên B (Bao gồm nhưng không giới hạn ở việc thanh toán tất cả các vụ kiện hoặc yêu cầu kiện tụng và các chi phí pháp lý liên quan cho các vị phạm của Bên A với những người nêu trên). \nĐiều Khoản 13 Chấm Dứt Hợp Đồng\nBên A sẽ phải tuân thủ các điều khoản của hợp đồng và các lệnh pháp lý liên quan. Nếu Bên B tin rằng Bên A đã vị phạm hợp đồng này hoặc bất kỳ luật pháp và quy định nào, Bên B sẽ có quyền đình chỉ, chấm dứt hoặc xóa ngay tài khoản của Bên A và tất cả các dữ liệu liên quan, tệp tin và dữ liệu khác trong tài khoản của Bên A cũng như hủy, dừng và hạn chế tư cách thành viên của Bên A mà không cần thông báo trước cho Bên A.\nĐiều Khoản 14 Quyền Sửa Đổi Và Giải Thích\nDựa vào việc xem xét riêng của Bên B, người dùng và điều kiện thị trường, nếu Bên A tiếp tục sử dụng dịch vụ của Bên B, điều đó có nghĩa là Bên A đã đồng ý và chấp nhận sửa đổi, bổ sung,và xóa các điều khoản của hợp đồng này và sẽ không yêu cầu bất kỳ khoản bồi thường nào cho việc này.\nĐến mức độ tối đa có thể áp dụng, Công ty có quyền giải thích cuối cùng về thỏa thuận này";
+
+
+"privacy policy text" = "Chính sách bảo mật\nCông ty tôn trọng và bảo vệ quyền riêng tư cá nhân của tất cả người dùng dịch vụ. Để cung cấp cho bạn các dịch vụ chính xác và cá nhân hóa hơn, Công ty sẽ sử dụng và tiết lộ thông tin cá nhân của bạn theo các quy định của chính sách bảo mật này. Tuy nhiên, Công ty sẽ xử lý thông tin với mức độ chuyên sâu và cẩn trọng. Trừ khi có quy định khác trong chính sách bảo mật này, công ty sẽ không tiết lộ thông tin hoặc cung cấp cho bên thứ ba mà không có sự cho phép của bạn. Công ty sẽ cập nhật chính sách bảo mật này liên tục theo thời gian. Khi bạn đồng ý với thỏa thuận dịch vụ của Công ty, nó có nghĩa là bạn đã đồng ý toàn bộ nội dung trong chính sách bảo mật này. Chính sách bảo mật này là một phần không thể thiếu của Thỏa thuận dịch vụ.\n1. Sử dụng thông tin\nCông ty hoàn toàn tôn trọng và bảo vệ thông tin cá nhân đã được gửi và tạo ra bởi tất cả người dùng trong mạng dịch vụ cung cấp bởi Công ty. Trừ khi có quy định khác trong điều khoản này, Công ty đảm bảo sẽ không chủ ý tiết lộ bảo mật cá nhân của người dùng cho bất cứ bên thứ ba nào mà không có sự cho phép của người dùng. Trừ khi bạn được phép hoặc khi bên thứ ba và Công ty chúng tôi cung cấp cho bạn, bạn mới có thể truy cập dịch vụ, nhưng khi dịch vụ kết thúc, bên thứ ba và chúng tôi cũng có thể bị cấm không được quyền đăng nhập trở lại.\n2. Lưu trữ và trao đổi thôn tin\nThông tin và dữ liệu thu thập được bởi Công ty sẽ được lưu trữ trên máy chủ của công ty và/hoặc các chi nhánh của công ty, thông tin và dữ liệu này có thể được chuyển đến quốc gia, lãnh thổ và khu vực nơi mà Công ty thu thập thông tin và dữ liệu, cũng như được truy cập và lưu giữ bên ngoài quốc gia.\n3. Quản lý thông tin\nDưới tiền đề rằng thôn tin về quyền riêng tư không được tiết lộ, Công ty có quyền tiến hành phân tích toản bộ cơ sở dữ liệu người dùng và sử dụng thương mại cơ sở dữ liệu người dùng được phân tích và sắp xếp (bao gồm nhưng không giới hạn ở việc thông báo, phân tích hoặc sử dụng thông tin dữ liệu người dùng như lượt truy cập người dùng, thời gian truy cập, sở thích người dùng v.v.)\n4. Sử dụng \"Cookies\" thu thập dữ liệu\nChúng tôi có thể sử dụng「Tệp tin Cookies」 để thu thập dữ liệu sử dụng dịch vụ của người dùng, điều này sẽ giúp người dùng khi quay trở lại trang web một lần nữa. 「Tệp tin Cookies」 là mẩu nhỏ dữ liệu được gửi bởi máy chủ web và lưu trữ trong trình duyệt web để có thể đọc từ trình duyệt trong tương lai. Hiện tại, thông tin thu được từ tệp tin Cookies được sử dụng để cái thiện tính năng của dịch vụ. Dữ liệu do Công ty cung cấp sẽ dựa trên phân tích về việc sử dụng tích lũy của người dùng, và sau đó sắp xếp và tổ chức lại. Tệp tin Cookies giúp đồng thời quá trình đăng nhập nhanh và mượt mà hơn, cũng như lưu trữ giữ liệu giữa các phiên.\nBạn có thể tắt chức năng Tệp tin Cookies trên trình duyệt mà không ảnh hưởng đến quá trình duyệt trang web của bạn, nhưng Tệp tin Cookies sẽ không làm cho dịch vụ của chúng tôi trở nên thuận tiện hơn. Tắt chức năng Tệp tin Cookies có thể gây nên sự phức tạp trong sử dụng và thủ tục nhập liệu hơn. Bạn cũng nên lưu ý rằng nếu bạn xóa chức năng của Tệp tin Cookies, nó có thể ảnh hưởng đến một số chức năng dịch vụ của Công ty.\n5. Cập nhật chính sách bảo mật\nCông ty có quyền điều chỉnh các điều khoản này bất cứ lúc nào. Khi điều chỉnh những điều khoản này, chúng tôi sẽ thông báo về sửa đổi trên trang có liên quan mà không cần thông báo riêng với người dùng. Nếu người dùng không đồng ý với nội dung cập nhật, họ có thể dừng sử dụng tất cả các dịch vụ cung cấp bởi Công ty. Nếu người dùng tiếp tục sử dụng dịch vụ được cung cấp bởi Công ty, nó có nghĩa là người dùng đã đồng ý nội dung đã được sửa đổi bởi Công ty.";
+

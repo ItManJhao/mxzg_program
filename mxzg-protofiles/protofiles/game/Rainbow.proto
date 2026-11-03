@@ -1,0 +1,78 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "RainbowGMsg";
+import "Battle.proto";
+
+//神位NPC
+message PSRainbowNpc
+{
+	optional int32 type = 1;				//英雄类型
+	optional int32 star = 2;				//英雄星级
+	optional string skill_show = 3;			//主动技能展示heroskill表
+	optional string passive_skill_show = 4;	//被动技能展示heroskill表
+}
+//神位数据
+message PSRainbowSlot
+{
+	optional int64 id = 1;			//唯一ID
+	optional int32 type = 2;		//类型
+	optional int32 evolution = 3;	//当前神位的等级
+	optional int64 rid = 4;			//占领的玩家ID，0为未被占领
+	optional string name = 5;		//占领的玩家昵称
+	optional int32 image_id = 6;	//形象ID，仅在被占领后有意义
+	optional int32 pos = 7;			//神位的位置，不同类型之间都是从1开始
+	optional int32 level = 8;		//玩家等级，仅在被占领后有意义
+	optional int32 head_id  = 9;	//玩家头像，仅在被占领后有意义
+	optional int32 border_id = 10;	//玩家头像框，仅在被占领后有意义
+	repeated PSRainbowNpc npc_list = 11;	//npc列表
+}
+
+//挑战记录
+message PSRainbowRecord
+{
+	optional int32 evolution = 1;	//挑战的进化次数
+	optional int32 time = 2;		//挑战的时间
+	optional string battle_id = 3;	//战斗ID
+	optional BattleLog battle_log = 4;	//血量统计、阵型信息
+}
+
+//查看神位数据
+//57001
+message GReqRainbowInfo
+{
+}
+//57001
+message GResRainbowInfo
+{
+	repeated PSRainbowSlot slots = 1;	//神位数据
+	optional int32 rank = 2;			//当前玩家的竞技场排名，0未进榜
+	optional int32 rainbow_cd = 3;		//挑战冷却时间戳
+}
+
+//挑战神位
+//57002
+message GReqRainbowChallenge
+{
+	optional int64 id = 1;				//神位数据ID
+	optional int32 evolution = 2;		//选择的进化次数，1、5、10
+}
+//57002
+message GResRainbowChallenge
+{
+	repeated PSRainbowSlot slots = 1;	//所有神位数据
+	optional BattleReport report = 2;	//战报
+	optional int32 my_type = 3;			//战斗后我占领的类型，0为未占领成功
+	optional int32 rainbow_cd = 4;		//挑战冷却时间戳
+}
+
+//查看神位挑战数据
+//57003
+message GReqRainbowRecord
+{
+	optional int64 id = 1;				//神位数据ID
+}
+//57003
+message GResRainbowRecord
+{
+	repeated PSRainbowRecord records = 1;	//挑战记录列表
+}

@@ -1,0 +1,197 @@
+local AliceAssistLayer = class("AliceAssistLayer", require("src.comp.CCCLayerBase")) 
+
+function AliceAssistLayer:onCreate() 
+	 local sfc = cc.SpriteFrameCache:getInstance()
+	self:setPosition(0, 0)
+	self:setContentSize(640, 850)
+	self:setAnchorPoint(cc.p(0, 0))
+	self:resetScaleAtWidth(false)
+	self:addBlackBackground()
+	local spr_bg = cc.Scale9Sprite:create()
+	spr_bg:setPosition(0, 0)
+	spr_bg:setContentSize(640, 850)
+	spr_bg:setAnchorPoint(cc.p(0, 0))
+	self:addLoadRes(1, spr_bg, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {frame = "win-bg/win-bg-11.png", capInsets = cc.rect(58,64,56,71)})
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(spr_bg)
+	lyt:setLeftMargin(0)
+	lyt:setRightMargin(0)
+	lyt:setHorizontalEdge(3)
+	lyt:setStretchWidthEnabled(true)
+	lyt:setTopMargin(0)
+	lyt:setBottomMargin(0)
+	lyt:setVerticalEdge(3)
+	lyt:setStretchHeightEnabled(true)
+	self:addLyt(lyt)
+	spr_bg.lyt = lyt
+	self:addChild(spr_bg)
+	self.spr_bg = spr_bg
+
+	local spr_box = cc.Scale9Sprite:create()
+	spr_box:setPosition(320, 778.39)
+	spr_box:setContentSize(580, 640)
+	spr_box:setAnchorPoint(cc.p(0.5, 1))
+	self:addLoadRes(1, spr_box, "ccbi-res/hero-info.plist", "ccbi-res/hero-info.pvr.ccz", {frame = "hero-info/spr-hero-image-3.png", capInsets = cc.rect(20,80,20,50)})
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(spr_box)
+	lyt:setLeftMargin(30)
+	lyt:setRightMargin(30)
+	lyt:setHorizontalEdge(3)
+	lyt:setStretchWidthEnabled(true)
+	lyt:setTopMargin(71.61)
+	lyt:setBottomMargin(138.39)
+	lyt:setVerticalEdge(3)
+	lyt:setStretchHeightEnabled(true)
+	self:addLyt(lyt)
+	spr_box.lyt = lyt
+	self:addChild(spr_box)
+	self.spr_box = spr_box
+
+	local node_elem = cc.Node:create()
+	node_elem:setPosition(290, 625)
+	node_elem:setContentSize(0, 0)
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(node_elem)
+	lyt:setPositionPercentXEnabled(true)
+	lyt:setPositionPercentX(0.5)
+	lyt:setTopMargin(15)
+	lyt:setVerticalEdge(2)
+	self:addLyt(lyt)
+	node_elem.lyt = lyt
+	spr_box:addChild(node_elem)
+	self.node_elem = node_elem
+
+	local elem_menu = cpp.UIMenu:create()
+	elem_menu:setPosition(0, 0)
+	elem_menu:setContentSize(100, 1)
+	elem_menu:setAnchorPoint(cc.p(0, 0))
+	elem_menu:setIgnoreAnchorPointForPosition(false)
+	node_elem:addChild(elem_menu)
+	self.elem_menu = elem_menu
+
+	local btn_elem0 = cpp.UIMenuItemImage:createWithSpriteFrameName("", nil, nil)
+	btn_elem0:setPosition(-210, -34)
+	btn_elem0:setContentSize(74, 72)
+	btn_elem0:setScale(0.8, 0.8)
+	btn_elem0:setTag(0)
+	btn_elem0:registerScriptTapHandler(handler(self, self.onElem))
+	self:addLoadRes(3, btn_elem0, "ccbi-res/hero-icon-other.plist", "ccbi-res/hero-icon-other.pvr.ccz", {spr1="hero-icon/elem-0.png", spr2="hero-icon/elem-0.png"})
+	elem_menu:addChild(btn_elem0)
+	self.btn_elem0 = btn_elem0
+
+	local btn_elem1 = cpp.UIMenuItemImage:createWithSpriteFrameName("", nil, nil)
+	btn_elem1:setPosition(-126, -34)
+	btn_elem1:setContentSize(74, 72)
+	btn_elem1:setScale(0.8, 0.8)
+	btn_elem1:setTag(1)
+	btn_elem1:registerScriptTapHandler(handler(self, self.onElem))
+	self:addLoadRes(3, btn_elem1, "ccbi-res/hero-icon-other.plist", "ccbi-res/hero-icon-other.pvr.ccz", {spr1="hero-icon/elem-1.png", spr2="hero-icon/elem-1.png"})
+	elem_menu:addChild(btn_elem1)
+	self.btn_elem1 = btn_elem1
+
+	local btn_elem2 = cpp.UIMenuItemImage:createWithSpriteFrameName("", nil, nil)
+	btn_elem2:setPosition(-42, -34)
+	btn_elem2:setContentSize(74, 72)
+	btn_elem2:setScale(0.8, 0.8)
+	btn_elem2:setAnchorPoint(cc.p(0.5, 0.5))
+	btn_elem2:setTag(2)
+	btn_elem2:registerScriptTapHandler(handler(self, self.onElem))
+	self:addLoadRes(3, btn_elem2, "ccbi-res/hero-icon-other.plist", "ccbi-res/hero-icon-other.pvr.ccz", {spr1="hero-icon/elem-2.png", spr2="hero-icon/elem-2.png"})
+	elem_menu:addChild(btn_elem2)
+	self.btn_elem2 = btn_elem2
+
+	local btn_elem3 = cpp.UIMenuItemImage:createWithSpriteFrameName("", nil, nil)
+	btn_elem3:setPosition(42, -34)
+	btn_elem3:setContentSize(74, 72)
+	btn_elem3:setScale(0.8, 0.8)
+	btn_elem3:setTag(3)
+	btn_elem3:registerScriptTapHandler(handler(self, self.onElem))
+	self:addLoadRes(3, btn_elem3, "ccbi-res/hero-icon-other.plist", "ccbi-res/hero-icon-other.pvr.ccz", {spr1="hero-icon/elem-3.png", spr2="hero-icon/elem-3.png"})
+	elem_menu:addChild(btn_elem3)
+	self.btn_elem3 = btn_elem3
+
+	local btn_elem4 = cpp.UIMenuItemImage:createWithSpriteFrameName("", nil, nil)
+	btn_elem4:setPosition(126, -34)
+	btn_elem4:setContentSize(74, 72)
+	btn_elem4:setScale(0.8, 0.8)
+	btn_elem4:setTag(4)
+	btn_elem4:registerScriptTapHandler(handler(self, self.onElem))
+	self:addLoadRes(3, btn_elem4, "ccbi-res/hero-icon-other.plist", "ccbi-res/hero-icon-other.pvr.ccz", {spr1="hero-icon/elem-4.png", spr2="hero-icon/elem-4.png"})
+	elem_menu:addChild(btn_elem4)
+	self.btn_elem4 = btn_elem4
+
+	local btn_elem5 = cpp.UIMenuItemImage:createWithSpriteFrameName("", nil, nil)
+	btn_elem5:setPosition(210, -34)
+	btn_elem5:setContentSize(74, 72)
+	btn_elem5:setScale(0.8, 0.8)
+	btn_elem5:setTag(5)
+	btn_elem5:registerScriptTapHandler(handler(self, self.onElem))
+	self:addLoadRes(3, btn_elem5, "ccbi-res/hero-icon-other.plist", "ccbi-res/hero-icon-other.pvr.ccz", {spr1="hero-icon/elem-5.png", spr2="hero-icon/elem-5.png"})
+	elem_menu:addChild(btn_elem5)
+	self.btn_elem5 = btn_elem5
+
+	local lbl_tips_1 = cc.Label:createWithTTF(ex.Tools:getLang(5387),FONT_DEFAULT_NAME_BOLD, 22)
+	lbl_tips_1:setPosition(290, 530)
+	lbl_tips_1:setContentSize(26.3, 27.72)
+	lbl_tips_1:setTextColor(cc.c3b(122, 71, 45))
+	lbl_tips_1:setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+	lbl_tips_1:setHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT)
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(lbl_tips_1)
+	lyt:setPositionPercentXEnabled(true)
+	lyt:setPositionPercentX(0.5)
+	lyt:setTopMargin(96.14)
+	lyt:setVerticalEdge(2)
+	self:addLyt(lyt)
+	lbl_tips_1.lyt = lyt
+	spr_box:addChild(lbl_tips_1)
+	self.lbl_tips_1 = lbl_tips_1
+
+	local lbl_tips_2 = cc.Label:createWithTTF(ex.Tools:getLang(580031),FONT_DEFAULT_NAME_BOLD, 22)
+	lbl_tips_2:setPosition(320, 115.1)
+	lbl_tips_2:setContentSize(26.3, 27.72)
+	lbl_tips_2:setTextColor(cc.c3b(122, 71, 45))
+	lbl_tips_2:setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+	lbl_tips_2:setHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT)
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(lbl_tips_2)
+	lyt:setPositionPercentXEnabled(true)
+	lyt:setPositionPercentX(0.5)
+	lyt:setBottomMargin(101.24)
+	lyt:setVerticalEdge(1)
+	self:addLyt(lyt)
+	lbl_tips_2.lyt = lyt
+	self:addChild(lbl_tips_2)
+	self.lbl_tips_2 = lbl_tips_2
+
+	local UIMenu = cpp.UIMenu:create()
+	UIMenu:setPosition(320, 65)
+	UIMenu:setContentSize(0, 0)
+	UIMenu:setAnchorPoint(cc.p(0.5, 0.5))
+	UIMenu:setIgnoreAnchorPointForPosition(false)
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(UIMenu)
+	lyt:setPositionPercentXEnabled(true)
+	lyt:setPositionPercentX(0.5)
+	self:addLyt(lyt)
+	UIMenu.lyt = lyt
+	self:addChild(UIMenu)
+
+	local btn_confirm = cpp.UIMenuItemLabel:create("", nil, " ", nil)
+	btn_confirm:setPosition(0, 0)
+	btn_confirm:setContentSize(197, 60)
+	btn_confirm:registerScriptTapHandler(handler(self, self.onConfirm))
+	btn_confirm:getLabel():setTextColor(cc.c4b(255, 255, 255, 255))
+	btn_confirm:setLabelOffset(cc.p(0, -2))
+	btn_confirm:setLabelSize(44)
+	btn_confirm:setLabelOutLine(cc.c4b(0,0,0,255), 4)
+	btn_confirm:setLabelText(ex.Tools:getLang(74224))
+	self:addLoadRes(3, btn_confirm, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-blue-7.png"})
+	UIMenu:addChild(btn_confirm)
+	self.btn_confirm = btn_confirm
+
+	local btn_close = cpp.UIMenuItemImage:createWithSpriteFrameName("", nil, nil)
+	btn_close:setPosition(235, 750.83)
+	btn_close:setContentSize(55, 58)
+	btn_close:registerScriptTapHandler(handler(self, self.onClose))
+	self:addLoadRes(3, btn_close, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-close-1.png"})
+	UIMenu:addChild(btn_close)
+	self.btn_close = btn_close
+
+	 self:startLoadRes()
+end
+return AliceAssistLayer

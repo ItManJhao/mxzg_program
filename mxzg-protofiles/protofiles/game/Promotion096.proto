@@ -1,0 +1,46 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion096GMsg";
+
+import "Promotion070.proto";
+
+//出游寻春
+//数据
+//76301
+message GReqSpringOutingMissionGetDataInfo {
+
+}
+//76301
+message GResSpringOutingMissionGetDataInfo {
+    repeated PSMission mission = 1; //任务记录
+    repeated int32 mission_box_reward_record = 2; //任务次数领奖记录
+    optional int32 open_day = 3; //开启天数
+}
+
+//领取任务奖励
+//76302
+message GReqSpringOutingMissionGetMission {
+    optional int32 idx = 1;
+}
+
+//76302
+message GResSpringOutingMissionGetMission {
+    optional PSMission mission_info = 1;
+}
+
+//更新任务
+//76303
+message GResSpringOutingMissionUpdateProcess {
+    repeated PSMission mission = 1; //更新记录
+}
+
+//领取任务箱子奖励
+//76304
+message GReqSpringOutingMissionGetMissionBox {
+    optional int32 idx = 1;
+}
+
+//76304
+message GResSpringOutingMissionGetMissionBox {
+    optional int32 idx = 1;
+}

@@ -1,0 +1,79 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "PlaneWarGMsg";
+
+import "Object.proto";
+import "Battle.proto";
+import "Pvp.proto";
+
+//请求信息
+//75701
+message GReqPlaneWarData {
+
+}
+
+//75701
+message GResPlaneWarData {
+    optional int32 challenge_count = 1; //挑战次数
+    optional int32 remaining_buy_count = 2; //剩余购买次数
+    repeated PSMapData pass_level_info = 3; //通关信息;(element,level)只推送开放的副本
+    optional int32 privilege_expire_time = 4; //特权过期时间
+    optional int32 max_challenge_count = 5; //最大挑战次数
+    optional int32 turn = 6; //轮次
+    optional int32 had_buy_count = 7; //已购买次数
+    repeated int32 stage_group = 8; //本周关卡集合
+}
+
+//挑战boss
+//75702
+message GReqPlaneWarChallenge {
+    optional int32 idx = 1; //planewarlevel.idx
+}
+
+//75702
+message GResPlaneWarChallenge {
+    optional BattleReport report = 1; //战报
+    repeated PSBackpackData reward = 2; //奖励
+    repeated PSMapData pass_level_info = 3; //通关信息;(element,level)只推送开放的副本
+    optional int32 idx = 4; //挑战关卡
+}
+
+//扫荡
+//75703
+message GReqPlaneWarSweep {
+    optional int32 idx = 1; //planewarlevel.idx
+    optional int32 ele = 2; // 一键扫荡的时候传
+}
+
+//75703
+message GResPlaneWarSweep {
+
+}
+
+//购买次数
+//75704
+message GReqPlaneWarBuyCount {
+}
+
+//75704
+message GResPlaneWarBuyCount {
+    optional int32 remaining_buy_count = 1;
+    optional int32 challenge_count = 2;
+    optional int32 had_buy_count = 3; //已购买次数
+}
+
+//
+
+//排行榜
+//75705
+message GReqPlaneWarRank {
+
+}
+
+//75705
+message GResPlaneWarRank {
+    repeated PSRankPlayerData list = 1;
+    optional PSRankPlayerData self_data = 2;
+}
+
+

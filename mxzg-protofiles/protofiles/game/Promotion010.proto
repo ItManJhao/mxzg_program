@@ -1,0 +1,35 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion010GMsg";
+
+//特权数据
+message PSPrivilegeGift
+{
+	optional int32 idx = 1;			//特权ID
+	optional int32 end_time = 2;	//特权结束时间，0为永久
+	optional int32 buy_count = 3;	//特权礼包以购买次数
+}
+
+//查看特权数据
+//20014
+message GReqPrivilegeGiftAddOrUpdate
+{
+}
+//20014
+message GResPrivilegeGiftAddOrUpdate
+{
+    repeated PSPrivilegeGift list = 1;
+}
+
+//购买钻石特权礼包
+//20015
+message GReqPrivilegeGiftBuy
+{
+    optional int32 idx = 1;		//特权ID
+}
+//成功购买特权礼包后服务器推送
+//20015
+message GResPrivilegeGiftBuy
+{
+    optional PSPrivilegeGift data = 1;	//特权数据
+}

@@ -1,0 +1,142 @@
+cfg.championreward = {
+	["championreward"] = {
+		[1] = {
+			reward_rank_type = 0,
+			rank_low = 1,
+			rank_up = 1,
+			rank_reward = {{item_num=1,item_type=907004},{item_num=240000,item_type=900001},{item_num=6000,item_type=900901}},
+		},
+		[2] = {
+			reward_rank_type = 0,
+			rank_low = 2,
+			rank_up = 2,
+			rank_reward = {{item_num=1,item_type=907005},{item_num=200000,item_type=900001},{item_num=5000,item_type=900901}},
+		},
+		[3] = {
+			reward_rank_type = 0,
+			rank_low = 3,
+			rank_up = 3,
+			rank_reward = {{item_num=1,item_type=907006},{item_num=180000,item_type=900001},{item_num=4500,item_type=900901}},
+		},
+		[4] = {
+			reward_rank_type = 0,
+			rank_low = 4,
+			rank_up = 4,
+			rank_reward = {{item_num=160000,item_type=900001},{item_num=4000,item_type=900901}},
+		},
+		[5] = {
+			reward_rank_type = 0,
+			rank_low = 5,
+			rank_up = 8,
+			rank_reward = {{item_num=140000,item_type=900001},{item_num=3600,item_type=900901}},
+		},
+		[6] = {
+			reward_rank_type = 0,
+			rank_low = 9,
+			rank_up = 16,
+			rank_reward = {{item_num=120000,item_type=900001},{item_num=3200,item_type=900901}},
+		},
+		[7] = {
+			reward_rank_type = 0,
+			rank_low = 17,
+			rank_up = 32,
+			rank_reward = {{item_num=120000,item_type=900001},{item_num=3000,item_type=900901}},
+		},
+		[8] = {
+			reward_rank_type = 0,
+			rank_low = 33,
+			rank_up = 50,
+			rank_reward = {{item_num=100000,item_type=900001},{item_num=2600,item_type=900901}},
+		},
+		[9] = {
+			reward_rank_type = 0,
+			rank_low = 51,
+			rank_up = 80,
+			rank_reward = {{item_num=88000,item_type=900001},{item_num=2200,item_type=900901}},
+		},
+		[10] = {
+			reward_rank_type = 0,
+			rank_low = 81,
+			rank_up = 100,
+			rank_reward = {{item_num=80000,item_type=900001},{item_num=2000,item_type=900901}},
+		},
+		[11] = {
+			reward_rank_type = 0,
+			rank_low = 101,
+			rank_up = 128,
+			rank_reward = {{item_num=72000,item_type=900001},{item_num=1800,item_type=900901}},
+		},
+		[12] = {
+			reward_rank_type = 1,
+			rank_low = 1,
+			rank_up = 1,
+			rank_reward = {{item_num=9000,item_type=901901},{item_num=540000,item_type=900001}},
+		},
+		[13] = {
+			reward_rank_type = 1,
+			rank_low = 2,
+			rank_up = 2,
+			rank_reward = {{item_num=7500,item_type=901901},{item_num=450000,item_type=900001}},
+		},
+		[14] = {
+			reward_rank_type = 1,
+			rank_low = 3,
+			rank_up = 3,
+			rank_reward = {{item_num=6750,item_type=901901},{item_num=400000,item_type=900001}},
+		},
+		[15] = {
+			reward_rank_type = 1,
+			rank_low = 4,
+			rank_up = 4,
+			rank_reward = {{item_num=6000,item_type=901901},{item_num=360000,item_type=900001}},
+		},
+		[16] = {
+			reward_rank_type = 1,
+			rank_low = 5,
+			rank_up = 8,
+			rank_reward = {{item_num=5400,item_type=901901},{item_num=320000,item_type=900001}},
+		},
+		[17] = {
+			reward_rank_type = 1,
+			rank_low = 9,
+			rank_up = 16,
+			rank_reward = {{item_num=4800,item_type=901901},{item_num=280000,item_type=900001}},
+		},
+		[18] = {
+			reward_rank_type = 1,
+			rank_low = 17,
+			rank_up = 32,
+			rank_reward = {{item_num=4500,item_type=901901},{item_num=270000,item_type=900001}},
+		},
+		[19] = {
+			reward_rank_type = 1,
+			rank_low = 33,
+			rank_up = 64,
+			rank_reward = {{item_num=3900,item_type=901901},{item_num=230000,item_type=900001}},
+		},
+		[20] = {
+			reward_rank_type = 1,
+			rank_low = 65,
+			rank_up = 100,
+			rank_reward = {{item_num=3300,item_type=901901},{item_num=190000,item_type=900001}},
+		},
+		[21] = {
+			reward_rank_type = 1,
+			rank_low = 101,
+			rank_up = 150,
+			rank_reward = {{item_num=3000,item_type=901901},{item_num=180000,item_type=900001}},
+		},
+		[22] = {
+			reward_rank_type = 1,
+			rank_low = 151,
+			rank_up = 200,
+			rank_reward = {{item_num=2700,item_type=901901},{item_num=160000,item_type=900001}},
+		},
+		[23] = {
+			reward_rank_type = 1,
+			rank_low = 201,
+			rank_up = 256,
+			rank_reward = {{item_num=2400,item_type=901901},{item_num=140000,item_type=900001}},
+		},
+	}
+}

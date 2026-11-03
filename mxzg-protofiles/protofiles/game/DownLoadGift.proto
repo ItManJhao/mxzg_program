@@ -1,0 +1,27 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "DownLoadGiftGMsg";
+
+
+//请求信息
+//77201
+message GReqDownLoadGiftData {
+
+}
+
+//77201
+message GResDownLoadGiftData {
+	optional int32 state = 1;	// 0未领取 1已领取
+}
+
+
+//77202
+message GReqDownLoadGiftReward {
+	
+}
+
+//77202
+message GResDownLoadGifeReward {
+
+	optional int32 state = 1;	// 0未领取 1已领取
+}

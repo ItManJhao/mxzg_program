@@ -1,0 +1,240 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>玩家道具列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('ItemLog/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label">服务器</label>
+                                            <select class="form-control sid" name="sid">
+                                                <option value="0">请选择服务器</option>
+                                                <volist name="servers" id="servers_vo">
+                                                    <eq name="servers_vo.id" value="$search_params.sid">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+                                            <label class="control-label">角色id</label>
+                                            <input type="text" placeholder="精确搜索" name="role_id" value="{$search_params.role_id}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">操作类型</label>
+                                            <select class="form-control oprate" name="oprate">
+                                                <option <if condition="$search_params['oprate'] == 'all'"> selected </if> value="all">请选择</option>
+                                                <option <if condition="$search_params['oprate'] == 1"> selected </if> value="1">增加</option>
+                                                <option <if condition="$search_params['oprate'] == 2"> selected </if> value="2">消耗</option>
+                                            </select>
+                                            
+
+                                            <label class="control-label" style="padding-left: 5px;">开始时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            <label class="control-label" style="padding-left: 5px;">结束时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['end_time']}">
+
+                                            <div></div>
+
+                                            <label class="control-label">道具类型</label>
+                                            <select class="form-control server-type" name="item_class" onchange="serverType(this)">
+                                                <volist name="item_classs" id="item_classs_vo">
+                                                    <eq name="item_classs_vo.id" value="$search_params.item_class">
+                                                        <option value="{$item_classs_vo.id}" selected>{$item_classs_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$item_classs_vo.id}">{$item_classs_vo.name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 7px;">道具</label>
+                                            <input type="hidden" name="item_type" value="{$search_params['item_type']}">
+                                            <select class="selectpicker form-control item-type item_type" data-style="btn-info" data-title="请选择道具" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">来源</label>
+                                            <input type="hidden" name="game_event" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control game_event" data-style="btn-info" data-title="请选择来源" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="event_list" id="event_list_vo">
+                                                    <if condition="!empty($search_params['game_event']) && in_array($event_list_vo['id'],explode(',', $search_params['game_event']))">
+                                                        <option value="{$event_list_vo.id}" selected>{$event_list_vo.id}--{$event_list_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$event_list_vo.id}">{$event_list_vo.id}--{$event_list_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <button type="button" style="float:right; margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <a class="btn btn-primary export" href="javascript:void(0);" title="导出" ><i class="fa fa-cloud-download"></i>导出</a>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >道具：</label>
+                                                <span class="item_type-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >来源：</label>
+                                                <span class="game_event-text">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>角色id</th>
+                                                                <th>角色名称</th>
+                                                                <th>子渠道</th>
+                                                                <th>大渠道</th>
+                                                                <th>账号id</th>
+                                                                <th>区服id</th>
+                                                                <th>道具id</th>
+                                                                <th>道具</th>
+                                                                <th>道具类型</th>
+                                                                <th>品质</th>
+                                                                <th>操作来源</th>
+                                                                <th>操作类型</th>
+                                                                <th>原有值</th>
+                                                                <th>现有值</th>
+                                                                <th>变化值</th>
+                                                                <th>操作时间</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                            <volist name="list" id="vo">
+                                                                <tr role="row"> 
+                                                                    <td>{$vo.rid}</td>
+                                                                    <td>{$vo.role_name}</td>
+                                                                    <td>{$vo.channel_name_son}</td>
+                                                                    <td>{$vo.channel_name}</td>
+                                                                    <td>{$vo.user_id}</td>
+                                                                    <td>{$search_params.sid}</td>
+                                                                    <td>{$vo.type}</td>
+                                                                    <td>{$vo.item_name}</td>
+                                                                    <td>{$vo.item_type_name}</td>
+                                                                    <td>{$vo.item_quality}</td>
+                                                                    <td>{$vo.event}--{$vo.event_desc}</td>
+                                                                    <td>{$vo.oprate}</td>
+                                                                    <td>{$vo.old}</td>
+                                                                    <td>{$vo.curr}</td>
+                                                                    <td>{$vo.delta}</td>
+                                                                    <td>{:date('Y-m-d H:i:s', $vo['time'])}</td>
+                                                                </tr>
+                                                            </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+ 
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+    $(".item_type").on('change',function(e){
+        doMultipleSelection(this, 'item_type');
+    })
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+    $(".game_event").on('change',function(e){
+        doMultipleSelection(this, 'game_event');
+    })
+
+    $(function(){
+        serverType($('.server-type'));
+        doMultipleSelection($('.item_type'), 'item_type');
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+        doMultipleSelection($('.game_event'), 'game_event');
+    });
+
+    var mail_templates_str = '<?php echo json_encode($item_class_arr); ?>';
+    mail_templates_object = JSON.parse(mail_templates_str);
+
+    var search_params = '<?php echo json_encode($search_params); ?>';
+    search_params_arr = JSON.parse(search_params);
+
+    function serverType(obj){
+        var selectedValue = $(obj).val();
+        var item_html = "";
+        var item_arr = search_params_arr.item_type.split(',');
+        $.each(mail_templates_object[selectedValue], function (key, item) {
+            if ($.inArray(item.id, item_arr) >= 0)
+            {
+                item_html +='<option value="' + item.id + '" selected>' + item.id + '--' + item.name + '</option>';
+            }else{
+                item_html +='<option value="' + item.id + '" >' + item.id + '--' + item.name + '</option>';
+            }
+        });
+
+        $("select.item-type").empty();
+        $("select.item-type").append(item_html);
+        doMultipleSelection($('.item_type'), 'item_type');
+        $('select.item_type').selectpicker('refresh');
+    }
+
+    $(".export").click(function(){
+        var c_son_id = $("input[ name='c_son_id' ]").val();
+        var sid = $(".sid option:selected").val();
+        var role_id = $(" input[ name='role_id' ] ").val();
+        var oprate = $(".oprate option:selected").val();
+        var item_class = $(".server-type option:selected").val();
+        var item_type = $("input[ name='item_type' ]").val();
+        var game_event = $("input[ name='game_event' ]").val();
+        var start_time = $("#start_time").val();
+        var end_time = $("#end_time").val();
+        window.location.href="/admin.php/ItemLog/export?c_son_id=" + c_son_id + "&game_event=" + game_event + "&sid=" + sid + "&role_id=" + role_id + "&item_class=" + item_class + "&item_type=" + item_type + "&oprate=" + oprate + "&start_time=" + start_time + "&end_time=" + end_time;
+    });
+</script>
+
+<include file="Public:footer" />

@@ -1,0 +1,27 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion087GMsg";
+
+//嗨翻圣诞
+//数据
+//76121
+message GReqChristmasLotteryGetDataInfo {
+
+}
+//76121
+message GResChristmasLotteryGetDataInfo {
+    optional int32 bookmark = 1; //奖池页签 值为配置表promotion087lotterytype.idx
+    repeated int32 lottery_record = 2; //抽奖记录
+}
+
+//抽奖
+//76122
+message GReqChristmasLottery {
+
+}
+
+//76122
+message GResChristmasLottery {
+    optional int32 lottery_record = 1; //抽中奖励
+}
+

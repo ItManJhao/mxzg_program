@@ -1,0 +1,52 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "CrusadeGroupOccupationGMsg";
+
+//任务类型1000：占领领土  1001：开垦土地  1002：获得精华 1003：获得神兵 1004：神兵核心升级 1005：boss伤害 1006：击杀boss
+//职级信息
+message PSOccupationInfo {
+    optional int32 oc_id = 1;//角色职级id(等级)
+    repeated PSOccupationTaskInfo taskInfos = 2;//职级任务数据
+}
+
+//职级任务信息（客户端根据targetCount和condition结合任务配置来判断是否完成了任务）
+message PSOccupationTaskInfo {
+    optional int32 taskId = 1;// 对应crusadegroupoccupationtasktemplate  id
+    optional int64 targetCount = 2;//目标计数（计个数或者伤害等）
+    optional int32 condition = 3;//-1：为不满足条件 0：满足条件（针对特殊任务，比如 是否参与击杀boss）
+    optional int32 complete_type = 4;//-1：没有手动完成 0：已经手动完成
+}
+
+//获取职级信息
+//75606
+message GReqGetOccupationInfo {
+}
+//75606
+message GResGetOccupationInfo {
+    optional PSOccupationInfo occupationInfo = 1;//职级信息
+}
+
+//晋升职级
+//75607
+message GReqOccupationUp {
+}
+//75607
+message GResOccupationUp {
+    optional int32 oc_id = 1;//角色职级id(等级)
+}
+
+//职级任务信息推送
+//75608
+message GResSendOccupationTaskInfo {
+    repeated PSOccupationTaskInfo taskInfo = 1;//职级任务数据
+}
+
+//玩家手动完成任务
+//75609
+message GReqOpreaOccupationTask {
+    optional int32 taskId = 1;// 对应crusadegroupoccupationtasktemplate  id
+}
+//75609
+message GResOpreaOccupationTask {
+    optional PSOccupationTaskInfo taskInfo = 1;//职级任务数据
+}

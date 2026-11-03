@@ -1,0 +1,49 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion091GMsg";
+
+import "Object.proto";
+
+message PSSpringFestivalTurnsRecord {
+    optional int32 turns = 1; //轮次
+    repeated PSMapData place_record = 2; //<位置，奖励id>，从1开始
+}
+
+//嗨翻圣诞
+//数据
+//76211
+message GReqSpringFestivalGetDataInfo {
+
+}
+
+//76211
+message GResSpringFestivalGetDataInfo {
+    repeated PSSpringFestivalTurnsRecord lottery_record = 1; //扭蛋抽奖记录
+    optional int32 curr_lottery_turns = 2; //当前轮次
+}
+
+//扭蛋抽奖
+//76212
+message GReqSpringFestivalGashaponLottery {
+    optional int32 place = 1; //抽奖位置
+}
+
+//76212
+message GResSpringFestivalGashaponLottery {
+    optional int32 lottery_turns = 1; //抽奖轮次
+    optional int32 place = 2; //抽奖位置
+    optional int32 idx = 3; //抽中奖励
+    optional int32 curr_lottery_turns = 4; //当前轮次
+}
+
+//盲盒抽奖
+//76213
+message GReqSpringFestivalBoxLottery {
+
+}
+
+//76213
+message GResSpringFestivalBoxLottery {
+    optional int32 idx = 1; //抽中奖励
+}
+

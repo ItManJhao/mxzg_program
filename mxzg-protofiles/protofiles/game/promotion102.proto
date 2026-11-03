@@ -1,0 +1,26 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion102GMsg";
+
+
+//76550
+message GReqTimeLimitRecharge{
+	
+}
+
+//76550
+message GResTimeLimitRecharge{
+	optional int64 money = 1;	// 已经充值总金额
+	repeated int32 list = 2;	// 已领取奖励列表
+}
+
+
+//76551
+message GReqTimeLimitReward{
+	optional int32 idx = 1;	// 奖励idx
+}
+
+//76551
+message GResTimeLimitReward{
+	optional int32 idx = 1;
+}

@@ -1,0 +1,122 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>公会列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('Clan/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">公会ID：</label>
+                                            <input type="text" placeholder="精确搜索" name="clan_id" value="{$search_params.clan_id}" style="width: 120px;" class="form-control">
+                                            
+                                            <label class="control-label">公会名称：</label>
+                                            <input type="text" placeholder="模糊搜索" name="clan_name" value="{$search_params.clan_name}" style="width: 120px;" class="form-control">
+                                            
+                                            <label class="control-label">会长ID：</label>
+                                            <input type="text" placeholder="模糊搜索" name="clan_head_rid" value="{$search_params.clan_head_rid}" style="width: 120px;" class="form-control">
+                                            
+                                            <label class="control-label">服务器：</label>
+                                            <select class="form-control" name="sid">
+                                                <option value="0">请选择服务器</option>
+                                                <volist name="servers" id="servers_vo">
+                                                    <eq name="servers_vo.id" value="$search_params.sid">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <!-- <th style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'ids\']').prop('checked', this.checked);"></th> -->
+                                                                <th>公会ID</th>
+                                                                <th>公会名称</th>
+                                                                <th>公会等级</th>
+                                                                <th>公户经验</th>
+                                                                <th>公会贡献</th>
+                                                                <th>总战力</th>
+                                                                <th>区服排名</th>
+                                                                <th>成员数</th>
+                                                                <th>总充值</th>
+                                                                <th>会长ID</th>
+                                                                <th>会长名称</th>
+                                                                <th>公会公告</th>
+                                                                <th>会长副本关卡</th>
+                                                                <th>创建时间</th>
+                                                                <th>操作</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                            <volist name="list" id="vo">
+                                                                <tr role="row"> 
+                                                                    <!-- <td><input type="checkbox" name="ids[]" value="{$vo.id}"></td> -->
+                                                                    <td>{$vo.id}</td>
+                                                                    <td>{$vo.clan_name}</td>
+                                                                    <td>{$vo.clan_level}</td>
+                                                                    <td>{$vo.clan_exp}</td>
+                                                                    <td>{$vo.clan_donate}</td>
+                                                                    <td>{$vo.clan_fighting}</td>
+                                                                    <td>{$i+$firstRow}</td>
+                                                                    <td>{$vo.counts}</td>
+                                                                    <td>{$vo.money}</td>
+                                                                    <td>{$vo.clan_head_rid}</td>
+                                                                    <td>{$vo.clan_head_name}</td>
+                                                                    <td>{$vo.clan_desc}</td>
+                                                                    <td>{$vo.boss_idx}</td>
+                                                                    <td>{:date('Y-m-d H:i:s',$vo['create_time']*0.001)}</td>
+                                                                    <td>
+                                                                        <a class="btn btn-primary" href="javascript:;" title="公会成员详情" onclick="openYemian('/admin.php/Clan/ClanMember?clan_id={$vo.id}&sid={$vo.sid}','公会成员详情')">公会成员详情</a>
+                                                                        <a class="btn btn-primary" href="javascript:;" title="修改公告" onclick="openYemian('/admin.php/Clan/UpdateClanDesc?clan_id={$vo.id}&sid={$vo.sid}&clan_desc={$vo.clan_desc}','修改公告')">修改公告</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+</script>
+
+<include file="Public:footer" />

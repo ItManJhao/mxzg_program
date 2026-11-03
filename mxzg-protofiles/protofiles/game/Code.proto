@@ -1,0 +1,15 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "CodeGMsg";
+
+//兑换码，激活码
+//15010
+message GReqCdk
+{
+	optional string cdk = 1; // CDK
+}
+//15010
+message GResCdk
+{
+	optional int32 is_success = 1;    // <=0：失败；>0：成功
+}

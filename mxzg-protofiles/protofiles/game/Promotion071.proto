@@ -1,0 +1,20 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion071GMsg";
+import "Object.proto";
+
+//七神器数据
+//75101
+message GReqQiShenQiInfo{
+
+}
+//75101
+message GResQiShenQiInfo{
+    repeated PSMapData buy = 1; //购买记录
+}
+
+//购买推送
+//75102
+message GResQiShenQiBuy{
+    optional PSMapData buy = 1; //购买记录
+}

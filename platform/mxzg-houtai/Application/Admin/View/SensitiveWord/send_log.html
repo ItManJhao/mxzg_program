@@ -1,0 +1,53 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>发送敏感词记录</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form method="post" enctype="multipart/form-data" id="form-order">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>发送的敏感词</th>
+                                                    <th>发送的服务器</th>
+                                                    <th>发送的结果</th>
+                                                    <th>操作人</th>
+                                                    <th>操作时间</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ajaxList">
+                                            <volist name="list" id="vo">
+                                                <tr role="row">
+                                                    <td>{$vo.sensitive_words}</td>
+                                                    <td>{$vo.sid}</td>
+                                                    <td>{$vo.debug}</td>
+                                                    <td>{$vo.admin_name}</td>
+                                                    <td>{:date('Y-m-d H:i:s',$vo['created_at'])}</td>
+                                                </tr>
+                                            </volist>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+
+</script>
+
+
+<include file="Public:footer" />

@@ -1,0 +1,20 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion098GMsg";
+
+//活动跳转数据
+//76530
+message GReqActiveJumpDataInfo{
+	
+}
+
+//76530
+message GResActiveJumpDataInfo{
+	repeated ActiveItemInfo infos = 1;	// 活动数据集合
+}
+
+message ActiveItemInfo{
+	optional int32 active_id = 1;	// 活动id
+	optional int32 state = 2;		// 活动状态
+	optional string url = 3;		// 活动跳转链接
+}

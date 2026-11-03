@@ -1,0 +1,317 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "GodEquipGMsg";
+import "Object.proto";
+
+//神装升星继承的属性
+message PSGodEquipAttr
+{
+	optional int64 id = 1; //神装id
+	optional int32 sort = 2;	//槽位号
+}
+
+//神装属性
+message PSGodAttr
+{
+	optional int32 sort = 1;	//槽位号
+	optional int32 sys_id = 2;	//属性ID
+	optional int32 level = 3;	//属性等级
+	optional int32 lock = 4;	//是否上锁，0未上锁，1已上锁
+}
+
+//神装装备
+message PSGodEquip
+{
+	optional int64 id = 1;				//神装ID
+	optional int64 hero_id = 2;			//英雄ID
+	optional int32 sys_id = 3;			//神装配置表ID
+	optional int32 place = 4;			//部位
+	repeated PSGodAttr attrs = 5;		//属性列表
+	repeated PSGodAttr wash_attrs = 6;	//洗练中的属性列表
+	optional int32 wash_num	= 7;		//神装洗炼次数
+	optional int32 package_id = 8;	    //套装id
+    optional string package_name = 9;	//套装名字
+}
+
+//神装抽奖记录
+message PSGodRecord
+{
+	optional string name = 1;	//玩家名字
+	optional int32 item_type = 2;	//道具ID
+    optional int64 item_num = 3; //道具数量
+}
+
+//查看神装
+//58001
+message GReqScanGodEquip
+{
+	optional int32 page = 1;		//页码，从1开始
+}
+//58001
+message GResScanGodEquip
+{
+	optional int32 page = 1;		//页码，从1开始
+	repeated PSGodEquip equips = 2;	//装备列表
+}
+
+//装备神装
+//58002
+message GReqWearGodEquip
+{
+	optional int64 hero_id = 1;		//英雄ID
+	optional int64 equip_id = 2;	//神装ID
+
+}
+//58002
+message GResWearGodEquip
+{
+	optional int64 hero_id = 1;		//英雄ID
+	repeated PSGodEquip equips = 2;	//神装
+}
+
+//脱下神装
+//58003
+message GReqDisboardGodEquip
+{
+	optional int64 equip_id = 1;	//神装ID
+}
+//58003
+message GResDisboardGodEquip
+{
+	optional int64 hero_id = 1;		//英雄ID
+	optional int64 equip_id = 2;	//神装ID
+}
+
+//58004 保留
+//58005 保留
+
+//神装回收推送，通知更新神装为未装备状态
+//58006
+message GResUpdateGodEquipOff
+{
+	repeated int64 equip_ids = 1;	//被系统脱下的神装，需要更新原有神装数据中的hero_id为0
+}
+
+//查看神装探宝数据
+//58007
+message GReqScanGodEquipLottery
+{
+}
+//58007
+message GResScanGodEquipLottery
+{
+	optional int32 lucky = 1;			//已抽奖N次，用于必出逻辑
+	optional int32 roll_num = 2;		//免费抽机会，1 或 0
+	repeated PSGodRecord records = 3;	//抽奖记录
+	optional int32 lucky_total = 4;			//总共累计抽奖次数
+	repeated int32 reward_times = 5;		//已领取累计奖励次数
+}
+
+//查看神装探宝记录
+//58008
+message GReqScanGodEquipRecord
+{
+}
+//58008
+message GResScanGodEquipRecord
+{
+	repeated PSGodRecord role_records = 1;		//玩家的记录
+	repeated PSGodRecord server_records = 2;	//服务器的记录
+}
+
+//神装探宝
+//58009
+message GReqLotteryGodEquip
+{
+	optional int32 type = 1;	//抽奖类型，1或者10
+}
+//58009
+message GResLotteryGodEquip
+{
+	optional int32 type = 1;			//抽奖类型，1或者10
+	repeated PSBackpackData list = 2;   // 奖励内容
+}
+
+//神装洗练
+//58010
+message GReqWashGodEquip
+{
+	optional int64 equip_id = 1;	//装备ID
+	repeated int32 lock_sort = 2;	//锁定的槽位号
+}
+//58010
+message GResWashGodEquip
+{
+	optional PSGodEquip equip = 1;	//神装数据
+}
+
+//神装洗练保存
+//58011
+message GReqSaveWashGodEquip
+{
+	optional int64 equip_id = 1;	//装备ID
+}
+//58011
+message GResSaveWashGodEquip
+{
+	optional PSGodEquip equip = 1;	//神装数据
+}
+
+//神装升星
+//58012
+message GReqGodEquipUpStar{
+	repeated PSGodEquipAttr attr_list = 1;//选择继承的属性
+	repeated int64 god_equip_list = 2;//选择的神装
+}
+//58012
+message GResGodEquipUpStar{
+	optional PSGodEquip equip = 1;
+}
+
+//神装背包回收
+//58013
+message GReqGodEquipRecycle{
+	repeated int64 god_equips = 1;//回收的神装id
+}
+//58013
+message GResGodEquipRecycle{
+
+}
+
+//神装增加推送
+//58014
+message GResGodEquipAdd{
+	repeated PSGodEquip equips = 1;	//装备列表
+}
+
+//神装减少推送
+//58015
+message GResGodEquipDelete{
+	repeated int64 equip_ids = 1;	//装备列表
+}
+
+//获取神装总览战力
+//58016
+message GReqGodEquipFighting{
+	optional int64 hero_id = 1;
+}
+//58016
+message GResGodEquipFighting{
+	optional int64 fighting = 1;
+}
+
+//神装特权
+//58017
+message GReqGodEquipPrivilege {
+
+}
+//58017
+message GResGodEquipPrivilege {
+	optional int32 buy_status = 1; //特权购买状态 ，1为购买。0为未购买
+	optional int32 get_day = 2; //今天是否已领取 1为领取。0为未领取
+}
+
+//领取神装特权奖励
+//58018
+message GReqGetPrivilegeReward {
+
+}
+//58018
+message GResGetPrivilegeReward {
+	optional int32 get_day = 1; //今天是否已领取 1为领取。0为未领取
+}
+
+//领取累计次数奖励
+//58019
+message GReqLotteryTimesReward {
+    optional int32 times = 1; //领取哪次的累计奖励
+}
+//58019
+message GResLotteryTimesReward {
+	optional int32 lucky_total = 1;			//总共累计抽奖次数
+	repeated int32 reward_times = 2;		//已领取累计奖励次数
+}
+
+//神装转化
+//58020
+message GReqGodEquipChange {
+    optional int64 id = 1;          //被转化的神装id
+    optional int32 target_type = 2; //转化目标神装类型
+}
+//58020
+message GResGodEquipChange {
+    optional PSGodEquip equips = 1;	//装备
+}
+
+message PSPackageRecord {
+    optional int32 package_id = 1;	    //套装id
+    optional int64 hero_id = 2;	        //英雄id
+    optional string package_name = 3;	//套装名字
+    repeated int64 equip_ids = 4;	    //神装列表
+}
+
+//神装套装列表
+//58021
+message GReqGodEquipPackage {
+}
+//58021
+message GResGodEquipPackage {
+    repeated PSPackageRecord list = 1;// 列表
+}
+
+//神装套装更新
+//58022
+message GReqGodEquipPackageUpdate {
+    optional int32 package_id = 1;	    //套装id
+    optional int64 hero_id = 2;	        //英雄id
+    repeated int64 equip_ids = 3;	    //神装列表
+}
+//58022
+message GResGodEquipPackageUpdate {
+    optional PSPackageRecord record = 1;    //套装信息
+}
+
+//神装套装重命名
+//58023
+message GReqGodEquipPackageRename {
+    optional int32 package_id = 1;	//套装id
+    optional string new_name = 2;	//套装新名字
+}
+//58023
+message GResGodEquipPackageRename {
+    optional int32 package_id = 1;	    //套装id
+    optional string package_name = 2;	//套装名字
+}
+
+//神装套装增加数量
+//58024
+message GReqGodEquipPackageAdd {
+}
+//58024
+message GResGodEquipPackageAdd {
+    optional PSPackageRecord record = 1;    //增加的套装信息
+}
+
+//神装套装装配英雄
+//58025
+message GReqGodEquipPackageWear {
+    optional int32 package_id = 1;	    //套装id
+    optional int64 hero_id = 2;	        //装备的英雄id
+}
+//58025
+message GResGodEquipPackageWear {
+    optional int64 hero_id = 1;	        //装备的英雄id
+    repeated PSGodEquip equips = 2;	    //目标英雄穿戴的神装
+    repeated PSPackageRecord records = 3;//所有套装信息
+}
+
+//神装套装一键卸下
+//58026
+message GReqGodEquipTakeOffAll {
+    optional int64 hero_id = 1;	  //英雄id
+}
+//58026
+message GResGodEquipTakeOffAll {
+    optional int64 hero_id = 1;	        //装备的英雄id
+    repeated PSPackageRecord records = 2;//所有套装信息
+}

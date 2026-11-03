@@ -1,0 +1,29 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion040GMsg";
+import "Object.proto";
+
+
+//召唤达标活动列表
+//13080
+message GReqSummonList
+{
+}
+//13080
+message GResSummonList
+{
+	optional int32 nvalue = 4;
+	optional int32 round = 5;
+	repeated PSMapData list = 6;
+}
+
+//领取召唤达标活动奖励
+//13081
+message GReqSummonTimesGift
+{
+	optional int32 idx = 1;
+}
+//13081
+message GResSummonTimesGift
+{
+}

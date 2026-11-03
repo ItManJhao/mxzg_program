@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.9.RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ayjs.mxzg</groupId>
+    <artifactId>mxzg-server</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>mxzg-gameserver</module>
+        <module>mxzg-config</module>
+        <module>mxzg-protocol</module>
+        <module>mxzg-battle</module>
+        <module>mxzg-cross</module>
+        <module>mxzg-message</module>
+        <module>mxzg-center</module>
+        <module>mxzg-template</module>
+        <module>mxzg-large-cross</module>
+        <module>mxzg-merge-server</module>
+    </modules>
+
+    <name>mxzg-server</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.jdk>1.8</project.build.jdk>
+        <mxzg.version>1.0-SNAPSHOT</mxzg.version>
+        <mxzg-agent.version>1.0-SNAPSHOT</mxzg-agent.version>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.test.skip>true</maven.test.skip>
+        <game.common.version>1.3.3</game.common.version>
+        <lombok.version>1.18.4</lombok.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <guava.version>27.0.1-jre</guava.version>
+        <gson.version>2.8.5</gson.version>
+        <reflectasm.version>1.11.7</reflectasm.version>
+        <protobuf.version>2.6.1</protobuf.version>
+        <druid.version>1.1.19</druid.version>
+        <druid-spring-boot-starter.version>1.1.16</druid-spring-boot-starter.version>
+        <jts.version>1.13</jts.version>
+        <fastjson.version>1.2.54</fastjson.version>
+        <opencsv.version>2.4</opencsv.version>
+        <objenesis.version>3.0.1</objenesis.version>
+        <poi.version>3.17</poi.version>
+        <hutool-all.version>4.6.15</hutool-all.version>
+        <reflectasm.version>1.11.3</reflectasm.version>
+        <maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
+        <ip2region.version>1.7.2</ip2region.version>
+        <pushy.version>0.13.10</pushy.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Repository</name>
+            <url>http://192.168.1.131:8081/repository/maven-public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus</id>
+            <name>Nexus Plugin Repository</name>
+            <url>http://192.168.1.131:8081/repository/maven-public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>

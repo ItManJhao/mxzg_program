@@ -1,0 +1,51 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ProphetSummonGMsg";
+import "Object.proto";
+
+//
+message PSProphetLucky
+{
+	optional int32 type = 1;	//抽奖类型，对照prophecyguarantee配置表
+	optional int32 lucky = 2;	//幸运值
+}
+//先知抽奖
+//13041
+message GReqProphetSummon {
+    optional int32 index = 1;//prophecylottery lottery_type  不含首抽的
+}
+//13041
+message GResProphetSummon {
+    repeated PSBackpackData list = 1;//奖励列表
+}
+
+//置换英雄
+//13042
+message GReqProphetChange {
+    optional int64 hero_id = 1;
+}
+//13042
+message GResProphetChange {
+    optional int64 before_hero_id = 1; //置换前英雄ID
+    optional int32 after_hero_type = 2; //置换后英雄类型
+}
+
+//确定转换
+//13043
+message GReqProphetConfirmChange {
+    optional int32 index = 1;
+}
+//13043
+message GResProphetConfirmChange {
+}
+
+//查看先知召唤幸运值
+//13044
+message GReqProphetSummonInfo
+{
+}
+//13044
+message GResProphetSummonInfo
+{
+	repeated PSProphetLucky luckys = 1;	//幸运值列表
+}

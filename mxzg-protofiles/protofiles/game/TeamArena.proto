@@ -1,0 +1,462 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "TeamArenaGMsg";
+
+import "HeroPalace.proto";
+import "Hero.proto";
+import "Battle.proto";
+
+//------------------------------------------------------------
+
+message PBMemberInfo {
+    optional PSRoleSimpleInfo member = 1; //玩家简要信息
+    repeated ResHeroBriefData hero_data = 2; // 阵容信息
+    optional int32 goddess_type = 3; //神器类型(契约)
+    optional int32 formation_id = 4; //阵法id（序列）
+    optional int32 fighting = 5; //战斗力
+    optional bool hidden = 6; //是否已经隐藏
+}
+
+message PBMemberSimpleInfo {
+    optional PSRoleSimpleInfo member = 1; //玩家简要信息
+    optional int32 fighting = 2; //战斗力
+    optional bool hidden = 3; //是否已经隐藏
+}
+
+message PBTeam {
+    optional int64 team_id = 1; //队伍id
+    optional int64 captain_id = 2; //队长
+    repeated PBMemberInfo member = 3; //成员
+    optional int32 min_fighting = 4; //最低战斗力
+    optional int32 min_lv = 5; //最低等级
+    optional bool auto_agree = 6; //是否自动审批
+    optional string team_name = 7; //队伍名
+    optional bool had_sign = 8; //是否已经报名
+}
+
+message PBSimpleTeam {
+    optional int64 team_id = 1; //队伍id
+    optional int64 captain_id = 2; //队长
+    repeated PBMemberSimpleInfo member = 3; //成员
+    optional string team_name = 4;
+    optional int32 score = 5;
+    optional int32 fighting = 6;
+    optional bool is_request = 7; // 是否已申请
+    optional int32 min_lv = 8;
+    optional int32 min_fighting = 9;
+}
+
+//我的队伍
+//66001
+message GReqTeam {
+}
+
+//66001
+message GResTeam {
+    optional PBTeam team = 1;
+}
+
+//搜索队伍
+//66002
+message GReqTeamSearch {
+    optional string team_name = 1;
+}
+
+//66002
+message GResTeamSearch {
+    repeated PBSimpleTeam team = 1;
+    optional bool is_join = 2;
+}
+
+//创建队伍
+//66003
+message GReqTeamCreate {
+    optional string team_name = 1;
+    optional int32 min_fighting = 2;
+    optional int32 min_lv = 3;
+    optional bool auto_agree = 4;
+}
+
+//66003
+message GResTeamCreate {
+    optional PBTeam team = 1;
+}
+
+//邀请列表
+//66004
+message GReqTeamInviteList {
+}
+
+//66004
+message GResTeamInviteList {
+    repeated PBTeam team = 1;
+
+}
+
+//队伍的申请列表
+//66005
+message GReqTeamApplyList {
+}
+//66005
+message GResTeamApplyList {
+    repeated PBMemberInfo apply_info = 1; //申请者信息
+
+}
+
+//处理邀请
+//66006
+message GReqTeamHandleInvite {
+    optional int64 team_id = 1;
+
+}
+//66006
+message GResTeamHandleInvite {
+    optional PBTeam team = 1;
+}
+
+//申请队伍
+//66007
+message GReqTeamApply {
+    optional int64 team_id = 1;
+}
+//66007
+message GResTeamApply {
+    optional int32 code = 1; //1发送申请成功未入队：2发送申请成功并入队：3 目标队伍已满员：4目标队伍更改了入队条件导致不符合入队条件;5:已经加入队伍
+    optional int64 team_id = 2;
+}
+
+//退出队伍
+//66008
+message GReqTeamExit {
+
+}
+//66008
+message GResTeamExit {
+    //    optional PBTeam team = 1;
+}
+
+//踢出队伍
+//66009
+message GReqTeamKickOut {
+    optional int64 member_id = 1;
+}
+//66009
+message GResTeamKickOut {
+    optional PBTeam team = 1;
+}
+
+//申请
+//66010
+message GReqTeamHandleApply {
+    optional int64 member_id = 1;
+    optional int32 op = 2; //1同意，2拒绝
+}
+//66010
+message GResTeamHandleApply {
+    optional int64 member_id = 1;
+    optional int32 op = 2; //1同意，2拒绝
+    optional PBTeam team = 3;
+}
+
+//邀请
+//66011
+message GReqTeamInvite {
+    optional int64 rid = 1;
+}
+//66011
+message GResTeamInvite {
+    optional int64 rid = 1;
+}
+
+//重置队伍信息，每次都会覆盖这四个值
+//66012
+message GReqTeamReset {
+    optional string team_name = 1; //队伍名
+    optional int32 min_fighting = 2; //最低战力
+    optional int32 min_lv = 3; //最低等级
+    optional bool auto_agree = 4; //是否自动同意
+}
+//66012
+message GResTeamReset {
+    optional PBTeam team = 1;
+}
+
+//推荐列表
+//66013
+message GReqTeamRecommend {
+
+}
+//66013
+message GResTeamRecommend {
+    repeated PBSimpleTeam team = 1;
+    optional bool is_join = 2;
+}
+
+//保存阵容
+//66014
+message GReqTeamArenaLineUp {
+    optional int64 team_id = 1;
+    repeated int64 line_up = 2; //布阵顺序
+    repeated int64 hidden_member = 3; //隐藏成员
+}
+
+//66014
+message GResTeamArenaLineUp {
+    optional PBTeam team = 1;
+}
+
+//更换队长
+//66015
+message GReqTeamArenaChangeCaptain {
+    optional int64 captain_id = 1; //新队长id
+}
+
+//66015
+message GResTeamArenaChangeCaptain {
+    optional PBTeam team = 1;
+}
+
+//清除所有邀请
+//66016
+message GReqTeamArenaClearAllInvite {
+}
+
+//66016
+message GResTeamArenaClearAllInvite {
+}
+
+//邀请玩家对象
+message PBTeamArenaInviteRole {
+    optional PBMemberInfo role = 1;
+    optional bool is_invite = 2;
+}
+
+//推荐玩家
+//66017
+message GReqTeamArenaRecommendRole {
+
+}
+
+//66017
+message GResTeamArenaRecommendRole {
+    repeated PBTeamArenaInviteRole roles = 1;
+}
+
+//搜索玩家
+//66018
+message GReqTeamArenaSearchRole {
+    optional string role_name = 1;
+}
+
+//66018
+message GResTeamArenaSearchRole {
+    repeated PBTeamArenaInviteRole roles = 1;
+}
+
+//被踢出通知
+//66019
+message GResTeamArenaBeKickOut {
+}
+
+//小红点状态
+//66020
+message GReqTeamArenaRedState {
+}
+
+//66020
+message GResTeamArenaRedState {
+    repeated int32 red_list = 1; //小红点集合
+}
+
+//-----------------排行榜-------------------------
+
+message PSTeamArenaRank {
+    optional int32 rank = 1; //排名
+    optional int64 team_id = 2; //队伍id
+    optional int32 score = 3; //分数
+    repeated PBMemberSimpleInfo member = 4; //成员
+    optional string team_name = 5; //队伍名
+    optional int32 fighting = 6; //战力
+    optional int64 captain_id = 7; //队长id
+}
+
+//排行榜
+//66050
+message GReqTeamArenaRank {
+
+}
+//66050
+message GResTeamArenaRank {
+    repeated PSTeamArenaRank rank_list = 1;
+    optional PSTeamArenaRank self = 2; //未上排行榜时，rank=-1，没有加入队伍时，teamId=-1；
+    optional bool had_sign = 3; //是否报名
+}
+
+//请求状态
+//66051
+message GReqTeamArenaState {
+
+}
+
+//66051
+message GResTeamArenaState {
+    optional int32 curr_state = 1; //1休战阶段；2组队阶段；3挑战阶段；4结算阶段
+    optional int32 next_state_time = 2;
+}
+
+//领取挑战奖励
+//66052
+message GReqTeamArenaGetChallengeReward {
+    optional int32 idx = 1;
+}
+
+//66052
+message GResTeamArenaGetChallengeReward {
+}
+
+//查询可挑战成员
+//66053
+message GReqGetDefendTeam {
+
+}
+
+//66053
+message GResGetDefendTeam {
+    repeated PBSimpleTeam team = 1;
+}
+
+//报名
+//66054
+message GReqTeamArenaSign {
+
+}
+
+//66054
+message GResTeamArenaSign {
+    optional PBTeam team = 1;
+}
+
+//刷新挑战列表
+//66055
+message GReqTeamArenaRefreshDefend {
+
+}
+
+//66055
+message GResTeamArenaRefreshDefend {
+    repeated PBSimpleTeam defend = 1; //可挑战列表
+}
+
+//战斗
+//66056
+message GReqTeamArenaBattle {
+    optional int64 defend_team_id = 1;
+}
+
+//66056
+message GResTeamArenaBattle {
+    optional BattleReport report = 1; //战报
+
+    optional int32 attack_score = 2; //进攻方分数
+    optional int32 attack_add_score = 3; //进攻方增加分数
+    optional PBSimpleTeam attack_team = 4; //进攻方
+    optional int32 attack_rank = 5; //进攻方排名
+    optional int32 attack_add_rank = 6; //进攻方增加排名
+
+    optional PBSimpleTeam defend_team = 7; //防守方
+    optional int32 defend_rank = 8; //防守方新排名
+    optional int32 defend_score = 9; //防守方分数
+    optional int32 defend_add_rank = 10; //防守方排名
+
+    optional int32 report_sum = 11; //总战报数
+    optional int32 report_index = 12; //战报索引
+    optional int32 defend_reduce_score = 13; //防守方减少分数
+}
+
+//获取战报
+//66057
+message GReqTeamArenaBattleReport {
+    optional int64 team_id = 1;
+    optional int32 report_index = 2;
+}
+
+//66057
+message GResTeamArenaBattleReport {
+    optional BattleReport report = 1;
+
+    optional int32 attack_score = 2; //进攻方分数
+    optional int32 attack_add_score = 3; //进攻方增加分数
+    optional PBSimpleTeam attack_team = 4; //进攻方
+    optional int32 attack_rank = 5; //进攻方排名
+    optional int32 attack_add_rank = 6; //进攻方增加排名
+
+    optional int32 defend_score = 7; //防守方分数
+    optional PBSimpleTeam defend_team = 8; //防守方
+    optional int32 defend_rank = 9; //防守方排名
+    optional int32 defend_add_rank = 10; //防守方增加排名
+
+    optional int32 report_index = 11; //总战报数
+    optional int32 report_sum = 12; //战报索引
+    optional int32 defend_reduce_score = 13; //防守方减少分数
+}
+
+message PBTeamArenaBattleRecord {
+    optional int64 record_id = 1; //唯一id
+    optional int64 win_team_id = 2; //胜利队伍
+    optional PSTeamArenaRank attack_team = 3; //进攻方
+    optional PSTeamArenaRank defend_team = 4; //防守方
+    optional int32 add_score = 5; //进攻方增加分数
+    optional int32 attack_add_rank = 6; //进攻方增加排名
+    optional int32 defend_add_rank = 7; //防守方增加排名，可能为负数
+    optional int32 battle_time = 8; //战斗时间
+    optional int32 defend_reduce_score = 9; //防守方减少分数
+}
+
+message PBTeamArenaBattleRecordDetail {
+    optional string battle_report_id = 1; //战报id
+    optional BattleLog battle_log = 2; //战斗信息
+    optional string attack_team_name = 3; //进攻方队伍名
+    optional string defend_team_name = 4; //防守方队伍名
+    optional int32 battle_time = 5; //战斗时间
+    optional int32 battle_round = 6; //战斗轮次
+
+}
+
+//战斗记录
+//66058
+message GReqTeamArenaBattleRecord {
+}
+//66058
+message GResTeamArenaBattleRecord {
+    repeated PBTeamArenaBattleRecord record = 1;
+}
+
+//战斗记录详情
+//66059
+message GReqTeamArenaBattleRecordDetail {
+    optional int64 record_id = 1;
+}
+//66059
+message GResTeamArenaBattleRecordDetail {
+    repeated PBTeamArenaBattleRecordDetail detail = 1;
+}
+
+//组队竞技场数据
+//66060
+message GReqTeamArenaData {
+
+}
+//66060
+message GResTeamArenaData {
+    optional int32 challenge_count = 1; //挑战次数
+    optional int32 last_add_time = 2; //上次增加次数时间
+    repeated int32 reward_idx = 3; //已领取奖励id的集合
+    optional int32 had_challenge_count = 4; //已挑战次数
+}
+
+//组队竞技场排行榜玩家详细,返回2004
+//66061
+message GReqTeamArenaRankRoleInfo {
+    optional int64 role_id = 1;
+    optional int32 server_id = 2; //服务器id
+}

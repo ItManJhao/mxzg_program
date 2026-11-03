@@ -1,0 +1,18 @@
+<div class="form-group">
+    <label class="col-sm-2 control-label">选择道具：</label>
+    <div class="col-sm-8 class-item">
+        <a class="add_item"><i class="fa fa-plus"></i>添加道具</a>
+        <p></p>
+        <div class="col-sm-10">
+            <a style="width: 80px; float: left;" class="del_item"><i class="fa fa-minus-square"></i>删除道具</a>
+            <select style="width: 110px; float: left;" class="form-control item_type_type" name="item_type_type[]" onchange="upitem(this)">
+                <volist name="item_type_type" id="item_type_type_vo">
+                    <option value="{$item_type_type_vo.id}">{$item_type_type_vo.name}</option>
+                </volist>
+            </select>
+            <select style="width: 240px; float: left;" class="form-control" name="gift_item[]">
+            </select>
+            <input style="width: 90px; float: left;" class="configInput form-control" name="gift_item_num[]" type="number" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,"")">
+        </div>
+    </div>
+</div>

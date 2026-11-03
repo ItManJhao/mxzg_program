@@ -1,0 +1,58 @@
+cfg.chapterextrareward = {
+	["chapterextrareward"] = {
+		[100] = {
+			idx = 100,
+			chapter = 15,
+			reward = {{item_num=1,item_type=10105007}},
+			show_model = 10105007,
+			tips_lang = 52801,
+			tip_img = 1,
+			other_tip_language = 52831,
+		},
+		[150] = {
+			idx = 150,
+			chapter = 30,
+			reward = {{item_num=500,item_type=900102}},
+			show_model = 900102,
+			tips_lang = 52802,
+			tip_img = 2,
+			other_tip_language = 52832,
+		},
+		[200] = {
+			idx = 200,
+			chapter = 50,
+			reward = {{item_num=800,item_type=900102}},
+			show_model = 900102,
+			tips_lang = 52803,
+			tip_img = 2,
+			other_tip_language = 52833,
+		},
+		[300] = {
+			idx = 300,
+			chapter = 80,
+			reward = {{item_num=1,item_type=1001012}},
+			show_model = 1001012,
+			tips_lang = 52804,
+			tip_img = 3,
+			other_tip_language = 52834,
+		},
+		[400] = {
+			idx = 400,
+			chapter = 110,
+			reward = {{item_num=1,item_type=10205011}},
+			show_model = 10205011,
+			tips_lang = 52805,
+			tip_img = 4,
+			other_tip_language = 52835,
+		},
+		[500] = {
+			idx = 500,
+			chapter = 140,
+			reward = {{item_num=1,item_type=10105007}},
+			show_model = 10105007,
+			tips_lang = 52806,
+			tip_img = 1,
+			other_tip_language = 52836,
+		},
+	}
+}

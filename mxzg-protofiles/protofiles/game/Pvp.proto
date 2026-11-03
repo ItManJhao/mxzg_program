@@ -1,0 +1,185 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "PvpGMsg";
+import "Object.proto";
+import "Battle.proto";
+
+message PSRankPlayerData {
+    optional int64 player_id = 1; 		//玩家ID
+    optional string name = 2; 			//玩家名字
+    optional int64 clan_id = 3; 		//公会ID
+    optional string clan_name = 4; 		//玩家战盟名
+    optional int32 clan_icon_id = 5; 	//公会图标
+    optional int32 level = 6; 			//玩家等级
+    optional int32 head_id = 7; 		//玩家头像
+    optional int32 complete_time = 8; 	//通关时间
+    optional int32 score = 9; 			//pvp分数，试炼塔层数，剧情章节数，庇护所最高层数，点金次数
+    optional int32 combat_num = 10; 	//战斗力
+    optional int32 server_id = 11; 		//大区（服务器区号）.
+    optional int32 rank = 12; 			//玩家排名
+    optional int32 border_id = 13;		//头像框id
+    optional int32 belike = 14;			//被点赞次数
+    optional int32 sub_score = 15;		//拓展分数
+}
+
+message PSRankTopData {
+	optional int64 player_id = 1; 	 //玩家ID
+	optional string name = 2; 			 //玩家名字
+	optional int32 rank = 3; 				 //玩家排名
+	optional int32 belike = 4;			 //被点赞次数
+	optional int32 image_id = 5;	   //形象ID
+}
+
+
+message PSClanRankData
+{
+	optional int32 rank = 1; 		//公会排名
+	optional int64 clan_id = 2; 	//公会ID
+	optional int32 clan_level = 3; //公会等级
+	optional int32 clan_photo = 4;	//公会头像
+	optional string clan_name = 5; //公会名字
+	optional string head_name = 6; //公长名字
+	optional int64 damage = 7;		//战斗力
+	optional int32 border_id = 8;	//头像框
+	optional int64 score = 9;		//分数
+	optional int32 server_id = 10; //大区（服务器区号）
+	optional int32 member = 11; //成员数量
+	optional int64 manage_rid = 12; //公长rid
+	optional int32 manage_head_id = 13;//会长头像
+	optional int32 manage_border_id = 14;//会长头像框id
+}
+
+//竞技场记录
+message PSPvpRecordData
+{
+	optional string battle_id = 1;	//战斗ID
+	optional string atk_name = 2;	//我的名字
+	optional int32 atk_lv = 3;		//我的等级
+	optional int32 atk_head = 4;	//我的头像
+	optional int32 atk_border = 5;	//我的头像
+	optional string def_name = 6;	//对方的名字
+	optional int32 def_lv = 7;		//对方的等级
+	optional int32 def_head = 8;	//对方的头像
+	optional int32 def_border = 9;	//对方的头像
+	optional int32 cup_delta = 10;	//奖杯变化量
+	optional int32 result = 11;		//战斗结果，0负1胜
+	optional int32 type = 12;		//挑战还是防御，1挑战，2防御
+	optional int32 time = 13;		//时间
+}
+
+//打开竞技场界面时请求的信息
+//18001
+message GReqPvpData
+{
+}
+//18001
+message GResPvpData
+{
+    optional int32 free_count = 1;		//剩余免费次数
+    optional int32 score = 2; 			//玩家自身分数
+    repeated PSRankPlayerData list = 3;	//可挑战的玩家
+    optional int32 season_end_time = 4;	//赛季结束时间
+    repeated int64 like_rids = 5;		//今天已点赞的玩家ID
+    optional int32 season_count = 6;	//赛季已挑战次数
+    repeated int32 season_reward = 7;	//已领取的赛季奖励，不保证列表内容的顺序
+}
+
+//挑战对手
+//18002
+message GReqPvpBattle 
+{
+    optional int64 player_id = 1; //挑战哪一个玩家
+}
+//18002
+message GResPvpBattle
+{
+	optional int32 is_win = 1;			//0负1胜
+	optional int32 self_score = 2; 		//自己增加的分数
+	optional int32 enemy_score = 3; 	//敌人增加的分数
+	repeated PSBackpackData list = 4;
+	optional BattleReport report = 5;	//战报
+	optional int64 player_id = 6; 		//挑战哪一个玩家
+	optional int32 self_cup = 7;		//自己当前的积分
+	optional int32 enemy_cup = 8;		//敌人当前的积分
+	optional string enemy_name = 9;		//敌人的名字
+	optional int32 head_id = 10;		//敌人的头像
+	optional int32 border_id = 11;		//敌人的头像框
+    optional int32 chance_status = 12;      //神职概率是否触发
+    optional int32 enemy_level = 13;      //敌人的等级
+}
+
+//换一批挑战者
+//18003
+message GReqPvpPlayerRefresh
+{
+}
+//18003
+message GResPvpPlayerRefresh
+{
+	repeated PSRankPlayerData list = 1;	//可挑战的玩家
+}
+
+//竞技场挑战记录
+//18004
+message GReqPvpBattleHistoryList
+{
+}
+//18004
+message GResPvpBattleHistoryList
+{
+    repeated PSPvpRecordData list = 1; //历史记录
+}
+
+//钻石购买pvp门票
+//18005
+message GReqBuyPvpTicket
+{
+	optional int32 item_num = 1;	//购买数量
+}
+//18005
+message GResBuyPvpTicket
+{
+}
+
+//18006
+message GReqPvpShopList
+{
+
+}
+
+//竞技场点赞
+//18007
+message GReqPvpLike
+{
+	optional int64 rid = 1;	//玩家ID
+}
+//18007
+message GResPvpLike
+{
+	optional int64 rid = 1;			//玩家ID
+	optional int32 belike = 2;		//玩家被点赞的次数
+}
+
+//竞技场领取赛季累计挑战次数奖励
+//18008
+message GReqPvpSeasonReward
+{
+	optional int32 type = 1;	//
+}
+//18008
+message GResPvpSeasonReward
+{
+	optional int32 type = 1;	//
+}
+
+//竞技场前三名信息
+//18009
+message GReqPvpTopThree
+{
+}
+//18009
+message GResPvpTopThree
+{
+	optional int32 belike = 1;// 自己的点赞数
+	repeated PSRankTopData list = 2;	// 前三名信息
+}

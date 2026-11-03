@@ -1,0 +1,106 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "AchievementGMsg";
+
+//------------------------------------------------------------
+
+// 任务数据
+message PSTaskData {
+    optional int32 idx = 1; //任务id
+    optional int32 process = 2; //进度
+    optional int32 state = 3; //领取状态：0，未领取；1，领取
+}
+
+//成就记录
+//12010
+message GReqAchievementList {
+
+}
+//12010
+message GResAchievementList {
+    repeated PSTaskData task = 1;
+}
+
+//请求领奖
+//12011
+message GReqAchievementGetReward {
+    optional int32 idx = 1;
+}
+
+//领取奖励后，删除就任务，添加新任务
+//12011
+message GResAchievementGetReward {
+    required int32 idx = 1;
+    repeated PSTaskData add_tasks = 2; //新增任务集合
+    optional PSTaskData last_task = 3; //最后一个任务
+}
+
+//推送任务进度更新
+//12012
+message GResUpdateAchievementTask {
+    repeated PSTaskData update_tasks = 1; //
+}
+
+//推送任务完成
+//12013
+message GResAchievementTaskComplete {
+    repeated int32 complete_ids = 1; //完成任务列表
+}
+//历练列表
+//12014
+message GReqExperienceList {
+
+}
+//12014
+message GResExperienceList {
+    repeated PSTaskData task = 1;
+}
+
+//历练获取奖励
+//12015
+message GReqExperienceGetReward {
+    optional int32 idx = 1;
+}
+//12015
+message GResExperienceGetReward {
+    optional PSTaskData task = 1;
+}
+
+//-------------每日任务--------------------
+//任务列表
+//12020
+message GReqDailyTaskList {
+
+}
+//12020
+message GResDailyTaskList {
+    repeated PSTaskData task = 1; //任务列表
+    repeated int32 reward_box_idx = 2; //宝箱领奖记录
+    required int32 daily_value = 3; //任务值
+}
+
+//每日任务领奖
+//12021
+message GReqDailyTaskGetReward {
+    required int32 task_id = 1;
+}
+//12021
+message GResDailyTaskGetReward {
+    required int32 daily_value = 1;
+    repeated PSTaskData task = 2;
+}
+//宝箱领奖
+//12022
+message GReqDailyTaskBoxGetReward {
+    required int32 box_id = 1;
+}
+//12022
+message GResDailyTaskBoxGetReward {
+    optional int32 box_id = 1;
+}
+
+//推送任务进度更新
+//12023
+message GResUpdateDailyTask {
+    repeated PSTaskData update_tasks = 1; //
+}

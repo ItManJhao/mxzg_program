@@ -1,0 +1,110 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "CrusadeGroupShenBinGMsg";
+import "Object.proto";
+
+//玩家个人获取神兵、精华列表
+message PSRoleShenBinInfo {
+    optional int32 item_type = 1;//道具id
+    optional int64 itemNum = 2;//神兵道具数量
+}
+
+//神兵装备信息
+message PSShenBinInfo {
+    optional int32 job = 1;//职业1-4
+    optional int32 coreLv = 2;//神兵核心等级
+    optional PSShenBinEquipData equipData = 3;//部位装备信息
+    optional int32 fighting = 4;//该职业神兵战力
+}
+//英雄神兵装备信息
+message PSShenBinEquipData {
+    optional int32 job = 1;//职业1-4
+    repeated PSHoleData equip_list = 2; //装备列表
+}
+
+message PSHoleData {
+    optional int64 equip_id = 1; //装备部位ID
+    optional int32 place = 2; //装备部位
+    optional int32 equip_type = 3; //物品类型  -1表示没有装备
+}
+
+//神兵信息
+//75601
+message GReqShenBinInfo{
+}
+//75601
+message GResShenBinInfo {
+    repeated PSShenBinInfo shenBinInfos = 1;//神兵信息
+}
+
+//神兵合成
+//75602
+message GReqShenBinCompose {
+    optional int32 job = 1;//职业
+    optional int32 equip_type = 3; //物品类型
+}
+//75602
+message GResShenBinCompose {
+    optional PSBackpackData shenbin = 1;//合成的装备
+}
+
+//神兵装备
+//75603
+message GReqShenBinEquip{
+    optional int32 job = 1;
+    optional int32 place = 2; //装备部位
+}
+//75603
+message GResShenBinEquip{
+    optional PSHoleData  holeData = 1;//装备成功客户端要从神兵背包中删除该装备
+    optional int32 fighting = 2;//该职业神兵战力
+}
+
+//神兵核心升级
+//75604
+message GReqShenBinCoreUp{
+    optional int32 job = 1;
+}
+//75604
+message GResShenBinCoreUp{
+    optional PSShenBinInfo shenBinInfo = 1;//神兵信息(重置当前职业部位装备)
+}
+
+//神兵分解
+//75605
+message GReqShenBinResolve{
+    optional int32 equip_type = 1; //物品类型
+    optional int64 equipNum = 2; //分解数量
+}
+//75605
+message GResShenBinResolve{
+}
+
+
+//玩家神兵道具信息
+//75615
+message GReqRoleShenBinInfo {
+
+}
+
+//75615
+message GResRoleShenBinInfo{
+   repeated PSRoleShenBinInfo roleShenBins = 1; //玩家神兵道具信息
+}
+
+//获取神兵系统战力
+//75618
+message GReqShenBinFighting {
+   optional int32 job = 1;
+}
+
+//75618
+message GResShenBinFighting{
+   optional int32 fighting = 1;
+}
+
+//分享坐标
+//75619
+message GReqShareCityPosit {
+   optional int32 group_id = 1;//crusadegroupmap 表group_id
+}

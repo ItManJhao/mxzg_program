@@ -1,0 +1,111 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "RuneStoneGMsg";
+
+import "Object.proto";
+
+//符石消耗结构体
+message PSConsume {
+    optional int32 cost_idx = 1; //消耗索引
+    repeated int64 rune_stone_id = 2; //消耗列表
+}
+
+//资质
+message PSRuneStoneAptitude {
+    optional int32 idx = 1; //额外属性配置表
+    optional int64 value = 2; //资质值
+    optional int32 place = 3; //位置索引
+}
+
+//符石
+message PSRuneStone {
+    optional int64 id = 1; //唯一id
+    optional int32 idx = 2; //配置表id
+    optional int64 hero_id = 3; //装备英雄
+    optional int32 place = 4; //穿戴位置
+    repeated PSRuneStoneAptitude aptitude = 5; //资质
+    optional bool lock = 6; //是否锁定
+}
+
+//符石列表
+message GReqRuneStoneList {
+
+}
+
+//符石列表
+message GResRuneStoneList {
+    repeated PSRuneStone rune_stone = 1;
+}
+
+//新增符石
+message GResRuneStoneAdd {
+    repeated PSRuneStone rune_stone = 1;
+}
+
+//删除符石
+message GResRuneStoneDelete {
+    repeated int64 id = 1;
+}
+
+message PSEquip {
+    optional int64 id = 1; //符石id
+    optional int64 hero_id = 2; //英雄id
+    optional int32 place = 3; //装备位置
+}
+
+//符石穿戴或卸下,一键穿戴，一键卸下
+message GReqRuneStoneEquip {
+    repeated PSEquip equip_info = 1;
+    optional bool equip = 4; //是否穿戴，true穿戴，false脱下
+}
+
+//符石穿戴
+message GResRuneStoneEquip {
+    repeated PSRuneStone updates = 1; //符石改变列表
+}
+
+//符石合成
+message GReqCombine {
+    optional int32 target_idx = 1; //合成目标
+    repeated PSConsume consume = 2; //消耗
+}
+
+message GResCombine {
+    optional PSRuneStone runeStone = 1; //合成后的符石
+}
+
+//符石强化
+message GReqIntensify {
+    optional int64 id = 1; //符合唯一id
+    repeated PSConsume consume = 2; //消耗
+}
+
+//符石强化
+message GResIntensify {
+    optional PSRuneStone runeStone = 1; //合成后的符石
+}
+
+//符石资质交换
+message GReqAptitudeExchange {
+    optional int64 source_id = 1; //源符石
+    optional int32 source_place = 2; //源符石位置
+    optional int64 target_id = 3; //目标符石
+    optional int32 target_place = 4; //目标符石位置
+}
+
+//符石资质交换
+message GResAptitudeExchange {
+    optional PSRuneStone source = 1; //源符石
+    optional PSRuneStone target = 2; //目标符石
+}
+
+//符石分解
+message GReqResolve {
+    optional int64 id = 1;
+}
+
+//符石分解
+message GResResolve {
+    repeated PSRuneStone stone_reward = 1; //符石分解奖励
+    repeated PSBackpackData item_reward = 2; //道具奖励
+}

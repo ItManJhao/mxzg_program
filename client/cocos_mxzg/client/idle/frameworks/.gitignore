@@ -1,0 +1,5 @@
+# Various settings
+*.xcuserstate
+*.xcuserdatad
+*.DS_Store
+xcuserdata/

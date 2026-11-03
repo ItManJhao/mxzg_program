@@ -1,0 +1,104 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion070GMsg";
+
+import "Object.proto";
+
+//任务
+message PSMission {
+    optional int32 idx = 1;
+    optional int64 process = 2;
+    optional bool had_reward = 3;
+}
+
+//选择奖励
+message PSSelectInfo {
+    optional int32 idx = 1;
+    repeated int32 reward_id = 2;
+}
+
+//数据
+//75001
+message GReqGetDataInfo {
+}
+//75001
+message GResGetDataInfo {
+    repeated PSSelectInfo select_info = 1; //选择记录
+    repeated PSMission mission = 2; //任务记录
+    repeated int32 count_reward = 4; //次数领取记录
+    optional int32 open_count = 5; //开箱次数
+    repeated PSMapData open_record = 6; //开箱记录
+    optional int32 good_buy_count = 7; //商品购买次数
+    repeated int32 mission_box_reward_record = 8; //任务次数领奖记录
+    optional int32 open_day = 9; //当前开启天数
+}
+
+//选择档位奖励
+//75002
+message GReqSelect {
+    repeated PSSelectInfo select_info = 1;
+}
+//75002
+message GResSelect {
+    repeated PSSelectInfo select_info = 1;
+}
+
+//领取任务奖励
+//75003
+message GReqGetMission {
+    optional int32 idx = 1;
+}
+//75003
+message GResGetMission {
+    optional PSMission mission_info = 1;
+}
+
+//抽奖开格子
+//75004
+message GReqOpen {
+    optional int32 open_index = 1; //开启格子位置
+}
+
+//75004
+message GResOpen {
+    repeated PSMapData open_record = 1; //所有开启记录
+    optional PSMapData this_open_record = 2; //本次开启记录
+}
+
+//领取次数奖励
+//75005
+message GReqGetCountReward {
+    optional int32 idx = 1;
+}
+
+//75005
+message GResGetCountReward {
+    optional int32 idx = 1;
+}
+
+//重置
+//75006
+message GReqResetSelect {
+}
+
+//75006
+message GResResetSelect {
+    //    repeated PSSelectInfo select_info = 1; //选择记录
+    //    repeated PSMapData open_record = 2; //开箱记录
+}
+
+//75007
+message GResUpdateProcess {
+    repeated PSMission mission = 1; //更新记录
+}
+
+//领取任务箱子奖励
+//75008
+message GReqGetMissionBox {
+    optional int32 idx = 1;
+}
+
+//75008
+message GResGetMissionBox {
+    optional int32 idx = 1;
+}

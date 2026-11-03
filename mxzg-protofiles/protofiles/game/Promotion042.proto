@@ -1,0 +1,28 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion042GMsg";
+import "Object.proto";
+
+
+//祭坛兑换活动
+//13095
+message GReqPromotionSacrificeShop
+{
+}
+//13095
+message GResPromotionSacrificeShop
+{
+	repeated PSMapData list = 4;
+}
+
+//活动兑换商品
+//50003
+message GReqShopBuySacrifice
+{
+	optional int32 idx = 1;
+}
+//50003
+message GResShopBuySacrifice
+{
+	optional int32 idx = 1;
+}

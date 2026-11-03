@@ -1,0 +1,130 @@
+cfg.promotion3daytaskreward = {
+	["promotion3daytaskreward"] = {
+		[1] = {
+			idx = 1,
+			turns = 1,
+			day = 1,
+			reward = {{item_num=1,item_type=1031002}},
+		},
+		[2] = {
+			idx = 2,
+			turns = 1,
+			day = 2,
+			reward = {{item_num=200,item_type=900102}},
+		},
+		[3] = {
+			idx = 3,
+			turns = 1,
+			day = 3,
+			reward = {{item_num=1,item_type=900601}},
+		},
+		[4] = {
+			idx = 4,
+			turns = 2,
+			day = 1,
+			reward = {{item_num=1,item_type=1031002}},
+		},
+		[5] = {
+			idx = 5,
+			turns = 2,
+			day = 2,
+			reward = {{item_num=200,item_type=900102}},
+		},
+		[6] = {
+			idx = 6,
+			turns = 2,
+			day = 3,
+			reward = {{item_num=1,item_type=900601}},
+		},
+		[7] = {
+			idx = 7,
+			turns = 3,
+			day = 1,
+			reward = {{item_num=1,item_type=1031002}},
+		},
+		[8] = {
+			idx = 8,
+			turns = 3,
+			day = 2,
+			reward = {{item_num=200,item_type=900102}},
+		},
+		[9] = {
+			idx = 9,
+			turns = 3,
+			day = 3,
+			reward = {{item_num=1,item_type=900601}},
+		},
+		[10] = {
+			idx = 10,
+			turns = 4,
+			day = 1,
+			reward = {{item_num=1,item_type=1031002}},
+		},
+		[11] = {
+			idx = 11,
+			turns = 4,
+			day = 2,
+			reward = {{item_num=200,item_type=900102}},
+		},
+		[12] = {
+			idx = 12,
+			turns = 4,
+			day = 3,
+			reward = {{item_num=1,item_type=900601}},
+		},
+		[13] = {
+			idx = 13,
+			turns = 5,
+			day = 1,
+			reward = {{item_num=1,item_type=1031002}},
+		},
+		[14] = {
+			idx = 14,
+			turns = 5,
+			day = 2,
+			reward = {{item_num=200,item_type=900102}},
+		},
+		[15] = {
+			idx = 15,
+			turns = 5,
+			day = 3,
+			reward = {{item_num=1,item_type=900601}},
+		},
+		[16] = {
+			idx = 16,
+			turns = 6,
+			day = 1,
+			reward = {{item_num=1,item_type=1031002}},
+		},
+		[17] = {
+			idx = 17,
+			turns = 6,
+			day = 2,
+			reward = {{item_num=200,item_type=900102}},
+		},
+		[18] = {
+			idx = 18,
+			turns = 6,
+			day = 3,
+			reward = {{item_num=3,item_type=901817}},
+		},
+		[19] = {
+			idx = 19,
+			turns = 7,
+			day = 1,
+			reward = {{item_num=1,item_type=1031002}},
+		},
+		[20] = {
+			idx = 20,
+			turns = 7,
+			day = 2,
+			reward = {{item_num=200,item_type=900102}},
+		},
+		[21] = {
+			idx = 21,
+			turns = 7,
+			day = 3,
+			reward = {{item_num=3,item_type=901817}},
+		},
+	}
+}

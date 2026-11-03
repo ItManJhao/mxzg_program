@@ -1,0 +1,79 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>发送服务器日志</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form method="post" enctype="multipart/form-data" id="form-order">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>活动id</th>
+                                                    <th>活动名称</th>
+                                                    <th>开始时间</th>
+                                                    <th>结束时间</th>
+                                                    <th>清除时间</th>
+                                                    <th>服务器id</th>
+                                                    <th>服务器名称</th>
+                                                    <th>发送状态</th>
+                                                    <th>发送结果</th>
+                                                    <th>操作人</th>
+                                                    <th>操作时间</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ajaxList">
+                                            <volist name="send_active_server" id="vo">
+                                                <tr role="row">
+                                                    <td>{$vo.active_id}</td>
+                                                    <td>{$vo.active_name}</td>
+                                                    <td>{:date('Y-m-d H:i:s',$vo['start_time'])}</td>
+                                                    <td>{:date('Y-m-d H:i:s',$vo['end_time'])}</td>
+                                                    <td>{:date('Y-m-d H:i:s',$vo['clear_time'])}</td>
+                                                    <td>{$vo.server_id}</td>
+                                                    <td>{$vo.server_name}</td>
+                                                    <if condition="$vo['status'] == 200">
+                                                        <td>发送成功</td>
+                                                    <elseif condition="$vo['status'] == 1" />
+                                                        <td style="color:coral">发送失败</td>
+                                                    <elseif condition="$vo['status'] == 0"/>
+                                                        <td style="color:red;">连接失败</td>
+                                                    <else/>
+                                                        <td style="color:red;">未知错误</td>
+                                                    </if>
+                                                    <td>{$vo.debug}</td>
+                                                    <td>{$vo.admin_name}</td>
+                                                    <td>{:date('Y-m-d H:i:s',$vo['created_at'])}</td>
+                                                </tr>
+                                            </volist>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                    <div>
+                                        <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                    </div>
+                                    <script>
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+    
+
+</script>
+
+
+<include file="Public:footer" />

@@ -1,0 +1,58 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "CrusadeGroupRankGMsg";
+
+//讨伐团排行数据  神兵精华、boss伤害排行
+message PSCrusadeGroupRankData {
+    optional int64 cg_id = 1;//讨伐团id
+    optional string cg_name = 2;//讨伐团名字
+    optional int32 emblem = 3;//团徽
+    optional int32 rank = 4;//排名
+    //根据不同排行都不同数据**********************
+    //神兵精华数量
+    optional int64 shenBinJh = 5;//神兵精华数量
+    //boss伤害
+    optional int64 bossHurt = 6;//bosss伤害
+}
+
+//讨伐团玩家排行数据  神兵精华、boss伤害排行
+message PSCrusadeGroupPRankData {
+    optional int64 cg_id = 1;//讨伐团id
+    optional int64 player_id = 2;//玩家ID
+    optional string name = 3; //玩家名字
+    optional int32 headId = 4; //玩家头像
+    optional int32 borderId = 5; //头像框ID
+    optional int32 server_id = 6; //大区（服务器区号）.
+    optional int32 rank = 7;//排名
+    //根据不同排行都不同数据**********************
+    //神兵精华数量
+    optional int64 shenBinJh = 8;//神兵精华数量
+    //boss伤害
+    optional int64 bossHurt = 9;//bosss伤害
+}
+
+//神兵精华、boss伤害排行
+//75616
+message GReqCrusadeGroupRank{
+    optional int32 type = 1;//1:神兵精华  2:boss伤害
+    optional int32 cgId = 2;//讨伐团id（当前玩家的讨伐团id）
+}
+//75616
+message GResCrusadeGroupRank{
+    repeated PSCrusadeGroupRankData ranks = 1;//排行数据
+    optional PSCrusadeGroupRankData self = 2;//自己数据
+    optional int32 type = 3;//1:神兵精华  2:boss伤害
+}
+
+//团员神兵精华、boss伤害排行
+//75617
+message GReqCrusadeGroupPRank{
+    optional int32 type = 1;//1:神兵精华  2:boss伤害
+    optional int32 cgId = 2;//讨伐团id
+}
+//75617
+message GResCrusadeGroupPRank{
+    repeated PSCrusadeGroupPRankData ranks = 1;//排行数据
+    optional PSCrusadeGroupPRankData self = 2;//自己数据
+    optional int32 type = 3;//1:神兵精华  2:boss伤害
+}

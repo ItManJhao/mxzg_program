@@ -1,0 +1,51 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "InviteGiftGMsg";
+
+message PSInvitationData {
+    optional int64 role_id = 1; //角玩ID
+    optional string name = 2; // 玩家姓名
+    optional int32 level = 3; //玩家等级
+    optional int32 head_id = 4; // 头像
+    optional int32 power = 5; // 战力
+    optional int32 vip = 6; //vip等级
+    optional int32 border_id = 7; //头像框id
+    optional int32 last_operator_time = 8; //上次操作时间
+}
+
+message PSRewardState {
+    optional int32 idx = 1; //idx
+    optional int32 had_Reward_count = 2; //已领奖次数
+    optional int32 max_Reward_count = 3; //可领奖次数
+}
+
+//13082
+message GReqInvitationList {
+}
+//13082
+message GResInvitationList {
+    repeated PSInvitationData roleList = 1; //玩家信息
+    optional int32 used = 2; //是否使用了别人的邀请码:0为使用，1使用
+    repeated PSRewardState reward_record = 3; //领奖记录
+    optional string invite_code = 4; //邀请码
+}
+
+//请求邀请码奖励
+//13083
+message GReqInviteReward {
+    optional int32 idx = 1;
+}
+//13083
+message GResInviteReward {
+    optional PSRewardState reward_record = 1;
+}
+//
+//请求使用邀请码
+//13084
+message GReqInviteUseCode {
+    optional string use_code = 1; //使用的邀请码
+}
+//13084
+message GResInviteUseCode {
+    optional int32 used_state = 1; //使用状态:0未使用，1使用
+}

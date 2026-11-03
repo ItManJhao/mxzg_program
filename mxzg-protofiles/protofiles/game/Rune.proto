@@ -1,0 +1,149 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "RuneGMsg";
+import "Object.proto";
+// 模块命名 符文  --> 精灵 --> 魔法石
+//技能信息
+message PSRuneSkill
+{
+	optional int32 sort = 1;
+	optional int32 skill_id = 2;
+	optional int32 level = 3;
+}
+
+message RuneData
+{
+	optional int64 item_id = 1;			//符文的唯一ID
+	optional int32 item_type = 2;		//符文类型，关联配置表ID
+	repeated int32 ability_id = 3; 		//属性id
+	repeated PSRuneSkill skill = 4; 	//技能
+	optional int32 exp = 5; 			//经验值
+	repeated int32 wash_ability_id = 6;	//洗练属性ID
+	repeated PSRuneSkill wash_skill = 7;//洗练技能
+	optional int64 hero_id = 8;			//英雄ID，0为未穿戴
+	optional int32 place = 9;			//穿戴到英雄身上时的位置
+}
+
+message PSHeroRuneData
+{
+	optional int64 hero_id = 1;	//英雄ID
+	optional int32 place = 2;//0=告诉前端更新整个rune_list（保证数据是完整的）；1=只需更新1号位置；2=只需更新2号位置
+	repeated RuneData rune_list = 3; //符文列表 0:1号位置，1：2号位置
+}
+
+
+//请求符文全信息
+//29001
+message GReqRunesList
+{
+	optional int32 page = 1;	//页码，从1开始
+}
+//29001
+message GResRunesList
+{
+	repeated RuneData list = 1;	//背包符文列表
+	optional int32 page = 2;	//页码，从1开始
+	optional int32 magic_power = 3;		//魔力值
+}
+
+//符文穿卸
+//29002
+message GReqRuneOnOff
+{
+	optional int64 hero_id = 1;	
+	optional int64 rune_id = 2;
+	optional int32 place = 3;	//
+	optional int32 sign = 4;	//1= 穿戴；0= 卸下
+}
+//29002
+message GResRuneOnOff
+{
+}
+
+//符文分解
+//29003
+message GReqRuneDisCombine
+{
+	optional int64 rune_id = 1;
+}
+//29003
+message GResRuneDisCombine
+{
+}
+
+//符文合成--又称 精灵，魔法石
+//29004
+message GReqRuneCombine
+{
+	optional int64 rune_id = 1;//符文id
+	repeated int64 list = 2;//材料id列表
+}
+//29004
+message GResRuneCombine
+{
+	optional int64 rune_id = 1;			//符文ID
+	repeated PSBackpackData list = 2;	//合成返还的物品
+	optional int32 magic_power = 3;		//魔力值
+}
+
+//符文重铸
+//29005
+message GReqRuneWash
+{
+	optional int64 rune_id = 1;
+}
+//29005
+message GResRuneWash
+{
+	optional int64 rune_id = 1;
+}
+
+//魔法石重铸次数
+//29006
+message GReqRuneWashNum
+{
+
+}
+//29006
+message GResRuneWashNum
+{
+	repeated PSMapData rune_num = 1;
+}
+
+//服务器推送添加符文到背包
+//29011
+message GResRune
+{
+	repeated RuneData runeData = 1;
+}
+
+//请求符文重铸保存
+//29014
+message GReqRuneWashSave
+{
+	optional int64 rune_id = 1;
+}
+//29014
+message GResRuneWashSave
+{
+	optional int64 rune_id = 1;
+}
+
+//魔力值兑换
+//29015
+message GReqRuneMagicPowerExchange
+{
+}
+//29015
+message GResRuneMagicPowerExchange
+{
+	optional int32 magic_power = 2;	//魔力值
+}
+
+//服务器推送删除符文背包
+//29021
+message GResRunesDelList
+{
+	repeated int64 list = 1;
+}
+

@@ -1,0 +1,21 @@
+local data = {
+	{call = "waitSceneLoadingEnd"},
+	{call = "wait", time=300},
+	{call = "closeOtherWindow"},
+	{call = "wait", time=10},
+	{call = "openNPCLayer", auto=1,npc_name="",content=930030009},
+	{call = "checkLayerType", layer_type=MainSceneType.MAINCITY_LAYER, r_beg=1, r_end=2},
+	{call = "findSpriteByFileName", plist="ccbi-res/main-scene-lang.plist",getParent=1,file="main-scene-lang/spr-city.png"},
+	{call = "createMask"},
+	{call = "wait", time=300},
+	{call = "findSpriteByFileName", plist="ccbi-res/main-city.plist",getParent=1,file="main-city/icon-act_sevent_day_gift.png"},
+	{call = "stayInMiddleStep"},
+	{call = "wait", time=300},
+	{call = "createMask"},
+	{call = "wait", time=300},
+	{call = "findSpriteByFileName", plist="ccbi-res/seven-day-gift.plist",getParent=1,file="seven-day-gift/spr-day-cell-bg.png"},
+	{call = "createMask"},
+	{call = "findSpriteByFileName", plist="ccbi-res/seven-day-gift.plist",getParent=1,file="seven-day-gift/btn-get.png"},
+	{call = "createMask"},
+}
+return data

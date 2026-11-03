@@ -1,0 +1,24 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroSkinGMsg";
+
+//永久皮肤列表
+//76397
+message GReqHeroSkinList{
+}
+
+//76397
+message GResHeroSkinList{
+	repeated int32 skins = 1;	// 已经购买的皮肤
+}
+
+//76398
+message GReqHeroSkinBuy{
+	optional int32 skin_id = 1;	// 皮肤id
+}
+
+//76398
+message GResHeroSkinBuy{
+	optional int32 stats = 1;	// 0失败，1成功
+}
+

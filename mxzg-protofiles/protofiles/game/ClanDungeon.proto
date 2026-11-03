@@ -1,0 +1,76 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ClanDungeonGMsg";
+
+import "Battle.proto";
+import "Object.proto";
+
+//公会副本信息
+//7051
+message GReqClanMissionInfo
+{
+}
+//7051
+message GResClanMissionInfo
+{
+	optional int32 boss_idx = 1;
+	optional int32 boss_hp = 2;//成分比
+	optional int32 left_count = 3;	//剩余次数
+	optional int32 attack_count = 4;//已使用次数
+	optional int32 buy_count = 5;//剩下的可购买次数
+	optional int32 bugle_end_time = 6;//集结号结束时间
+	optional int32 buy_buff_idx = 7;//boss购买buff当前档位配置文件id
+	optional int32 buff_expiration_time = 8;//增加攻击buff过期时间
+	repeated PSMapData add_buff = 9;//增加的buff
+	optional int64 last_total_damage = 10;//最后一次挑战总伤害
+}
+
+//公会副本结束
+//7052
+message GReqClanMissionEnd
+{
+    optional int32 battle_mode = 1;// 攻击方式0：正常攻击，1：扫荡
+}
+//7052
+message GResClanMissionEnd
+{
+	optional BattleReport report = 1;	// 战报
+    repeated PSBackpackData list = 2; //奖励
+	optional bool isAwarded = 3;//
+	optional int64 total_damage = 4;//总伤害
+	optional int32 battle_mode = 5;// 攻击方式0：正常攻击，1：扫荡
+}
+
+//购买公会副本挑战次数
+//7053
+message GReqClanMissionBuy
+{
+}
+//7053
+message GResClanMissionBuy
+{
+}
+
+//公会副本集结号
+//7060
+message GReqClanMissionCallBugle
+{
+}
+//7060
+message GResClanMissionCallBugle
+{
+    optional int32 bugle_end_time = 1;//集结号结束时间
+}
+
+//购买公会副本增加攻击Buff
+//7061
+message GReqClanMissionBuyBuff
+{
+}
+//7061
+message GResClanMissionBuyBuff
+{
+    optional int32 buy_buff_idx = 1;//boss购买buff当前档位配置文件id
+    optional int32 buff_expiration_time = 2;//增加攻击buff过期时间
+	repeated PSMapData add_buff = 9;//增加的buff
+}

@@ -1,0 +1,199 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>执行特殊sql</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('ReloadConfig/doSpecialSql')}" method="get" class="form-horizontal form-inline">
+                                            <div style="float:left;">
+                                                <label style="width:150px;float:left;">服务器：</label>
+                                                <div class="col-sm-8">
+                                                    <volist name="server_list" id="server_list_vo">
+                                                        <div class="check-servers">
+                                                            <div class="checkbox">
+                                                                <label>
+                                                                    <input style="width: 21px;height: 21px;" class="check-all" type="checkbox" >
+                                                                    全选
+                                                                </label>
+                                                            </div>
+                                                            <div class="checkbox checkbox-inline">
+                                                                <volist name="server_list_vo" id="server_list_vo_vo">
+                                                                    <label>
+                                                                        <input style="width: 21px;height: 21px;" type="checkbox" class="server-check" name="server_ids[]" value="{$server_list_vo_vo['id']}"  <if condition="in_array($server_list_vo_vo['id'], $search_params['server_ids'])"> checked  </if>>
+                                                                        {$server_list_vo_vo['server_name']}
+                                                                    </label>
+                                                                </volist>
+                                                            </div>
+                                                        </div>
+                                                    </volist>
+                                                </div>
+                                            </div>
+                                            
+                                            <div style="float:left;">
+                                                <label style="width:150px;float:left;">执行的数据库后缀：</label>
+                                                <select class="form-control name" name="name">
+                                                    <option <if condition="$search_params['name'] == 'data'"> selected </if> value="data">data</option>
+                                                    <option <if condition="$search_params['name'] == 'log'"> selected </if> value="log">log</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div style="float:left;">
+                                                <label style="width:150px;float:left;">sql语句：</label>
+                                                <textarea style="width: 1300px;height: 300px;" placeholder="请输入sql" name="sql" class="configInput form-control" required="" aria-required="true">{$search_params.sql}</textarea>
+                                            </div>
+                                            <div style="float:left;">
+                                                <p style="color:red;font-size: 20px;">注释：只能适用select查询语句，且‘select’要用小写，替换词是：###serverid###</p>
+                                            </div>
+                                            
+
+                                            <button type="button" style="float:right;" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <a class="btn btn-primary export" style="float:right; margin-left:30px" href="javascript:void(0);" title="导出" ><i class="fa fa-cloud-download"></i>导出</a>
+                                        <!-- <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label style="float:left;">服务器：</label>
+                                                <span class="sid-text">
+                                                </span>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <div style="white-space: nowrap; overflow: hidden; overflow-x: scroll; -webkit-backface-visibility: hidden; -webkit-overflow-scrolling: touch;">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <volist name="list_title" id="list_title_vo">
+                                                                    <th>{$list_title_vo}</th>
+                                                                </volist>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                            <volist name="list" id="vo">
+                                                                <tr role="row"> 
+                                                                    <volist name="vo" id="vo_vo">
+                                                                        <td>{$vo_vo}</td>
+                                                                    </volist>
+                                                                </tr>
+                                                            </volist>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<!-- 服务器全选js代码 -->
+<script type="text/javascript" src="/Public/static/admin/js/servercheckall.js"></script>
+ 
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+    // $(".sid").on('change',function(e){
+    //     doMultipleSelection(this, 'sid');
+    // })
+
+    $(function(){
+        //处理服务器全选
+        $(".check-servers").each(function(){
+            var check_servcers = $(this).find(".server-check").first();
+            isCheckAlls('check-all','server-check', check_servcers);
+        });
+        // doMultipleSelection($('.sid'), 'sid');
+    });
+
+    _export = {
+        canExport:false,
+        post:function(data,exportUrl) {
+            _export.canExport = true;
+            if ($('#exportIframe').length > 0) {
+                $('#exportIframe').remove();
+            }
+            $('body').append('<iframe id="exportIframe" width="0" height="0" src="'+domain+'/export"></iframe>');
+            $('#exportIframe').load(function() {
+                if (_export.canExport) {
+                    var formData = '<form method="post" action='+exportUrl+' >';
+                    for (var name in data) {
+                        formData = formData + '<input type="text" name="'+name+'" value="'+data[name]+'" />';
+                    }
+                    formData = formData + '<input type="submit" id="submitExportForm"/>';
+                    formData = formData + '</form>';
+                    $(this).contents().find('body').append(formData);
+                    $(this).contents().find('#submitExportForm').click();
+                    _export.canExport = false;
+                }
+            });
+        }
+    }
+
+    $(".export").click(function(){
+        var server_ids = new Array();
+        $(".server-check").each(function() {
+            if ($(this).is(":checked")) {
+                server_ids.push($(this).val());
+            }
+        });
+
+        var name = $(".name option:selected").val();
+        var sql = $("textarea[ name='sql' ]").val();
+        
+        var IP = "/admin.php/ReloadConfig/doSpecialSqlExport";
+        var json = {server_ids:server_ids,name:name,sql:sql};
+    
+        var form = $("<form>");
+        form.attr('style', 'display:none');
+        form.attr('target', '');
+        form.attr('method', 'post'); //请求方式
+        var urlstr = IP;   //你的接口名
+        form.attr('action', urlstr);//请求地址
+    
+        var input1 = $('<input>');//将你请求的数据模仿成一个input表单
+        input1.attr('type', 'hidden');
+        input1.attr('name', 'exportData');//该输入框的name
+        input1.attr('value',JSON.stringify(json));//该输入框的值
+        
+        $('body').append(form);
+        form.append(input1);
+        
+        form.submit();
+        // $.post("/admin.php/ReloadConfig/doSpecialSqlExport",{sid:sid,name:name,sql:sql}, function(data){
+        //     alert("导出成功");
+        // });
+        // window.location.href="/admin.php/ReloadConfig/doSpecialSqlExport?sid=" + sid + "&name=" + name + "&sql=" + sql;
+    });
+
+    
+    
+
+</script>
+
+<include file="Public:footer" />

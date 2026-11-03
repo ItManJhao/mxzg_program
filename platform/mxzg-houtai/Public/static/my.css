@@ -1,0 +1,86 @@
+/*后台加样式*/
+.planList-menu ul li .active {
+    color: #258fa5;
+}
+.index-cases-img img{
+	width:100%;height: 100%;
+}
+.news-img img{
+	width:100%;height:100%;
+}
+.equipmentIndoor-page ul li span{
+    display: block;
+    width: 48px;
+    line-height: 30px;
+    height: 30px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 18px;
+    font-family: 'Arial';
+    color: #bbb;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    font-weight: bold;
+}
+.equipmentIndoor-page ul li.active span{
+	color: #fff;
+	background-color: #757575;
+}
+.equipmentIndoorDetails-small-img{
+    height: 85px;
+}
+.equipmentIndoorDetails-small-img img{
+	width:120px;height: 75px;
+}
+.index-products-img{
+        width: 80%;
+    margin: 0 auto;margin-bottom: 10px;
+}
+.equipmentIndoor-recommend-name{
+    height:50px;width:70%;overflow:hidden;
+}
+.productsDetails-btn {
+    width: 96%;
+    height: auto;
+    margin: 0 auto;
+    overflow: hidden;
+    margin-top: 10px;
+    text-align: center;
+}
+.productsDetails-btn a {
+    display: block;
+    margin: 0 auto;
+    /* width: 605px; */
+    height: 40px;
+    line-height: 40px;
+    background-color: #ff6700;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+}
+.equipmentIndoorDetails-btn{
+    margin-top:10px;
+}
+.equipmentIndoorDetails-left{
+    border:none;
+}
+
+/*悬浮窗*/
+.foot_right{position:absolute; right: 20px; top: 300px; width: 50px; height: 235px;  z-index: 9999;  }
+.foot_right li{ position: relative; cursor: pointer; width: 50px; height: 50px; -webkit-transition: background 0.6s ;  transition: background 0.6s ; background: url(foot_right.png) no-repeat;border-bottom:1px solid #fff;   }
+.foot_right li a{color: #ffffff; display: block; width: 40px; height: 40px; }
+.foot_right li .kf{padding: 9px; background-color: #2d646f; position: absolute; top: 0; left: -114px; text-align: center; color: #ffffff; line-height: 18px;display: none; }
+.foot_right li .kf div{ height: 1px; border-bottom: 1px  dashed #ffffff; margin: 5px 0;}
+.foot_right li .f-code{position: absolute; top:5px; right: 100%; padding: 5px; background-color: #ffffff;  color: #ffffff; width: 110px; display: none; /*border-radius: 8px;    box-shadow: -5px -5px 15px #909090;*/}
+.foot_right li .f-code div{display: inline-block;  margin-right: 10px;width: 100px; /*height: 72px;*/ vertical-align: top; text-align: left; font-size: 12px;}
+.foot_right li .f-code div p{ margin: 5px 0;}
+.foot_right li .f-code div img{width: 100px; height: 100px; border: 4px solid #ffffff; }
+.foot_right li:nth-child(1){  background-position: center 3px;/*border-top-left-radius: 10px;*/ }
+.foot_right li:nth-child(2){ background-position: center -52px;}
+.foot_right li:nth-child(3){  background-position: center -104px;border-bottom:none;}
+/*.foot_right li:hover{ background: url(foot_right.png) no-repeat; }
+.foot_right li:nth-child(1):hover{ background-position: center 3px; }
+.foot_right li:nth-child(2):hover{ background-position: center -56px;}
+.foot_right li:nth-child(3):hover{ background-position: center -116px;}
+.foot_right li:nth-child(4):hover{ background-position: center -178px; }
+.foot_right li:nth-child(5):hover{  background: none; background-color: #FB9B30; }*/

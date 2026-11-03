@@ -1,0 +1,79 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "BlessingPoolGMsg";
+
+import "Object.proto";
+
+message ResBlessingPoolData {
+    required int32 position = 1; //下标,位置
+    required int32 times = 2; //出现次数
+    required PSBackpackData item = 3; //物品信息
+}
+
+message GResBlessingData {
+    required int32 type = 1; // 1普通,2高级
+    required int32 refresh_times = 2; // 刷新次数
+    repeated ResBlessingPoolData pool_data = 3; // 奖项数据
+    required int32 lucky_value = 4; // 幸运值
+    repeated int32 lucky_reward_id = 5; // 幸运值领奖记录
+    optional int32 refresh_time = 6 ;//下次刷新时间
+}
+
+//许愿池
+//27001
+message GReqBlessingPoolList {
+}
+//27001
+message GResBlessingPoolList {
+    repeated GResBlessingData blessing_data = 1; // 许愿池数据
+}
+
+//许愿池刷新
+//27002
+message GReqBlessingPoolRefresh {
+    required int32 type = 1; // 1普通,2高级
+}
+//27002
+message GResBlessingPoolRefresh {
+    required GResBlessingData blessing_data = 1; // 许愿池数据
+}
+
+//许愿池抽奖
+//27003
+message GReqBlessingPoolDone {
+    required int32 type = 1; // 1普通,2高级
+    required int32 times = 2; // 次数
+}
+//27003
+message GResBlessingPoolDone {
+    required int32 index = 1; // 中奖下标,多次抽奖给第一个位置
+    repeated PSBackpackData award = 2; // 奖励
+    required GResBlessingData blessing_data = 3; // 许愿池数据
+
+}
+
+//幸运值领奖
+//27004
+message GReqBlessingPoolLuckyReward {
+    required int32 idx = 1; // 领奖id
+}
+//27004
+message GResBlessingPoolLuckyReward {
+    required GResBlessingData blessing_data = 1; // 许愿池数据
+}
+
+//请求稀有日志列表，打开界面请求一次
+//27005
+message GReqBlessingPoolRareLog {
+    required int32 type = 1; //许愿池类型
+}
+//稀有日志列表返回，许愿池操作也会返回这条给许愿的玩家
+//27005
+message GResBlessingPoolRareLog {
+    repeated PSRareLog rare_log = 1;
+}
+
+message PSRareLog {
+    optional string nick = 1;
+    optional int32 itemId = 2;
+}

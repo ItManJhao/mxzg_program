@@ -1,0 +1,53 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroArriveGMsg";
+import "Object.proto";
+
+message PSHeroArriveData
+{
+	optional int32 id = 1;	//任务ID
+	optional int32 num = 2; // 任务进度
+	optional int32 type = 3;  // 任务类型
+}
+
+message PSHeroArriveStatus
+{
+	optional int32 idx = 1;//配置id
+	optional int32 status = 2;//是否领取，1.领取;0,未领取
+}
+
+// 领取记录和时间
+//23000
+message GResHeroArriveData
+{
+	optional int32 end_time = 1;		//活动结束时间
+	repeated PSHeroArriveStatus list = 2;//任务领取状态
+	repeated PSHeroArriveData data_list = 3;//任务计数状态
+}
+
+//领取奖励
+//23001
+message GReqHeroArriveReward
+{
+	optional int32 idx = 1;
+}
+//23001
+message GResHeroArriveReward
+{
+	optional PSHeroArriveStatus status = 1;//该活动领取状态
+	repeated PSBackpackData list = 2;//领取奖励
+}
+
+//英雄降临任务进度更改
+//23002
+message GResHeroArriveUpdate
+{
+	optional PSHeroArriveData data = 1;
+}
+
+//英雄降临任务领取状态更改
+//23003
+message GResHeroArriveStatusUpdate
+{
+	repeated PSHeroArriveStatus status = 1;
+}

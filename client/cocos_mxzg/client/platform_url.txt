@@ -1,0 +1,30 @@
+
+正式服平台：http://platform-mxzg.anyaojs.com/
+
+外网平台: 
+	正式服pf_id: 100001
+	测试服pf_id: 100000
+内网平台: http://182.254.197.214:8070/
+	pf_id: 100001
+
+IOS平台 https://platform-ios-mxzg.hnguangyi.cn/
+IOS下载链接 http://cdn-mxzg.anyaojs.com/release/hxqy/ios/                     
+	http://182.254.197.214/hxqy/develop/ios
+	change_id:100
+	pf_id:100001
+
+贪玩平台 	http://overseas.api.hnguangyi.cn/
+	pf_id: 	400001
+		400
+
+http://192.168.1.185:11001/updatecode   台服内网更新
+http://192.168.1.185:14002/updatecode   台服外网更新
+http://192.168.1.185:11601/updatecode    韩服内网更新
+http://192.168.1.185:16002/updatecode    韩服外网更新
+http://192.168.1.185:16001/updatecode	韩服外网正式服更新(谨慎点击)
+http://192.168.1.185:11701/updatecode     日文内网更新
+http://192.168.1.185:17002/updatecode     日文外网更新
+http://192.168.1.185:18900/updateconfigstatus  转表和转协议
+
+
+

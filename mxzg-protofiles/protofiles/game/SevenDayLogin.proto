@@ -1,0 +1,36 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "SevenDayLoginGMsg";
+
+message PSSevenLoginStatus {
+    optional int32 idx = 1;
+    optional int32 status = 2;
+}
+
+//七天登陆数据
+//22000
+message GReqSevenDayLoginData {
+}
+//22000
+message GResSevenDayLoginData {
+    optional int32 end_time = 1;
+    optional int32 cur_day = 2;
+    repeated PSSevenLoginStatus list = 3;
+}
+
+//领取七天登陆奖励
+//22001
+message GReqSevenDayLoginReward {
+    optional int32 day = 1;
+}
+//22001
+message GResSevenDayLoginReward {
+    optional PSSevenLoginStatus status = 1;
+    //	repeated PSBackpackData data = 2;
+}
+
+//七天登陆
+//22002
+message GResSevenDayLoginUpdateDay {
+    optional int32 cur_day = 1;
+}

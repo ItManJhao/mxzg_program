@@ -1,0 +1,239 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "StageMatchGMsg";
+
+import "Battle.proto";
+import "Object.proto";
+import "Hero.proto";
+
+// 英雄数据信息
+message HeroData {
+    required int32 hero_id = 1; //英雄id
+    required int32 pos = 2; //位置
+    optional int32 level = 3; //等级
+    optional int32 star = 4; //星级
+    optional int32 fashion_id = 5;	//皮肤id
+    optional int32 fighting = 6;	//战力
+    optional PSHeroEvolve evolve=7;//进化
+}
+
+// 对手信息
+message OpponentInfo{
+    optional int32 server_id = 1; // 分区
+    optional string name = 2;     //名字
+    optional int32 stage_id = 3; //段位
+    optional int32 rank = 4;	//排名
+    optional int32 level = 5;	//等级
+    optional int32 head_id = 6;	//头像
+    optional int32 border_id = 7;	//头像框
+}
+
+// 挑战日志
+message ChallengeLog {
+    optional BattleLog battle_log = 1;
+    optional int32 battle_time = 2; //战斗时间
+    optional bool win = 3;          //是否胜利，针对攻方
+    optional OpponentInfo attacker = 4; //攻方对手
+    optional OpponentInfo defender = 5; //守方对手
+}
+
+// 传奇日志
+message LegendInfo {
+    optional int32 server_id = 1;   //分区
+    optional string name = 2;       //名字
+    optional int32 stage_id = 3;    //段位
+    optional int32 rank = 4;	    //排名
+    optional int32 fighting = 5;    //战力
+    optional int32 image_id = 6;    //形象id
+}
+
+// 匹配信息
+message MatchInfo {
+    required int32 server_id = 1;   //服务器id
+    required string name = 2;       //名字
+    required int32 stage_id = 3;   //段位
+    required int32 fighting = 4;   //战力
+    optional int32 formation_id = 5;  // 阵法id
+    repeated HeroData hero = 6;     // 英雄列表
+    required int32 countdown = 7;   //开始战斗的时间戳
+}
+
+// 排行榜信息
+message RankInfo {
+    optional int32 image_id = 1;	//形象
+    required int32 server_id = 2;   //服务器id
+    required string name = 3;       //名字
+    required int32 stage_id = 4;   //段位
+    required int32 fighting = 5;   //战力
+    optional int32 rank = 6;	//排名
+    optional int32 level = 7;	//等级
+    optional int32 head_id = 8;	//头像
+    optional int32 border_id = 9;	//头像框
+    optional int32 elite_integral = 10;   //精英积分
+}
+
+//请求段位赛
+//72001
+message GReqStageMatchData {
+    required bool role_request = 1;   //是否是玩家主动请求，主动请求时检测是否切换了赛季
+}
+
+// 返回段位赛信息
+//72001
+message GResStageMatchData {
+    optional int32 season = 1; //赛季 赛季为0则表示当前活动未开启
+    optional int32 stage_id = 2; //段位id stage表的idx
+    optional int32 start_time = 3; // 开始时间
+    optional int32 end_time = 4;   // 匹配结束时间
+    optional int32 settlement_time = 5;    // 结算时间
+    optional int32 integral = 6; //段位积分
+    optional int32 elite_integral = 7;   //精英积分
+    optional int32 matches = 8;     //可以匹配次数
+    optional int32 remaining_purchases = 9;//剩余购买次数
+    optional int32 rank = 10;   //排名 0为未上榜
+    optional int32 received_id = 11;    //已经领取到段位id，stage表的idx
+    optional bool qualifying_match = 12;   //是否是晋级赛
+    repeated int32 record = 13;   //晋级结果列表 0失败 1胜利
+    optional bool matching = 14;    // 是否是匹配中
+    optional int32 preliminaries_time = 15;    //预赛开始时间
+    optional int32 final_time = 16;      //决赛开始时间
+    optional int32 pinnacle_stage = 17;      //階段0，未開啓5預賽，6決賽
+    optional bool preliminary_qualification = 18; // 预赛资格
+    optional int32 second_start_time = 19;   //2、下半赛季的开始时间
+}
+
+// 请求匹配对手
+//72002
+message GReqMatchOpponent {
+    required bool skip_array = 1;   //是否跳过布阵
+}
+
+// 响应匹配对手
+//72002
+message GResMatchOpponent {
+    optional MatchInfo match_info = 1;   //匹配信息 如果该对象为则表示未匹配到对手
+    optional int32 matches = 2;     //可以匹配次数
+    optional int32 remaining_purchases = 3;//剩余购买次数
+    optional int32  language_id = 4;      //语言包key，改值不为0则提示该语言
+}
+
+// 请求匹配信息
+//72003
+message GReqMatchInfo {
+}
+
+// 响应匹配信息
+//72003
+message GResMatchInfo {
+    required MatchInfo match_info = 1;   //匹配信息
+}
+
+// 请求购买匹配次数
+//72004
+message GReqPurchases {
+}
+
+// 返回的最新的购买次数和剩余购买次数
+//72004
+message GResPurchases {
+    optional int32 matches = 1;     //可以匹配次数
+    optional int32 remaining_purchases = 2;//剩余购买次数
+}
+
+// 请求挑战
+//72005
+message GReqChallenge {
+}
+
+// 挑战结果
+//72005
+message GResChallenge {
+    required BattleReport report = 1;       // 战报
+    repeated PSBackpackData reward = 2;	    //奖励
+    optional int32 old_stage_id = 3;        //挑战前后的段位
+    optional int32 new_stage_id = 4;        //挑战后的段位
+    optional int32 old_integral = 5;        //挑战前的积分
+    optional int32 new_integral = 6;        //挑战后的积分
+    optional int32 old_elite_integral = 7;  //挑战前的精英积分
+    optional int32 new_elite_integral = 8;   //挑战后的精英积分
+    repeated int32 advance_result = 9;  //晋级赛的结果列表
+}
+
+// 我的录像
+//72006
+message GReqMyVideo {
+}
+
+// 我的录像响应
+//72006
+message GResMyVideo {
+    repeated ChallengeLog log = 1;       // 日志
+}
+
+// 大神风采
+//72007
+message GReqGreatStyle {
+}
+
+// 大神风采响应
+//72007
+message GResGreatStyle {
+    repeated ChallengeLog log = 1;       // 日志
+}
+
+// 领取奖励
+//72008
+message GReqReceiveAward {
+}
+
+// 领取奖励响应
+//72008
+message GResReceiveAward {
+    optional int32 received_id = 1;    //已经领取到段位id，stage表的idx
+}
+
+// 赛季传奇
+//72009
+message GReqSeasonLegend {
+    optional int32 season = 1;
+}
+
+// 赛季传奇
+//72009
+message GResSeasonLegend {
+    optional int32 season = 1;
+    repeated LegendInfo legendInfo = 2;
+    optional int32 group_id = 3; 
+}
+
+// 请求排行榜
+//72010
+message GReqRankInfo{
+}
+
+// 请求排行榜
+//72010
+message GResRankInfo {
+    repeated RankInfo rankInfo = 1;
+    optional RankInfo selfRank = 2;
+}
+
+//所有赛区传奇
+//72011
+message GReqAllSeasonLegend {
+    optional int32 season = 1;  // 赛季
+}
+
+//72011
+message GResAllSeasonLegend {
+    optional int32 season = 1;
+    repeated ZoneLegendInfo all = 2;    
+}
+
+//某一个赛季的传奇
+message ZoneLegendInfo {
+    optional int32 group_id = 1;    //赛区id，对应配置的表的group_id
+    repeated LegendInfo legendInfo = 2;// 此赛区的六个人
+}
+
+

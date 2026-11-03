@@ -1,0 +1,63 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroPalaceGMsg";
+import "Object.proto";
+
+message PSRoleSimpleInfo {
+    optional int64 player_id = 1; // 玩家的rid
+    optional int32 head_id = 2; // 头像id
+    optional int64 clan_id = 3; // 公会id
+    optional string nick = 4; // 玩家名字
+    optional int32 level = 5; // 等级
+    optional int32 server_id = 6; // 服务器
+    optional int32 fighting = 9; // 战斗力
+    optional int32 border_id = 10; //头像框id
+    optional int32 image_id = 11; //形象
+}
+
+message PSServerHeroPalace {
+    optional int32 server_id = 1; //服务器id
+    repeated PSRoleSimpleInfo rank_role = 2; //前三名信息
+
+}
+
+message PSHeroPalace {
+    optional int32 type = 1;
+    repeated PSRoleSimpleInfo rank_role = 2; //前三名信息
+    optional bool is_reward = 3; //是否领取
+    optional bool is_worship = 4; //是否膜拜
+    repeated PSServerHeroPalace server_rank_role = 6; //合服后的字段
+}
+
+//英雄殿堂数据
+//63001
+message GReqHeroPalaceData {
+}
+
+//63001
+message GResHeroPalaceData {
+    repeated PSHeroPalace hero_palace = 1; //英雄殿堂数据
+}
+
+//膜拜
+//63002
+message GReqHeroPalaceWorship {
+    optional int32 type = 1; //类型
+}
+
+//63002
+message GResHeroPalaceWorship {
+    optional PSMapData worshipData = 2; //膜拜数据（type,rank）
+}
+
+//领取奖励
+//63003
+message GReqHeroPalaceGetReward {
+    optional int32 type = 1; //类型
+}
+
+//63003
+message GResHeroPalaceGetReward {
+    optional int32 type = 1;
+}
+

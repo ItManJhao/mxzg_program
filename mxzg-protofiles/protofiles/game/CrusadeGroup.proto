@@ -1,0 +1,446 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "CrusadeGroupGMsg";
+
+import "Battle.proto";
+
+
+// 领地信息
+message PSTerritory {
+    optional int32 id = 1;//领地id
+    optional int64 occupied_id = 2; // 占领的玩家id
+    optional int64 hero_id = 3; // 占领的英雄id
+    optional int32 element = 4; //元素
+}
+
+// 英雄信息
+message PSHero {
+    optional int64 hero_id = 1; //英雄ID
+    optional int32 hero_type = 2; //英雄类型
+    optional int32 level = 3; //英雄等级
+    optional int32 stage = 4; //英雄品阶
+    optional int32 star = 5; //英雄星级
+    optional bool development_status = 6;//开发状态
+}
+
+//坐标信息
+message PSCoordinate {
+    required int32 x = 1;   //x坐标
+    required int32 y  =2;   //y坐标
+}
+
+
+// npc英雄信息
+message PSNpcHero {
+    optional int32 hero_type = 1;   // 英雄类型
+    optional int32 star = 2;        // 星际
+    optional int32 level = 3;       // 等级
+    optional int64 hp = 4;          // 当前血量
+    optional int64 max_hp = 5;      // 最大血量
+    optional int32 position = 6;    // 位置
+}
+
+// npc阵容数据
+message PSNpcFormation {
+    required int32 formation_id = 1;    //阵容id
+    repeated PSNpcHero hero = 2;        //领土npc列表
+    required int64 fighting = 3;        //战斗力
+    optional bool boss = 4;             //是否是boss
+}
+
+// 英雄占位信息
+message PSBattleHero {
+    optional int64 hero_id = 1;   // 英雄id
+    optional int32 position = 2;    // 位置
+}
+
+// 英雄箱子
+message PSHeroBox {
+    required int32 box_id = 1;  //箱子id
+    optional PSHero hero = 2;   //英雄
+    optional int32 physical_strength = 3;//体力
+}
+
+// 神兵
+message PSShenBin {
+    optional int32 id = 1;  //神兵id crusadegroupshenbin.sb_id
+    optional int64 num = 2; //数量
+}
+
+//讨伐团成员
+message PSCrusaders {
+    required int64 rid = 1; //角色id
+    required int32 knighthood_id = 2; //爵位
+    required string nick = 3; //昵称
+    required string guild_name = 4; //公会名称
+    required int32 head_id = 5; //头像id
+    required int32 border_id = 6; //头像框id
+    required int64 fighting = 7; //战力
+    required int32 last_offline_time = 8; //最后离线时间 0代表在线
+    optional int32 position = 9; //0 成员 1 指挥官 2团长
+    required int32 level = 10; //等级
+    required int32 server_id = 11; //服务器id
+}
+
+//挑战记录
+message PSChallengeRecord {
+    required int64 rid = 1;    //角色id
+    required int32 level = 2;   //等级
+    required string nick = 3;   //昵称
+    required int64 damage = 4;   //伤害
+    required int32 head_id = 5; //头像id
+    required int32 border_id = 6; //头像框id
+    required string battle_id = 7;  //战场id
+    required int32 server_id = 8;   //服务器id
+}
+
+//领地标记
+message PSTerritoryMark {
+    required int32 territory_id = 1;    //领地id
+    required string name = 2;    //名称
+}
+
+//推送阶段变化，gm指令调整阶段过后推送
+//75649
+message GPushStageChange {
+    optional int32 stage = 1; //活动阶段 0 未开启， 1报名中，2 报名截止，3战斗开始，4战斗结束 5结算，6活动关闭
+}
+
+//请求讨伐团信息
+//75650
+message GReqCrusadeGroupInfo {
+}
+
+// 讨伐团响应
+//75650
+message GResCrusadeGroupInfo {
+    optional int32 stage = 1; //活动阶段 0 未开启， 1报名中，2 报名截止，3战斗开始，4战斗结束 5结算，6活动关闭
+    optional bool registration = 2; //是否报名
+    optional int32 registration_start_time = 3; //报名开始时间
+    optional int32 registration_end_time = 4;  //报名截止时间
+    optional int32 battle_start_time = 5;   //战斗开始时间
+    optional int32 battle_end_time = 6;   //活动结束时间
+}
+
+// 报名
+//75651
+message GReqRegistration {
+}
+
+// 报名结果返回
+//75651
+message GResRegistration {
+}
+
+
+// 推送讨伐团开启战斗
+//75652
+message GCrusadeGroupOpen {
+}
+
+// 请求讨伐团主界面信息
+//75653
+message GReqCrusadeGroupMain {
+
+}
+
+// 返回讨伐团信息
+//75653
+message GResCrusadeGroupMain {
+    optional int32 group_id = 1;    //讨伐团id
+    optional int32 knighthood_id = 2;   //爵位 CrusadeGroupKnighthood.idx
+    optional int64 force_nature = 3; //自然之力
+    optional int32 productivity = 4;    //生产效率
+    repeated PSTerritoryMark territory_mark = 5; //标记列表
+    optional int32 last_occupation_id = 6;  //最后占领的id，该领地作为玩家视野中心点
+    repeated PSHeroBox hero = 7;   //出征的英雄列表
+    optional int32 last_acquisition_time = 8;   //最后一次的采集时间
+}
+
+// 设置上阵英雄
+//75654
+message GReqSetHeroes {
+    required int32 box_id = 1;     //箱子id
+    required int64 hero_id = 2;    //英雄主键id
+}
+
+// 返回上阵结果
+//75654
+message GResSetHeroes {
+    optional PSHeroBox hero = 1;   //上阵的英雄
+}
+
+
+// 取消英雄上阵
+//75655
+message GReqCancelHero {
+    optional int32 box_id = 1;  //英雄箱子id
+}
+
+// 返回取消上阵结果
+//75655
+message GResCancelHero {
+    optional PSHeroBox hero = 1;   //下阵的英雄
+}
+
+// 英雄刷新接口
+//75656
+message GReqRefreshHero {
+    optional int64 hero_id = 1;    //英雄主键id，如果该id为0则返回全部
+
+}
+
+// 英雄刷新接口
+//75656
+message GResRefreshHero {
+    repeated PSHeroBox hero_box = 1;    //英雄箱子
+}
+
+// 请求地图数据
+//75657
+message GReqMapData {
+    required PSCoordinate bottom_left = 1;  //左下角的坐标
+    required PSCoordinate upper_right = 2;  //右上角的坐标
+    optional int32 mark_id = 3;     //前端标记id
+}
+
+// 返回地图数据
+//75657
+message GResMapData {
+    repeated PSTerritory territory = 1;
+    optional int32 mark_id = 2;     //前端标记id
+}
+
+
+
+// 查看领地信息
+//75658
+message GReqViewTerritory {
+    required int32 territory_id = 1;    // 查看的领地
+}
+
+// 返回领地信息
+//75658
+message GResViewTerritory {
+    required int32 territory_id = 1; // 查看的领地
+    optional bool occupied = 2; //是否被占领了，被占领了则需要重新刷新数据
+    optional int32 evaluation = 3; //1、虐菜 2、菜鸡互啄 3、找屎
+    repeated PSNpcFormation formation = 4; //领土阵容列表
+    optional int32 refresh_countdown = 5; //刷新时间（单位：秒）
+    optional int32 element = 6; //可以驻守的元素
+    optional int32 star = 7; //可以驻守的英雄星级
+    repeated int64 dead_hero_id = 8; //阵亡的英雄id列表
+    optional int32 guard_time = 9; //保护时间（单位：秒）
+    optional string challenger_name = 10; //挑战者名字,如果是自己则不现实
+ }
+
+
+// 查看占领的领地
+//75659
+message GReqOccupiedTerritory {
+    required int32 territory_id = 1;    // 查看的领地
+}
+
+// 返回占领的信息
+//75659
+message GResOccupiedTerritory {
+    optional int64 occupiedId = 1;    //占领的玩家
+    optional int32 element = 2;    //领地元素
+    optional string nick = 3;    //昵称
+    optional int32 borderId = 4;   //头像框
+    optional int32 headId = 5; //头像id
+    optional int32 serverId = 6;   // 服务器id
+}
+
+// 攻击领地(战斗)
+//75660
+message GReqStartFighting {
+    required int32 territory_id = 1;    // 挑战的领地
+    required int32 formation_id = 2;    // 挑战的阵容id
+}
+
+// 战斗结果
+//75660
+message GResStartFighting {
+    optional int32 territory_id = 1; // 挑战的领地
+    optional int32 formation_id = 2; // 攻击的阵容id
+    optional BattleReport report = 3; // 战报
+    optional bool occupied = 4; // 是否已经占领
+    repeated PSBattleHero hero = 5; //英雄上阵信息
+    repeated int32 start = 6; //星级 1为达成条件0为未达成
+    optional int32 num = 7; //当前第几波
+    optional int64 totalNum = 8; //总波数
+    optional int64 boss_damage = 9; //伤害
+    optional int64 boss_total_damage = 10; //总伤害 当前字段不为0则是boss
+    optional int32 language_id = 11; //语言id
+    optional int32 refresh_countdown = 12; //刷新时间（单位：秒）
+    optional int32 guard_time = 13; //保护时间（单位：秒）
+}
+
+// 请求开发领地
+//75661
+message GReqDevelopment {
+    required int32 territory_id = 1;    // 领地id
+    required int64 hero_id = 2;    //英雄id
+}
+
+// 请求开发领地
+//75661
+message GResDevelopment {
+    required PSTerritory territory = 1;
+}
+
+// 放弃领地开发
+//75662
+message GReqCancelDevelopment {
+    required int32 territory_id = 1;    // 领地id
+}
+
+// 放弃领地开发
+//75662
+message GResCancelDevelopment {
+    required PSTerritory territory = 1;
+}
+
+
+//推送资源产出
+//75663
+message GPushResourceOutput {
+}
+
+// 收取资源
+//75664
+message GReqCollectResources {
+
+}
+
+//返回收取结果
+//75664
+message GResCollectResources {
+    optional int32 force_nature = 1; //自然之力
+    repeated PSShenBin shenBin = 2; //神兵列表
+    optional int32 last_acquisition_time = 3;   //最后一次的采集时间
+}
+
+// 查看小地图
+//75665
+message GReqViewSmallMap {
+    required int32 page = 1;    //请求第几页数据
+}
+
+// 返回小地图数据
+//75665
+message GResViewSmallMap {
+    required int32 page = 1;    //当前请求的是第几页数据
+    required int32 total_page = 2;      //总页数
+    repeated int32 territory_id = 3;    //被占领的领地id列表
+}
+
+// 放弃领地
+//75666
+message GReqGiveUpTerritory {
+    required int32 territory_id = 1;    // 领地id
+}
+
+// 放弃领地响应
+//75666
+message GResGiveUpTerritory {
+    required int32 territory_id = 1;    // 领地id
+}
+
+// 获取自己的领地列表
+//75667
+message GReqTerritory {
+}
+
+// 返回自己的领地列表
+//75667
+message GResTerritory {
+    repeated PSTerritory territory = 1;    //领地列表
+}
+
+//标记
+//75668
+message GReqMark {
+    required int32 territory_id = 1;    //领地id
+    required string name = 2;   //新的名字
+}
+
+// 标记返回
+//75668
+message GResMark {
+    required PSTerritoryMark mark = 1;    //标记的领地id
+
+}
+
+// 取消标记
+//75669
+message GReqUnmark {
+    required int32 territory_id = 1;    //领地id
+
+}
+
+// 取消标记返回
+//75669
+message GResUnmark {
+    required int32 territory_id = 1;    //取消的标记领地id
+}
+
+//推送领地更新
+//75670
+message GPushTerritoryUpdate {
+    required PSTerritory territory = 1;    //变更的领地，占领玩家id为0时为放弃领地
+}
+
+//请求讨伐团信息
+//75671
+message GReqGroupInfo {
+}
+
+//请求讨伐团信息
+//75671
+message GResGroupInfo {
+    required int32 group_id = 1;    //分组id
+    required string name = 2;    //名称
+    required int32 end_time = 3;    //结束时间
+    required int32 emblem = 4;  //团徽
+    repeated PSCrusaders crusaders = 5; //成员讨伐者
+    optional int32 rename_number = 6;   //改名次数
+}
+
+//请求boss挑战记录
+//75672
+message GReqBossChallengeRecord {
+    required int32 territory_id = 1;    //领地id
+}
+
+//响应boss挑战记录
+//75672
+message GResBossChallengeRecord {
+    required int32 territory_id = 1;    //领地id
+    repeated PSChallengeRecord records = 2; //挑战记录
+}
+
+//请求战报
+//75673
+message GReqBossReport {
+    required string battle_id = 1;    //战斗id
+}
+
+//响应战报
+//75673
+message GResBossReport {
+    required BattleReport report = 1;    //战报
+}
+
+//修改讨伐团名字
+//75674
+message GReqGroupRename {
+    required string name = 1;   //修改后的讨伐团名称
+}
+
+//修改讨伐团名字返回
+//75674
+message GResGroupRename {
+    required string name = 1;   //修改后的讨伐团名称
+}

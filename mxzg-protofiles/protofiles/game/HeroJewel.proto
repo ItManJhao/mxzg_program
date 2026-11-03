@@ -1,0 +1,109 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroJewelGMsg";
+import "Object.proto";
+
+message PSHeroJewelData
+{
+	optional int64 hero_id = 1;			//英雄ID
+	repeated PSJewelData jewel_list = 2;//宝石列表
+}
+
+message PSJewelData
+{
+	optional int64 jewel_id = 1;	//宝石部位ID
+	optional int32 place = 2;		//宝石部位
+	optional int32 jewel_type = 3;	//物品类型
+}
+
+//返回英雄宝石
+//4101
+message GReqHeroJewel
+{
+}
+//4101
+message GResHeroJewel
+{
+	repeated PSHeroJewelData jewel_list = 1;
+}
+
+//宝石穿戴更换
+//4102
+message GReqHeroJewelChange
+{
+	optional int64 hero_id = 1;
+	optional int32 sys_id = 2;	//宝石配置表ID
+}
+//4102
+message GResHeroJewelChange
+{
+	optional int64 hero_id = 1;
+	optional PSJewelData jewel = 2;	//装备槽位信息
+}
+
+//宝石卸下
+//4103
+message GReqHeroJewelDisboard
+{
+	optional int64 hero_id = 1;		//英雄ID
+	optional int64 jewel_id = 2;	//宝石部位的ID
+
+}
+//4103
+message GResHeroJewelDisboard
+{
+	optional int64 hero_id = 1;		//英雄ID
+	optional PSJewelData jewel = 2;	//宝石槽位信息
+}
+
+//宝石一键穿戴
+//4104
+message GReqHeroJewelOneKeyWear
+{
+	optional int64 hero_id = 1;
+	repeated int32 sys_id = 2;		//配置ID
+}
+//4104
+message GResHeroJewelOneKeyWear
+{
+	optional int64 hero_id = 1;
+	repeated PSJewelData jewel = 2;
+}
+
+//宝石一键卸下
+//4105
+message GReqHeroJewelOneKeyDisboard
+{
+	optional int64 hero_id = 1;
+}
+//4105
+message GResHeroJewelOneKeyDisboard
+{
+	optional int64 hero_id = 1;
+	repeated PSJewelData jewel = 2;
+}
+
+//宝石合成
+//4106
+message GReqJewelCombine
+{
+	optional int32 jewel_type = 1;	//需要合成的宝石物品ID
+	optional int32 make_count = 2;	//合成多少个
+}
+//4106
+message GResJewelCombine
+{
+	repeated PSBackpackData jewel = 1;
+}
+
+//宝石一键合成
+//4107
+message GReqJewelAllCombine
+{
+	optional int32 jewel_place = 1;
+}
+//4107
+message GResJewelAllCombine
+{
+	repeated PSBackpackData jewel = 1;
+}

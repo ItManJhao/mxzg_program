@@ -1,0 +1,201 @@
+<include file="Public:header" />
+
+<script src="/Public/static/admin/js/plugins/echarts/echarts.min.js"></script>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>充值数据--在线时长(每9分钟更新一次数据)</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('OperateData/OnlineLength')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <input type="hidden" name="sid" value="{$search_params['sid']}">
+                                            <select class="selectpicker form-control sid" data-style="btn-info" data-title="请选择服务器" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="servers" id="servers_vo">
+                                                    <if condition="!empty($search_params['sid']) && in_array($servers_vo['id'],explode(',', $search_params['sid']))">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">开始时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            <label class="control-label" style="padding-left: 5px;">结束时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['end_time']}">
+                                            
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >服务器：</label>
+                                                <span class="sid-text">
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <!-- 图表 -->
+                                                <div id="main" style="width: 1450px;height:600px;"></div>
+                                                <!-- table -->
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>日期</th>
+                                                        <th>登录人数</th>
+                                                        <th>登录次数</th>
+                                                        <th>0~10s</th>
+                                                        <th>10~30s</th>
+                                                        <th>30~60s</th>
+                                                        <th>1~3m</th>
+                                                        <th>3~5m</th>
+                                                        <th>5~10m</th>
+                                                        <th>10~20m</th>
+                                                        <th>20~30m</th>
+                                                        <th>30~60m</th>
+                                                        <th>60~90m</th>
+                                                        <th>90~120m</th>
+                                                        <th>120~180m</th>
+                                                        <th>180~240m</th>
+                                                        <th>240~300m</th>
+                                                        <th>300+m</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row">
+                                                            <td>{$vo.date}</td>
+                                                            <td>{$vo.login_role_total}</td>
+                                                            <td>{$vo.login_num_total}</td>
+                                                            <td>{$vo.one_num_total}</td>
+                                                            <td>{$vo.two_num_total}</td>
+                                                            <td>{$vo.three_num_total}</td>
+                                                            <td>{$vo.four_num_total}</td>
+                                                            <td>{$vo.five_num_total}</td>
+                                                            <td>{$vo.six_num_total}</td>
+                                                            <td>{$vo.seven_num_total}</td>
+                                                            <td>{$vo.eight_num_total}</td>
+                                                            <td>{$vo.nine_num_total}</td>
+                                                            <td>{$vo.ten_num_total}</td>
+                                                            <td>{$vo.eleven_num_total}</td>
+                                                            <td>{$vo.twelve_num_total}</td>
+                                                            <td>{$vo.thirteen_num_total}</td>
+                                                            <td>{$vo.fourteen_num_total}</td>
+                                                            <td>{$vo.fifteen_num_total}</td>
+                                                        </tr>
+                                                    </volist>
+                                                    </tbody>
+                                                </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(function(){
+        doMultipleSelection($('.sid'), 'sid');
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+    });
+    $(".sid").on('change',function(e){
+        doMultipleSelection(this, 'sid');
+    })
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // var data_r_str = '<?php echo json_encode($item_data); ?>';
+    // data_object = JSON.parse(data_str);
+
+    var data_x = {$data_x};
+    var data_series = {$data_series};
+    var data_legend = {$data_legend};
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '在线时长'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: data_legend
+        },
+        grid: {
+            left: '2%',
+            right: '6%',
+            bottom: '4%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: data_x
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: data_series
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+<include file="Public:footer" />

@@ -1,0 +1,1 @@
+cocos luacompile -s E:\cocos_mxzg_tw\client\src -d E:\cocos_mxzg_tw\client\idle\src -e -k 5c44afa98c8 -b c91b5eceab5 --disable-compile

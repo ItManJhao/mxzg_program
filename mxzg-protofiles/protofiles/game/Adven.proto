@@ -1,0 +1,157 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "AdvenGMsg";
+import "Object.proto";
+import "Battle.proto";
+import "Hero.proto";
+
+//message PSTrialBox
+//{
+//	optional int32 pos = 1;	//位置
+//	optional int32 status = 2;// 0 可领取  1已领取
+//}
+
+message GResTrialData
+{
+    required int32 mission_id = 1;			// 关卡id
+    required int32 status = 2;				// 0，没通关/没领奖，1已通关/已领奖
+    optional string def_nick = 3;			// 防守方名称
+    optional int64 def_fighting = 4;		// 防守方战力
+    optional int32 def_level = 5;			// RechargeService防守方等级
+    optional int32 def_head_id = 6;			// 防守方头像
+    repeated GResTrialHeroData hero_data = 7;// 防守方英雄数据
+    optional int32 def_border_id = 8;		// 头像框id
+    optional int32 def_formation_id = 9;	// 阵法ID
+}
+
+message GResTrialHeroData {
+    required int32 pos = 1; // 位置
+    required int32 type = 2; // 英雄类型
+    required int32 star = 3; // 星级
+    required int32 level = 4; // 等级
+    required int32 elem = 5; // 元素
+    required int64 hp = 6; // 血量
+    required int64 max_hp = 7; // 最大血量
+}
+//试炼英雄剩余血量
+message GResTrialHeroHpData {
+    required int64 hero_id = 1; // 英雄id
+    required int64 hp = 2; // 英雄血量
+}
+
+//通关试炼关卡
+//16000
+message GReqTrialCfg {
+}
+//16000
+message GResTrialCfg {
+    repeated GResTrialData data = 1; // 试炼关卡数据
+    repeated GResTrialHeroHpData hero_hp = 2; // 试炼英雄血量数据
+    optional int32 level = 3; // 难度
+    optional bool today_select = 4; // 今天是否选择过难度
+    repeated PSBackpackData reward = 5; //通关累计奖励
+    optional int32 pass_lv = 6; //当前可以挑战的最大难度，默认未1，普通难度
+    optional int32 skip = 7; // 是否跳过0跳过，1不跳过
+    optional int32 resurrection_times = 8; // 已经使用复活次数
+}
+//通关试炼关卡
+//16001
+message GReqTrialPass {
+    optional int32 mission_id = 1; // 改成进攻的关卡id
+    optional int32 skip = 2; // 是否跳过0跳过，1不跳过
+}
+//16001
+message GResTrialPass {
+    optional int32 mission_id = 1; // 关卡id
+    repeated PSBackpackData items = 2; // 奖励
+    optional BattleReport report = 3; // 战报
+    optional int32 skip = 4;        // 是否跳过0跳过，1不跳过
+}
+
+//请求试炼宝箱
+//16002
+message GReqTrialBox {
+    optional int32 mission_id = 1; // 关卡id
+}
+//16002
+message GResTrialBox {
+    required int32 mission_id = 1; // 宝箱关卡id
+    required int32 status = 2; // 0，没通关/没领奖，1已通关/已领奖
+}
+
+//请求红点
+//16010
+message GReqRedState {
+}
+//16010
+message GResRedState {
+    required int32 red_state = 1; //红点状态,0不显示,1显示
+}
+
+//好友助战列表
+//16011
+message GReqAdvenAssistHeroList {
+
+}
+//16011
+message GResAdvenAssistHeroList {
+    repeated ResHeroData hero_data = 1; //派出助战的英雄
+    repeated PSAdvenAssistData friend_hero = 2; //选择的好友英雄
+    repeated PSAdvenAssistData assist_data = 3; //好友助战列表
+}
+
+//支援英雄
+//16012
+message GReqAdvenAssist {
+    optional int64 hero_id = 1; //派遣助战的英雄id
+}
+//支援英雄
+//16012
+message GResAdvenAssist {
+    optional ResHeroData hero = 2; //英雄信息
+}
+
+//选择好友,取消选择
+//16013
+message GReqAdvenSelect {
+    optional int64 hero_id = 1; //英雄id
+    optional int64 friend_id = 2; //好友id
+    optional bool select = 3; //是否选择，true选择，false取消
+}
+
+//选择好友
+//16013
+message GResAdvenSelect {
+    optional PSAdvenAssistData hero = 1; //英雄信息
+    optional bool select = 2; //是否选择，true选择，false取消
+}
+
+//选择难度
+//16014
+message GReqAdvenSelectLv {
+    optional int32 lv = 1; //难度
+}
+
+//选择难度
+//16014
+message GResAdvenSelectLv {
+    optional int32 lv = 1; //难度
+}
+
+// 好友英雄数据
+message PSAdvenAssistData {
+    optional ResHeroData hero = 1; //助战英雄数据
+    optional string friend_nick = 2; //好友名字
+    optional int64 friend_id = 3; //好友id
+    optional bool had_battle = 4; //是否已上过阵
+}
+
+//复活英雄
+//16015
+message GReqAdvenResurrection {
+    repeated int64 hero_ids = 1; //英雄id
+}
+//16015
+message GResAdvenResurrection {
+    optional int32 resurrection_times = 1; // 已经使用复活次数
+}

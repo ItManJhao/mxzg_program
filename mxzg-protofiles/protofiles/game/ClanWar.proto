@@ -1,0 +1,244 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ClanWarGMsg";
+import "Hero.proto";
+
+//分路的信息
+message PSClanWarRoad
+{
+	optional int32 road = 1;		//路号，1左，2中，3右
+	optional int32 battling = 2;	//是否在战斗中，0未在战斗中，1在战斗中
+	optional int32 total = 3;		//一共多少个队伍
+	optional int32 alive = 4;		//存活多少个队伍
+}
+
+//公会战信息
+message PSClanWarInfo
+{
+	optional int64 clan_id = 1;			//公会ID
+	optional string name = 2;			//公会名字
+	optional int32 server_id = 3;		//公会所在服务器ID
+	repeated PSClanWarRoad roads = 4;	//分路的信息
+}
+
+//参战队伍信息
+message PSClanWarTeam
+{
+	optional int64 rid = 1;			//玩家ID
+	optional string name = 2;		//玩家名字
+	optional int32 hero_type = 3;	//英雄类型
+	optional int32 hero_level = 4;	//英雄等级
+	optional int64 fighting = 5;	//战斗力
+	optional int32 hero_star = 6;	//英雄星级
+	optional int32 fashion_id = 7;	//时装ID
+	optional PSHeroEvolve evolve=8;//进化
+}
+
+//分路的详细信息
+message PSClanWarRoadDetail
+{
+	optional int32 road = 1;			//哪一路
+	repeated PSClanWarTeam teams = 2;	//参战队伍
+}
+
+//分路对战中的队伍信息
+message PSClanWarBattling
+{
+	optional int64 clan_id = 1;				//公会ID
+	repeated PSClanWarTeam teams = 2;		//参战队伍
+	optional int32 server_id = 3;			//服务器ID
+}
+
+//英雄公会战信息
+message PSClanWarHeroBrief
+{
+	optional int32 hero_type = 1;	//英雄类型
+	optional int32 level = 2;		//英雄等级
+	optional int32 star = 3;		//英雄星级
+    optional int64 hero_id = 4;     //英雄id
+	optional int32 pos = 5;			//上阵英雄位置
+	optional int32 fashion_id = 6; //皮肤(时装)。未穿戴为0
+	optional int32 alive = 7;		//是否存活
+	optional PSHeroEvolve evolve=8;//进化
+}
+
+
+//历史战斗玩家信息
+message PSHisBattlePlayer
+{
+	optional string name = 1;		//玩家名字
+	optional int64 clan_id = 2;		//公会ID
+	repeated PSClanWarHeroBrief heros = 3;//出战英雄
+	optional int32 win = 4;			//胜负，0负，1胜
+	optional int32 fighting = 5;	//战斗力
+	optional int64 rid = 6;			//角色ID
+}
+
+//历史战斗详细信息
+message PSHisBattleDetail
+{
+	optional string battle_id = 1;			//战斗ID
+	repeated PSHisBattlePlayer players = 2;	//对战双方的玩家
+}
+
+//开箱信息
+message PSClanWarBox
+{
+	optional int32 position = 1;	//宝箱位置
+	optional string name = 2;		//玩家名字
+	optional int32 item_type = 3;	//道具类型
+	optional int64 item_num = 4;	//道具数量
+	optional int64 rid = 5;			//玩家ID
+}
+
+//查看公会战信息
+//31001
+message GReqScanWarInfo
+{
+}
+//31001
+message GResScanWarInfo
+{
+	optional int32 round_start_time = 1;	//本轮活动的开始时间
+	optional int32 round_end_time = 2;		//本轮活动的结束时间
+	repeated PSClanWarInfo war_infos = 3;	//对战双方
+	optional int32 stage = 4;				//当前阶段，1匹配阶段，2备战阶段，3调整阶段，4开战阶段，5休战阶段
+	optional int32 next_stage_time = 5;		//下一阶段的时间
+	optional int32 is_win = 6;				//上一轮公会战是否胜利，1胜利，其它失败
+	optional int32 can_join = 7;			//是否可以参与公会战，0不可以，1可以
+	optional int32 first_round_time = 8;	//第一轮公会战开启的时间
+}
+
+//查看路况信息
+//31002
+message GReqScanRoadInfo
+{
+}
+//31002
+message GResScanRoadInfo
+{
+	repeated PSClanWarRoadDetail details = 1;	//分路详细信息
+}
+
+//保存布阵数据
+//31003
+message GReqSaveRoadFormation
+{
+	optional int32 road = 1;				//保存哪一路
+}
+//31003
+message GResSaveRoadFormation
+{
+	optional int32 road = 1;				//保存哪一路
+}
+
+//调整队伍出战分路与出战顺序
+//31004
+message GReqAdjustRoadSort
+{
+	optional int32 road = 1;	//调整到哪一路
+	optional int64 rid = 2;		//哪个玩家
+	optional int32 sort = 3;	//调整到的序号，从1开始
+}
+//31004
+message GResAdjustRoadSort
+{
+	optional int32 road = 1;	//调整到哪一路
+	optional int64 rid = 2;		//哪个玩家
+	optional int32 sort = 3;	//调整到的序号，从1开始
+}
+
+//查看某一路的当前战况
+//31005
+message GReqScanBattlingInfo
+{
+	optional int32 road = 1;	//哪一路
+}
+//31005
+message GResScanBattlingInfo
+{	
+	repeated PSClanWarBattling battling = 1;	//双方对战信息
+	optional PSHisBattleDetail detail = 2;		//当前正在进行的战斗详细信息
+}
+
+//查看某一路的历史战况
+//31006
+message GReqScanHisBattlingInfo
+{
+	optional int32 road = 1;	//哪一路
+}
+
+//31006
+message GResScanHisBattlingInfo
+{
+	repeated PSHisBattleDetail his_info = 1;	//简要信息
+}
+
+//查看公会战宝箱
+//31008
+message GReqScanWarBox
+{
+}
+//31008
+message GResScanWarBox
+{
+	optional int32 box_number = 1;	//箱子总数
+	repeated PSClanWarBox box = 2;	//已经抽奖的箱子
+	optional int32 box_type = 3;	//箱子类型，1胜利宝箱，2失败宝箱
+	optional int32 has_box = 4;		//玩家是否有资格抽，0没有，1有
+}
+
+//打开公会战宝箱
+//31009
+message GReqOpenWarBox
+{
+	optional int32 box_index = 1;	//从1开始
+}
+//31009
+message GResOpenWarBox
+{
+	optional int32 box_number = 1;	//箱子总数
+	optional PSClanWarBox box = 2;	//已经抽奖的箱子
+}
+
+//战场有变化时推送
+//31010
+message GResWarBattleNext
+{
+}
+
+//路况信息发生调整时推送，正在查看路况信息的时候就重新刷新路况信息
+//31011
+message GResRoadInfoChange
+{
+	optional int64 rid = 1;
+}
+
+//查看某个公会成员的布路信息
+//31012
+message GReqScanMemberRoadInfo
+{
+	optional int64 rid = 1;
+}
+//31012
+message GResScanMemberRoadInfo
+{
+	optional int64 player_id = 1;	// 玩家的rid
+	optional int32 head_id = 2;		// 头像id
+	optional int64 clan_id = 3;		// 军团id
+	optional string nick = 4;		// 玩家名字
+	optional int32 level = 5;		// 等级
+	optional int32 server_id = 6;	// 玩家区号
+	optional string clan_name = 7;	// 军团名字
+	optional int32 clan_level = 8;	// 军团等级
+	optional int32 rank = 9;		// pvp分数
+	optional int32 fighting = 10;	// 战斗力
+	repeated ResHeroBriefData hero_data = 11; // 上阵英雄的信息
+	optional int32 border_id = 12;	//头像框id
+}
+
+//公会成员开宝箱推送
+//31013
+message GResMemberOpenBox
+{
+}

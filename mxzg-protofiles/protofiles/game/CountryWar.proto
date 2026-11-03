@@ -1,0 +1,331 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "CountryWarGMsg";
+
+import "Battle.proto";
+import "Object.proto";
+
+//
+
+message PSCountryWarSmallCity {
+    optional int32 idx = 1; //位置
+    optional int64 rid = 2; //角色id
+    optional string nick = 3; //角色名
+    optional int32 server_id = 4; //服务器id
+}
+
+message PSCountryWarCity {
+    optional int32 idx = 1; //配置id
+    optional int32 server_id = 2; //服务器id
+    optional int32 defend_num = 3; //驻守数量
+    optional int32 event_id = 4; //事件id，不存在事件时，未0
+    optional int32 war_duration = 5; //交战结束时间点
+    optional bool isolate = 6; //是否是孤立状态
+    optional int32 event_duration = 7; //事件刷新时间点
+    optional int32 shop_duration = 8; //商城持续时间，如果没有商城未0；
+
+}
+
+
+message PSCountryWarRank {
+    optional int32 rank = 1;
+    optional int64 rid = 2;
+    optional string name = 3;
+    optional int32 server_id = 4;
+
+    optional int64 damage = 5; //伤害量
+    optional int32 kill = 6; //击杀数量
+    optional int32 occupy_count = 7; //占领城池数量
+    optional int32 hour_score = 8; //每小时积分数
+    optional int64 score = 9; //积分
+}
+
+enum Faction {
+    FACTION_1 = 1;
+    FACTION_2 = 2;
+    FACTION_3 = 4;
+    FACTION_4 = 8;
+    FACTION_UNION = 16; //联合阵营
+}
+
+message PSCountryWarServerFaction {
+    optional int32 server_id = 1;
+    repeated Faction faction = 2; //服务器阵营
+}
+
+//阶段和时间数据
+//76350
+message GReqCountryWarTime {
+}
+//76350
+message GResCountryWarTime {
+    optional int32 stage = 1; //阶段
+    optional int32 start_time = 2; //当前阶段开始时间
+    optional int32 next_stage_time = 3; //下一阶段时间
+    optional bool had_join = 4; //是否参赛
+    optional int32 round = 5; //轮次
+    optional int32 type = 6; //主题
+    optional int32 main_server_id = 7; //主服id
+}
+
+//大城池数据
+//76351
+message GReqCountryWarCity {
+}
+//76351
+message GResCountryWarCity {
+    optional int32 curr_id = 1; //当前位置
+    repeated PSCountryWarCity cities = 2; //大城池数据
+    repeated PSCountryWarServerFaction servers = 3; //服务器阵营
+    optional int32 attack_add_time = 4; //攻城令获取时间
+    optional int32 move_add_time = 5; //迁移令获取时间
+    optional bool had_reward = 6; //是否有奖励可以领取
+    optional int32 attack_item_num = 7; //攻击令数量
+    optional int32 move_item_num = 8; //迁移令数量
+}
+
+//小城池数据
+//76352
+message GReqCountryWarSmallCity {
+    optional int32 idx = 1;
+}
+
+//76352
+message GResCountryWarSmallCity {
+    optional int32 idx = 1; //大城id
+    repeated PSCountryWarSmallCity small_cities = 2;
+    optional int32 occupy_time = 3; //占领时间点
+}
+
+//攻城
+//76353
+message GReqCountryWarAttackCity {
+    required int32 idx = 1;
+}
+
+//76353
+message GResCountryWarAttackCity {
+    optional int32 curr_id = 1; //当前位置
+    optional int32 idx = 2;
+    repeated PSBackpackData reward = 3; //奖励
+    repeated PSCountryWarCity cities = 4; //只有改变的城池数据
+    repeated PSCountryWarServerFaction faction = 5; //阵营
+    optional BattleReport report = 6; //战报
+    optional int32 attack_item_num = 7; //攻击令数量
+    optional bool triggerSkill = 8; //触发必杀技能
+}
+
+//迁移
+//76354
+message GReqCountryWarMoveCity {
+    optional int32 idx = 1;
+}
+
+//76354
+message GResCountryWarMoveCity {
+    optional int32 curr_id = 1; //当前所在城池
+    optional int32 idx = 2; //请求的大城池id返回
+    optional int32 move_item_num = 3; //移动令数
+    repeated PSCountryWarCity cities = 4; //小城池数据
+}
+
+
+message PSCountryWarScoreMission {
+    optional int32 type = 1; //类型
+    optional int32 round = 2; //轮次
+    repeated PSTaskProgress task = 3; //任务列表
+    optional int32 refresh_time = 4; //刷新时间
+}
+
+//积分成就
+//76355
+message GReqCountryWarScore {
+}
+
+//76355
+message GResCountryWarScore {
+    optional int32 score = 1;
+    repeated int32 score_record = 2; //积分领奖记录
+    repeated int32 mystery_score_record = 3; //积分神秘领奖记录
+    optional bool buy_gem = 4; //是否购买道具
+    repeated PSCountryWarScoreMission tasks = 5; //任务
+}
+
+//领取积分任务
+//76356
+message GReqCountryWarScoreMissionGet {
+    optional int32 idx = 1;
+}
+
+//76356
+message GResCountryWarScoreMissionGet {
+    optional int32 score = 1; //积分
+    optional PSTaskProgress task = 2; //任务
+}
+
+//更新积分任务
+//76357
+message GResCountryWarScoreMissionUpdate {
+    repeated PSTaskProgress task = 1; //任务
+}
+
+//积分奖励领取
+//76358
+message GReqCountryWarScoreGet {
+    optional int32 idx = 1;
+}
+//76358
+message GResCountryWarScoreGet {
+    repeated int32 score_record = 1; //积分领奖记录
+    repeated int32 mystery_score_record = 2; //积分神秘领奖记录
+}
+
+//领取城池收益
+//76359
+message GReqCountryWarGetCityReward {
+
+}
+//76359
+message GResCountryWarGetCityReward {
+    optional bool had_reward = 1; //是否有奖励可以领取
+}
+
+//购买道具返回
+//76360
+message GResCountryWarScoreBuyGem {
+    optional bool buy_gem = 1; //是否购买道具
+}
+
+//推送积分变化
+//76361
+message GResCountryWarScoreUpdate {
+    optional int32 score = 1; //最新积分
+}
+
+//抽奖
+//76370
+message GReqCountryWarLottery {
+    optional int32 lottery_times = 1; //抽奖次数
+}
+//76370
+message GResCountryWarLottery {
+    optional int32 idx = 1; //抽中的第一个奖励
+    repeated PSBackpackData reward = 2; //抽中奖励
+}
+
+//抽奖信息
+//76371
+message GReqCountryWarLotteryData {
+
+}
+//76371
+message GResCountryWarLotteryData {
+    optional int32 round = 1; //轮次
+}
+
+//战旗任务
+//76375
+message GReqCountryWarFlag {
+
+}
+//76375
+message GResCountryWarFlag {
+    optional int32 round = 1; //完成轮次
+    repeated PSTaskProgress tasks = 2; //任务，所有轮次的任务记录
+    repeated int32 round_reward = 3; //轮次领奖记录
+}
+
+//领取战旗任务
+//76376
+message GReqCountryWarFlagMissionGet {
+    optional int32 idx = 1;
+}
+
+//76376
+message GResCountryWarFlagMissionGet {
+    optional int32 round = 1; //轮次
+    optional PSTaskProgress task = 2;
+}
+
+//更新战旗任务
+//76377
+message GResCountryWarFlagMissionUpdate {
+    repeated PSTaskProgress task = 2; //任务
+}
+
+//领取战旗轮次奖励
+//76378
+message GReqCountryWarFlagRoundGet {
+    optional int32 idx = 1;
+}
+
+//76378
+message GResCountryWarFlagRoundGet {
+    repeated int32 round_reward = 3; //轮次领奖记录
+}
+
+//战场日志
+message PSCountryWarLog {
+    optional int32 type = 1; //
+    repeated string param = 2; //日志参数，按顺序填充到配置表里面
+    optional int32 time = 3; //日志时间
+}
+
+//战场日志
+//76385
+message GReqCountryWarServerLog {
+}
+
+//76385
+message GResCountryWarServerLog {
+    repeated PSCountryWarLog logs = 1; //日志
+}
+
+//角色日志
+//76386
+message GReqCountryWarRoleLog {
+}
+
+//76386
+message GResCountryWarRoleLog {
+    repeated PSCountryWarLog logs = 1; //日志
+}
+
+//排行榜
+//76390
+message GReqCountryWarRank {
+    optional int32 rank_type = 1; //积分榜28,英雄榜29,击杀榜30,伤害榜31
+}
+
+//76390
+message GResCountryWarRank {
+    optional int32 rank_type = 1;
+    optional PSCountryWarRank self = 2;
+    repeated PSCountryWarRank ranks = 3;
+}
+
+//随机商城
+//每次打开都必须刷新数据
+//76395
+message GReqCountryWarRandomShop {
+}
+
+//76395
+message GResCountryWarRandomShop {
+    repeated PSMapData buy_count = 1; //购买记录
+}
+
+//随机商城购买
+//76396
+message GReqCountryWarRandomShopBuy {
+    optional int32 idx = 1;
+    optional int32 count = 2; //购买数量
+}
+
+//76396
+message GResCountryWarRandomShopBuy {
+    repeated PSMapData buy_count = 1; //购买记录
+}
+
+
+

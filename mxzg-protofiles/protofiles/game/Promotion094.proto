@@ -1,0 +1,36 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion094GMsg";
+
+//制作彩蛋
+//数据
+//76271
+message GReqMakeEggScoreInfo {
+
+}
+//76271
+message GResMakeEggScoreInfo {
+    optional int32 score = 1; //积分
+}
+
+//兑换积分
+//76272
+message GReqMakeEggExchangeScore {
+
+}
+
+//76272
+message GResMakeEggExchangeScore {
+    optional int32 score = 1;
+}
+
+//开宝箱
+//76273
+message GReqMakeEggBox {
+
+}
+
+//76273
+message GResMakeEggBox {
+    optional int32 score = 1;
+}

@@ -1,0 +1,20 @@
+local data = {
+	{call = "waitSceneLoadingEnd"},
+	{call = "wait", time=300},
+	{call = "closeOtherWindow"},
+	{call = "findNodeByName",name="main_chat"},
+	{call = "setNodeVisible",visible=0},
+	{call = "checkLayerType", layer_type=MainSceneType.MLT_BATTLE, r_beg=1, r_end=2},
+	{call = "findSpriteByFileName", plist="ccbi-res/main-scene-lang.plist",getParent=1,file="main-scene-lang/spr-battle.png"},
+	{call = "createMask"},
+	{call = "wait", time=300},
+	{call = "findNodeByName",name="btn_harvest"},
+	{call = "enabledNode", enabled=true},
+	{call = "createMask",bubble=930030022, anchor={x=0.12,y=0},offset_x=-ex.p.width * 0.4},
+	{call = "waitRecv", protocol = 3005,time_out = 10000},
+	{call = "wait",time=200,finial=1},
+	{call = "findSpriteByFileName",plist="ccbi-res/lang-1.plist",file="lang-1/close-tips.png", extend_x=2500, extend_y = 2500},
+	{call = "createMask",mask=false},
+	{call = "openNPCLayer", auto=1,music="music/guide009.mp3",npc_name="Misa",content=930030023},
+}
+return data

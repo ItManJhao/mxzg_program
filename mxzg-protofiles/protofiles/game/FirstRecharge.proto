@@ -1,0 +1,24 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "FirstRechargeMsg";
+import "Object.proto";
+
+//首充礼包
+//20012
+message GReqFirstRecharge {
+}
+//20012
+message GResFirstRecharge {
+    optional int32 recharge = 1;
+    repeated int32 list = 2; //奖励领取记录
+    repeated PSMapData can_reward = 3; //今天是否可以领取,0代表可以领取,1代表不可领取
+}
+
+//20013
+message GReqFirstRechargeReward {
+    optional int32 idx = 1;
+}
+//20013
+message GResFirstRechargeReward {
+    optional int32 idx = 1;
+}

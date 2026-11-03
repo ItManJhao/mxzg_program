@@ -1,0 +1,193 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "MagicTowerGMsg";
+import "Battle.proto";
+import "Object.proto";
+
+//擂主信息
+message PSMagicTowerArena {
+    optional int64 rid = 1; //玩家id
+    optional int32 server_id = 2; //服务器id
+    optional string name = 3; //名字
+    optional int32 head_id = 4; //头像
+    optional int32 level = 5; //关卡
+    optional int32 broad_id = 6; //头像框id
+}
+
+message PSMagicTowerPassRole {
+    optional int64 rid = 1;
+    optional string name = 2;
+    optional int32 head_id = 3; //头像
+    optional int32 broad_id = 4; //头像框
+    optional string battle_id = 5; //
+    optional int32 server_id = 6; //服务器id
+    optional int32 lowest_time = 7; // 最低时间
+    optional int64 lowest_power = 8;//最低战力
+}
+
+//幻魔塔关卡信息
+message PSMagicLevelData {
+    optional int32 level = 1; //关卡
+    repeated int32 complete_id = 2; //完成目标id
+}
+
+//幻魔塔关卡信息
+message PSMagicLevelPassData {
+    optional int32 level = 1;
+    optional PSMagicTowerPassRole fast_pass = 2; //最快通关,只推送玩家名字和服务器id
+    optional PSMagicTowerPassRole min_fighting_pass = 3; //最低通关,只推送玩家名字和服务器id
+}
+
+//76501
+message GReqMagicTowerData {
+}
+
+//76501
+message GResMagicTowerData {
+    repeated PSMagicLevelData level_data = 1; //关卡信息
+    optional int32 can_challenge_count = 2; //可挑战次数
+    optional int32 buy_count = 3; //已购买次数
+    repeated PSMagicTowerArena arena = 4; //擂主列表
+    repeated PSMagicLevelPassData pass_data = 5; //通关信息
+}
+
+//挑战幻魔塔
+//76502
+message GReqMagicTowerChallenge {
+    optional int32 idx = 1; //挑战得关卡MagicTower.idx
+}
+
+//76502
+message GResMagicTowerChallenge {
+    optional PSMagicLevelData level_data = 1; //关卡信息
+    optional BattleReport battle_report = 2; //战报
+    optional int32 can_challenge_count = 3; //可挑战次数
+    repeated PSBackpackData reward = 4; //奖励
+    optional PSMagicLevelData max_star_map = 5; //关卡最大星级
+}
+
+//幻魔塔购买次数
+//76503
+message GReqMagicTowerBuyCount {
+}
+
+//76503
+message GResMagicTowerBuyCount {
+    optional int32 can_challenge_count = 1; //可挑战次数
+    optional int32 buy_count = 2; //已购买次数
+}
+
+//扫荡
+//76505
+message GReqMagicTowerSweep {
+    optional int32 idx = 1; //挑战得关卡MagicTower.idx
+}
+
+//76505
+message GResMagicTowerSweep {
+    optional int32 can_challenge_count = 1; //可挑战次数
+}
+
+//挑战擂主
+//76506
+message GReqMagicTowerChallengeArena {
+    optional int32 idx = 1; //挑战关卡
+}
+
+//76506
+message GResMagicTowerChallengeArena {
+    optional BattleReport battle_report = 1; //战报
+    optional int32 level = 2;   // 当前挑战的阶层
+}
+
+//关卡通关详情
+//76510
+message GReqMagicTowerLevelPassDetail {
+    optional int32 level = 1;
+}
+
+//76510
+message GResMagicTowerLevelPassDetail {
+    optional PSMagicTowerPassRole fast_pass = 1; //最快通关
+    optional PSMagicTowerPassRole min_fighting_pass = 2; //最低通关
+    optional PSMagicTowerPassRole self = 3; //最低通关
+}
+
+//查看
+//76507
+message GReqMagicTowerQuery {
+    optional int32 server_id = 1; //服务器id
+    optional string battle_id = 2; //战报id
+
+}
+
+//76507
+message GResMagicTowerQuery {
+    optional BattleReport report = 1; //战报
+}
+
+//广播擂主变化
+//76508
+message GResMagicTowerArenaBro {
+    optional PSMagicTowerArena arena = 1; //擂主
+}
+
+//广播通关信息变化
+//76509
+message GResMagicTowerLevelPassBro {
+    optional PSMagicLevelPassData level_pass = 1; //通关信息
+}
+
+//排行榜---------------------
+message PSMagicTowerRank {
+    optional int64 rid = 1;
+    optional int32 server_id = 2;
+    optional string name = 3;
+    optional int32 border_id = 4; //头像框id
+    optional int32 head_id = 5; //玩家头像
+    optional int32 pass_level = 6; //通关层数
+    optional int32 pass_time = 7; //通关时间
+    optional int32 rank = 8; //排名
+}
+
+//76520
+message GReqMagicTowerLevelRank {
+}
+
+//76520
+message GResMagicTowerLevelRank {
+    optional PSMagicTowerRank self = 1;
+    repeated PSMagicTowerRank list = 2;
+}
+
+//----------------------------
+//斩魔之路
+//76542
+message GReqMagicTowerRoadInfo {
+
+}
+
+//76542
+message GResMagicTowerRoadInfo {
+    repeated int32 normal_list = 1; // 普通已经领取的id
+    repeated int32 king_list = 2; // 斩魔王者的list
+    optional int32 state = 3; // 斩魔王者解锁状态 0未解锁 解锁
+}
+
+//斩魔奖励领取
+//76543
+message GReqMagicTowerRoadReceive {
+    optional int32 receive_id = 1; // 要领取的奖励
+    optional int32 type = 2; // 1普通 2王者
+}
+
+//76543
+message GResMagicTowerRoadReceive {
+    repeated int32 list = 1; // 领取后更新的领取列表
+    optional int32 type = 2; // 1普通 2王者
+}
+
+
+
+
+

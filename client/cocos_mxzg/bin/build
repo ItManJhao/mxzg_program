@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+workDir=$(cd $(dirname $0); pwd)
+rootDir=$workDir/..
+platform=$1
+buildMode=$2
+buildMode="$(tr '[:lower:]' '[:upper:]' <<< ${buildMode:0:1})${buildMode:1}"
+region=$3
+channel=$4
+channel="$(tr '[:lower:]' '[:upper:]' <<< ${channel:0:1})${channel:1}"
+useObb=$5
+versionCode=$6
+versionName=$7
+
+srcDir=$rootDir/client/idle/src
+resDir=$rootDir/client/idle/res
+ardDir=$rootDir/client/idle/frameworks/runtime-src/proj.android
+iosDir=$rootDir/client/idle/frameworks/runtime-src/proj.ios_mac
+
+branch="publish-$region"
+
+cd $rootDir/../$branch
+git fetch --all
+git reset --hard HEAD
+git pull
+
+cd $rootDir
+rm -fr $srcDir
+rm -fr $resDir
+ln -s "$rootDir/../$branch/client/idle/src" $srcDir
+ln -s "$rootDir/../$branch/client/idle/res" $resDir
+
+if [ "$buildMode" == "All" ]; then
+    buildMode=""
+fi
+
+if [ "$platform" != "iOS" ]; then
+    echo "============== Build Android ===================="
+    cd $ardDir
+
+    echo "./gradlew assemble$channel$buildMode -PpreVersionName=$versionName -PpreVersionCode=$versionCode -PpreRegion=$region -PpreUseObb=$useObb"
+    ./gradlew assemble$channel$buildMode -PpreVersionName=$versionName -PpreVersionCode=$versionCode -PpreRegion=$region -PpreUseObb=$useObb
+fi
+
+if [ "$platform" != "Android" ]; then
+    echo "============== Build iOS ======================="
+    cd $iosDir
+
+    if [ "$buildMode" != "Release" ]; then
+        echo "xcodebuild archive -project ./DreamElementalist.xcodeproj -scheme $channel -configuration Debug -archivePath ./build"
+        xcodebuild archive -project ./DreamElementalist.xcodeproj -scheme $channel -configuration Debug -archivePath ./build
+    fi
+
+    if [ "$buildMode" != "Debug" ]; then
+        echo "xcodebuild archive -project ./DreamElementalist.xcodeproj -scheme $channel -configuration Release -archivePath ./build"
+        xcodebuild archive -project ./DreamElementalist.xcodeproj -scheme $channel -configuration Release -archivePath ./build
+    fi
+fi
+
+

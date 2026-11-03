@@ -1,0 +1,47 @@
+@charset 'utf-8';
+/*超出隐藏属性*/
+/*
+overflow: hidden;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;text-overflow: ellipsis;
+text-overflow: ellipsis;white-space: nowrap;overflow: hidden;
+.clearfix li{width: 20%;float: left;position: relative;border: 1px solid #f3f3f3;margin-left: -1px; margin-top: -1px;overflow: hidden;display: block; }
+.clearfix li img{opacity: 0.5;width: 100%;display: block;-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-ms-filter: grayscale(100%);-o-filter: grayscale(100%);filter:grayscale(100%);filter: gray;}
+.clearfix li:hover img{opacity: 1;-webkit-filter: grayscale(0%);-moz-filter: grayscale(0%);-ms-filter: grayscale(0%);-o-filter: grayscale(0%);filter: grayscale(0%);filter: gray;}
+*/
+/*公用属性*/
+*{font-family: 'Microsoft YaHei',serif;box-sizing: border-box;color: #444;}
+a:focus {outline-style:none !important;-moz-outline-style: none !important;} 
+body{width: 100%;overflow-x:hidden;}
+.cl:after{content: " ";display: block;clear: both;height: 0;}
+.fl{float: left;}
+.fl2{float: right;}
+.cl{zoom: 1;}
+.fw{font-weight: bold;}
+.maxwidth{width: 100%;max-width: 1200px;margin: 0 auto;min-width: 320px;}
+.in_fl{display: inline-block;float: left;}
+.in_fl2{display: inline-block;float: right;}
+.max_block{width: 100%;max-width: 1920px;margin: 0 auto;}
+.block{display: inline-block;width: 100%;height: 100%;}
+.in_block{display: inline-block;width: 100%;float: left;}
+.allimg1{display: inline-block;max-width: 100%;max-height: 100%;position: absolute;left: 0px;top: 0px;right: 0px;bottom: 0px;margin:auto;}
+.allimg2{display: inline-block;width: 100%;height: 100%;position: absolute;left: 0px;top: 0px;}
+.over{text-overflow: ellipsis;white-space: nowrap;overflow: hidden;}
+.over2{overflow: hidden;display: -webkit-box;-webkit-box-orient: vertical;text-overflow: ellipsis;}
+.y_y{-webkit-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);-o-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);-ms-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);-moz-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);}
+
+ 
+/*在992和1199像素之间的屏幕里,这里的样式才生效*/
+@media (max-width: 1199px) {
+	 
+}
+/*在768和991像素之间的屏幕里,这里的样式才生效*/
+@media (max-width: 991px) {
+	 
+}
+/*在480和767像素之间的屏幕里,这里的样式才生效*/
+@media (max-width: 767px) {
+	 
+}	
+/*在小于480像素的屏幕,这里的样式才生效*/
+@media (max-width: 479px) {
+	 
+}

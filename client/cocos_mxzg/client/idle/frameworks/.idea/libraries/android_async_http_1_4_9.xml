@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="android-async-http-1.4.9">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/cocos2d-x/cocos/platform/android/java/libs/android-async-http-1.4.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/cocos2d-x/cocos/platform/android/java/libs/com.android.vending.expansion.zipfile.jar!/" />
+      <root url="jar://$PROJECT_DIR$/cocos2d-x/cocos/platform/android/java/libs/EngineDataManager.jar!/" />
+      <root url="jar://$PROJECT_DIR$/cocos2d-x/cocos/platform/android/java/libs/httpclient-4.4.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,60 @@
+cfg.shopzsjt = {
+	["shopzsjt"] = {
+		[1] = {
+			idx = 1,
+			item_type = {{item_num=5,item_type=901506}},
+			need_item = {{item_num=15,item_type=902043}},
+			buy_limit = 0,
+			hero_num = 0,
+			hero_star = 0,
+		},
+		[2] = {
+			idx = 2,
+			item_type = {{item_num=25,item_type=901505}},
+			need_item = {{item_num=15,item_type=902043}},
+			buy_limit = 0,
+			hero_num = 0,
+			hero_star = 0,
+		},
+		[3] = {
+			idx = 3,
+			item_type = {{item_num=1,item_type=905304}},
+			need_item = {{item_num=30,item_type=902043}},
+			buy_limit = 0,
+			hero_num = 0,
+			hero_star = 0,
+		},
+		[4] = {
+			idx = 4,
+			item_type = {{item_num=1,item_type=902023}},
+			need_item = {{item_num=40,item_type=902043}},
+			buy_limit = 0,
+			hero_num = 0,
+			hero_star = 0,
+		},
+		[5] = {
+			idx = 5,
+			item_type = {{item_num=50,item_type=20505017}},
+			need_item = {{item_num=60,item_type=902043}},
+			buy_limit = 0,
+			hero_num = 0,
+			hero_star = 0,
+		},
+		[6] = {
+			idx = 6,
+			item_type = {{item_num=1,item_type=901904}},
+			need_item = {{item_num=20,item_type=902043}},
+			buy_limit = 5,
+			hero_num = 3,
+			hero_star = 10,
+		},
+		[7] = {
+			idx = 7,
+			item_type = {{item_num=1,item_type=902054}},
+			need_item = {{item_num=30,item_type=902043}},
+			buy_limit = 5,
+			hero_num = 3,
+			hero_star = 13,
+		},
+	}
+}

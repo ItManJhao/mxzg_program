@@ -1,0 +1,62 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>公会科技</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('Role/clan_skill')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <volist name="clan_skill_title" id="clan_skill_title_vo">
+                                                    <th>{$clan_skill_title_vo}</th>
+                                                </volist>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <volist name="clan_skill_data" id="clan_skill_data_vo">
+                                                <tr role="row">
+                                                    <td>{$clan_skill_data_vo.id}</td>
+                                                    <td>{$clan_skill_data_vo.name}</td>
+                                                    <td>{$clan_skill_data_vo.level}</td>
+                                                    <td>{$clan_skill_data_vo.skill_type_101}</td>
+                                                    <td>{$clan_skill_data_vo.skill_type_102}</td>
+                                                    <td>{$clan_skill_data_vo.skill_type_201}</td>
+                                                    <td>{$clan_skill_data_vo.skill_type_207}</td>
+                                                    <td>{$clan_skill_data_vo.skill_type_208}</td>
+                                                    <td>{$clan_skill_data_vo.skill_type_212}</td>
+                                                    <td>{$clan_skill_data_vo.skill_type_219}</td>
+                                                    <td>{$clan_skill_data_vo.skill_type_222}</td>
+                                                    <td>{$clan_skill_data_vo.skill_type_270}</td>
+                                                    <td>{$clan_skill_data_vo.skill_type_291}</td>
+                                                </tr>
+                                            </volist>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+
+</script>
+
+
+<include file="Public:footer" />

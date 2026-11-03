@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>battle-detail-lang/spr-result-win.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{2,2}</string>
+                <key>spriteSize</key>
+                <string>{113,54}</string>
+                <key>spriteSourceSize</key>
+                <string>{127,58}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{113,54}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>battle-detail-lang.pvr.ccz</string>
+            <key>size</key>
+            <string>{113,54}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:814ea7c15c4ad5b5c23678468db07dc5:6dd90135d32cada934f3b0e4a182d70d:39d7eef69ac978908b9fb3eee13a4c90$</string>
+            <key>textureFileName</key>
+            <string>battle-detail-lang.pvr.ccz</string>
+        </dict>
+    </dict>
+</plist>

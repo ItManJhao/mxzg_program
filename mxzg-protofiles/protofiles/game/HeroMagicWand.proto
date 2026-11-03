@@ -1,0 +1,115 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroMagicWandGMsg";
+
+//请求魔杖全部列表
+//4601
+message GReqHeroMagicWandList {
+    optional int32 page = 1;    // 页码
+}
+
+//4601
+message GResHeroMagicWandList {
+    repeated MagicWandData list = 1;  // 背包魔杖列表
+    optional int32 page = 2;    // 页码，从1开始
+}
+
+message MagicWandData {
+    optional int64 magic_id = 1;     // 魔杖的唯一id
+    optional int32 item_type = 2;   // 关联配置表id
+    optional int32 magic_type = 3;  // 魔杖类型，红色品质需要区分
+    optional int64 hero_id = 4;     // 英雄id, 0为未穿戴
+    optional int32 strengthen_lv = 5;   // 强化等级
+    repeated MagicWandAttr base_attrs = 6;      // 基础属性
+    repeated MagicWandAttr random_attrs = 7;    // 随机属性
+    repeated MagicWandAttr wash_attrs = 8;      // 洗炼属性
+    optional int32 magic_rare = 9;  // 魔杖的品质
+    optional int32 wash_times = 10; // 洗炼的次数    
+}
+
+message MagicWandAttr {
+    optional int32 attr_id = 1;     // 属性唯一id
+    optional int64 attr_value_new = 2;  // 属性的新数值，强化或洗练需发送
+    optional int64 attr_value_old = 3;	// 旧数值，原本的数值
+}
+
+//魔杖穿戴替换
+//4602
+message GReqHeroMagicWandOn {
+    optional int64 hero_id = 1; //英雄的id
+    optional int64 magic_id = 2; // 魔杖的唯一id
+}
+
+//4602
+message GResHeroMagicWandOn {
+    optional int64 hero_id = 1; // 英雄的id
+    optional MagicWandData magic_info = 2; //替换后在该位置上的
+    optional int64 magic_id = 3;    // 原本穿在身上的旧魔杖id 
+}
+
+//魔杖卸下
+//4603
+message GReqHeroMagicWandOff {
+    optional int64 hero_id = 1; //英雄的id
+    optional int64 magic_id = 2; // 魔杖的唯一id
+}
+
+//4603 
+message GResHeroMagicWandOff {
+    optional int64 hero_id = 1;
+    optional MagicWandData magic_info = 2; //替换后在该位置上的 
+}
+
+//魔杖强化
+//4604
+message GReqMagicWandStrengthen {
+    optional int64 hero_id = 1;  // 英雄id, 0则在背包里
+    optional int64 magic_id = 2; //魔杖唯一id
+}
+
+//4604
+message GResMagicWandStrengthen {
+    optional MagicWandData magic_info = 1; // 强化后信息
+}
+
+//魔杖洗炼
+//4605
+message GReqMagicWandBaptism {
+    optional int64 hero_id = 1; // 英雄id, 0则在背包里
+    optional int64 magic_id = 2; // 魔杖唯一id
+}
+
+//4605
+message GResMagicWandBaptism {
+    optional MagicWandData magic_info = 1; // 洗炼后信息
+}
+
+//洗炼保存
+//4606
+message GReqMagicWandSave {
+    optional int64 hero_id = 1; // 英雄id, 0则在背包里
+    optional int64 magic_id = 2; // 魔杖唯一id
+}
+
+//4606
+message GResMagicWandSave {
+    optional MagicWandData magic_info = 1; // 保存之后信息
+}
+
+//魔杖分解
+//4607
+message GReqMagicWandDecompose {
+    repeated int64 magic_ids = 1;	// 要分解的魔杖id
+}
+
+//4607
+message GResMagicWandDecompose {
+    repeated int64 del_ids = 1;		// 已分解的魔杖id
+}
+
+//服务端推送背包更新
+//4608
+message GResMagicWandBaginfo {
+    repeated MagicWandData list = 1;  // 背包魔杖列表
+    optional int32 sign = 2;	// 0删除 1增加
+}

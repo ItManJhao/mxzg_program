@@ -1,0 +1,60 @@
+cfg.runestype = {
+	["runestype"] = {
+		[2000001] = {
+			type = 2000001,
+			idx = 1,
+			rare = 1,
+			skill_max = 0,
+			random_cost = {{item_num=6,item_type=901401},{item_num=5000,item_type=900001}},
+			point = 6,
+		},
+		[2000002] = {
+			type = 2000002,
+			idx = 2,
+			rare = 2,
+			skill_max = 1,
+			random_cost = {{item_num=30,item_type=901401},{item_num=20000,item_type=900001}},
+			point = 30,
+		},
+		[2000003] = {
+			type = 2000003,
+			idx = 3,
+			rare = 3,
+			skill_max = 1,
+			random_cost = {{item_num=150,item_type=901401},{item_num=100000,item_type=900001}},
+			point = 150,
+		},
+		[2000004] = {
+			type = 2000004,
+			idx = 4,
+			rare = 4,
+			skill_max = 2,
+			random_cost = {{item_num=500,item_type=901401},{item_num=250000,item_type=900001}},
+			point = 750,
+		},
+		[2000005] = {
+			type = 2000005,
+			idx = 5,
+			rare = 5,
+			skill_max = 2,
+			random_cost = {{item_num=1500,item_type=901401},{item_num=750000,item_type=900001}},
+			point = 3750,
+		},
+		[2000006] = {
+			type = 2000006,
+			idx = 6,
+			rare = 6,
+			skill_max = 2,
+			random_cost = {{item_num=3000,item_type=901401},{item_num=1500000,item_type=900001}},
+			point = 18750,
+		},
+		[2000007] = {
+			type = 2000007,
+			idx = 7,
+			rare = 7,
+			skill_max = 2,
+			random_cost = {{item_num=6000,item_type=901401},{item_num=3000000,item_type=900001}},
+			point = 93750,
+		},
+	}
+}

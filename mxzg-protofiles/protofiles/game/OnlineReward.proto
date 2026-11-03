@@ -1,0 +1,45 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "OnlineRewardGMsg";
+import "Object.proto";
+import "Hero.proto";
+
+//获取在线奖励数据
+//25001
+message GReqInitOnlineRewardData
+{
+}
+//25001
+message GResInitOnlineRewardData
+{
+	optional int32 online_time = 1;//累积在线时长
+    repeated PSMapData idx_list = 2;
+    repeated int32 once_again_list = 3;//已经再领过一次的奖励idx集
+}
+
+//领取在线奖励
+//25002
+message GReqInitOnlineReward
+{
+	optional int32 idx = 1;	//奖励ID
+}
+//25002
+message GResInitOnlineReward
+{
+    optional ResHeroData hero = 2;//英雄奖励
+    optional PSMapData idx_list = 3;
+
+}
+
+//在线奖励再次领取协议
+//25003
+message GReqOnceAgainOnlineReward
+{
+    optional int32 idx = 1;//奖励id
+}
+//25003
+message GResOnceAgainOnlineReward
+{
+    optional ResHeroData hero = 1;//英雄奖励
+    optional int32 idx = 2;//奖励id
+}

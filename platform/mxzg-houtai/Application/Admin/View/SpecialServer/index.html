@@ -1,0 +1,88 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>特殊服务器列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('SpecialServer/index')}" method="get" class="form-horizontal form-inline">
+                                             
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <button onclick="openYemian('{:U('SpecialServer/add')}','添加特殊服务器')"  type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>添加特殊服务器</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="5%">服务器ID</th>
+                                                        <th>服务器名字</th>
+                                                        <th>服务器外网地址</th>
+                                                        <th>内网地址</th>
+                                                        <th>游戏端口</th>
+                                                        <th>HTTP端口</th>
+                                                        <th>是否启用</th>
+                                                        <th>管理员id</th>
+                                                        <th>修改时间</th>
+                                                        <th>添加时间</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="server_list" id="server_list_vo">
+                                                        <tr role="row"> 
+                                                            <td>{$server_list_vo.id}</td>
+                                                            <td>{$server_list_vo.server_name}</td>
+                                                            <td>{$server_list_vo.extranet_host}</td>
+                                                            <td>{$server_list_vo.intranet_host}</td>
+                                                            <td>{$server_list_vo.game_port}</td>
+                                                            <td>{$server_list_vo.http_port}</td>
+                                                            <td><if condition="$server_list_vo['status'] == 1">启用<else/>停用</if></td>
+                                                            <td>{$server_list_vo.admin_id}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$server_list_vo['updated_at'])}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$server_list_vo['created_at'])}</td>
+                                                            <td>
+                                                                <a class="btn btn-primary" href="javascript:;" title="编辑" onclick="openYemian('/admin.php/SpecialServer/edit?id={$server_list_vo.id}','编辑服务器')" >编辑</a>
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+</script>
+
+
+<include file="Public:footer" />

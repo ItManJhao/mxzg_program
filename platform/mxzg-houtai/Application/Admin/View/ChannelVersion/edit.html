@@ -1,0 +1,73 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑公告</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('ChannelVersion/ajax_updata')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                        <div class="tab-pane active">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">渠道：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="c_id" disabled>
+                                        <option value="0">请选择渠道</option>
+                                        <volist name="channels" id="channels_vo">
+                                            <eq name="channels_vo.id" value="$channel_version_info.c_son_id">
+                                                <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                <else />
+                                                <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                            </eq>
+                                            
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>包版本</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="package_version" value="{$channel_version_info.package_version}" type="text" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>资源版本</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="version" value="{$channel_version_info.version}" type="text" required="" aria-required="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>过审标记</label>
+                                <div class="col-sm-8">
+                                    <input name="is_past" type="radio" value="0" <if condition="$channel_version_info['is_past'] == 0"> checked </if> aria-required="true">未过审&nbsp;&nbsp;&nbsp;
+                                    <input name="is_past" type="radio" value="1" <if condition="$channel_version_info['is_past'] == 1"> checked </if> aria-required="true">已过审&nbsp;&nbsp;&nbsp;
+                                </div>
+                            </div>
+
+                        </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <input type="hidden" name="id" value="{$channel_version_info.id}">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('ChannelVersion/ajax_updata')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+
+</script>
+
+
+
+<include file="Public:footer" />

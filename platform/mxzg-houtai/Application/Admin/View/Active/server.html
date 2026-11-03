@@ -1,0 +1,160 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>活动发送服务器</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('active/ajax_server')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>活动id：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" name="id" value="{$active_info.id}" type="text" required="" aria-required="true" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>活动名称：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" name="name" value="{$active_info.name}" type="text" required="" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">活动类型：</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="type_id">
+                                            <volist name="active_type" id="active_type_vo">
+                                                <eq name="active_type_vo.id" value="$active_info.type_id">
+                                                    <option value="{$active_type_vo.id}" selected>{$active_type_vo.name}</option>
+                                                    <else />
+                                                    <option value="{$active_type_vo.id}">{$active_type_vo.name}</option>
+                                                </eq>
+                                            </volist>
+                                            </if>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>活动描述：</label>
+                                    <div class="col-sm-8">
+                                        <textarea placeholder="请输入内容" name="desc" class="configInput form-control" required="" aria-required="true">{$active_info.desc}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>开始时间：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{:date('Y-m-d H:i:s',$active_info['start_time'])}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>结束时间：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{:date('Y-m-d H:i:s',$active_info['end_time'])}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>清除时间：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" id="clear_time" name="clear_time" type="text" onclick="laydate({elem: '#clear_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{:date('Y-m-d H:i:s',$active_info['clear_time'])}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>开服第N天开启：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" name="limit_days" type="number" value="<if condition="$active_info['limit_days'] neq 0"> {$active_info['limit_days']}<else/>8</if>" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" required="" aria-required="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>数据列表：</label>
+                                    <div class="col-sm-8" style="white-space: nowrap; overflow: hidden; overflow-x: scroll; -webkit-backface-visibility: hidden; -webkit-overflow-scrolling: touch;">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                            <empty name="excel_data">
+                                                <tr><td>暂时没有数据</td></tr>
+                                            <else />
+                                                <volist name="excel_data" id="excel_data_vo">
+                                                    <tr>
+                                                        <volist name="excel_data_vo" id="excel_data_son_vo">
+                                                            <td>{$excel_data_son_vo}</td>
+                                                        </volist>
+                                                    </tr>
+                                                </volist>
+                                            </empty>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>服务器：</label>
+                                    <div class="col-sm-8">
+                                        <volist name="server_list" id="server_list_vo">
+                                            <div class="check-servers">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input style="width: 21px;height: 21px;" class="check-all" type="checkbox" >
+                                                        全选
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox checkbox-inline">
+                                                    <volist name="server_list_vo" id="server_list_vo_vo">
+                                                        <label>
+                                                            <if condition="in_array($server_list_vo_vo['id'], $active_info['server_ids'])">
+                                                                <input style="width: 21px;height: 21px;" type="checkbox" class="server-check"  name="server_ids[]" value="-1"  checked disabled >
+                                                                <input style="display:none" type="checkbox" name="server_ids[]" value="{$server_list_vo_vo['id']}"  checked >
+                                                                <else />
+                                                                <input style="width: 21px;height: 21px;" type="checkbox" class="server-check"  name="server_ids[]" value="{$server_list_vo_vo['id']}" >
+                                                            </if>
+                                                            {$server_list_vo_vo['server_name']}
+                                                        </label>
+                                                    </volist>
+                                                </div>
+                                            </div>
+                                        </volist>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <input type="hidden" name="id" value="{$active_info.id}">
+                                    <input type="hidden" name="data_file" value="{$active_info.data_file}">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('active/ajax_server')}')" type="button">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+$(function(){
+    $(".check-servers").each(function(){
+        var check_servcers = $(this).find(".server-check").first();
+        isCheckAlls('check-all','server-check', check_servcers);
+    });
+});
+
+$(".server-check").click(function(){    
+    isCheckAlls('check-all','server-check', $(this));
+});
+$(".check-all").click(function () {
+    doCheckAlls('check-all', 'server-check', $(this));
+});
+
+</script>
+
+
+<include file="Public:footer" />

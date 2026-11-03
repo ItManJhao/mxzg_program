@@ -1,0 +1,82 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "FloatingIslandsGMsg";
+
+import "Battle.proto";
+import "Object.proto";
+
+//浮空岛时间
+//73001
+message GReqFloatingIslandsTime {
+
+}
+
+//73001
+message GResFloatingIslandsTime {
+    optional int32 next_time = 2; //下一阶段开始时间
+    optional int32 stage = 3; //阶段1.未开始；2挑战boss；3挑战boss结算
+}
+
+//浮空岛数据
+//73002
+message GReqFloatingIslandsData {
+
+}
+
+//73002
+message GResFloatingIslandsData {
+    optional int64 self_max_dmg = 1; //当前伤害值
+    optional string total_dmg = 2; //当前血量
+    optional int32 challenge_count = 4; //挑战次数
+    optional int32 can_buy_count = 5; //可以购买次数
+}
+
+//浮空岛挑战
+//73003
+message GReqFloatingIslandsChallenge {
+
+}
+
+//73003
+message GResFloatingIslandsChallenge {
+    optional BattleReport report = 1; //战报
+    optional int64 dmg = 2; //伤害值
+    repeated PSBackpackData challenge_reward=3;//挑战奖励
+}
+
+//浮空岛购买次数
+//73004
+message GReqFloatingIslandsBuyCount {
+
+}
+
+//73004
+message GResFloatingIslandsBuyCount {
+    optional int32 challenge_count = 4;
+    optional int32 can_buy_count = 5;
+}
+
+//
+message PSFloatingRankData {
+    optional int64 player_id = 1; //玩家ID
+    optional string name = 2; //玩家名字
+    optional int32 level = 3; //玩家等级
+    optional int32 head_id = 4; //玩家头像
+    optional int32 border_id = 5; //头像框id
+    optional int32 server_id = 6; //大区（服务器区号）.
+    optional int32 rank = 7; //玩家排名
+    optional int64 total_dmg = 8; //总伤害
+    optional int64 self_max_dmg = 9; //最高伤害
+}
+
+//排行榜数据
+//73005
+message GReqFloatingIslandsRank {
+
+}
+
+//73005
+message GResFloatingIslandsRank {
+    repeated PSFloatingRankData ranks = 1;
+    optional PSFloatingRankData self = 2;
+}

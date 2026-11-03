@@ -1,0 +1,45 @@
+契约召唤服务端：
+1，软件环境：jdk1.8, IntelliJ IDEA(推荐), mysql5
+2，策划svn:svn://192.168.1.131/idle_plan/doc
+   gameconfig      策划数值文件
+   策划\文档审核    策划需求文件
+3,后端代码：gitlab:http://192.168.1.131/
+    代码模块介绍：
+        mxzg-battle 战斗逻辑
+        mxzg-center 中心服逻辑
+        mxzg-config 数值配置
+        mxzg-cross  跨服逻辑
+        mxzg-deploy  部署工具
+        mxzg-gameserver 游戏业务
+        mxzg-large-server 大跨服逻辑
+        mxzg-message 内部消息
+        mxzg-protocol proto协议
+        mxzg-template 服务公共模板
+        mxzg-tool 工具程序
+
+    引用工程：
+        mxzg-common 基础公共包
+        mxzg-rpc    远程调用
+        mxzg-agent  热更扩展
+
+
+4，本地发布 
+   内网机:192.168.1.131 账号root,密码：ayjs#$@!~~~2019
+           打包同步命令：sh /home/mxzg/build_script/test-build-jar-git.sh
+   内部测试机：182.254.197.214, 账号root,用key登录
+           先cd到 /data/mxzg/serivce/trunk
+            centerserver 中心服
+            crossserver  跨服
+            largecrossserver 大跨服
+            gameserver1  国内简体-1
+            gameserver2  港台测试服-5
+            gameserver3  港台测试服-1016
+            gameserver4  俄文测试服-1017--(旧版韩文测试服)
+            gameserver5  日文测试服-1020
+            server-sea   东南亚测试服主目录
+            server-sea/gameserver6 东南亚测试服-1022
+            server-sea/centerserver 东南亚测试中心服
+            server-sea/crossserver 东南亚测试跨服
+            server-sea/largecrossserver 东南亚测试大跨服
+
+        注意：每个服下面的script有restart****.sh命令重启，必须在进入当前服目录下才能调用脚本重启例如：进入gameserver2 ，执行sh scripts/restart-game-server.sh 重启对应的服

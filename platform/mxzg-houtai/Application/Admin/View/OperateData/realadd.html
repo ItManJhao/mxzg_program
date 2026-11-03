@@ -1,0 +1,168 @@
+<include file="Public:header" />
+
+<script src="/Public/static/admin/js/plugins/echarts/echarts.min.js"></script>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>实时新增</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('OperateData/realadd')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <input type="hidden" name="sid" value="{$search_params['sid']}">
+                                            <select class="selectpicker form-control sid" data-style="btn-info" data-title="请选择服务器" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="servers" id="servers_vo">
+                                                    <if condition="!empty($search_params['sid']) && in_array($servers_vo['id'],explode(',', $search_params['sid']))">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label minute-time" style="padding-left: 7px;">选择小时</label>
+                                            <input class="configInput form-control minute-time" style="width: 160px;" id="minute_time" name="minute_time" type="text" onclick="laydate({elem: '#minute_time', istime: true, format: 'YYYY-MM-DD hh'})" required="" aria-required="true" value="{$search_params['minute_time']}">
+                                            <label class="control-label hour-time" style="padding-left: 7px;">选择日期</label>
+                                            <input class="configInput form-control hour-time" style="width: 160px;" id="hour_time" name="hour_time" type="text" onclick="laydate({elem: '#hour_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['hour_time']}">
+
+                                            <label class="control-label" style="padding-left: 7px;">统计方式</label>
+                                            <select class="form-control server-type" name="type" onchange="serverType(this)">
+                                                <option value="1" <if condition="$search_params['type'] == 1"> selected </if>>按分钟统计</option>
+                                                <option value="2" <if condition="$search_params['type'] == 2"> selected </if>>按小时统计</option>
+                                            </select>
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >服务器：</label>
+                                                <span class="sid-text">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <div id="main" style="width: 1450px;height:600px;"></div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+ 
+<script>
+    $(function(){
+        doMultipleSelection($('.sid'), 'sid');
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+    });
+    $(".sid").on('change',function(e){
+        doMultipleSelection(this, 'sid');
+    })
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+
+    $(function(){
+        serverType($('.server-type'));
+    });
+
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    function serverType(obj){
+        var selectedValue = $(obj).val();
+        if(selectedValue == 1){
+            $(".minute-time").show();
+            $(".hour-time").hide();
+        }else{
+            $(".minute-time").hide();
+            $(".hour-time").show();
+        }
+    }
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // var data_r_str = '<?php echo json_encode($item_data); ?>';
+    // data_object = JSON.parse(data_str);
+
+    var data_x = {$data_x};
+    var data_series = {$data_series};
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '实时新增'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['实时创角', '实时注册']
+        },
+        grid: {
+            left: '2%',
+            right: '6%',
+            bottom: '4%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: data_x
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: data_series
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
+<include file="Public:footer" />

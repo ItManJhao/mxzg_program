@@ -1,0 +1,67 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>修改大区</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('bigServer/ajax_updata')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                        <div class="tab-pane active">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">渠道：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="cid_str">
+                                        <volist name="channels" id="channels_vo">
+                                            <eq name="channels_vo.id" value="$big_server_info.c_son_id">
+                                                <option value="{$channels_vo.id}-{$channels_vo.parent_id}" selected>{$channels_vo.id}-{$channels_vo.name}</option>
+                                                <else />
+                                                <option value="{$channels_vo.id}-{$channels_vo.parent_id}">{$channels_vo.id}-{$channels_vo.name}</option>
+                                            </eq>
+                                        </volist>
+                                        </if>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>显示名称：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="name" value="{$big_server_info.name}" type="text" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>排序：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="sort" type="number" value="{$big_server_info.sort}" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                        </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <input type="hidden" name="id" value="{$big_server_info.id}">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('bigServer/ajax_updata')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+
+</script>
+
+
+<include file="Public:footer" />

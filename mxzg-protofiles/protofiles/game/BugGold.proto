@@ -1,0 +1,36 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "BugGoldGMsg";
+
+message PSBuyGoldData
+{
+	optional int32 idx = 1;	//购买的类型idx
+	optional int32 num = 2;  // 该类型的点金礼包购买次数
+}
+
+//点金
+//17000
+message GReqBuyGoldLog
+{
+}
+//17000
+message GResBuyGoldLog
+{
+	optional int32 status = 1;// 0是非活动 ，1是活动
+	optional int32 time = 2; //下一次刷新的时间
+	repeated PSBuyGoldData list = 3;
+}
+
+//购买点金礼包
+//17001
+message GReqBuyGold
+{
+	optional int32 idx = 1;	//购买的点金礼包ID
+}
+//17001
+message GResBuyGold
+{
+	optional int32 idx = 1;	//点金购习IDx
+	optional int64 gold = 2;//获得的金币
+	optional int32 get_rate =3;//加成万分比
+}

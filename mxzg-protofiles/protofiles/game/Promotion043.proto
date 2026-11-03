@@ -1,0 +1,28 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion043GMsg";
+import "TaskObj.proto";
+
+
+//召唤水晶
+//13087
+message GReqSummonCrystalInfo
+{
+}
+//13087
+message GResSummonCrystalInfo
+{
+	repeated PSSummonCrystalData list = 3;
+}
+
+//领取召唤水晶奖励
+//13088
+message GReqSummonCrystalGet
+{
+	optional int32 idx = 1;
+}
+//13088
+message GResSummonCrystalGet
+{
+
+}

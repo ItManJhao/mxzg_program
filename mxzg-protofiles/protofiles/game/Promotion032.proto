@@ -1,0 +1,23 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion032GMsg";
+
+import "TaskObj.proto";
+
+//酒馆达标活动
+//13106
+message GReqPubArriveInfo {
+}
+//13106
+message GResPubArriveInfo {
+    repeated PSSummonCrystalData list = 1;
+}
+
+//酒馆达标活动奖励领取
+//13107
+message GReqPubArriveGot {
+    optional int32 idx = 1;
+}
+//13107
+message GResPubArriveGot {
+}

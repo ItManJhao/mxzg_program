@@ -1,0 +1,24 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion044GMsg";
+import "Object.proto";
+//七彩华章
+//13166
+message GReqColourfulShopData {
+}
+//13166
+message GResColourfulShopData {
+    repeated PSMapData buy_info = 1; //购买记录
+}
+
+//兑换奖励
+//13167
+message GReqColourfulShopReward {
+    required int32 idx = 1;
+    optional int32 num = 2;
+}
+//13167
+message GResColourfulShopReward {
+    required int32 idx = 1;
+    optional int32 num = 2;
+}

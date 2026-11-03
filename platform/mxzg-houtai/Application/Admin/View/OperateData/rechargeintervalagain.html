@@ -1,0 +1,162 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>运营数据--充值区间继续充值（每11分钟执行一次）</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('OperateData/RechargeIntervalAgain')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <input type="hidden" name="sid" value="{$search_params['sid']}">
+                                            <select class="selectpicker form-control sid" data-style="btn-info" data-title="请选择服务器" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="servers" id="servers_vo">
+                                                    <if condition="!empty($search_params['sid']) && in_array($servers_vo['id'],explode(',', $search_params['sid']))">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">日期</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="today_date" name="today_date" type="text" onclick="laydate({elem: '#today_date', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['today_date']}">
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >服务器：</label>
+                                                <span class="sid-text">
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>充值区间</th>
+                                                            <th>人数</th>
+                                                            <th>2日充值</th>
+                                                            <th>3日充值</th>
+                                                            <th>4日充值</th>
+                                                            <th>5日充值</th>
+                                                            <th>6日充值</th>
+                                                            <th>7日充值</th>
+                                                            <th>10日充值</th>
+                                                            <th>14日充值</th>
+                                                            <th>21日充值</th>
+                                                            <th>30日充值</th>
+                                                            <th>60日充值</th>
+                                                            <th>90日充值</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                        <volist name="list" id="vo">
+                                                            <tr role="row">
+                                                                <td>
+                                                                    <if condition="$vo['retain_type'] == 1">1~10元
+                                                                        <elseif condition="$vo['retain_type'] == 2"/>11~30元
+                                                                        <elseif condition="$vo['retain_type'] == 3"/>31~50元
+                                                                        <elseif condition="$vo['retain_type'] == 4"/>51~100元
+                                                                        <elseif condition="$vo['retain_type'] == 5"/>101~200元
+                                                                        <elseif condition="$vo['retain_type'] == 6"/>201~500元
+                                                                        <elseif condition="$vo['retain_type'] == 7"/>501~1000元
+                                                                        <elseif condition="$vo['retain_type'] == 8"/>1001~2000元
+                                                                        <elseif condition="$vo['retain_type'] == 9"/>2001~3000元
+                                                                        <elseif condition="$vo['retain_type'] == 10"/>3001~5000元
+                                                                        <elseif condition="$vo['retain_type'] == 11"/>5001~8000元
+                                                                        <elseif condition="$vo['retain_type'] == 12"/>8001~10000元
+                                                                        <elseif condition="$vo['retain_type'] == 13"/>10001+元
+                                                                        <else/>汇总
+                                                                    </if>
+                                                                </td>
+                                                                <td>{$vo.num}</td>
+                                                                <td>{$vo.one_day_money}</td>
+                                                                <td>{$vo.three_day_money}</td>
+                                                                <td>{$vo.four_day_money}</td>
+                                                                <td>{$vo.five_day_money}</td>
+                                                                <td>{$vo.six_day_money}</td>
+                                                                <td>{$vo.seven_day_money}</td>
+                                                                <td>{$vo.ten_day_money}</td>
+                                                                <td>{$vo.fourteen_day_money}</td>
+                                                                <td>{$vo.twenty_one_day_money}</td>
+                                                                <td>{$vo.thirty_day_money}</td>
+                                                                <td>{$vo.sixty_day_money}</td>
+                                                                <td>{$vo.ninety_day_money}</td>
+                                                            </tr>
+                                                        </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(function(){
+        doMultipleSelection($('.sid'), 'sid');
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+    });
+    $(".sid").on('change',function(e){
+        doMultipleSelection(this, 'sid');
+    })
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+
+</script>
+
+<include file="Public:footer" />

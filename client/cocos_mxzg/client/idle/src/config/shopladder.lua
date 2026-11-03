@@ -1,0 +1,81 @@
+cfg.shopladder = {
+	["shopladder"] = {
+		[1] = {
+			idx = 1,
+			item_type = {{item_num=50,item_type=20405014}},
+			need_item = {{item_num=50000,item_type=901805}},
+			buy_limit = 0,
+			appear_level = 1,
+		},
+		[2] = {
+			idx = 2,
+			item_type = {{item_num=50,item_type=20505011}},
+			need_item = {{item_num=50000,item_type=901805}},
+			buy_limit = 0,
+			appear_level = 1,
+		},
+		[3] = {
+			idx = 3,
+			item_type = {{item_num=50,item_type=20105008}},
+			need_item = {{item_num=37500,item_type=901805}},
+			buy_limit = 0,
+			appear_level = 1,
+		},
+		[4] = {
+			idx = 4,
+			item_type = {{item_num=50,item_type=20205022}},
+			need_item = {{item_num=37500,item_type=901805}},
+			buy_limit = 0,
+			appear_level = 1,
+		},
+		[5] = {
+			idx = 5,
+			item_type = {{item_num=50,item_type=20305008}},
+			need_item = {{item_num=37500,item_type=901805}},
+			buy_limit = 0,
+			appear_level = 1,
+		},
+		[6] = {
+			idx = 6,
+			item_type = {{item_num=1,item_type=1001013}},
+			need_item = {{item_num=29000,item_type=901805}},
+			buy_limit = 0,
+			appear_level = 1,
+		},
+		[7] = {
+			idx = 7,
+			item_type = {{item_num=1,item_type=1002013}},
+			need_item = {{item_num=29000,item_type=901805}},
+			buy_limit = 0,
+			appear_level = 1,
+		},
+		[8] = {
+			idx = 8,
+			item_type = {{item_num=1,item_type=1003013}},
+			need_item = {{item_num=29000,item_type=901805}},
+			buy_limit = 0,
+			appear_level = 1,
+		},
+		[9] = {
+			idx = 9,
+			item_type = {{item_num=1,item_type=1004013}},
+			need_item = {{item_num=29000,item_type=901805}},
+			buy_limit = 0,
+			appear_level = 1,
+		},
+		[10] = {
+			idx = 10,
+			item_type = {{item_num=500,item_type=901401}},
+			need_item = {{item_num=1250,item_type=901805}},
+			buy_limit = 0,
+			appear_level = 1,
+		},
+		[11] = {
+			idx = 11,
+			item_type = {{item_num=1,item_type=902022}},
+			need_item = {{item_num=2480,item_type=901805}},
+			buy_limit = 1,
+			appear_level = 80,
+		},
+	}
+}

@@ -1,0 +1,45 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion077GMsg";
+
+import "Promotion070.proto";
+
+//数据
+//75841
+message GReqMidMissionGetDataInfo {
+
+}
+//75841
+message GResMidMissionGetDataInfo {
+    repeated PSMission mission = 1; //任务记录
+    repeated int32 mission_box_reward_record = 2; //任务次数领奖记录
+    optional int32 open_day = 3; //开启天数
+}
+
+//领取任务奖励
+//75842
+message GReqMidMissionGetMission {
+    optional int32 idx = 1;
+}
+
+//75842
+message GResMidMissionGetMission {
+    optional PSMission mission_info = 1;
+}
+
+//更新任务
+//75843
+message GResMidMissionUpdateProcess {
+    repeated PSMission mission = 1; //更新记录
+}
+
+//领取任务箱子奖励
+//75844
+message GReqMidMissionGetMissionBox {
+    optional int32 idx = 1;
+}
+
+//75844
+message GResMidMissionGetMissionBox {
+    optional int32 idx = 1;
+}

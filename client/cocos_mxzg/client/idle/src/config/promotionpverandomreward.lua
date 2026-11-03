@@ -1,0 +1,148 @@
+cfg.promotionpverandomreward = {
+	["promotionpverandomreward"] = {
+		[1] = {
+			idx = 1,
+			mission_type = 1,
+			mission_id = 1,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[2] = {
+			idx = 2,
+			mission_type = 1,
+			mission_id = 2,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[3] = {
+			idx = 3,
+			mission_type = 1,
+			mission_id = 3,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[4] = {
+			idx = 4,
+			mission_type = 1,
+			mission_id = 1,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[5] = {
+			idx = 5,
+			mission_type = 1,
+			mission_id = 2,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[6] = {
+			idx = 6,
+			mission_type = 1,
+			mission_id = 3,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[7] = {
+			idx = 7,
+			mission_type = 1,
+			mission_id = 1,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[8] = {
+			idx = 8,
+			mission_type = 1,
+			mission_id = 2,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[9] = {
+			idx = 9,
+			mission_type = 1,
+			mission_id = 3,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[10] = {
+			idx = 10,
+			mission_type = 1,
+			mission_id = 1,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[11] = {
+			idx = 11,
+			mission_type = 1,
+			mission_id = 2,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[12] = {
+			idx = 12,
+			mission_type = 1,
+			mission_id = 3,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[13] = {
+			idx = 13,
+			mission_type = 1,
+			mission_id = 1,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[14] = {
+			idx = 14,
+			mission_type = 1,
+			mission_id = 2,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[15] = {
+			idx = 15,
+			mission_type = 1,
+			mission_id = 3,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[16] = {
+			idx = 16,
+			mission_type = 1,
+			mission_id = 1,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[17] = {
+			idx = 17,
+			mission_type = 1,
+			mission_id = 2,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[18] = {
+			idx = 18,
+			mission_type = 1,
+			mission_id = 3,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[19] = {
+			idx = 19,
+			mission_type = 1,
+			mission_id = 1,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[20] = {
+			idx = 20,
+			mission_type = 1,
+			mission_id = 2,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[21] = {
+			idx = 21,
+			mission_type = 1,
+			mission_id = 3,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[22] = {
+			idx = 22,
+			mission_type = 1,
+			mission_id = 1,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[23] = {
+			idx = 23,
+			mission_type = 1,
+			mission_id = 2,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+		[24] = {
+			idx = 24,
+			mission_type = 1,
+			mission_id = 3,
+			random_reward = {{item_type = 900701,item_num = 10,chance = 50},{item_type = 900002,item_num = 1000,chance = 50}},
+		},
+	}
+}

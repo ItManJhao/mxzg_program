@@ -1,0 +1,118 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroShareGMsg";
+import "Rune.proto";
+import "HeroJewel.proto";
+import "HeroTalent.proto";
+import "GodEquip.proto";
+import "Hero.proto";
+import "HeroMagicWand.proto";
+import "AliceUnicorn.proto";
+import "Object.proto";
+
+//分享英雄数据
+message ResHeroInfo {
+    optional int32 hero_type = 1; //类型
+    optional int32 star = 2; //星级
+    optional int32 stage = 3; //品级
+    optional int32 level = 4; //等级
+    optional int32 fighting = 5; //战力
+    optional int64 atk = 6; //攻击力
+    optional int64 def = 7; //防御力
+    optional int64 hp = 8; //血量
+    optional int64 agl = 9; //速度
+    optional int32 fashion_id = 10; //皮肤(时装)。未穿戴为0
+    repeated int32 reiki_places = 11; //开启的灵器槽位
+    optional PSHeroEvolve evolve = 12; //进化
+    optional ResPetInfo pet = 13; //宠物信息
+    optional ResTotemInfo totems = 14; //图腾信息
+}
+
+//图腾信息
+message ResTotemInfo {
+    optional int32 sys_id = 1; //配置表id
+    optional int32 level = 2; //等级
+    optional int32 quality = 3; //品质
+    optional bool isOpen = 4; //是否满足穿戴、分享条件 true 满足  false 不满足
+}
+
+//宠物数据
+message ResPetInfo {
+    optional int32 sys_id = 1; //配置表id
+    optional int32 level = 2; //等级
+}
+
+//装备数据
+message ResEquipInfo {
+    optional int32 place = 1; //位置
+    optional int32 equip_type = 2; //装备类型
+    optional int32 soul_lv = 3; //附魂等级
+}
+//符文数据
+message ResRuneInfo {
+    optional int32 item_type = 1; //类型
+    repeated int32 ability_id = 2; //属性id
+    repeated PSRuneSkill skill = 3; //技能
+}
+
+//神装数据
+message ResGodEquip {
+    optional int32 sys_id = 1; //
+    repeated PSGodAttr attrs = 2;
+}
+
+//英雄分享数据
+message PSHeroShare {
+    optional ResHeroInfo hero = 1; //英雄数据
+    repeated ResEquipInfo equip_list = 2; //装备列表
+    repeated ResRuneInfo rune_list = 3; //符文列表
+    repeated PSJewelData jewel_list = 4; //宝石列表
+    repeated PSHeroTalent talent_list = 5; //天赋列表
+    repeated ResGodEquip god_equip_list = 6; //神装列表
+    repeated int32 reiki_equip_list = 7; //灵器列表
+    optional MagicWandData magic_info = 8; // 魔杖信息
+    optional int32 unicorn_grade=9;//独角兽阶级
+    optional int32 unicorn_strength=10;//独角兽强化等级
+    repeated PBUnicornRareAttr unicorn_rare_attr=11;//稀有属性信息
+    optional PSHeroDetail detail = 12;// 英雄属性
+    repeated PSTuple3Data addition = 13;// 英雄属性加成项 key-->value1等级-->value2阶级,key:1公会科技2，圣器等级阶级，3，天罡，4地煞
+}
+
+//英雄分享
+//4033
+message GReqHeroShare {
+    optional int64 hero_id = 1; //英雄Id
+    optional int32 channel_type = 2; //分享频道类型，2：世界频道，3：公会频道，6：跨服频道。
+}
+//4033
+message GResHeroShare {
+    optional int32 status = 1; // 1：发送成功。(发送成功才会有返回)
+}
+
+//查看分享英雄
+//4034
+message GReqShareHeroInfo {
+    optional string share_id = 1; //聊天传递的[3]值,分享id。
+    optional int32 server_id = 2; //聊天传递的[2]值,服务器id
+}
+//4034
+message GResShareHeroInfo {
+    optional PSHeroShare hero = 1; //英雄数据
+    optional int64 rid = 2;         //角色id
+    optional int32 server_id = 3; //聊天传递的[2]值,服务器id
+}
+
+//通过个人名片查看英雄简要数据
+//4035
+message GReqHeroBriefInfo {
+    optional int64 rid = 1;
+    optional int64 hero_id = 2; //英雄id
+    optional int32 server_id = 3; //服务器id
+}
+//4035
+message GResHeroBriefInfo {
+    optional PSHeroShare hero = 1; //英雄数据
+    optional int64 rid = 2;     //角色id
+    optional int32 server_id = 3; //聊天传递的[2]值,服务器id
+}
+

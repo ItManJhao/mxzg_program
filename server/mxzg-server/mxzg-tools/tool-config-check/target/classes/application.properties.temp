@@ -1,0 +1,31 @@
+#debug
+server.debug=true
+## web初始化线程数量
+#server.tomcat.min-spare-threads=2
+## management
+#management.endpoint.conditions.enabled=true
+#management.endpoints.web.exposure.include=*
+#management.endpoint.health.show-details=always
+#
+##定时器线程池线程数量
+#scheduler.threads=2
+##定时器任务执行输出日志临界时间
+#scheduler.threshold=200
+#扫描包的跟路径
+#base.package.path = com.ayjs
+##配置文件路径
+#config.path=D:\\svn\\dle_plan\\doc\\gameconfig\\config-hk-test
+##延时日志缓冲最大数量
+#delayed.log.buffer.max.size=1000
+##延时日志缓冲清空间隔 单位:毫秒
+#delayed.log.buffer.flush.period=30000
+##延时日志持久化批量处理数量
+#delayed.log.persistence.batch.add.size=200
+##日志持久化线程数量
+#log.persistence.threads=2
+##日志输出到数据库
+#log.to.db=true
+##日志输出到文件
+#log.to.file=true
+##日志输出到文件目录
+#log.to.file.dir=gamelog

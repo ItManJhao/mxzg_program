@@ -1,0 +1,153 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>修改渠道服务器</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('channelServer/ajax_updata')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                        <div class="tab-pane active">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">选择渠道大区：</label>
+                                <div class="col-sm-8 class-item item-fuzhi">
+                                    <div class="col-sm-10">
+                                        <select style="width: 300px; float: left;" class="form-control channels" name="cid_str" onchange="upBigServer(this)">
+                                            <volist name="channels" id="channels_vo">
+                                                <eq name="channels_vo.id" value="$server_channel_info.c_son_id">
+                                                    <option value="{$channels_vo.id}-{$channels_vo.parent_id}" selected>{$channels_vo.id}-{$channels_vo.name}</option>
+                                                    <else />
+                                                    <option value="{$channels_vo.id}-{$channels_vo.parent_id}">{$channels_vo.id}-{$channels_vo.name}</option>
+                                                </eq>
+                                            </volist>
+                                        </select>
+                                        <select style="width: 350px; float: left;" class="form-control" name="big_server_id">
+                                            <volist name="server_channel_info['big_servers']" id="big_servers_vo">
+                                                <eq name="big_servers_vo.id" value="$server_channel_info.big_server_id">
+                                                    <option value="{$big_servers_vo.id}" selected>{$big_servers_vo.id}--{$big_servers_vo.name}</option>
+                                                    <else />
+                                                    <option value="{$big_servers_vo.id}">{$big_servers_vo.id}--{$big_servers_vo.name}</option>
+                                                </eq>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-group">
+                                <label class="col-sm-2 control-label">渠道：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="cid_str">
+                                        <volist name="channels" id="channels_vo">
+                                            <eq name="channels_vo.id" value="$server_channel_info.c_son_id">
+                                                <option value="{$channels_vo.id}-{$channels_vo.parent_id}" selected>{$channels_vo.id}---{$channels_vo.name}</option>
+                                                <else />
+                                                <option value="{$channels_vo.id}-{$channels_vo.parent_id}">{$channels_vo.id}---{$channels_vo.name}</option>
+                                            </eq>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">服务器：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="sid">
+                                        <volist name="servers" id="servers_vo">
+                                            <eq name="servers_vo.id" value="$server_channel_info.sid">
+                                                <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                <else />
+                                                <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                            </eq>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label class="col-sm-2 control-label">大区：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="big_server_id">
+                                        <volist name="big_servers" id="big_servers_vo">
+                                            <eq name="big_servers_vo.id" value="$server_channel_info.big_server_id">
+                                                <option value="{$big_servers_vo.id}" selected>{$big_servers_vo.name}</option>
+                                                <else />
+                                                <option value="{$big_servers_vo.id}">{$big_servers_vo.name}</option>
+                                            </eq>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">设备类型：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="device_type">
+                                        <option value="0" <if condition="$server_channel_info['device_type'] == 0"> selected </if> >所有设备类型</option>
+                                        <option value="1" <if condition="$server_channel_info['device_type'] == 1"> selected </if>>安卓</option>
+                                        <option value="2" <if condition="$server_channel_info['device_type'] == 2"> selected </if>>ios</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>显示名称：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="show_name" value="{$server_channel_info.show_name}" type="text" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>渠道显示的序号sort：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="sort" type="number" value="{$server_channel_info.sort}" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                        </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <input type="hidden" name="id" value="{$server_channel_info.id}">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('channelServer/ajax_updata')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+
+    var data_str = '<?php echo json_encode($big_servers_data); ?>';
+    data_object = JSON.parse(data_str);
+
+    $(function(){
+        // upBigServer($('.channels'));
+    });
+
+    function upBigServer(obj){
+        console.log(data_object);
+        //获取所选值
+        var selectedValue = $(obj).val();
+        var arr = selectedValue.split("-");
+        selectedValue = arr[0];
+        console.log(selectedValue);
+        //先清空方向下拉菜单的option
+        $(obj).next().empty();
+        // 根据返回的数据拼接option
+        var listFleet = "";
+        $.each(data_object[selectedValue], function (key, item) {
+            listFleet += "<option value='" + item.id + "'>" + item.id +"--"+ item.name + "</option>";
+        });
+        $(obj).next().append(listFleet); //填充selectFleet
+    }
+
+</script>
+
+
+<include file="Public:footer" />

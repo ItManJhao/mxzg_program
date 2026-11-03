@@ -1,0 +1,87 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>商品列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('VirtualRecharge/product')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">商品名称：</label>
+                                            <input type="text" placeholder="模糊搜索" name="product_name" value="{$search_params.product_name}" style="width: 120px;" class="form-control">
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <button onclick="openYemian('{:U('VirtualRecharge/addproduct')}','添加商品')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>添加商品</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>商品id</th>
+                                                        <th>第三方商品id</th>
+                                                        <th>商品名称</th>
+                                                        <th>商品code</th>
+                                                        <th>商品金额/分</th>
+                                                        <th>商品美金金额/元</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row"> 
+                                                            <td>{$vo.id}</td>
+                                                            <td>{$vo.three_product_id}</td>
+                                                            <td>{$vo.product_name}</td>
+                                                            <td>{$vo.goods_id}</td>
+                                                            <td>{$vo.money}</td>
+                                                            <td>{$vo.dollar_money}</td>
+                                                            <td>
+                                                                <a class="btn btn-primary" href="javascript:;" title="编辑" onclick="openYemian('/admin.php/VirtualRecharge/editproduct?id={$vo.id}','编辑商品')" ><i class="fa fa-pencil"></i>编辑商品</a>
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script language="javascript">
+
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+
+
+</script>
+
+
+
+<include file="Public:footer" />

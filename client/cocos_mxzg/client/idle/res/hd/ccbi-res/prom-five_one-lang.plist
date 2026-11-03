@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>prom-five_one-lang/get_finish.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{78,56}</string>
+                <key>spriteSourceSize</key>
+                <string>{78,56}</string>
+                <key>textureRect</key>
+                <string>{{0,0},{78,56}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>prom-five_one-lang.pvr.ccz</string>
+            <key>size</key>
+            <string>{78,56}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:3e79452cdbf236a0896c8233f9ee25a3:95eea551fada1f162b61daad86cac74d:cab64e20e58f4594a9caf9b98b138f8b$</string>
+            <key>textureFileName</key>
+            <string>prom-five_one-lang.pvr.ccz</string>
+        </dict>
+    </dict>
+</plist>

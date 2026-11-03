@@ -1,0 +1,164 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>模拟充值</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="row">
+
+                        <form action="{:U('VirtualRecharge/ajax_add')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">服务器：</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="sid">
+                                            <option value="">请选择服务器</option>
+                                            <volist name="server_list" id="server_list_vo">
+                                                <option value="{$server_list_vo.id}">{$server_list_vo.id}--{$server_list_vo.server_name}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>角色id：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" name="role_id" type="text" placeholder="请输入单个角色id" required="" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>备注：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" name="note" type="text" placeholder="请输入备注" required="" aria-required="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">商品：</label>
+                                    <div class="col-sm-8 class-product">
+                                        <a style="font-size: 25px;" class="add_product"><i class="fa fa-plus"></i>+ 添加商品</a>
+                                        <p></p>
+                                        <div class="col-sm-10">
+                                            <a style="width: 120px; float: left; font-size: 20px;" class="del_product"><i class="fa fa-minus-square"></i>删除商品-></a>
+                                            <!-- <select style="width: 300px; float: left;" class="form-control product_id" name="product_id[]">
+                                                <option value="0">请选择商品</option>
+                                                <volist name="product_list" id="product_list_vo">
+                                                    <option value="{$product_list_vo.id}">{$product_list_vo.id}--{$product_list_vo.product_name}--{$product_list_vo.money}--{$product_list_vo.dollar_money}</option>
+                                                </volist>
+                                            </select> -->
+                                            <input type="hidden" name="product_id[]" value="">
+                                            <select class="selectpicker form-control product_id" data-style="btn-info" data-title="请选择商品" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="product_list" id="product_list_vo">
+                                                    <option value="{$product_list_vo.id}">{$product_list_vo.id}--{$product_list_vo.product_name}--{$product_list_vo.money}--{$product_list_vo.dollar_money}</option>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <div style="background:#C0C0C0; font-size: 14px; margin-top: 1px;"  >
+                                                <div style="padding-top: 10px;padding-left: 15px;padding-bottom: 10px;">
+                                                    <label class="control-label" >选中的商品：</label>
+                                                    <br />
+                                                    <span class="product_id-text">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <input type="hidden" name="gift_id" value="{$gift_id}">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('VirtualRecharge/ajax_add')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+
+    $ (function () {
+        $(document).on('change', ".product_id", function(e){
+            var sid_str = '';
+            var sid_text = '';
+            $(this).find("option:selected").each(function () {
+                sid_str += $(this).val() + ",";
+                sid_text += $(this).text() + "；<br />";
+            })
+            if(sid_str != ''){
+                sid_str = sid_str.slice(0,-1);
+            }
+            if(sid_text != ''){
+                sid_text = sid_text.slice(0,-1);
+            }
+            console.log(sid_str);
+            $(this).parent().prev().val(sid_str);
+            var next_class = $(this).parent().next();
+            next_class.children('div').children('span').html(sid_text);
+
+            // doMultipleSelection(this, 'product_id');
+        })
+
+
+        $(document).on('click', '.add_product', function() {
+            // var htmladd="";
+            // htmladd +='<div class="col-sm-10">';
+            // htmladd +='<a style="width: 120px; float: left; font-size: 20px;" class="del_product"><i class="fa fa-minus-square"></i>删除商品-></a>';
+            // htmladd +='<select style="width: 300px; float: left;" class="form-control product_id" name="product_id[]">';
+            // htmladd +='<option value="0">请选择商品</option>';
+            // htmladd +='<volist name="product_list" id="product_list_vo">';
+            // htmladd +='<option value="{$product_list_vo.id}">{$product_list_vo.id}--{$product_list_vo.product_name}--{$product_list_vo.money}--{$product_list_vo.dollar_money}</option>';
+            // htmladd +='</volist>';
+            // htmladd +='</select>';
+            // htmladd +='</div>';
+
+
+            var htmladd="";
+            htmladd +='<div class="col-sm-10" style="margin-top:18px;">';
+            htmladd +='<a style="width: 120px; float: left; font-size: 20px;" class="del_product"><i class="fa fa-minus-square"></i>删除商品-></a>';
+            htmladd +='<input type="hidden" name="product_id[]" value="">';
+            htmladd +='<select class="selectpicker form-control product_id" data-style="btn-info" data-title="请选择商品" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">';
+            htmladd +='<volist name="product_list" id="product_list_vo">';
+            htmladd +='<option value="{$product_list_vo.id}">{$product_list_vo.id}--{$product_list_vo.product_name}--{$product_list_vo.money}--{$product_list_vo.dollar_money}</option>';
+            htmladd +='</volist>';
+            htmladd +='</if>';
+            htmladd +='</select>';
+            htmladd +='<div style="background:#C0C0C0; font-size: 14px; margin-top: 1px;"  >';
+            htmladd +='<div style="padding-top: 10px;padding-left: 15px;padding-bottom: 10px;">';
+            htmladd +='<label class="control-label" >选中的商品：</label>';
+            htmladd +='<br />';
+            htmladd +='<span class="product_id-text">';
+            htmladd +='</span>';
+            htmladd +='</div>';
+            htmladd +='</div>';
+            htmladd +='</div>';
+
+            $('.class-product').append(htmladd);
+            $('.product_id').selectpicker('refresh');
+        });
+
+
+        $(document).on('click', '.del_product', function() {
+            $(this).parent().remove();
+        });
+
+        
+    });
+
+</script>
+</body>
+</html>

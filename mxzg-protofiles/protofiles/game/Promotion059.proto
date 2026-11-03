@@ -1,0 +1,14 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion059GMsg";
+import "Object.proto";
+
+//召唤周卡数据
+//13220
+message GReqSummonWeeksCardsInfo{
+
+}
+//13220
+message GResSummonWeeksCardsInfo{
+    optional PSMapData buy = 1; //购买记录
+}

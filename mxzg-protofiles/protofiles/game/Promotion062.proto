@@ -1,0 +1,30 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion062GMsg";
+
+message PSCustomData {
+    optional int32 product_id = 1; //商品id
+    repeated int32 custom_reward_id = 2; //定制配置id
+    optional int32 buy_count = 3; //已购买数量
+}
+
+//购买数据
+//71001
+message GReqCustomRewardData {
+}
+
+//71001
+message GResCustomRewardData {
+    repeated PSCustomData buy_record = 1; //(buyGemId,buyCount)
+}
+
+//奖励定制
+//71002
+message GReqRewardCustom {
+    repeated int32 custom_ids = 1; //定制成一组
+}
+
+//71002
+message GResRewardCustom {
+    optional PSCustomData custom_data = 1; //定制数据
+}

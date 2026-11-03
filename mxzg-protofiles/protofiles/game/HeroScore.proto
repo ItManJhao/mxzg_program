@@ -1,0 +1,43 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroScoreGMsg";
+
+import "Hero.proto";
+
+//英雄评分
+message PSHeroScore
+{
+	optional int32 type = 1;
+	optional int32 score = 2;
+	optional int32 level = 3;
+	optional int32 star = 4;
+	optional int32 equip = 5;
+	optional int32 grade = 6;
+	optional int32 fetter = 7;
+	optional int32 clan_skill = 8;
+	optional int32 runes = 9;
+
+}
+
+//英雄对比的数据
+message PSHeroCompare
+{
+	optional PSHeroScore top = 1;	//本服最高
+	optional PSHeroScore mine = 2;	//我的英雄数据
+	optional int32 level = 3;		//英雄等级
+	optional int32 star = 4;		//英雄星级
+	optional int32 pos = 5;			//位置
+	optional PSHeroEvolve evolve = 6;
+	optional int64 hero_id = 7;//英雄id
+}
+
+//查看主线阵容英雄对比
+//56001
+message GReqScanHeroScore
+{
+}
+//56001
+message GResScanHeroScore
+{
+	repeated PSHeroCompare heros = 1;	//英雄的对比数据列表
+}

@@ -1,0 +1,255 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "FetterGMsg";
+
+message PSFetterData {
+    optional int32 type = 1; // 神器类型
+    optional int32 exp = 2; // 经验值
+    optional int32 level = 3; // 神器等级
+    optional int32 skill_level = 4; // 技能等级
+    optional int32 refine_level = 5; // 精练等级
+    optional int32 uplimit_level = 6; // 突破等级
+    optional int32 soul_level = 7; //铸魂等级
+    optional int32 wash_level = 8; //洗炼等级
+}
+
+message PSFetterStatus {
+    optional int32 idx = 1;
+    optional int32 status = 2;
+}
+
+message PSFetterProgress {
+    optional int32 idx = 1; //羁绊ID
+    optional int32 num = 2; //进度
+}
+
+//羁绊数据
+//28000
+message GReqFetterInitTask {
+}
+//28000
+message GResFetterInitTask {
+    repeated PSFetterProgress progress_list = 1;
+    repeated PSFetterStatus status_list = 2;
+}
+
+//羁绊任务进度
+//28001
+message GResFetterUpProgress {
+    repeated PSFetterProgress progress_list = 1;
+}
+
+//28103
+message GResFetterInitVip {
+    optional int32 vip_level = 1; //vip等级
+    optional int32 vip_exp = 2;   //vip经验
+}
+
+//领取羁绊任务奖励
+//28002
+message GReqFetterReward {
+    optional int32 idx = 1; //羁绊神器ID
+}
+//28002
+message GResFetterReward {
+    optional PSFetterStatus fetterStatus = 1; //任务领取状态
+}
+
+//羁绊女神精炼
+//28003
+message GReqFetterUpRefine {
+    optional int32 idx = 1; //羁绊神器ID
+}
+//28003
+message GResFetterUpRefine {
+    optional int32 idx = 1; //羁绊神器ID
+    optional int32 level = 2; //羁绊神器精炼等级
+}
+
+//28004
+message GResFetterUpdateVip {
+    optional int32 vip_level = 1; //神器VIP等级
+    optional int32 vip_exp = 2;   // vip经验
+}
+//28005
+message GResFetterData {
+    optional PSFetterData model = 1; //单个神器数据
+}
+
+//羁绊数据
+//28100
+message GReqFetterList {
+}
+//28100
+message GResFetterList {
+    optional int32 reset_count = 1; // 羁绊重置次数
+    repeated PSFetterData goddess = 2; //羁绊列表
+}
+
+//升级羁绊女神等级
+//28101
+message GReqFetterUpLevel {
+    optional int32 idx = 1; //羁绊神器ID
+}
+//28101
+message GResFetterUpLevel {
+    optional int32 idx = 1; //羁绊神器ID
+    optional int32 level = 2; //羁绊神器等级
+    optional int32 exp = 3; //羁绊神器经验值
+}
+
+//升级羁绊女神技能
+//28102
+message GReqFetterUpSkill {
+    optional int32 idx = 1; //羁绊神器ID
+}
+//28102
+message GResFetterUpSkill {
+    optional int32 idx = 1; //羁绊神器ID
+    optional int32 level = 2; //羁绊神器技能等级
+}
+
+//羁绊女神突破
+//28104
+message GReqFetterUplimit {
+    optional int32 idx = 1; //羁绊神器ID
+}
+//28104
+message GResFetterUplimit {
+    optional int32 idx = 1; //羁绊神器ID
+    optional int32 level = 2; //羁绊神器突破等级
+}
+
+//羁绊女神重置
+//28105
+message GReqFetterReset {
+    optional int32 idx = 1; //羁绊神器ID
+}
+//28105
+message GResFetterReset {
+    optional int32 status = 1; //0:成功 1:资源不足 2:idx错误 3:0级不能重置
+    optional int32 idx = 2;
+    optional int32 reset_count = 3;
+}
+
+//羁绊女神铸魂
+//28106
+message GReqFetterMakeSoul {
+    optional int32 idx = 1; //羁绊女神ID
+    optional int32 num = 2; //此次铸魂次数
+}
+//28106
+message GResFetterMakeSoul {
+    optional int32 idx = 1;
+    optional int32 soul_count = 2; //总的铸魂次数
+}
+
+//查看契约
+//28107
+message GReqFetterContractInfo {
+}
+//28107
+message GResFetterContractInfo {
+    repeated int32 contracts = 1; //已经激活的契约，不保证顺序
+}
+
+//激活契约
+//28108
+message GReqFetterContractActive {
+    optional int32 type = 1; //契约类型
+}
+//28108
+message GResFetterContractActive {
+    optional int32 type = 1; //契约类型
+}
+
+//羁绊女神洗炼
+//28109
+message GReqFetterWash {
+
+}
+//28109
+message GResFetterWash {
+    optional int32 wash_level = 1; //洗炼后等级
+}
+
+//-------------------------------------------
+//羁绊皮肤
+message PSFashionTask {
+    optional int32 task_id = 1; //任务id
+    optional int64 process = 2; //任务进度
+    optional bool had_reward = 3; //是否领奖
+}
+
+//羁绊皮肤数据
+//28200
+message GReqFashionData {
+
+}
+
+//28200
+message GResFashionData {
+    repeated int32 active_type = 1; //已激活列表
+    optional int32 use_type = 3; //当前使用类型
+}
+
+//皮肤道具熔炼
+//28201
+message GReqFashionSmelt {
+    optional int32 idx = 1; //goddessfashionsmelt.idx
+    optional int32 num = 2; //熔炼数量
+
+}
+//28201
+message GResFashionSmelt {
+}
+
+//皮肤激活
+//28202
+message GReqFashionActive {
+    optional int32 type = 1;
+}
+
+//28202
+message GResFashionActive {
+    optional int32 type = 1; //激活类型
+}
+
+//任务列表
+//28203
+message GReqFashionTasks {
+}
+
+//28203
+message GResFashionTasks {
+    repeated PSFashionTask task = 1;
+}
+
+//任务领取
+//28204
+message GReqFashionTaskGet {
+    optional int32 task_id = 1;
+}
+
+//28204
+message GResFashionTaskGet {
+    optional PSFashionTask task = 1;
+}
+
+//皮肤使用
+//28205
+message GReqFashionUse {
+    optional int32 fashion_type = 1;
+}
+
+//28205
+message GResFashionUse {
+    optional int32 use_type = 1; //当前使用类型
+}
+
+//皮肤任务进度更新
+//28206
+message GResFashionUpdateTask {
+    repeated PSFashionTask task = 1;
+}
+

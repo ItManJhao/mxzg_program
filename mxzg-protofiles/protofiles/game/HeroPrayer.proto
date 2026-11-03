@@ -1,0 +1,24 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroPrayerGMsg";
+
+//英雄祈愿数据
+//4201
+message GReqHeroPrayerData {
+
+}
+//4201
+message GResHeroPrayerData {
+    optional int32 privilege = 1;//祈愿特权是否开启,0为未开启，1为已开启
+	optional int32 end_time = 3;//特权结束时间，未开启时，时间为0
+}
+
+//英雄祈愿
+//4202
+message GReqHeroPrayer{
+	optional int32 elem = 1;//元素，1为火系，2为水系，3为草系
+}
+//4202
+message GResHeroPrayer{
+
+}

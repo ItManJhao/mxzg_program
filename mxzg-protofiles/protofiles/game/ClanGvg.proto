@@ -1,0 +1,323 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ClanGvgGMsg";
+import "Hero.proto";
+import "Battle.proto";
+import "Object.proto";
+
+// 对阵列表单个公会信息
+message PSGvgAgainstClanInfo
+{
+	optional string clan_name = 1;  // 公会名
+	optional int32 server_id = 2;   // 服务器id
+	optional int32 rank = 3;        // 服务器排名，公会本服排名
+}
+
+//据点数据
+message PSGvgClanStronghold
+{
+	optional int32 idx = 1;				//据点编号
+	optional int32 fighting = 2;		//阵容战力
+	optional int32 lose_star = 3;		//当前被攻打的星数
+	optional string name = 4;			//玩家昵称
+	optional int32 discard_battle_times = 5;//废弃后被挑战次数
+	repeated ResHeroBriefData hero_data = 6;//阵容信息
+	optional int32 defense_num = 7;		//防御次数
+	optional int32 fight_time = 8;		//战斗CD时间，用来做特效
+}
+
+message PSGvgClanInfo
+{
+	required string name = 1;
+	required int32 win_star = 2;			//赢到的星数
+	repeated PSGvgClanStronghold stronghold = 3;
+	required int32 buffLevel = 4;
+	optional int32 serverId =5;
+}
+
+// 据点防守记录
+message PSGvgStrongholdDefendRecode
+{
+	optional int64 fighting = 1;    //战力
+	optional string name = 2;
+	optional int32 date_time = 3;   //时间
+	optional int32 formation_id = 4;//阵型ID
+	optional bool is_win = 5;       //输赢
+	optional int32 difficulty = 6;        // 难度：1，80%难度，2，90%难度，3，100%难度
+	repeated ResHeroBriefData hero_data = 7; // 防守方阵容信息
+	optional string battle_id = 8;  //战报ID
+}
+// 战绩排行记录
+message PSGvgScoreRankRecord
+{
+	optional int64 player_id = 1;  //玩家ID
+	optional string name = 2;      //玩家名字
+	optional int32 level = 3;      //玩家等级
+	optional int32 head_id = 4;    //玩家头像
+	optional int32 border_id = 5;  //头像框id
+	optional int32 score = 6;      //战绩
+	optional int32 win_star = 7;   //赢到的星数
+	optional int32 rank = 8;       //玩家排名
+}
+
+// 一组对阵信息
+message PSGvgAgainstRecord
+{
+	optional PSGvgAgainstClanInfo attack = 1;	//攻方
+	optional PSGvgAgainstClanInfo deffer = 2;	//守方
+	optional int32 win = 3;           		//是否胜利 -1未结算，0平局，1攻方胜利，2守方胜利
+}
+
+//进攻日志
+message PSGvgBattleLogRecord
+{
+	optional string attacker_name = 1;//进攻方名字
+	optional string defender_name = 2;//防守方名字
+	optional int32 win_star = 3;	//获得星星数
+	optional int32 score = 4;		//获得战绩
+	optional string clan_name = 5;	//公会名字
+	optional int32 total_star = 6;	//公会总星数
+	optional int32 time = 7;		//时间
+	optional bool win = 8;			//是否胜利
+	optional int32 type = 9;		//类型 1为我方 2为敌方 3我方废墟 4敌方废墟
+	optional int32 buffLevel = 10;	//buff等级
+}
+// 成就数据信息
+message PSGvgTaskRecord
+{
+	optional int32 idx = 1;//任务id
+	optional int64 value = 2;//任务进度
+	optional bool reward = 3;//是否领奖
+}
+
+//开箱信息
+message PSClanGvgChest
+{
+	optional int32 position = 1;  //宝箱位置
+	optional string name = 2;    //玩家名字
+	optional int32 item_type = 3;  //道具类型
+	optional int64 item_num = 4;  //道具数量
+	optional int64 rid = 5;      //玩家ID
+}
+
+//查看公会战活动开启信息
+//31020
+message GReqGvgStartInfo
+{
+}
+//31020
+message GResGvgStartInfo
+{
+	optional int32 start_time = 1;	//本轮活动的开始时间不是活动当天返回下一轮
+	optional int32 end_time = 2;  	//本轮活动的结束时间不是活动当天返回下一轮
+	optional int32 clear_time = 3;	//清理时间
+	optional int32 state = 4;     	//1不轮空 2轮空 3条件不满足，0未匹配，只在阶段为准备、对战、领奖时有意义
+	optional int32 stage = 5;		//赛程阶段，0空闲，1上报，2匹配，3准备，4对战，5领奖，6结束
+}
+
+//公会战对战列表
+//31021
+message GReqGvgAgainstList
+{
+}
+//31021
+message GResGvgAgainstList
+{
+	repeated PSGvgAgainstRecord list = 1; 	//对阵信息
+	optional PSGvgAgainstRecord selfRecord = 2;//自己的对阵信息
+}
+
+//查看公会战主界面和据点信息
+//31022
+message GReqGvgInfo
+{
+}
+//31022
+message GResGvgInfo
+{
+	optional int32 times = 1;				//已经挑战次数
+	optional PSGvgClanInfo clanInfo = 2;	//自己的公会信息
+	optional PSGvgClanInfo enemyClanInfo = 3;	//敌方公会信息
+	repeated string rankNames = 4;		//战绩排名
+}
+
+//查看单个据点详情
+//31023
+message GReqGvgStrongholdDetail
+{
+	optional int32 type = 1;	//0敌方据点，1己方据点
+	optional int32 idx = 2;	//据点编号
+}
+//31023
+message GResGvgStrongholdDetail
+{
+	optional int32 type = 1;				//0敌方据点，1己方据点
+	optional PSGvgClanStronghold stronghold = 2;
+}
+
+//挑战据点/废墟
+//31024
+message GReqGvgFortressBattle
+{
+	optional int32 idx = 1;//据点编号
+	required int32 difficulty = 2;//难度 1，2，3对应的难度 4是打废墟
+}
+//31024
+message GResGvgFortressBattle
+{
+	optional int32 idx = 1;			//据点编号
+	optional int32 challengeTimes = 2; //最新的挑战次数
+	optional BattleReport report = 3;//战报
+	optional int32 buffLevel = 4;//buff等级
+	repeated PSBackpackData rewards = 5;//变化的物品列表，扣减时数量为负数
+}
+
+//战绩排行榜
+//31025
+message GReqGvgScoreRank
+{
+	required int32 num = 1;//-1获取全部，否则获取指定数量的排名
+}
+//31025
+message GResGvgScoreRank
+{
+	repeated PSGvgScoreRankRecord list = 1; // 战绩排名
+	optional PSGvgScoreRankRecord selfRecord = 2;//自己的战绩
+}
+
+//进攻日志
+//31026
+message GReqGvgBattleLog
+{
+	required int32 type = 1;	//1看全部 2看自己
+}
+//31026
+message GResGvgBattleLog
+{
+	required int32 type = 1;				//1看全部 2看自己
+	repeated PSGvgBattleLogRecord list = 2;	//进攻日志
+}
+
+// 工会战商店等级信息和列表
+//31027
+message GReqGvgShopInfo
+{
+}
+//31027
+message GResGvgShopInfo
+{
+	optional int32 level = 1;// 商店等级
+	optional int32 value = 2;// 商店等级进度
+	repeated PSMapData goods = 3;//key 为商品格子 value 为已购买次数
+}
+
+// 工会战商店购买
+//31028
+message GReqGvgShopBuy
+{
+	optional int32 idx = 1;//商店格子
+}
+//31028
+message GResGvgShopBuy
+{
+	optional int32 idx = 1;//商店格子
+	optional int32 buy_times = 2;//已购买次数
+}
+
+// 查看工会战任务成就
+//31029
+message GReqGvgTask
+{
+
+}
+//31029
+message GResGvgTask
+{
+	optional int32 roleTaskCount = 1;	//个人的成就点数
+	optional int32 clanTaskCount = 2;	//公会的成就点数
+	repeated int32 taskIds = 3;			//已经领奖的任务id
+}
+
+// 领取工会战成就奖励
+//31030
+message GReqGvgTaskReward
+{
+	optional int32 taskIds = 1;//任务idx
+}
+//31030
+message GResGvgTaskReward
+{
+	optional int32 taskIds = 1; //个人的任务id
+}
+
+// 查看公会战宝箱
+//31031
+message GReqGvgFruitChest
+{
+}
+//31031
+message GResGvgFruitChest
+{
+	optional int32 number = 1;          //箱子总数
+	repeated PSClanGvgChest chest = 2;  //已经抽奖的箱子
+	optional int32 type = 3;          	//箱子类型，1青铜宝箱，2黄金宝箱
+	optional int32 has_reward = 4;		//玩家是否有资格抽，0没有，1有
+}
+
+// 打开公会战宝箱
+//31032
+message GReqGvgFruitChestOpen
+{
+	optional int32 idx = 1;  //从1开始
+}
+//31032
+message GResGvgFruitChestOpen
+{
+	optional int32 number = 1;          //箱子总数
+	optional PSClanGvgChest box = 2;  //已经抽奖的箱子
+}
+
+// 开宝箱推送其他成员
+//31033
+message GReqGvgFruitChestOpenEvent
+{
+}
+//31033
+message GResGvgFruitChestOpenEvent
+{
+	optional PSClanGvgChest box = 1;  //抽奖的箱子
+}
+
+// 据点防御记录
+//31034
+message GReqGvgStrongholdDefenseLog
+{
+	required int32 type = 1;//0敌方 1己方
+	required int32 idx = 2;//据点id
+}
+//31034
+message GResGvgStrongholdDefenseLog
+{
+	repeated PSGvgStrongholdDefendRecode list = 1; // 挑战记录
+}
+
+//据点挑战变更推送
+//31036
+message GResGvgTellLogUpdate
+{
+	optional bool win = 1;	//战斗是否胜利，胜利则更新日志相关红点或其它处理
+	optional PSGvgClanStronghold stronghold = 2;	//挑战后据点的数据变化
+	optional int64 attack_rid = 3;	//进攻者的ID
+}
+
+//任务点数
+//31037
+message GReqGvgTaskCount
+{
+}
+//31037
+message GResGvgTaskCount
+{
+	optional int32 roleTaskCount = 1; //个人的成就点数
+	optional int32 clanTaskCount = 2;//公会的成就点数
+}

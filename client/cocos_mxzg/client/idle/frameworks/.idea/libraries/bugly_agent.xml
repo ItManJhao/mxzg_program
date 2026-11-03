@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="bugly_agent">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/runtime-src/proj.android/libs/bugly_agent.jar!/" />
+      <root url="jar://$PROJECT_DIR$/runtime-src/proj.android/libs/bugly_crash_release.jar!/" />
+      <root url="jar://$PROJECT_DIR$/runtime-src/proj.android/libs/jg_filter_sdk_1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/runtime-src/proj.android/libs/mid-core-sdk-4.0.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/runtime-src/proj.android/libs/OK_GAME.jar!/" />
+      <root url="jar://$PROJECT_DIR$/runtime-src/proj.android/libs/wup-1.0.0.E-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/runtime-src/proj.android/libs/Xg_sdk_4.0.5_20190108_1425.jar!/" />
+      <root url="jar://$PROJECT_DIR$/runtime-src/proj.android/libs/XgOtherPush.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

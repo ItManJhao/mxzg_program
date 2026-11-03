@@ -1,0 +1,86 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加管理员</h5>
+                </div>
+                <div class="ibox-content">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-1"> 基本信息</a></li>
+                        <li class=""><a data-toggle="tab" href="#tab-2" style="display: none"> 栏目内容(英)</a>
+                        </li>
+                    </ul>
+                    <br/>
+                    <div class="row">
+                        <form action="{:U('adminlist/ajax_add')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                        <div id="tab-1" class="tab-pane active">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">账户：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="name" type="text" value="{$re.name}" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">所属人：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="belongs_to" type="text" value="{$re.belongs_to}" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">权限组：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="root_id">
+                                        <volist name="root" id="vo">
+                                            <option value="{$vo.id}">{$vo.name}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">登录密码：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="password" type="password" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-8">
+                                    <input name="status" type="radio" value="1" checked aria-required="true">开&nbsp;&nbsp;&nbsp;
+                                    <input name="status" type="radio" value="0" aria-required="true">关
+                                </div>
+                            </div>
+              
+                        </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <input type="hidden" name="id" value="{$re.id}">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('adminlist/ajax_add')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+    });
+</script>
+
+
+<include file="Public:footer" />

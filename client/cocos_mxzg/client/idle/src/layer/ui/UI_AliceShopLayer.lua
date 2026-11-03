@@ -1,0 +1,183 @@
+local AliceShopLayer = class("AliceShopLayer", require("src.comp.CCCLayerBase")) 
+
+function AliceShopLayer:onCreate() 
+	 local sfc = cc.SpriteFrameCache:getInstance()
+	self:setPosition(0, 0)
+	self:setContentSize(640, 900)
+	self:setAnchorPoint(cc.p(0, 0))
+	self:resetScaleAtWidth(false)
+	self:addBlackBackground()
+	self:setCascadeOpacityEnabled(true)
+	self:setOpacity(0)
+	self:runEnterAnim()
+	local spr_bg = cc.Scale9Sprite:create()
+	spr_bg:setPosition(0, 0)
+	spr_bg:setContentSize(640, 800)
+	spr_bg:setAnchorPoint(cc.p(0, 0))
+	self:addLoadRes(1, spr_bg, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {frame = "win-bg/win-bg-11.png", capInsets = cc.rect(58,64,56,71)})
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(spr_bg)
+	lyt:setLeftMargin(0)
+	lyt:setRightMargin(0)
+	lyt:setHorizontalEdge(3)
+	lyt:setStretchWidthEnabled(true)
+	lyt:setTopMargin(100)
+	lyt:setBottomMargin(0)
+	lyt:setVerticalEdge(3)
+	lyt:setStretchHeightEnabled(true)
+	self:addLyt(lyt)
+	spr_bg.lyt = lyt
+	self:addChild(spr_bg)
+	self.spr_bg = spr_bg
+
+	local spr_content_bg = cc.Scale9Sprite:create()
+	spr_content_bg:setPosition(320, 100)
+	spr_content_bg:setContentSize(570, 620)
+	spr_content_bg:setAnchorPoint(cc.p(0.5, 0))
+	self:addLoadRes(1, spr_content_bg, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {frame = "win-bg/block-bg-5.png", capInsets = cc.rect(9,10,9,10)})
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(spr_content_bg)
+	lyt:setPositionPercentXEnabled(true)
+	lyt:setPositionPercentX(0.5)
+	lyt:setTopMargin(180)
+	lyt:setBottomMargin(100)
+	lyt:setVerticalEdge(3)
+	lyt:setStretchHeightEnabled(true)
+	self:addLyt(lyt)
+	spr_content_bg.lyt = lyt
+	self:addChild(spr_content_bg)
+	self.spr_content_bg = spr_content_bg
+
+	local node_title = cc.Node:create()
+	node_title:setCascadeOpacityEnabled(true)
+	node_title:setPosition(320, 800)
+	node_title:setContentSize(0, 0)
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(node_title)
+	lyt:setPositionPercentXEnabled(true)
+	lyt:setPositionPercentX(0.5)
+	lyt:setTopMargin(100)
+	lyt:setVerticalEdge(2)
+	self:addLyt(lyt)
+	node_title.lyt = lyt
+	self:addChild(node_title)
+	self.node_title = node_title
+
+	local spr_title_bg = cc.Scale9Sprite:create()
+	spr_title_bg:setPosition(0, 20)
+	spr_title_bg:setContentSize(529, 172)
+	self:addLoadRes(1, spr_title_bg, "ccbi-res/alice.plist", "ccbi-res/alice.pvr.ccz", {frame = "alice/spr-shop-title-bg.png", capInsets = cc.rect(0,0,0,0)})
+	node_title:addChild(spr_title_bg)
+	self.spr_title_bg = spr_title_bg
+
+	local lbl_title = cc.Label:createWithTTF(ex.Tools:getLang(580039),FONT_DEFAULT_NAME_BOLD, 56)
+	lbl_title:setPosition(0, -40)
+	lbl_title:setContentSize(116, 74.56)
+	lbl_title:setScale(0.5, 0.5)
+	lbl_title:setTextColor(cc.c3b(254, 254, 254))
+	lbl_title:setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+	lbl_title:setHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT)
+	lbl_title:enableOutline(cc.c4b(0,0,0,255), 2)
+	node_title:addChild(lbl_title)
+	self.lbl_title = lbl_title
+
+	local menu = cpp.UIMenu:create()
+	menu:setCascadeOpacityEnabled(true)
+	menu:setPosition(640, 800)
+	menu:setContentSize(0, 0)
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(menu)
+	lyt:setRightMargin(0)
+	lyt:setHorizontalEdge(2)
+	lyt:setTopMargin(100)
+	lyt:setVerticalEdge(2)
+	self:addLyt(lyt)
+	menu.lyt = lyt
+	self:addChild(menu)
+	self.menu = menu
+
+	local btn_close = cpp.UIMenuItemImage:createWithSpriteFrameName("", nil, nil)
+	btn_close:setPosition(-50, 0)
+	btn_close:setContentSize(55, 58)
+	btn_close:setAnchorPoint(cc.p(0.5, 1))
+	btn_close:registerScriptTapHandler(handler(self, self.onClose))
+	self:addLoadRes(3, btn_close, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-close-1.png"})
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(btn_close)
+	lyt:setRightMargin(22.5)
+	lyt:setHorizontalEdge(2)
+	lyt:setTopMargin(0)
+	lyt:setVerticalEdge(2)
+	self:addLyt(lyt)
+	btn_close.lyt = lyt
+	menu:addChild(btn_close)
+	self.btn_close = btn_close
+
+	local scroll_view = require("src.comp.UIScrollViewItem"):createWithSize(cc.size(0, 0))
+	scroll_view:setPosition(320, 105)
+	scroll_view:setContentSize(560, 610)
+	scroll_view:setAnchorPoint(cc.p(0.5, 0))
+	scroll_view:setIgnoreAnchorPointForPosition(false)
+	scroll_view:setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL)
+	scroll_view:setItemType(1)
+	scroll_view:setItemSize(cc.size(180, 240))
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(scroll_view)
+	lyt:setPositionPercentXEnabled(true)
+	lyt:setPositionPercentX(0.5)
+	lyt:setTopMargin(185)
+	lyt:setBottomMargin(105)
+	lyt:setVerticalEdge(3)
+	lyt:setStretchHeightEnabled(true)
+	self:addLyt(lyt)
+	scroll_view.lyt = lyt
+	self:addChild(scroll_view)
+	self.scroll_view = scroll_view
+
+	local node_res = cc.Node:create()
+	node_res:setCascadeOpacityEnabled(true)
+	node_res:setPosition(150, 55)
+	node_res:setContentSize(0, 0)
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(node_res)
+	lyt:setLeftMargin(150)
+	lyt:setHorizontalEdge(1)
+	lyt:setBottomMargin(55)
+	lyt:setVerticalEdge(1)
+	self:addLyt(lyt)
+	node_res.lyt = lyt
+	self:addChild(node_res)
+	self.node_res = node_res
+
+	local spr_res_bg = cc.Sprite:create()
+	spr_res_bg:setPosition(0, 0)
+	spr_res_bg:setContentSize(211, 43)
+	self:addLoadRes(2, spr_res_bg, "ccbi-res/alice.plist", "ccbi-res/alice.pvr.ccz", "alice/spr-res-bg.png")
+	node_res:addChild(spr_res_bg)
+	self.spr_res_bg = spr_res_bg
+
+	local lbl_res = cc.Label:createWithTTF("99999/9999",FONT_DEFAULT_NAME_BOLD, 48)
+	lbl_res:setPosition(-40, -2)
+	lbl_res:setContentSize(263.69, 64.48)
+	lbl_res:setScale(0.5, 0.5)
+	lbl_res:setAnchorPoint(cc.p(0, 0.5))
+	lbl_res:setTextColor(cc.c3b(255, 255, 255))
+	lbl_res:setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+	lbl_res:setHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT)
+	lbl_res:enableOutline(cc.c4b(100,100,100,255), 2)
+	node_res:addChild(lbl_res)
+	self.lbl_res = lbl_res
+
+	local UIMenu = cpp.UIMenu:create()
+	UIMenu:setCascadeOpacityEnabled(true)
+	UIMenu:setPosition(0, 0)
+	UIMenu:setContentSize(0, 0)
+	UIMenu:setAnchorPoint(cc.p(0.5, 0.5))
+	UIMenu:setIgnoreAnchorPointForPosition(false)
+	node_res:addChild(UIMenu)
+
+	local btn_res = cpp.UIMenuItemImage:createWithSpriteFrameName("", nil, nil)
+	btn_res:setPosition(-75, 0)
+	btn_res:setContentSize(62, 84)
+	btn_res:setScale(0.5, 0.5)
+	btn_res:registerScriptTapHandler(handler(self, self.onItemInfo))
+	self:addLoadRes(3, btn_res, "ccbi-res/backpack-4.plist", "ccbi-res/backpack-4.pvr.ccz", {spr1="backpack/900002.png"})
+	UIMenu:addChild(btn_res)
+	self.btn_res = btn_res
+
+	 self:startLoadRes()
+end
+return AliceShopLayer

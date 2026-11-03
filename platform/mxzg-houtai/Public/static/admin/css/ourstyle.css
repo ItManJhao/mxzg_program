@@ -1,0 +1,17 @@
+/* login 
+ */
+.a_form_input{width: 50%;background-color: #FFFFFF;border: 1px solid #e5e6e7;border-radius: 1px;padding: 6px 12px;height: 45px;color: inherit;-webkit-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;outline: none;}
+.a_form_input:focus{border-color: #1ab394 !important;}
+
+.a_verify_img{width: 48%;float: right;}
+/* 主样式-
+ */
+.site_content{padding: 0 20px;}
+/* 表单样式
+ */
+.configTable{margin-top: 20px;}
+.configTable th{min-width: 100px;text-align: right;}
+.configTable td{padding-left: 10px;}
+.configTable .configInput{width: 300px;height: 35px;background-color: #FFFFFF;border: 1px solid #e5e6e7;border-radius: 1px;padding: 6px 5px;color: inherit;-webkit-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;outline: none;}
+.configTable .configTextarea{background-color: #FFFFFF;background-image: none;border: 1px solid #e5e6e7;border-radius: 1px;color: inherit;display: block;padding: 6px 12px;-webkit-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;width: 100%;font-size: 14px;}
+.configSelect{width: 300px;height: 35px;border: 1px solid #e5e6e7;outline: none;}

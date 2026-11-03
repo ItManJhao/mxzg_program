@@ -1,0 +1,106 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "PromotionGMsg";
+import "Object.proto";
+
+
+//20001
+message GReqPromotionList {
+}
+
+//20001
+message GResPromotionList {
+    optional int32 is_buy_foundation = 1; // >0购买成长基金
+    repeated PSMapData foundation_reward_record = 2; //基金领奖记录
+    optional int32 cur_round = 3;   // 当前轮次
+}
+
+//20002
+message GReqPromotionReward {
+    optional int32 type = 1; // 1 成长基金  ,2 每日累计充值奖励  3，每周累计充值奖励
+    optional int32 index = 2;
+}
+//20002
+message GResPromotionReward {
+    optional int32 index = 1;
+    optional int32 is_reward = 2;
+}
+
+//20004
+message GReqVipRewardBuy {
+    optional int32 vip_level = 1; // 购买哪一个VIP等级奖励
+}
+//20004
+message GResVipRewardBuy {
+    optional int32 vip_level = 1;
+}
+
+//20005
+message GReqVipRewardLog{
+}
+//20005
+message GResVipRewardLog {
+    optional int32 is_reward = 1; //今天是否领取过奖励
+    repeated int32 list = 2; //已经购买过的
+}
+
+//20006
+message GResDayLimitLog {
+    optional int32 is_reward = 1; // 今天是否已经领取过奖励
+    repeated PSMapData list = 2;
+}
+
+//20007
+message GReqDayLimitReward {
+}
+//20007
+message GResDayLimitReward {
+}
+
+//20010
+message GReqVipDecorateBuy{
+    optional int32 idx = 1;
+}
+//20010
+message GResVipDecorateBuy{
+    optional int32 idx = 1;
+}
+
+//20011
+message GReqVipDecorateReward {
+}
+//20011
+message GResVipDecorateReward {
+    repeated PSMapData list = 1;
+}
+
+//基金领奖
+//20018
+message GReqFoundationReward {
+    optional int32 idx=1;
+}
+
+//20018
+message GResFoundationReward {
+
+    optional int32 reward_id = 1; //领取了哪一个
+}
+
+//20019
+message GResGrowthGiftCharge{
+    optional int64 chargeCount = 1;//充值额度
+}
+
+// 活动日历数据
+message PSPromotionCalendarData{
+    optional int32 week_day=1;// 一周的第几天
+    repeated int32 ids = 2; //  活动id
+}
+
+//20020
+message GReqPromotionCalendar {
+}
+//20020
+message GResPromotionCalendar {
+    repeated PSPromotionCalendarData list = 1; // 活动日历数据
+}

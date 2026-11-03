@@ -1,0 +1,74 @@
+# AngelCode Bitmap Font Generator configuration file
+fileVersion=1
+
+# font settings
+fontName=§ºÊ^
+fontFile=../text-yellow-80/songti.TTF
+charSet=0
+fontSize=60
+aa=1
+scaleH=100
+useSmoothing=1
+isBold=0
+isItalic=0
+useUnicode=1
+disableBoxChars=1
+outputInvalidCharGlyph=0
+dontIncludeKerningPairs=0
+useHinting=1
+renderFromOutline=0
+useClearType=1
+
+# character alignment
+paddingDown=0
+paddingUp=0
+paddingRight=0
+paddingLeft=0
+spacingHoriz=1
+spacingVert=1
+useFixedHeight=0
+forceZero=0
+
+# output file
+outWidth=512
+outHeight=512
+outBitDepth=32
+fontDescFormat=0
+fourChnlPacked=0
+textureFormat=png
+textureCompression=0
+alphaChnl=1
+redChnl=0
+greenChnl=0
+blueChnl=0
+invA=0
+invR=0
+invG=0
+invB=0
+
+# outline
+outlineThickness=0
+
+# selected chars
+chars=32,47-57,20987,21512,22238,25915,25968,35201,38656
+
+# imported icon images
+icon="image/32.png",32,0,0,-50
+icon="image/47.png",47,0,0,-42
+icon="image/48.png",48,0,0,-32
+icon="image/49.png",49,0,0,-32
+icon="image/50.png",50,0,0,-32
+icon="image/51.png",51,0,0,-32
+icon="image/52.png",52,0,0,-32
+icon="image/53.png",53,0,0,-32
+icon="image/54.png",54,0,0,-32
+icon="image/55.png",55,0,0,-32
+icon="image/56.png",56,0,0,-32
+icon="image/57.png",57,0,0,-32
+icon="image/20987.png",20987,0,0,-20
+icon="image/21512.png",21512,0,0,-20
+icon="image/22238.png",22238,0,0,-20
+icon="image/25915.png",25915,0,0,-20
+icon="image/25968.png",25968,0,0,-20
+icon="image/35201.png",35201,0,0,-20
+icon="image/38656.png",38656,0,0,-20

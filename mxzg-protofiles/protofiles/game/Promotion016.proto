@@ -1,0 +1,30 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion016GMsg";
+import "Object.proto";
+
+//限时兑换列表
+//13071
+message GReqExchangeList
+{
+
+}
+//13071
+message GResExchangeList
+{
+	repeated PSMapData list = 1;
+}
+
+//限时兑换
+//13072
+message GReqExchangeBuy
+{
+	optional int32 idx = 1;
+	optional int32 num = 2;
+}
+//13072
+message GResExchangeBuy
+{
+    optional int32 idx = 1;
+    optional int32 num = 2;
+}

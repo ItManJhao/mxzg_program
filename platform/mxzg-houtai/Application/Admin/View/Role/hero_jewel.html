@@ -1,0 +1,55 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>英雄-宝石信息</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('Role/hero_jewel')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>宝石ID</th>
+                                            <th>宝石名称</th>
+                                            <th>品质</th>
+                                            <th>星级</th>
+                                            <th>部位</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <volist name="hero_jewel" id="hero_jewel_vo">
+                                                <tr role="row">
+                                                    <td>{$hero_jewel_vo.sys_id}</td>
+                                                    <td>{$hero_jewel_vo.sys_name}</td>
+                                                    <td>{$hero_jewel_vo.quality}</td>
+                                                    <td>{$hero_jewel_vo.star}</td>
+                                                    <td>{$hero_jewel_vo.place}</td>
+                                                </tr>
+                                            </volist>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+
+</script>
+
+
+<include file="Public:footer" />

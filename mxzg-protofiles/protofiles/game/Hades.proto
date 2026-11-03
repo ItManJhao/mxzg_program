@@ -1,0 +1,70 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HadesGMsg";
+
+import "Battle.proto";
+import "Object.proto";
+
+enum HadesType {
+    hades_type_1 = 1; //赫卡忒地狱
+    hades_type_2 = 2; //撒旦魔域
+}
+
+message PSHadesRankData {
+    optional int64 player_id = 1; //玩家ID
+    optional string name = 2; //玩家名字
+    optional int32 level = 3; //玩家等级
+    optional int32 head_id = 4; //玩家头像
+    optional int32 border_id = 5; //头像框id
+    optional int32 server_id = 6; //大区（服务器区号）.
+    optional int32 rank = 7; //玩家排名
+    optional int32 floor = 8; //当前通关层数1-12
+    optional int64 fighting = 9; //战力
+    optional int32 image_id = 10; //形象id
+}
+
+//信息
+//76181
+message GReqHadesInfo {
+    optional HadesType type = 1;
+}
+//76181
+message GResHadesInfo {
+    optional HadesType type = 1; //类型
+    optional int32 pass_floor = 2; //当前已通关通关层数
+    optional int32 sweep_count = 3; //扫荡次数
+}
+//挑战
+//76182
+message GReqHadesChallenge {
+    optional HadesType type = 1;
+}
+//76182
+message GResHadesChallenge {
+    optional HadesType type = 1; //类型
+    optional BattleReport report = 2; //战报
+    repeated PSBackpackData pass_reward = 3; //通关奖励
+    optional int32 pass_floor = 4; //当前已通关通关层数
+}
+
+//扫荡
+//76183
+message GReqHadesSweep {
+    optional HadesType type = 1;
+}
+//76183
+message GResHadesSweep {
+    optional HadesType type = 1; //类型
+    optional int32 sweep_count = 2; //扫荡次数
+}
+//排行榜
+//76184
+message GReqHadesRankList {
+    optional HadesType type = 1;
+}
+//76184
+message GResHadesRankList {
+    optional HadesType type = 1; //类型
+    repeated PSHadesRankData ranks = 2; //列表
+    optional PSHadesRankData self = 3; //自己的数据
+}

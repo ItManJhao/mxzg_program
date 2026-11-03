@@ -1,0 +1,55 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion083GMsg";
+
+import "Object.proto";
+
+//数据
+//76041
+message GReqBlackFiveLotteryGetDataInfo {
+
+}
+//76041
+message GResBlackFiveLotteryGetDataInfo {
+    optional PSMapData select_info = 1; //选择记录
+    repeated int32 lottery_reward = 2; //次数领取记录
+    optional int32 lottery_count = 3; //抽奖次数
+    optional int32 lottery_best_remaining_count = 4; //抽中大奖剩余次数
+    optional int32 last_lottery_id = 5; //上次抽中奖励
+}
+
+//选择档位奖励
+//76042
+message GReqBlackFiveLotterySelect {
+    optional PSMapData select_info = 1;
+}
+//76042
+message GResBlackFiveLotterySelect {
+    optional PSMapData select_info = 1;
+}
+
+//抽奖
+//76043
+message GReqBlackFiveLotteryLottery {
+    optional int32 num = 1; //抽奖次数
+}
+
+//76043
+message GResBlackFiveLotteryLottery {
+    repeated PSBackpackData reward = 1; //本次奖励
+    optional int32 lottery_best_remaining_count = 2; //抽中大奖剩余次数
+    optional int32 idx = 3; //抽中奖励
+    optional int32 lottery_count = 4; //抽奖次数
+}
+
+//领取次数奖励
+//76044
+message GReqBlackFiveLotteryGetLotteryCountReward {
+    optional int32 idx = 1;
+}
+
+//76044
+message GResBlackFiveLotteryGetLotteryCountReward {
+    optional int32 idx = 1;
+}
+

@@ -1,0 +1,30 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "promotion068GMsg";
+
+
+
+//活动数据
+//13290
+message GReqSpaceTimeTreasureInfo {
+
+}
+//13290
+message GResSpaceTimeTreasureInfo {
+    optional int32 day = 1;//当前是活动进行的第几天
+    optional int32 status = 2;//今天是否已选择了商品,0:否，1:是
+    repeated int32 idx_list = 3;//当前选择的道具
+}
+
+//时空异宝选择道具
+//13291
+message GReqChooseItem{
+    repeated int32 idx_list = 1;//选择的道具
+}
+//13291
+message GResChooseItem{
+    optional int32 status = 1;//今天是否已选择了商品,0:否，1:是
+    repeated int32 idx_list = 2;//选择的道具
+}
+
+

@@ -1,0 +1,81 @@
+cfg.shopfloatingisland = {
+	["shopfloatingisland"] = {
+		[1] = {
+			idx = 1,
+			chance = 1000,
+			item_type = {{item_num=50,item_type=20405007}},
+			need_item = {{item_num=50000,item_type=902034}},
+			buy_limit = 0,
+		},
+		[2] = {
+			idx = 2,
+			chance = 1000,
+			item_type = {{item_num=50,item_type=20505014}},
+			need_item = {{item_num=50000,item_type=902034}},
+			buy_limit = 0,
+		},
+		[3] = {
+			idx = 3,
+			chance = 1000,
+			item_type = {{item_num=50,item_type=20305014}},
+			need_item = {{item_num=37500,item_type=902034}},
+			buy_limit = 0,
+		},
+		[4] = {
+			idx = 4,
+			chance = 1000,
+			item_type = {{item_num=50,item_type=20105020}},
+			need_item = {{item_num=37500,item_type=902034}},
+			buy_limit = 0,
+		},
+		[5] = {
+			idx = 5,
+			chance = 1000,
+			item_type = {{item_num=50,item_type=20205022}},
+			need_item = {{item_num=37500,item_type=902034}},
+			buy_limit = 0,
+		},
+		[6] = {
+			idx = 6,
+			chance = 1000,
+			item_type = {{item_num=50,item_type=20005000}},
+			need_item = {{item_num=7500,item_type=902034}},
+			buy_limit = 0,
+		},
+		[7] = {
+			idx = 7,
+			chance = 1000,
+			item_type = {{item_num=100,item_type=902001}},
+			need_item = {{item_num=7500,item_type=902034}},
+			buy_limit = 0,
+		},
+		[8] = {
+			idx = 8,
+			chance = 1000,
+			item_type = {{item_num=1000,item_type=901401}},
+			need_item = {{item_num=5000,item_type=902034}},
+			buy_limit = 0,
+		},
+		[9] = {
+			idx = 9,
+			chance = 1000,
+			item_type = {{item_num=1,item_type=900507}},
+			need_item = {{item_num=4000,item_type=902034}},
+			buy_limit = 0,
+		},
+		[10] = {
+			idx = 10,
+			chance = 1000,
+			item_type = {{item_num=1,item_type=908301}},
+			need_item = {{item_num=1500,item_type=902034}},
+			buy_limit = 0,
+		},
+		[11] = {
+			idx = 11,
+			chance = 1000,
+			item_type = {{item_num=1,item_type=908302}},
+			need_item = {{item_num=3000,item_type=902034}},
+			buy_limit = 0,
+		},
+	}
+}

@@ -1,0 +1,30 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion038GMsg";
+import "Object.proto";
+import "TaskObj.proto";
+
+//占星阵活动
+//13100
+message GReqAstrologyTaskInfo
+{
+}
+//13100
+message GResAstrologyTaskInfo
+{
+	repeated AstrologyTaskData list = 3;
+}
+
+//  占星阵活动兑换
+//13101
+message GReqAstrologyTaskSubmit
+{
+	optional int32 idx = 1;
+	repeated PSBackpackData heros = 2;	//材料英雄ID列
+}
+//13101
+message GResAstrologyTaskSubmit
+{
+	optional int32 idx = 1;
+	optional int32 is_over = 2;
+}

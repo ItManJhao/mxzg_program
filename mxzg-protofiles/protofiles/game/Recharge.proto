@@ -1,0 +1,49 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "RechargeGMsg";
+
+//请求订单ID
+//30001
+message GReqRechargeOrder
+{
+	optional int32 product_idx = 1;		//商品ID
+	optional string cli_extra_info = 2;	//客户端的下单额外信息
+}
+//30001
+message GResRechargeOrder
+{
+	optional string order_id = 1;		//订单Id
+	optional string product_code = 2;	//商品编码
+	optional string extra_info = 3;		//服务器返回的透传参数
+	optional int32 product_idx = 4;		//商品ID
+}
+
+//请求还没有做充值推送的商品信息
+//30002
+message GReqShopRechargeCheck
+{
+}
+//成功购买充值商品后会推送商品信息
+//30002
+message GResShopRechargeCheck
+{
+    repeated int32 list = 1;			//需要显示的充值商品
+    optional int64 total_charge = 2;	//玩家当前的充值总额
+    repeated int32 buy_idx = 3;			//购买过的充值商品信息，列表信息需要在登录期间保存在前端，有30002的推送时，需要把list添加到buy_idx中
+}
+
+message RechargeLevelInfo{
+    optional int32 client_type = 1;		//1:安卓，2:IOS，3:H5
+    optional int32 level = 2;		    //限制等级
+}
+
+//充值限制信息
+//30003
+message GReqRechargeLimitInfo{
+}
+//30003
+message GResRechargeLimitInfo{
+	repeated RechargeLevelInfo data = 1;    //充值等级限制信息，只发开启的，关闭的默认不发数据
+	optional int64 limit_total_charge = 2;	//限制充值总额
+	optional bool limit_area = 3;	        //是否限制地区
+}

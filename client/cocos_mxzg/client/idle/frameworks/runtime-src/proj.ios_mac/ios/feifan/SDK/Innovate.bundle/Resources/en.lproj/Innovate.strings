@@ -1,0 +1,244 @@
+
+
+/*Floating Window*/
+"personal" = "Account";
+"community" = "FB";
+"customer"  = "CS";
+"prize" = "Pack";
+"switch" = "Switch";
+"other" = "Other";
+
+
+"register placeHoder" = "Please enter account";
+"register password" = "Please enter password";
+
+"remember password" = "Remember password";
+"login" = "Log in";
+"account login" = "Account login";
+"register" = "Sign in";
+
+"facebook" = "Facebook";
+"google" = "Google";
+"tourists" = "Tourists";
+
+"isLogin" = "Logging in...";
+"register members" = "Member Sign in";
+
+"account limit" = "Letters, numbers and underline only";
+"password limit" = "At least 6 characters";
+"confirm" = "OK";
+"cancel" = "Cancel";
+
+"protocol policy" = "I have read and accept Terms of Service and Privacy Policy";
+"service policy" = "Terms of Service";
+"privacy policy" = "Privacy Policy";
+
+
+"forget password" = "Forget Password";
+"forget password tips" = "Please enter the account you want to retrieve password";
+"please input account" = "Please enter the account";
+"no bind phone or email" = "You do not have bound your account, please connect customer";
+"find password" = "Retrieve password";
+"find password tips" = "Dear, you can reset your password by following methods";
+"phone" = "Mobile Phone Number";
+"email" = "E-mail";
+
+"has send reset message" = "Hello, Confirmation Code for password reset has been sent to your mobile phone";
+"has send reset message" = "Hello, Confirmation Code for mobile phone authentication has been sent to your mobile phone";
+"has send reset message" = "Hello, Confirmation Code for unbinding has been sent to your mobile phone";
+
+"has send reset message" = "Hello, mail for password reset has been sent to your mobile phone";
+"has send reset message" = "Hello, mail for E-mail binding has been sent to your mail box";
+"has send reset message" = "Hello, mail for E-mail unbinding has been sent to your mail box";
+
+"code time limit" = "Confirmation Code is valid for 30 minutes, please enter it in time";
+"input code" = "Please enter received verification code";
+"repeat send code" = "Send again";
+"reset password" = "Reset password";
+
+"account error" = "Entered account is illegal";
+"password error" = "Password is not less than 6 numbers";
+"password different" = "The two passwords do not match";
+"agree protocol" = "Please accept Terms of Service and Privacy Policy first";
+
+
+"user center" = "User Center";
+"account" = "Account";
+"modify password" = "Modify password";
+"bind email" = "Bing E-mail";
+"change email" = "Change E-mail";
+"phone authentication" = "Mobile Phone Authentication";
+"change phone" = "Change Mobile Phone";
+"account upgrade" = "Account Upgrade";
+
+
+"input old password" = "Please enter the old password";
+"input new password" = "Please enter the new password";
+"input new password" = "Please enter the new password again";
+
+"bind email tips" = "Hello, please authenticate your e-mail to improve your account security. When you forget your password, you can quick-rest your password by the this E-mail!";
+"input email" = "Please enter the E-mail";
+"input validate email" = "Please enter the correct E-mail";
+"input code" = "Please enter verification code";
+"code is wrong" = "Verification code error";
+
+"bind phone tips" = "Hello, please fill in mobile phone info and it will become the evidence for retrieving account through costumer!";
+"input region" = "Please select the region";
+"input phone" = "Please enter the mobile phone number";
+
+"operation success" = "Operate successfully";
+"has operation success" = "Operate successfully!";
+
+"upgrade success" = "You account has been upgrade to Account";
+
+"welcome" = "Welcome back";
+"noLogin" = "Not log in, please log in the game first";
+"no init" = "Uninitialized, please recall initialize interface!";
+"login success" = "Log in successfully!";
+"logout success" = "Log out successfully!";
+
+"find new version" = "Found new version";
+"new version tips" = "Please download the newest version to improve game experience!";
+"to update" = "Update now";
+
+
+"Taiwan" = "Taiwan 886";
+"China" = "China 86";
+"Malaysia" = "Malaysia 60";
+"Hong Kong" = "Hong Kong 852";
+"America" = "The United States 1";
+"Singapore" = "Singapore 65";
+"Vietnam" = "Vietnam 84";
+"Macau" = "Macau 853";
+"Australia" = "Australia 61";
+"Canada" = "Canada 1";
+"Philippines" = "Philippines 63";
+"Japan" = "Japan 81";
+"Thailand" = "Thailand 66";
+"British" = "United Kingdom 44";
+"Cambodia" = "Cambodia 855";
+"India" = "India 91";
+"Indonesia" = "Indonesia 62";
+"Korea" = "South Korea 82";
+"Germany" = "Germany 49";
+"New Zealand" = "New Zealand 64";
+
+
+
+"unknow" = "Unknown error";
+"clientInvalid" = "Current Apple account can not make purchase (If you have problem, please contact Apple)";
+"paymentCancelled" = "Order has been canceled";
+"paymentInvalid" = "Invalid order ((If you have problem, please contact Apple)";
+"paymentNotAllowed" = "Current Apple device can not make purchase (If you have problem, please contact Apple)";
+"storeProductNotAvailable" = "Current product is not available";
+"networkConnectionFailed" = "Fail to connect network";
+
+"abnormal" = "Abnormal";
+"customer service" = "If you have paid for it, please contact customer to deal with it";
+"delivery failed" = "Delivery failed";
+
+"buying" = "Purchasing...";
+"redelivery" = "Start to delivery again...";
+"on delivery" = "Delivering...";
+"delivery completed" = "Delivered";
+"order" = "Order";
+
+"is ordering" = "Generating the order...";
+"product not available" = "The product is not available"; //The goods are not yet available
+"not in-app purchases" = "Your mobile phone has disabled in-app purchases";//Your phone is not open for in-app purchases
+"request product infomation" = "Requesting product information...";//Requesting product information...
+"request product fail" = "Fail to request product list";
+
+"recharge success" = "Top-up successfully";
+"recharge cancel"  = "Top-up canceled";
+"recharge failed" = "Top-up failed";
+
+
+"get" = "Claim";
+"has get" = "Claimed";
+"prize center" = "Pack Center";
+"get record" = "Record";
+
+"no activity" = "No pack event yet";
+"no get record" = "No record";
+
+"remain" = "Left";
+"validity" = "Validity";
+"copy success" = "Copied";
+"copy" = "Copy";
+
+"drag float tips" = "Drag here to hide";
+
+"prize copy success" = "Pack Code copied";
+"network error" = "Abnormal network, please try again later";
+
+//service
+"service center" = "CS Center";
+"selected service way" = "Please select contact ways";
+"service email" = "CS Mail Adress";
+"online service"= "Online CS";
+"submit" = "Submit";
+"complaint type" = "Type";
+"title" = "Title";
+
+"login question" = "Login";
+"payment question" = "Top-up";
+"game question" = "Game";
+"account question" = "Account";
+"activity question" = "Event";
+"suggestion" = "Suggest";
+"other question" = "Others";
+
+"selected images count" = "Selected pic numbers";
+"please select question type" = "Please select the problem type";
+
+"please input question title" = "Please enter the title";
+"please input question content" = "Please enter the content";
+
+"submit success" = "Submitted successfully";
+"Has your problem been solved" = "Whether this solves your problem?";
+"submit questions tips" = "You have not submitted a question,\ntap top right corner to come up with problem to CS~";
+
+"yes" = "Yes";
+"no" = "No";
+
+"waiting" = "Waiting...";
+"reply" = "Replied";
+"resolved" = "Solved";
+
+"picture is too big" = "The image is too large";
+
+"save to the phone" = "Same image to mobile phone";
+
+"save failure" = "Fail to save";
+"save success" = "Save successfully";
+
+"uploading" = "Uploading...";
+"send failure" = "Send failed";
+
+"prize code" = "CDK";
+
+"ad config empty" = "Invalid ad configuration";
+"no ad fill" = "No ad fill,please try again later";
+
+"not fast click" = "Please do not click repeatedly";
+"complete impress ads" = "You can get rewards after watching ads";
+
+"select fu ways" = "Select payment methods";
+"appstore" = "App Store";
+"other methods" = "Recharge in Official Website";
+
+"no share config" = "Sharing Link not set";
+"no thumbUp config" = "Like Link not set";
+
+"customer service time" = "Opening hours:Our team is available Monday - Friday 09:00-18:00 (UTC+8)";
+
+"work order id" = "Ticket Number";
+"work order_id copy success" = "Ticket Number copied";
+
+"allow app track ad" = "Please enable advertisement tracking in Settings>Privacy>Tracking";
+"turn off limit track ad" = "Please disable advertisement tracking in Settings>Privacy>Advertising";
+
+"service policy text" = "Terms of Service\nThis Agreement is a contract entered into by the platform member(hereinafter referred to as \"Party A\") and HONGKONG FEIFAN CO., LIMITED (hereinafter referred to as \"Party B\") on the gaming services provided by Party B. Once registered as a member Party B, Party A agrees and is willing to abide by all of the following terms.\nArticle I Scope of the Agreement\nParty B provides Party A with mobile gaming services and other related services (hereinafter referred to as the Service), Party A shall fully abide by this Agreement and rules of game supervision. With regard to the rights and obligations of the service, both parties shall adhere to terms of this Agreement.\nArticle II Contents of Service\nContents provided by Party B and based on actual circumstances is to offer users rich online resources via the Internet in its own operating system, including a variety of information tools, game links, e-mail, etc.Unless otherwise explicitly stated, any new feature that improves or enhances the current service, including new products, will be unconditionally applicable under this Service Agreement. Party B has the right to expand its services, and services provided by Party B may change from time to time. As for fee-based services, advance notice will be given before the service is made available online.Timing of such advance notice will be at the discretion of Party B. Free service will not require notice, unless Party B considers it to be necessary.\nArticle III User Account (user account, password and security)\n1. User account registration\nUsers must agree to all terms of this Agreement and complete the registration procedure. After a user has successfully registered, Party B will give the user an account and corresponding password. Users will keep their own ID and passwords, and should be responsible for activities under their accounts.\n2. Safeguarding of user account\nIn order to provide this service to Party A, Party B will not disclose Party A’s name, address, contact address, e-mail, account number,password or other personal information, unless:\n2.1 Party A authorizes Party B to disclose such personal information.\n2.2 Relevant laws or administrative regulations require Party B to disclose Party A’s personal information.\n2.3 Party B needs to disclose such personal information in order to protect its intellectual property and other property rights.\nParty B will take commercially reasonable means to protect personal information of Party A. Party A shall not transfer or lend its account and password to others. Party B does not assume any liability for any illegal use of Party A's account or password by others and resulting consequences due to Party A’s negligence in safeguarding its account or password.\nArticle IV Party A’s Obligations\n1. Party A provides service-related equipment (such as computers,and other Internet-related equipment) and bears costs (such as telephone charges and Internet access fees).\n2. Party A shall not use the service or participate in Party B’sactivities via improper or unfair means.\n3. Party A shall not interfere with normal services provided by Party B, including but not limited to:\n3.1 cracking, modifying the client program provided by Party B;\n3.2 making, using, publishing, or distributing any form of tool or program (plug) that may compromise the fairness of the game;\n3.3 exploiting loopholes and procedural errors (bugs) to disrupt the normal progress of the game or spreading the loophole or error (Bug);\n3.4 illegally collecting personal data of others.\n4. Party A must protect its own account number and password, and bear the consequences of the disclosure of its account and password due to its own negligence.\nArticle V Privacy Protection\n1. Party B guarantees not to disclose user registration data or user’s private contents generated during use of network service to the public do main or any third party.\n2. Party B may cooperate with a third party to provide relevant network services to users. In this case, if the third party agrees to assume the responsibility of protecting user privacy equal to that of Party B, Party B may provide user data to the third party.\nArticle VI Game Supervision\nIn order to supervise the way the game is operated, Party B shall set a fair and equitable rules for the game. Party A shall abide by the rules set by Party B.\nA game supervision rule becomes invalid if it contains one of the following circumstances:\n1. Contradicts any provision in this Agreement.\n2. Deprives Party A of contractual rights.\nArticle VII Limited Warranty and Liability\nParty B only accepts the following limited warranty:\n1. Services provided by Party B are consistent with the service commitments Party B officially announced;\n2. Party B only resolves any issue in the process of providing the service in a commercially reasonable way. In addition, within the maximum extent permitted by applicable law, Party B does not guarantee that the service provided meets all the requirements of Party A. Party B does not assume any liability or damage (including, but not limited to, personal injury, privacy leaks, any liability associated with failing to fulfill good faith or reasonable care, or damage as a result of financial or other loss caused by negligence or any other reason) as a result of Party A’s use of the service.\nArticle VIII User Information Storage and Restrictions\nParty B has the right to determine if the user's behavior is consistent with terms of service provisions. If Party B deems that the user has violated the terms of service provisions, it has the right to delete information sent by the user or even terminate network services for the user.\nArticle IX Service Change,Suspension or Termination\n1. Party B will give advance notice if network services need to be suspended due to system maintenance or upgrades.\n2. Party B reserves the right to unilaterally suspend or terminate some or all of the network services by issuing prior announcement or giving notice to Party A, and will not take any liability for Party A or any third party for any loss resulting from suspending or terminating services.\nArticle X Fee Policy\nParty B has the right to determine and modify the fee standards and methods. Where fee standards need to be adjusted, Party B will issue notice on the relevant web pages before the adjustment takes effect.\nIn regards to fee charging services, Party A shall purchase the service in accordance with the confirmed fee policy. If Party A fails to do so,Party B may immediately suspend the service.\nArticle XI Disclaimer\n1. Party B does not guarantee any of the following:\n1.1 The service will be provided in uninterrupted, timely, secure,or error-free manner.\n1.2 If a third party has illegally infringed upon the rights of Party A, and Party B has been informed of such infringement, Party B shall assist Party A to remove or identify the infringement.\n2. Party A expressly agrees that it will solely assume all risks associated with use of the network services.\nArticle XII Damage\nIf Party A has breached this Agreement or relevant laws, resulting in damage or derivative expenses taken by Party B's parent company,subsidiaries, affiliates, related companies, employees, agents or other related support staff (including, but not limited to, legal expenses in claims,litigation, or related reconciliation paid to all such persons due to Party A’s breach of this Agreement), Party A shall be held liable for such damages.\nArticle XIII Termination of the Agreement\nParty A shall abide by the Agreement and relevant laws and regulations. If Party B has detected any breach of this Agreement or relevant laws or regulations by Party A, Party B is entitled to, without prior notice to Party A, immediately suspending, terminating or deleting Party A’s account and all relevant data, files and records, and disqualifying, suspending or restricting Party A’s membership.\nArticle XIV Modification and Interpretation\nBy being aware of the ongoing changes of Party B itself, users and the market conditions, if Party A continues to use the service provided by Party B, Party A will be deemed to have agreed to and accepted modifications,addition, and deletion of terms of this Agreement, and therefore is not entitled to any claims or damages.\nTo the maximum extent applicable, the Company reserves the right of final interpretation of this Agreement.";
+
+"privacy policy text" = "Privacy Policy\nHONGKONG FEIFAN CO., LIMITED respects and protects the personal privacy of all service users. In order to provide you with more accurate and more personalized service, the Company will use and disclose your personal information in accordance with the provisions of this Privacy Policy. However,the Company will treat such information in a high degree of diligence and discretion.Except as otherwise provided in this Privacy Policy, without your prior consent, the Company will not disclose such information to any third party. The Company will continue to update this privacy policy. At the time you agree to the Company’s Service Agreement, you are deemed to have agreed to all of the contents of this Privacy Policy. This Privacy Policy belongs to an integral part of the Service Agreement.\n1. Information Use\nThe Company fully respects and protects all personal information submitted and generated by users during use of website services provided by the company. Except as otherwise provided in the terms, the Company, without the prior consent of the user, will not disclose the user’s privacy information to any third party. Except with your permission, the third party or the Company individually or collectively serving you will be denied access to your information, including all previously accessible information upon termination of the service.\n2. Information Storage and Exchange\nYour information and data collected by the Company will be stored on the Company’s servers and (or) its affiliates’ servers. Such information and data may be transferred to foreign countries outside the country or region in which you are currently located, or the location where information and data is collected, and accessed and stored in foreign countries.\n3. Information Administration\nWithout disclosing user’s privacy information, the company is entitled the technical analysis of the entire user database, and use it for commercial purposes after such analysis (including, but not limited to publishing, analyzing,or by other means, utilize the user’s access volume, access time, preference and other user data).\n4. Using Cookies to Collect Data\nWe may use cookies to collect user data, which helps users when revisiting the site. Cookies are small pieces of data sent by a web server and stored in a web browser so that the data can be read from the browser in the future. Currently, the data collected from cookies is used to improve service function. Data provided by the Company is analyzed and organized based on cumulative use of the service by users. Cookies helps the login process operate faster and more smoothly, and can store data between calls.\nYou may disable cookies in your browser without affecting your experience on our website, but cookies do make our services more convenient. Disabling cookies may make using our service more complicated and involve more input procedures. You should also note that if you disable cookies, some features of the Company's services may be affected.\n5. Privacy Policy Update\nThe Company reserves the right to revise the terms of the Privacy Policy at any time. Without prior notice to individual users, we may publish revisions on the corresponding web pages when revising the terms. If a user doe snot agree to the revised content, the user may stop using all services provided by the Company. If the user continues to use any service provided by the company, the user is deemed to have accepted the revised content provided by the Company.";

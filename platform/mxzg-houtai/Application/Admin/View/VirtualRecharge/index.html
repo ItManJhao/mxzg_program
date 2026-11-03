@@ -1,0 +1,235 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>模拟充值列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('VirtualRecharge/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">角色id：</label>
+                                            <input type="text" placeholder="精确搜索" name="role_id" value="{$search_params.role_id}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">角色名称：</label>
+                                            <input type="text" placeholder="模糊搜索" name="role_name" value="{$search_params.role_name}" style="width: 120px;" class="form-control">
+
+                                            <label class="control-label">状态：</label>
+                                            <select class="form-control" name="status">
+                                                <option <if condition="$search_params['status'] == '-1'"> selected </if> value="-1">所有状态</option>
+                                                <option <if condition="$search_params['status'] == 0"> selected </if> value="0">待审核</option>
+                                                <option <if condition="$search_params['status'] == 1"> selected </if> value="1">审核成功</option>
+                                                <option <if condition="$search_params['status'] == 2"> selected </if> value="2">审核失败</option>
+                                                <option <if condition="$search_params['status'] == 3"> selected </if> value="3">审核不通过</option>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <input type="hidden" name="sid" value="{$search_params['sid']}">
+                                            <select class="selectpicker form-control sid" data-style="btn-info" data-title="请选择服务器" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="servers" id="servers_vo">
+                                                    <if condition="!empty($search_params['sid']) && in_array($servers_vo['id'],explode(',', $search_params['sid']))">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">商品</label>
+                                            <input type="hidden" name="product_id" value="{$search_params['product_id']}">
+                                            <select class="selectpicker form-control product_id" data-style="btn-info" data-title="请选择商品" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="product_list" id="product_list_vo">
+                                                    <if condition="!empty($search_params['product_id']) && in_array($product_list_vo['id'],explode(',', $search_params['product_id']))">
+                                                        <option value="{$product_list_vo.id}" selected>{$product_list_vo.id}--{$product_list_vo.product_name}</option>
+                                                        <else />
+                                                        <option value="{$product_list_vo.id}">{$product_list_vo.id}--{$product_list_vo.product_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <button onclick="openYemian('{:U('VirtualRecharge/add')}','模拟充值')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>模拟充值</button>
+                                        <a class="btn btn-danger" href="javascript:void(0)" title="批量审核" data-url="{:U('VirtualRecharge/ajax_send')}" style="float: right;margin-right:10px;" data-id="{$vo.id}"  onclick="send_mails(this,'确定批量审核通过？','{:U('VirtualRecharge/ajax_send')}')" ><i class="fa fa-pencil"></i>批量审核</a>
+
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >服务器：</label>
+                                                <span class="sid-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >商品：</label>
+                                                <span class="product_id-text">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <table class="table table-bordered" style="word-wrap: break-word; word-break: break-all;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'ids\']').prop('checked', this.checked);"></th>
+                                                        <th width="5%">主键ID</th>
+                                                        <th>商品id</th>
+                                                        <th>商品名称</th>
+                                                        <th>金额</th>
+                                                        <th>金额美金</th>
+                                                        <th>角色id</th>
+                                                        <th>角色名</th>
+                                                        <th>区服</th>
+                                                        <th>状态</th>
+                                                        <th>备注</th>
+                                                        <th>充值返回</th>
+                                                        <th>创建时间</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row"> 
+                                                            <td><input type="checkbox" name="ids[]" value="{$vo.id}"></td>
+                                                            <td>{$vo.id}</td>
+                                                            <td>{$vo.product_id}</td>
+                                                            <td>{$vo.product_name}</td>
+                                                            <td>{:round($vo['money']/100,2)}</td>
+                                                            <td>{$vo.dollar_money}</td>
+                                                            <td>{$vo.role_id}</td>
+                                                            <td>{$vo.role_name}</td>
+                                                            <td>{$vo.sid}--{$vo.server_name}</td>
+                                                            <td><if condition="$vo['status'] == 1">充值成功<elseif condition="$vo['status'] == 2"/>充值失败<elseif condition="$vo['status'] == 3"/>审核不通过<else/>未审核</if></td>
+                                                            <td>{$vo.note}</td>
+                                                            <td>{$vo.debug}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['created_at'])}</td>
+                                                            <!-- <td>
+                                                                <if condition="$vo['status'] == 0">
+                                                                    <a class="btn btn-danger" href="javascript:void(0)" title="审批" data-url="{:U('VirtualRecharge/ajax_send')}" data-id="{$vo.id}"  onclick="send_mail(this,'确定审核通过？','{:U('VirtualRecharge/ajax_send')}')" ><i class="fa fa-pencil"></i>审批</a>
+                                                                    <else/>
+                                                                    <a class="btn btn-warning" href="javascript:;" title="已审批" >已审批</a>
+                                                                </if>
+                                                            </td> -->
+                                                            <td>
+                                                                <if condition="$vo['status'] == 0">
+                                                                    <a class="btn btn-danger" href="javascript:void(0)" title="审核通过" data-url="{:U('VirtualRecharge/ajax_send')}" data-id="{$vo.id}," data-status="1" onclick="send_mail(this,'确定审核通过？','{:U('VirtualRecharge/ajax_send')}')" ><i class="fa fa-pencil"></i>审核通过</a>
+                                                                    <a class="btn btn-danger" href="javascript:void(0)" title="审核不通过" data-url="{:U('VirtualRecharge/ajax_send')}" data-id="{$vo.id}" data-status="3" onclick="send_mail(this,'确定审核不通过？','{:U('VirtualRecharge/ajax_send')}')" ><i class="fa fa-pencil"></i>审核不通过</a>
+                                                                    <else/>
+                                                                    <a class="btn btn-warning" href="javascript:;" title="已审核" >已审核</a>
+                                                                </if>
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script language="javascript">
+
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(function(){
+        doMultipleSelection($('.sid'), 'sid');
+        doMultipleSelection($('.product_id'), 'product_id');
+    });
+    $(".sid").on('change',function(e){
+        doMultipleSelection(this, 'sid');
+    })
+    $(".product_id").on('change',function(e){
+        doMultipleSelection(this, 'product_id');
+    })
+
+    //审批，模拟充值
+    function send_mail(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var id=$(obj).attr("data-id");
+            var status=$(obj).attr("data-status");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {ids:id,status:status},
+                dataType : "json",
+                success:function(data){
+                    top.layer.alert(data.message, {icon: 6});
+                    // if (data.status == 0) {
+                    //     top.layer.msg(data.message);
+                    // } else {
+                    //     top.layer.msg(data.message);
+                    //     // $(obj).parent().parent().remove();
+                    // }
+                    window.location.reload();
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+    //批量审核，发送邮件
+    function send_mails(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var ids = "";
+            $("tbody input[type=checkbox]:checked").each(function () {
+                if ($(this).is(':checked')) {
+                    ids += $(this).val()+",";
+                }
+            });
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {ids:ids},
+                dataType : "json",
+                success:function(data){
+                    top.layer.alert(data.message, {icon: 6});
+                    // if (data.status == 0) {
+                    //     top.layer.msg(data.message);
+                    // } else {
+                    //     top.layer.msg(data.message);
+                    //     // $(obj).parent().parent().remove();
+                    // }
+                    window.location.reload();
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+</script>
+
+
+
+<include file="Public:footer" />

@@ -1,0 +1,15 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion039GMsg";
+import "Object.proto";
+
+//查看超值礼包
+//13181
+message GReqOverValueData
+{
+}
+//13181
+message GResOverValueData
+{
+	repeated PSMapData list = 3;	//限购信息，key礼包id,value已购买次数
+}

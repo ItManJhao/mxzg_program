@@ -1,0 +1,28 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion037GMsg";
+import "Object.proto";
+
+// 许愿池达标活动列表
+//13090
+message GReqBlessingPoolLists
+{
+}
+//13090
+message GResBlessingPoolLists
+{
+	optional int32 nvalue = 4;
+	optional int32 round = 5;
+	repeated PSMapData list = 6;
+}
+
+// 领取许愿池达标活动奖励
+//13092
+message GReqBlessingPoolGift
+{
+	optional int32 idx = 1;
+}
+//13092
+message GResBlessingPoolGift
+{
+}

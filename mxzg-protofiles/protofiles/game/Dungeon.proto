@@ -1,0 +1,309 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "DungeonGMsg";
+
+import "Battle.proto";
+
+message PSDungeonInfo {
+    optional int32 grid_x = 1; // X坐标位置
+    optional int32 grid_y = 2; // Y坐标位置
+    optional int32 is_open = 3; // 网格是否已打开
+    optional int32 grid_event_type = 4; //  网格打开后的事件类型，-1：怪物；0：无事件；101：金币堆；102：石堆；103：免费宝箱；104：钥匙；105：钥匙宝箱；106：buff；107：药水；108：商店；
+    optional int64 grid_event_num = 5; // 事件对应的数量或者商店id、怪物level、药剂类型
+    optional string event_param = 6; //参数 答题类型的参数[1,2,3]
+}
+
+message PSDungeonShopData {
+    optional int32 index = 1; //商品索引值
+    optional int32 item_type = 2; //购买物品类型
+    optional int32 item_num = 3; //购买物品数量
+    optional int32 cost_type = 4; //购买消耗的货币类型
+    optional int32 cost_num = 5; //购买消耗的货币数量
+    optional int32 discount = 6; //商品折扣
+    optional int64 shop_id = 7; //所属商店ID
+    optional int32 is_buy = 8;
+}
+//月神挑战中的编队信息
+message PSDungeonTeamData {
+    optional int32 index = 1; //英雄站位
+    optional int64 hero_id = 2; //英雄ID
+    optional int32 hero_type = 3; //英雄类型
+    optional int32 level = 4; //英雄等级
+    optional int32 star = 5; //英雄星级
+    optional int32 elem = 6; //英雄元素
+    optional int32 hero_rate = 7; //英雄剩余血量比（万分比）
+    optional int32 hero_bat = 8; //英雄战力
+
+}
+
+message PSDungeonPlace {
+    optional int32 grid_x = 1;
+    optional int32 grid_y = 2;
+}
+//月神请求保存的编队信息
+message PSDungeonPrepareTeam {
+    optional int32 index = 1; //英雄站位
+    optional int64 hero_id = 2; //英雄ID
+}
+
+message PSdungeonKillRewardData {
+    optional int32 index = 1;
+    optional int32 reward = 2;
+}
+
+message PSDungeonPropsData {
+    optional int32 item_type = 1; // 已拥有的物品类型 901601：神秘钥匙；901602：hp恢复药剂；901603：驱散药剂；901604：召唤商人
+    optional int32 item_num = 2; //  已拥有的物品数量
+    optional int32 cur_use_num = 3; // 已使用数量
+}
+
+message PSDungeonBuffData {
+    optional int32 item_type = 1; //已拥有的BUFF类型
+    optional int32 item_num = 2; //已拥有的BUFF增幅数
+}
+
+message PSDungeonMonsterHpData {
+    optional int32 monster_level = 1; //怪物的标识icon_level值
+    optional int32 hp_rate = 2; //怪物剩余血量比（万分比）
+}
+
+message PSDungeonNextStageData {
+    optional int32 item_type = 1; //类型idx
+    optional int64 item_num = 2; // 物品数量
+}
+
+message PSEventRewardsData{
+    optional int32 event_id = 1;//事件id
+    repeated PSDungeonNextStageData list = 2;//事件奖励内容
+}
+
+//庇护所重制时。发此协议让前端刷新庇护所数据(弃用)
+//24000
+message GReqRemoveShelterInfo {
+}
+//24000
+message GResRemoveShelterInfo {
+}
+
+//庇护所数据
+//24001
+message GReqDungeonInfo {
+}
+//24001
+message GResDungeonInfo {
+    optional int32 end_time = 1; //结束时间
+    optional int32 cur_stage = 2; //庇护所层数
+    optional int32 npc_num = 3; //怪物击杀数
+    repeated PSDungeonInfo list = 4; //网格信息集合
+    optional int32 quick_Battle = 5; //剩余扫荡次数
+    optional bool unlock_quick_battle = 6; //是否解锁一键扫荡
+}
+
+//庇护所商店数据
+//24002
+message GReqDungeonShopList {
+    optional int32 shop_id = 1;//商店id。0为查找所有商品，或者查询具体的商店数据
+}
+//24002
+message GResDungeonShopList {
+    repeated PSDungeonShopData list = 1; //商品列表
+    optional int32 shop_id = 2;//商店id。0为查找所有商品，或者查询具体的商店数据
+}
+
+//庇护所战斗队伍信息
+//24003
+message GReqDungeonTeam {
+}
+//24003
+message GResDungeonTeam {
+    repeated PSDungeonTeamData list = 1; //英雄编队信息
+}
+
+//保存庇护所战斗队伍
+//24004
+message GReqDungeonInitTeam {
+    repeated PSDungeonPrepareTeam list = 1; //请求布阵的编队信息
+}
+//24004
+message GResDungeonInitTeam {
+    repeated PSDungeonTeamData list = 1; //保存的英雄编队信息
+}
+
+//庇护所击杀奖励领取状态列表
+//24005
+message GReqDungeonKillRewardList {
+}
+//24005
+message GResDungeonKillRewardList {
+    repeated PSdungeonKillRewardData list = 1;
+}
+
+//庇护所击杀奖励领取
+//24006
+message GReqDungeonKillReward {
+    optional int32 reward_index = 1; //领取奖励ID
+}
+//24006
+message GResDungeonKillReward {
+    optional int32 status = 1; //领取是否成功
+    optional int32 index = 2; //奖励ID
+}
+
+//获取庇护所道具列表
+//24007
+message GReqDungeonPropsList {
+}
+//24007
+message GResDungeonPropsList {
+    repeated PSDungeonPropsData list = 1; //月神背包道具数量
+}
+
+//庇护所BUFF列表
+//24008
+message GReqDungeonBuffList {
+}
+//24008
+message GResDungeonBuffList {
+    repeated PSDungeonBuffData list = 1; //网格信息集合
+}
+
+//庇护所怪物剩余血量列表
+//24009
+message GReqDungeonMonsterHpList {
+}
+//24009
+message GResDungeonMonsterHpList {
+    repeated PSDungeonMonsterHpData list = 1;
+}
+
+//庇护所网格打开(弃用)
+//24011
+message GReqDungeonGridLight {
+    repeated PSDungeonPlace list = 1; //要打开网格
+}
+//24011
+message GResDungeonGridLight {
+}
+
+//进入庇护所下一层
+//24012
+message GReqDungeonNextStage {
+}
+//24012
+message GResDungeonNextStage {
+    optional int32 status = 1; //0 : 成功；1：失败
+    repeated PSDungeonNextStageData list = 2;
+}
+
+//庇护所使用道具
+//24013
+message GReqDungeonUseProps {
+    optional int32 props_type = 1; //道具类型
+    optional int32 target_id = 2; //道具使用对像(怪物的icon_level或者英雄的index)
+}
+//24013
+message GResDungeonUseProps {
+    optional int32 status = 1; // 使用道具是否成功，1：成功 0：失败
+    optional int32 props_type = 2; // 道具类型
+    optional int64 target_id = 3; //道具使用对像
+}
+
+//领取怪物格子附属的资源奖励
+//24014
+message GReqDungeonGetRes {
+    optional int32 grid_x = 1; //怪物网格x
+    optional int32 grid_y = 2; //怪物网格y
+}
+//24014
+message GResDungeonGetRes {
+    repeated PSEventRewardsData rewards_list = 1; //奖励内容
+    repeated PSDungeonInfo grid_list = 2; //网格信息集合
+}
+
+//格子上的资源奖励
+//24015
+message GReqDungeonGetGridReward {
+    optional int32 grid_x = 1; //网格x
+    optional int32 grid_y = 2; //网格y
+}
+//24015
+message GResDungeonGetGridReward {
+    repeated PSEventRewardsData rewards_list = 1; //奖励内容
+}
+
+//庇护所宝箱打开
+//24016
+message GReqDungeonOpenBox {
+    optional int32 grid_x = 1;
+    optional int32 grid_y = 2;
+}
+//24016
+message GResDungeonOpenBox {
+    optional int32 grid_x = 1;
+    optional int32 grid_y = 2;
+    repeated PSEventRewardsData rewards_list = 3; //奖励内容
+}
+
+//庇护所答题,猜拳,对话
+//24017
+message GReqDungeonQuestion {
+    optional int32 grid_x = 1;
+    optional int32 grid_y = 2;
+    repeated int32 param = 3; //参数 eg:答题参数1,2,3
+}
+//24017
+message GResDungeonQuestion {
+    optional int32 event_type = 1;//事件类型
+    optional int32 right_amount = 2;//正确题目数
+    repeated PSEventRewardsData rewards_list = 3; //奖励内容
+}
+
+//庇护所商店购买
+//24021
+message GReqDungeonShopBuy {
+    optional int32 index = 1; //商品索引值
+}
+//24021
+message GResDungeonShopBuy {
+    optional int32 index = 1; //商品索引值
+}
+
+//庇护所召唤商店
+//24022
+message GReqDungeonShopAdd {
+}
+//24022
+message GResDungeonShopAdd {
+    optional PSDungeonShopData goods = 1;
+}
+
+//庇护所一键扫荡
+//24023
+message GReqDungeonOneKeyBattle {
+
+}
+//24023
+message GResDungeonOneKeyBattle {
+    repeated PSEventRewardsData rewards_list = 1; //奖励内容
+}
+
+//驱散药剂购买
+//24024
+message GReqDispelBuy{
+    optional int32 buy_amount = 1;//购买数量
+}
+//24024
+message GResDispelBuy{
+}
+
+//庇护所战斗结算
+//24031
+message GReqDungeonBattleEnd {
+    optional int32 monster_level = 1; //怪物对应icon_level;
+    optional int32 hero_index = 2; //英雄索引id
+}
+//24031
+message GResDungeonBattleEnd {
+    optional BattleReport report = 4; // 战报
+}
+

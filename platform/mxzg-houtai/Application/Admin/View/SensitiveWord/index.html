@@ -1,0 +1,134 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>敏感词列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('SensitiveWord/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">敏感词：</label>
+                                            <input type="text" placeholder="模糊搜索" name="sensitive_word" value="{$search_params.sensitive_word}" style="width: 120px;" class="form-control">
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <button onclick="openYemian('{:U('SensitiveWord/add')}','添加敏感词')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>添加</button>
+                                        <button onclick="openYemian('{:U('SensitiveWord/send')}','发送敏感词')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>发送敏感词</button>
+                                        <button onclick="openYemian('{:U('SensitiveWord/send_log')}','发送敏感词记录')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>发送敏感词记录</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'ids\']').prop('checked', this.checked);"></th>
+                                                        <th width="5%">主键ID</th>
+                                                        <th>敏感词</th>
+                                                        <th>管理员id</th>
+                                                        <th>管理员名称</th>
+                                                        <th>创建时间</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row"> 
+                                                            <td><input type="checkbox" name="ids[]" value="{$vo.id}"></td>
+                                                            <td>{$vo.id}</td>
+                                                            <td>{$vo.sensitive_word}</td>
+                                                            <td>{$vo.admin_id}</td>
+                                                            <td>{$vo.admin_name}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['created_at'])}</td>
+                                                            <td>
+                                                                <a class="btn btn-danger" href="javascript:void(0)" title="删除敏感词" data-url="{:U('SensitiveWord/ajax_delete')}" data-id="{$vo.id}"  onclick="offline(this,'确定删除敏感词？','{:U('SensitiveWord/ajax_delete')}')" ><i class="fa fa-trash-o"></i>删除敏感词</a>
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                            <script>
+                                                // 点击分页触发的事件
+                                                $(".pagination a").click(function(){
+                                                    url = $(this).attr('href');
+                                                    ajax_get_table('formSearch',url);
+                                                    return false;
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,url){
+        // cur_page = page; //当前页面 保存为全局变量
+        // var info = $('#page_info').val();
+        $.ajax({
+            type : "POST",
+            url:url,
+            data : $('#'+form).serialize(),// 你的formid
+            success: function(data){
+                $("#ajaxList").html('');
+                $("#ajaxList").append(data);
+            }
+        });
+        return false;
+    }
+
+    //删除敏感词
+    function offline(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var id=$(obj).attr("data-id");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {id:id},
+                dataType : "json",
+                success:function(data){
+                    if (data.status == 0) {
+                        top.layer.msg(data.message);
+                    } else {
+                        top.layer.msg(data.message);
+                        // $(obj).parent().parent().remove();
+                    }
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+</script>
+
+
+<include file="Public:footer" />

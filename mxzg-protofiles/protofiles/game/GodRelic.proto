@@ -1,0 +1,73 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "GodRelicGMsg";
+import "Battle.proto";
+import "Object.proto";
+
+//请求诸神遗迹信息
+
+message PSStarData {
+    optional int32 chapter = 1; //篇章
+    optional int32 level = 2; //关卡
+    repeated int32 complete_id = 3; //完成目标id
+}
+
+//62001
+message GReqGodRelicData {
+}
+
+//62001
+message GResGodRelicData {
+    repeated PSStarData starMap = 1; //关卡星级集合(idx,star)
+    repeated int32 star_reward_record = 2; //领取星级奖励
+    optional int32 can_challenge_count = 3; //可挑战次数
+    optional int32 buy_count = 4; //已购买次数
+}
+
+//挑战诸神遗迹
+//62002
+message GReqGodRelicChallenge {
+    optional int32 idx = 1; //挑战得关卡GodRelic.idx
+}
+
+//62002
+message GResGodRelicChallenge {
+    optional PSStarData starMap = 1; //关卡星级集合(idx,star)
+    repeated BattleReport battle_report = 2; //战报，可能会有多份战报
+    optional int32 can_challenge_count = 3; //可挑战次数
+    repeated PSBackpackData reward = 4; //奖励
+    optional PSStarData max_star_map = 5; //关卡最大星级
+}
+
+//诸神遗迹购买次数
+//62003
+message GReqGodRelicBuyCount {
+}
+
+//62003
+message GResGodRelicBuyCount {
+    optional int32 can_challenge_count = 1; //可挑战次数
+    optional int32 buy_count = 2; //已购买次数
+}
+
+//领取星级奖励
+//62004
+message GReqGodRelicGetStarReward {
+    optional int32 idx = 1; //GodRelicStarReward.idx
+}
+
+//62004
+message GResGodRelicGetStarReward {
+    optional int32 idx = 1; //GodRelicStarReward.idx
+}
+
+//挑战诸神扫荡
+//62005
+message GReqGodRelicSweep {
+    optional int32 idx = 1; //挑战得关卡GodRelic.idx
+}
+
+//62005
+message GResGodRelicSweep {
+    optional int32 can_challenge_count = 1; //可挑战次数
+}

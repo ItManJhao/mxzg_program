@@ -1,0 +1,113 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>消息推送列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('FirebasePush/index')}" method="get" class="form-horizontal form-inline">
+                                            <label style="padding-left: 20px;" class="control-label" style="margin-left: 10px;">消息类型：</label>
+                                            <select class="form-control" name="is_broadcast">
+                                                <option <if condition="$search_params['is_broadcast'] == 'all'"> selected </if> value="all">请选择</option>
+                                                <option <if condition="$search_params['is_broadcast'] == '0'"> selected </if> value="0">用户消息</option>
+                                                <option <if condition="$search_params['is_broadcast'] == '1'"> selected </if> value="1">广播消息</option>
+                                            </select>
+                                            <label style="padding-left: 20px;" class="control-label" style="margin-left: 10px;">发送结果：</label>
+                                            <select class="form-control" name="status">
+                                                <option <if condition="$search_params['status'] == 'all'"> selected </if> value="all">请选择</option>
+                                                <option <if condition="$search_params['status'] == '0'"> selected </if> value="0">失败</option>
+                                                <option <if condition="$search_params['status'] == '1'"> selected </if> value="1">成功</option>
+                                            </select>
+                                            <label style="padding-left: 20px;" class="control-label" style="margin-left: 10px;">发送方式：</label>
+                                            <select class="form-control" name="type">
+                                                <option <if condition="$search_params['type'] == 'all'"> selected </if> value="all">请选择</option>
+                                                <option <if condition="$search_params['type'] == '1'"> selected </if> value="1">平台自动推送</option>
+                                                <option <if condition="$search_params['type'] == '2'"> selected </if> value="2">后台手动推送</option>
+                                            </select>
+                                            <label style="padding-left: 20px;" class="control-label">标题：</label>
+                                            <input type="text" style="margin-top: 10px;" placeholder="模糊搜索" name="title" value="{$search_params.title}" style="width: 120px;" class="form-control">&nbsp;
+                                            <label style="padding-left: 20px;" class="control-label">uid：</label>
+                                            <input type="text" style="margin-top: 10px;" placeholder="模糊搜索" name="user_ids" value="{$search_params.user_ids}" style="width: 120px;" class="form-control">&nbsp;
+                                            
+                                            
+                                            <button type="button" style="margin-left:30px;float: right;margin-top: 10px;" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="openYemian('{:U('FirebasePush/add')}','添加消息推送')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>添加</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" οnsubmit="return false;" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered" style="word-break:break-all; word-wrap:break-all;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>游戏id</th>
+                                                        <th>标题</th>
+                                                        <th>内容</th>
+                                                        <th>消息类型</th>
+                                                        <th>发送结果</th>
+                                                        <th>发送方式</th>
+                                                        <th>发送的uid集合</th>
+                                                        <th>返回结果</th>
+                                                        <th>管理员</th>
+                                                        <th>消息时间</th>
+                                                        <th>创建时间</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row"> 
+                                                            <td>{$vo.id}</td>
+                                                            <td>{$vo.appid}</td>
+                                                            <td>{$vo.title}</td>
+                                                            <td>{$vo.content}</td>
+                                                            <td><if condition="$vo['is_broadcast'] == 1">广播消息<else/>用户消息</if></td>
+                                                            <td><if condition="$vo['status'] == 1">成功<else/>失败</if></td>
+                                                            <td><if condition="$vo['type'] == 1">平台自动推送<else/>后台手动推送</if></td>
+                                                            <td>{$vo.user_ids}</td>
+                                                            <td>{$vo.debug}</td>
+                                                            <td>{$vo.admin_name}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['time'])}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['created_at'])}</td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+</script>
+
+<include file="Public:footer" />
+

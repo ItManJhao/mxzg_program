@@ -1,0 +1,68 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "MailGMsg";
+import "Object.proto";
+
+message ResMailData
+{
+	optional int64 mail_id = 1; // 邮件id
+	optional int32 time = 2; // 时间
+	optional int32 is_read = 3; // 是否阅读
+	optional int32 is_receive = 4; // 是否接受
+	optional string str_title = 5; // 邮件标题
+	optional string str_content = 6; // 邮件内容
+	repeated PSBackpackData vec_reward = 7;
+	optional int32 valid_day = 8; // 有效天数
+}
+
+//15000
+message GReqMailList
+{
+}
+//15000
+message GResMailList
+{
+	repeated ResMailData list = 1;
+}
+
+//邮件操作
+//15001
+message GReqDealWithMail
+{
+	optional int32 type = 1; // 0: 邮件已读  1: 接收邮件礼物   2: 删除邮件
+    optional int64 mail_id = 2;
+}
+//15001
+message GResDealWithMail
+{
+	optional int32 type = 1; // 0: 邮件已读  1: 接收邮件礼物   2: 删除邮件
+    optional int64 mail_id = 2;
+}
+
+//有新邮件时的推送
+//15002
+message GResNewMail
+{
+}
+
+//一键领取所有附件
+//15003
+message GReqReceiveAllMail
+{
+}
+//15003
+message GResReceiveAllMail
+{
+	repeated int64 mail_ids = 1;	//一键领取了的邮件ID
+}
+
+//一键领取所有附件
+//15004
+message GReqDeleteAllMail
+{
+}
+//15004
+message GResDeleteAllMail
+{
+	repeated int64 mail_ids = 1;	//一键删除了的邮件ID
+}

@@ -1,0 +1,23 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Task2GMsg";
+import "TaskObj.proto";
+
+//13061
+message GResLimitGiftAdd
+{
+	optional LimitGiftData data = 1;
+}
+
+//13086
+message GReqMidAutumnInfo
+{
+}
+//13086
+message GResMidAutumnInfo
+{
+	optional int32 begin_time = 1; // 开始时间戳
+	optional int32 end_time = 2; // 终止时间戳
+	optional int32 is_bought = 3; // 是否已经购买 0:未购买 1:已购买
+}
+

@@ -1,0 +1,211 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Alice";
+
+import "Battle.proto";
+import "Object.proto";
+import "Hero.proto";
+
+message PBAliceRank{
+    optional int64 rid=1;//玩家id
+    optional int32 server_id=2;//服务器id
+    optional int32 head_id=3;//头像
+    optional int32 broad_id=4;//头像框
+    optional string name=5;//玩家名
+    optional int32 rank=6;//排名
+    optional int32 battle_round=7;//通关回合
+    optional int32 battle_dead=8;//死亡武将
+}
+
+message PBAliceHero{
+    optional int32 hero_type=1;//类型
+    optional int32 level=2;//等级
+    optional int32 star=3;//星级
+    optional int32 fashion_id=4;//皮肤
+}
+
+message PBAliceLineUp{
+    repeated PBAliceHero alice_hero=1;
+}
+
+message PBAliceTopLog{
+    optional int32 rank=1;//排名
+    optional string name=2;//玩家名
+    optional int32 image=3;//模型
+    repeated int32 enemy_attr=4;//敌人属性
+    repeated int32 player_attr=5;//玩家属性
+    repeated PBAliceLineUp line_up=6;//所用阵容
+}
+
+//关卡信息
+message PBAliceLevel{
+    optional int32 level=1;//关卡
+    repeated int32 line_up=2;//阵容
+    optional bool kill=3;//是否击杀
+
+}
+
+message PBAliceStarData{
+    optional int32 star=1;//星级
+    repeated PBAliceLevel level_info=2;//通关信息
+    optional bool had_first=3;//已经首通
+    repeated int32 player_attr=4;//玩家增加属性
+    repeated int32 enemy_attr=5;//敌方增加属性
+    optional int32 skill_point=6;//技能点
+    optional int32 assist_idx=7;//助战配置
+    optional bool assist_battle=8;//是否已经上阵
+}
+
+//爱丽丝空间信息
+//76581
+message GReqAliceData{
+}
+
+//76581
+message GResAliceData{
+    repeated PBAliceStarData star_data=1;//通关星级信息
+    optional int32 curr_star=2;//当前所在星级
+    optional int32 stage=3;//阶段
+    optional int32 next_stage_time=4;//下一阶段时间
+}
+
+//爱丽丝挑战空间
+//76582
+message GReqChallengeLevel{
+    optional int32 level=1;//挑战关卡
+}
+
+//76582
+message GResChallengeLevel{
+    repeated BattleReport report=1;//战报
+    optional bool had_pass=2;//已经首通
+    repeated PSBackpackData reward=3;//奖励
+    repeated int32 enemy_attr=4;//怪物增加属性
+    optional int32 skill_point=5;//技能点
+    optional int32 rank=6;//排名(-1代表未上榜，0代表无意义)
+    optional int32 level_round=7;//当前空间回合数
+    optional int32 level_dead=8;//当前关空间亡数
+    optional int32 star_round=9;//当前星级回合数
+    optional int32 star_dead=10;//当前星级死亡数
+    optional int32 curr_add_skill=11;//当前空间增加点数
+}
+
+//爱丽丝重置星级
+//76583
+message GReqResetStar{
+    optional int32 star=1;//重置星级
+}
+
+//76583
+message GResResetStar{
+    optional PBAliceStarData star_data=1;//通关星级信息
+}
+
+//爱丽丝选择玩家属性
+//76584
+message GReqSelectPlayerAttr{
+    repeated int32 idx=1;//属性标识
+    optional int32 star=2;//星级
+}
+
+//76584
+message GResSelectPlayerAttr{
+    optional int32 skill_point=1;//技能点
+    repeated int32 player_attr=2;//玩家属性列表
+}
+
+//爱丽丝排行榜
+//76585
+message GReqAliceRank{
+    optional int32 star=1;
+}
+
+//76585
+message GResAliceRank{
+    repeated PBAliceRank list=1;
+    optional PBAliceRank self=2;
+}
+
+//爱丽丝大神风采
+//76586
+message GReqAliceTopLog{
+    optional int32 star = 1;
+}
+
+//76586
+message GResAliceTopLog{
+    repeated PBAliceTopLog top_log=1;
+}
+
+//爱丽丝选择助战
+//76587
+message GReqAliceSelectAssist{
+    optional int32 star = 1;//星级
+    optional int32 idx=2;//助战id
+}
+
+//76587
+message GResAliceSelectAssist{
+    optional int32 star = 1;//星级
+    optional int32 idx=2;//助战id
+}
+
+//爱丽丝英雄详情
+//76588
+message GReqAliceHeroDetail{
+    optional int64 hero_id=1;//英雄id
+    optional int32 star=2;//星级
+}
+
+//76588
+message GResAliceHeroDetail{
+    optional PSHeroDetail detail = 1;
+    optional int64 fighting=2;
+}
+
+//阵容战斗力计算
+//76589
+message GReqAliceLineUpFighting{
+    optional int32 line_up_type=1;//阵容
+    optional int32 star=2;//星级
+    repeated int64 heroId=3;//英雄id，助战填-1；
+}
+
+//76589
+message GResAliceLineUpFighting{
+    optional int64 fighting=1;
+    optional int32 line_up_type=2;
+}
+
+//保存阵容
+//76590
+message GReqAliceSaveLineUp{
+    optional PSLineUpData lineData = 1;
+    optional int32 star=2;
+}
+
+//76590
+message GResAliceSaveLineUp{
+}
+
+//改变星级界面
+//76591
+message GReqAliceChangeStar{
+    optional int32 star=1;
+}
+
+//76591
+message GResAliceChangeStar{
+}
+
+//爱丽丝助战详情
+//76592
+message GReqAliceAssistDetail{
+    optional int32 idx=1;
+}
+
+//76592
+message GResAliceAssistDetail{
+    optional PSHeroDetail detail = 1;
+    optional int64 fighting=2;
+}

@@ -1,0 +1,292 @@
+local HeroMagicWandSelectLayer = class("HeroMagicWandSelectLayer", require("src.comp.CCCLayerBase")) 
+
+function HeroMagicWandSelectLayer:onCreate() 
+	 local sfc = cc.SpriteFrameCache:getInstance()
+	self:setPosition(0, 0)
+	self:setContentSize(620, 1020)
+	self:setAnchorPoint(cc.p(0, 0))
+	self:resetScaleAtWidth(false)
+	self:addBlackBackground()
+	local spr_bg = cc.Scale9Sprite:create()
+	spr_bg:setPosition(0, 0)
+	spr_bg:setContentSize(620, 1020)
+	spr_bg:setAnchorPoint(cc.p(0, 0))
+	self:addLoadRes(1, spr_bg, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {frame = "win-bg/win-bg-11.png", capInsets = cc.rect(58,64,56,71)})
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(spr_bg)
+	lyt:setLeftMargin(0)
+	lyt:setRightMargin(0)
+	lyt:setHorizontalEdge(3)
+	lyt:setStretchWidthEnabled(true)
+	lyt:setTopMargin(0)
+	lyt:setBottomMargin(0)
+	lyt:setVerticalEdge(3)
+	lyt:setStretchHeightEnabled(true)
+	self:addLyt(lyt)
+	spr_bg.lyt = lyt
+	self:addChild(spr_bg)
+	self.spr_bg = spr_bg
+
+	local node_title = cc.Node:create()
+	node_title:setPosition(310, 1020)
+	node_title:setContentSize(0, 0)
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(node_title)
+	lyt:setTopMargin(0)
+	lyt:setVerticalEdge(2)
+	self:addLyt(lyt)
+	node_title.lyt = lyt
+	self:addChild(node_title)
+	self.node_title = node_title
+
+	local spr_title_bg = cc.Scale9Sprite:create()
+	spr_title_bg:setPosition(0, 0)
+	spr_title_bg:setContentSize(184, 67)
+	spr_title_bg:setAnchorPoint(cc.p(0.5, 1))
+	self:addLoadRes(1, spr_title_bg, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {frame = "win-bg/title-bar-3.png", capInsets = cc.rect(0,0,0,0)})
+	node_title:addChild(spr_title_bg)
+	self.spr_title_bg = spr_title_bg
+
+	local lbl_title = cc.Label:createWithTTF(ex.Tools:getLang(57186),FONT_DEFAULT_NAME_BOLD, 56)
+	lbl_title:setPosition(0, -42.4)
+	lbl_title:setContentSize(228, 74.56)
+	lbl_title:setScale(0.5, 0.5)
+	lbl_title:setTextColor(cc.c3b(255, 227, 183))
+	lbl_title:setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+	lbl_title:setHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT)
+	lbl_title:enableOutline(cc.c4b(87,56,29,255), 2)
+	node_title:addChild(lbl_title)
+	self.lbl_title = lbl_title
+
+	local spr_bg = cc.Scale9Sprite:create()
+	spr_bg:setPosition(30, 200)
+	spr_bg:setContentSize(560, 660)
+	spr_bg:setAnchorPoint(cc.p(0, 0))
+	self:addLoadRes(1, spr_bg, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {frame = "win-bg/block-bg-26.png", capInsets = cc.rect(9,9,9,9)})
+	local lyt = ccui.LayoutComponent:bindLayoutComponent(spr_bg)
+	lyt:setLeftMargin(30)
+	lyt:setRightMargin(30)
+	lyt:setHorizontalEdge(3)
+	lyt:setStretchWidthEnabled(true)
+	lyt:setTopMargin(160)
+	lyt:setBottomMargin(200)
+	lyt:setVerticalEdge(3)
+	lyt:setStretchHeightEnabled(true)
+	self:addLyt(lyt)
+	spr_bg.lyt = lyt
+	self:addChild(spr_bg)
+	self.spr_bg = spr_bg
+
+	local scroll_view_tab = cc.ScrollView:create(cc.size(560, 80))
+	scroll_view_tab:setPosition(310, 918.22)
+	scroll_view_tab:setContentSize(560, 80)
+	scroll_view_tab:setAnchorPoint(cc.p(0.5, 0.5))
+	scroll_view_tab:setIgnoreAnchorPointForPosition(false)
+	scroll_view_tab:setDirection(cc.SCROLLVIEW_DIRECTION_HORIZONTAL)
+	scroll_view_tab:setContentSize(cc.size(742, 80))
+	self:addChild(scroll_view_tab)
+	self.scroll_view_tab = scroll_view_tab
+
+	local content = scroll_view_tab:getContainer()
+	local menu_tab = cpp.UIMenu:create()
+	menu_tab:setPosition(0, 0)
+	menu_tab:setContentSize(742, 108)
+	menu_tab:setSwallowsTouches(false)
+	local ly = require("src.comp.UILayoutEx"):create()
+	ly:setLayoutType(UILayout.Type.HORIZONTAL, UILayout.ResizeMode.CONTAINER, UILayout.Direction.LTOR, 0, 0, -10, true)
+	ly.node = menu_tab
+	menu_tab.layoutex = ly
+	self:addLyt(ly)
+	content:addChild(menu_tab)
+	self.menu_tab = menu_tab
+
+	local btn_tab1 = cpp.UIMenuItemTab:create("", nil, "--", 1, 1)
+	btn_tab1:setPosition(66, 27)
+	btn_tab1:setContentSize(132, 54)
+	btn_tab1:setTag(1)
+	btn_tab1:registerScriptTapHandler(handler(self, self.onTab))
+	btn_tab1:getLabel():setTextColor(cc.c4b(255, 255, 255, 255))
+	btn_tab1:setLabelOffset(cc.p(0, -2))
+	btn_tab1:setLabelText(ex.Tools:getLang(57151))
+	local l = btn_tab1:getLabel()
+	local t = btn_tab1:getLabel():getTTFConfig()
+	t.fontSize = 44
+	l:setTTFConfig(t)
+	self:addLoadRes(3, btn_tab1, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-tab-17.png", spr2="button/btn-tab-18.png"})
+	menu_tab:addChild(btn_tab1)
+	self.btn_tab1 = btn_tab1
+
+	local btn_tab2 = cpp.UIMenuItemTab:create("", nil, "--", 1, 1)
+	btn_tab2:setPosition(188, 27)
+	btn_tab2:setContentSize(132, 54)
+	btn_tab2:setTag(2)
+	btn_tab2:registerScriptTapHandler(handler(self, self.onTab))
+	btn_tab2:getLabel():setTextColor(cc.c4b(255, 255, 255, 255))
+	btn_tab2:setLabelOffset(cc.p(0, -2))
+	btn_tab2:setLabelText(ex.Tools:getLang(57152))
+	local l = btn_tab2:getLabel()
+	local t = btn_tab2:getLabel():getTTFConfig()
+	t.fontSize = 44
+	l:setTTFConfig(t)
+	self:addLoadRes(3, btn_tab2, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-tab-19.png", spr2="button/btn-tab-20.png"})
+	menu_tab:addChild(btn_tab2)
+	self.btn_tab2 = btn_tab2
+
+	local btn_tab3 = cpp.UIMenuItemTab:create("", nil, "--", 1, 1)
+	btn_tab3:setPosition(310, 27)
+	btn_tab3:setContentSize(132, 54)
+	btn_tab3:setTag(3)
+	btn_tab3:registerScriptTapHandler(handler(self, self.onTab))
+	btn_tab3:getLabel():setTextColor(cc.c4b(255, 255, 255, 255))
+	btn_tab3:setLabelOffset(cc.p(0, -2))
+	btn_tab3:setLabelText(ex.Tools:getLang(57153))
+	local l = btn_tab3:getLabel()
+	local t = btn_tab3:getLabel():getTTFConfig()
+	t.fontSize = 44
+	l:setTTFConfig(t)
+	self:addLoadRes(3, btn_tab3, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-tab-19.png", spr2="button/btn-tab-20.png"})
+	menu_tab:addChild(btn_tab3)
+	self.btn_tab3 = btn_tab3
+
+	local btn_tab4 = cpp.UIMenuItemTab:create("", nil, "--", 1, 1)
+	btn_tab4:setPosition(432, 27)
+	btn_tab4:setContentSize(132, 54)
+	btn_tab4:setTag(4)
+	btn_tab4:registerScriptTapHandler(handler(self, self.onTab))
+	btn_tab4:getLabel():setTextColor(cc.c4b(255, 255, 255, 255))
+	btn_tab4:setLabelOffset(cc.p(0, -2))
+	btn_tab4:setLabelText(ex.Tools:getLang(57154))
+	local l = btn_tab4:getLabel()
+	local t = btn_tab4:getLabel():getTTFConfig()
+	t.fontSize = 44
+	l:setTTFConfig(t)
+	self:addLoadRes(3, btn_tab4, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-tab-19.png", spr2="button/btn-tab-20.png"})
+	menu_tab:addChild(btn_tab4)
+	self.btn_tab4 = btn_tab4
+
+	local btn_tab5 = cpp.UIMenuItemTab:create("", nil, "--", 1, 1)
+	btn_tab5:setPosition(554, 27)
+	btn_tab5:setContentSize(132, 54)
+	btn_tab5:setTag(5)
+	btn_tab5:registerScriptTapHandler(handler(self, self.onTab))
+	btn_tab5:getLabel():setTextColor(cc.c4b(255, 255, 255, 255))
+	btn_tab5:setLabelOffset(cc.p(0, -2))
+	btn_tab5:setLabelText(ex.Tools:getLang(57155))
+	local l = btn_tab5:getLabel()
+	local t = btn_tab5:getLabel():getTTFConfig()
+	t.fontSize = 44
+	l:setTTFConfig(t)
+	self:addLoadRes(3, btn_tab5, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-tab-19.png", spr2="button/btn-tab-20.png"})
+	menu_tab:addChild(btn_tab5)
+	self.btn_tab5 = btn_tab5
+
+	local btn_tab6 = cpp.UIMenuItemTab:create("", nil, "--", 1, 1)
+	btn_tab6:setPosition(676, 27)
+	btn_tab6:setContentSize(132, 54)
+	btn_tab6:setTag(6)
+	btn_tab6:registerScriptTapHandler(handler(self, self.onTab))
+	btn_tab6:getLabel():setTextColor(cc.c4b(255, 255, 255, 255))
+	btn_tab6:setLabelOffset(cc.p(0, -2))
+	btn_tab6:setLabelText(ex.Tools:getLang(57156))
+	local l = btn_tab6:getLabel()
+	local t = btn_tab6:getLabel():getTTFConfig()
+	t.fontSize = 44
+	l:setTTFConfig(t)
+	self:addLoadRes(3, btn_tab6, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-tab-21.png", spr2="button/btn-tab-22.png"})
+	menu_tab:addChild(btn_tab6)
+	self.btn_tab6 = btn_tab6
+
+	local scroll_view = require("src.comp.UIScrollViewItem"):createWithSize(cc.size(0, 0))
+	scroll_view:setPosition(310, 200)
+	scroll_view:setContentSize(560, 660)
+	scroll_view:setAnchorPoint(cc.p(0.5, 0))
+	scroll_view:setIgnoreAnchorPointForPosition(false)
+	scroll_view:setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL)
+	scroll_view:setItemType(1)
+	scroll_view:setItemSize(cc.size(550, 165))
+	self:addChild(scroll_view)
+	self.scroll_view = scroll_view
+
+	local UIMenu = cpp.UIMenu:create()
+	UIMenu:setPosition(0, 0)
+	UIMenu:setContentSize(0, 0)
+	UIMenu:setAnchorPoint(cc.p(0.5, 0.5))
+	UIMenu:setIgnoreAnchorPointForPosition(false)
+	self:addChild(UIMenu)
+
+	local btn_close = cpp.UIMenuItemImage:createWithSpriteFrameName("", nil, nil)
+	btn_close:setPosition(542.39, 1020.35)
+	btn_close:setContentSize(53, 56)
+	btn_close:setAnchorPoint(cc.p(0.5, 1))
+	btn_close:registerScriptTapHandler(handler(self, self.onClose))
+	self:addLoadRes(3, btn_close, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-close-1.png", spr2="button/btn-close-1.png"})
+	UIMenu:addChild(btn_close)
+	self.btn_close = btn_close
+
+	local btn_illustrate = cpp.UIMenuItemLabel:create("", nil, " ", nil)
+	btn_illustrate:setPosition(310, 98.63)
+	btn_illustrate:setContentSize(134, 56)
+	btn_illustrate:registerScriptTapHandler(handler(self, self.onIllustrate))
+	btn_illustrate:getLabel():setTextColor(cc.c4b(255, 255, 255, 255))
+	btn_illustrate:setLabelOffset(cc.p(0, 0))
+	btn_illustrate:setLabelSize(44)
+	btn_illustrate:setLabelOutLine(cc.c4b(0,0,0,255), 2)
+	btn_illustrate:setLabelText(ex.Tools:getLang(57172))
+	self:addLoadRes(3, btn_illustrate, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-green-big-1.png"})
+	UIMenu:addChild(btn_illustrate)
+	self.btn_illustrate = btn_illustrate
+
+	local btn_get = cpp.UIMenuItemLabel:create("", nil, " ", nil)
+	btn_get:setPosition(150, 98.63)
+	btn_get:setContentSize(134, 56)
+	btn_get:registerScriptTapHandler(handler(self, self.onGet))
+	btn_get:getLabel():setTextColor(cc.c4b(255, 255, 255, 255))
+	btn_get:setLabelOffset(cc.p(0, 0))
+	btn_get:setLabelSize(44)
+	btn_get:setLabelOutLine(cc.c4b(0,0,0,255), 2)
+	btn_get:setLabelText(ex.Tools:getLang(57171))
+	self:addLoadRes(3, btn_get, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-green-big-1.png"})
+	UIMenu:addChild(btn_get)
+	self.btn_get = btn_get
+
+	local btn_preview = cpp.UIMenuItemLabel:create("", nil, " ", nil)
+	btn_preview:setPosition(470, 98.63)
+	btn_preview:setContentSize(134, 56)
+	btn_preview:registerScriptTapHandler(handler(self, self.onPreview))
+	btn_preview:getLabel():setTextColor(cc.c4b(255, 255, 255, 255))
+	btn_preview:setLabelOffset(cc.p(0, 0))
+	btn_preview:setLabelSize(44)
+	btn_preview:setLabelOutLine(cc.c4b(0,0,0,255), 2)
+	btn_preview:setLabelText(ex.Tools:getLang(57173))
+	self:addLoadRes(3, btn_preview, "ccbi-res/common-ui-2.plist", "ccbi-res/common-ui-2.pvr.ccz", {spr1="button/btn-green-big-1.png"})
+	UIMenu:addChild(btn_preview)
+	self.btn_preview = btn_preview
+
+	local lbl_tip1 = cc.Label:createWithTTF(ex.Tools:getLang(57168),FONT_DEFAULT_NAME_BOLD, 20)
+	lbl_tip1:setPosition(310, 177.23)
+	lbl_tip1:setContentSize(120, 25.2)
+	lbl_tip1:setTextColor(cc.c3b(222, 0, 0))
+	lbl_tip1:setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+	lbl_tip1:setHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT)
+	self:addChild(lbl_tip1)
+	self.lbl_tip1 = lbl_tip1
+
+	local lbl_tip2 = cc.Label:createWithTTF(ex.Tools:getLang(57169),FONT_DEFAULT_NAME_BOLD, 20)
+	lbl_tip2:setPosition(310, 145.68)
+	lbl_tip2:setContentSize(317.7, 25.2)
+	lbl_tip2:setTextColor(cc.c3b(102, 54, 34))
+	lbl_tip2:setVerticalAlignment(cc.VERTICAL_TEXT_ALIGNMENT_TOP)
+	lbl_tip2:setHorizontalAlignment(cc.TEXT_ALIGNMENT_LEFT)
+	self:addChild(lbl_tip2)
+	self.lbl_tip2 = lbl_tip2
+
+	local lbl_tip3 = cpp.RichTextEx:createWithXMLLua("")
+	lbl_tip3:setPosition(310, 48.42)
+	lbl_tip3:setFontFace(FONT_DEFAULT_NAME_BOLD)
+	lbl_tip3:setFontSize(20)
+	lbl_tip3:setFontColor("#ffffff")
+	lbl_tip3:setXmlTextLua(ex.Tools:getLang(57170))
+	self:addChild(lbl_tip3)
+	self.lbl_tip3 = lbl_tip3
+
+	 self:startLoadRes()
+end
+return HeroMagicWandSelectLayer

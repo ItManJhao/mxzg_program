@@ -1,0 +1,28 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeadPortraitGMsg";
+
+//头像列表
+//34001
+message GReqHeadPortraitList{
+}
+//34001
+message GResHeadPortraitList{
+    repeated int32 idx_list = 1;//已解锁头像列表
+}
+
+//头像更换
+//34002
+message GReqChangeHeadPortrait{
+    optional int32 idx = 1;//更换的头像idx
+}
+//34002
+message GResChangeHeadPortrait{
+    optional int32 idx = 1;//更换的头像idx
+}
+
+//新头像解锁同步前端
+//34003
+message GResUnlockHeadPortrait{
+    repeated int32 idxs = 1;//新解锁头像集
+}

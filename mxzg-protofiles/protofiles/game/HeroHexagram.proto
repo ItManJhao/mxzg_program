@@ -1,0 +1,40 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroHexagramGMsg";
+
+//六芒星
+message PSHeroHexagram {
+    required int32 type = 1; //六芒星类型
+    required int32 level = 2; //六芒星等级
+}
+
+//重置六芒星
+//4501
+message GReqHeroHexagramReset
+{
+	required int64 hero_id = 1; //英雄id
+	required int32 type = 2; //六芒星类型
+}
+//4501
+message GResHeroHexagramReset
+{
+	required int64 hero_id = 1; //英雄id
+	required int32 type = 2; //六芒星类型
+}
+
+
+//升级突破六芒星
+//4502
+message GReqHeroHexagramUpgrade
+{
+	required int64 hero_id = 1; 	//英雄id
+	required int32 type = 2; //六芒星类型
+    required int32 level = 3; //六芒星等级
+}
+//4502
+message GResHeroHexagramUpgrade
+{
+	required int64 hero_id = 1; 	//英雄id
+	required int32 type = 2; //六芒星类型
+    required int32 level = 3; //六芒星等级
+}

@@ -1,0 +1,71 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>英雄-宠物信息</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('Role/hero_pet')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>宠物id</th>
+                                            <th>宠物名称</th>
+                                            <th>宠物等级</th>
+                                            <th>宠物元素</th>
+                                            <th>宠物品质</th>
+                                            <th>宠物技能</th>
+                                            <th>宠物技能等级</th>
+                                            <th>宠物属性</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row">
+                                            <volist name="hero_pet" id="hero_pet_vo">
+                                                <tr role="row">
+                                                    <td>{$hero_pet_vo.sys_id}</td>
+                                                    <td>{$hero_pet_vo.type_name}</td>
+                                                    <td>{$hero_pet_vo.level}</td>
+                                                    <td>
+                                                        <if condition="$hero_pet_vo['elem'] == 1">火
+                                                            <elseif condition="$hero_pet_vo['elem'] == 2"/>水
+                                                            <elseif condition="$hero_pet_vo['elem'] == 3"/>木
+                                                            <elseif condition="$hero_pet_vo['elem'] == 4"/>光
+                                                            <elseif condition="$hero_pet_vo['elem'] == 5"/>暗
+                                                            <else/>无
+                                                        </if>
+                                                    </td>
+                                                    <td>{$hero_pet_vo.quality}</td>
+                                                    <td>{$hero_pet_vo.skill}</td>
+                                                    <td>{$hero_pet_vo.skill_level}</td>
+                                                    <td>{$hero_pet_vo.attribute}</td>
+                                                </tr>
+                                            </volist>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+<script language="javascript">
+
+</script>
+
+
+<include file="Public:footer" />

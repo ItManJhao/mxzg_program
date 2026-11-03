@@ -1,0 +1,12 @@
+stages:
+  - build
+
+# common
+build-job:
+  stage: build
+  tags:
+    - java
+  script:
+    - mvn clean install -Dmaven.test.skip=true
+  only:
+    - master

@@ -1,0 +1,316 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "SpaceTimeAdventureGMsg";
+
+import "Object.proto";
+import "Battle.proto";
+
+//舰队科技
+message PSFleetSkillData {
+    optional int32 skill_type = 1; //科技类型
+    optional int32 skill_level = 2; //科技等级
+}
+//物资数据
+message PSGoodsData {
+    optional int32 idx = 1; //配置表id
+    optional int32 time = 2; //获得时间
+}
+//商品数据
+message PSShopItemData {
+    optional int32 idx = 1;
+    optional int32 buy_num = 2; //已购买数据
+}
+//英雄阵容
+message PSFleetHeroLineUp {
+    optional int32 type = 1;
+    repeated int64 hero_id = 2;
+}
+//减益或增益结构
+message PSFleetBuff {
+    optional int32 buff_id = 1; //类型
+    optional int32 effect = 2; //效果
+}
+
+//异界冒险信息
+//74120
+message GReqSpaceTimeAdventureInfo {
+
+}
+//74120
+message GResSpaceTimeAdventureInfo {
+    repeated int32 unlock_route = 1; //解锁的航线
+    optional int32 not_route = 2; //当前执行航线
+    optional int32 energy = 3; //剩余体力值
+    optional int64 not_progress = 4; //已航行里程（用于计算进度）
+    optional int32 end_time = 5; //预计航行结束时间
+    optional int32 shop_end_time = 6; //土著商店结束时间
+    repeated PSShopItemData shop_list = 7; //商店商品数据
+    optional int32 status = 8; //结算状态,1为可结算。0为不可结算
+    optional int32 product_end_time = 9;//超值礼包结束时间
+    optional int32 product_id = 11;//超值礼包id
+    optional int32 product_buy = 12;//超值礼包已购次数
+    optional int32 speed_buff = 13;//是否有速度加成，1是。0否。
+}
+
+//舰长室的舰队数据
+//74121
+message GReqFleetInfo {
+
+}
+//74121
+message GResFleetInfo {
+    optional int32 level = 1; //舰队等级
+    optional int64 exp = 2; //舰队经验
+    optional string nick = 3; //舰队名字
+    optional int32 durability = 4; //耐久度
+    optional int32 skill_num = 5; //剩余科技点
+    repeated PSFleetSkillData skill = 6; //科技信息
+}
+
+//货舱数据
+//74122
+message GReqCargoHoldInfo {
+
+}
+//74122
+message GResCargoHoldInfo {
+    repeated PSBackpackData item_list = 1; //材料列表
+    repeated PSGoodsData goods_list = 2; //物资列表
+}
+
+//选择航线
+//74123
+message GReqChooseRoute {
+    optional int32 idx = 1;
+}
+//74123
+message GResChooseRoute {
+    optional int32 idx = 1;
+}
+
+//舰队技能加点
+//74124
+message GReqFleetUpSkill {
+    optional int32 skill_type = 1;
+}
+//74124
+message GResFleetUpSkill {
+    optional int32 skill_num = 1; //剩余技能点
+    optional PSFleetSkillData skill_info = 2;
+}
+
+//舰队修理
+//74125
+message GReqFleetRepair {
+
+}
+//74125
+message GResFleetRepair {
+    optional int32 durability = 1; //当前耐久度
+}
+
+//商店购买
+//74126
+message GReqSpaceTimeShopBuy {
+    optional int32 idx = 1;
+}
+//74126
+message GResSpaceTimeShopBuy {
+    repeated PSShopItemData shop_list = 1; //商店商品数据
+    optional int32 end_time = 2; //商店关闭时间
+    optional int32 idx = 3;//购买的道具
+}
+
+//修改航队名字
+//74127
+message GReqModifyName {
+    optional string name = 1;
+}
+//74127
+message GResModifyName {
+    optional string name = 1;
+}
+
+//探索
+//74128
+message GReqFleetExplore {
+
+}
+//74128
+message GResFleetExplore {
+    optional int32 event_type = 1; //探索的事件类型
+    optional int32 energy = 2; //剩余体力值
+}
+
+//放弃事件或者退出界面
+//74129
+message GReqQuitEvent {
+
+}
+//74129
+message GResQuiteEvent {
+    optional int32 event_id = 1; //放弃的事件id
+}
+
+//查看掠夺航队信息
+//74130
+message GReqEnemyInfo {
+
+}
+//74130
+message GResEnemyInfo {
+    optional int32 service_id = 1; //服务器id
+    optional string enemy_nick = 2; //敌人昵称
+}
+
+//执行事件
+//74131
+message GReqExecuteEvent {
+    optional int32 event_type = 1;
+    optional int32 battle_type = 2; //其他舰队事件攻击的系统id
+}
+
+//事件返回
+//舰队残骸事件返回
+//74132
+message GResFleetEventOne {
+    repeated PSBackpackData item_list = 1; //获得道具
+}
+//舰队残骸(怪物)事件返回
+//74133
+message GResFleetEventTwo {
+    optional BattleReport report = 1; //战报
+    repeated PSBackpackData item_list = 2; //获得道具
+    repeated PSFleetBuff buff = 3; //减增益效果
+    optional int32 durability = 4;//当前剩余耐久度
+}
+//其他舰队事件返回
+//74134
+message GResFleetEventThree {
+    optional BattleReport report = 1; //战报
+    repeated PSFleetBuff buff = 2; //减增益效果
+    optional int32 durability = 3;//当前剩余耐久度
+    repeated PSBackpackData item_list = 4; //获得道具
+}
+//遗迹地图事件返回
+//74135
+message GResFleetEventFour {
+    optional int32 route_id = 1; //开启航线
+}
+//风暴降临事件返回
+//74136
+message GResFleetEventFive {
+    repeated PSFleetBuff buff = 1; //减增益效果
+    optional int32 durability = 2;//当前剩余耐久度
+}
+//土著商人事件返回
+//74137
+message GResFleetEventSix {
+    optional int32 end_time = 1; //结束时间
+    repeated PSShopItemData shop_list = 2; //商店商品数据
+}
+//搁浅舰队事件返回
+//74138
+message GResFleetEventSeven {
+    repeated PSFleetBuff buff = 1; //减增益效果
+    optional int32 durability = 2;//当前剩余耐久度
+}
+//天降宝箱事件返回
+//74139
+message GResFleetEventEight {
+    repeated PSBackpackData item_list = 1; //获得道具
+}
+//什么事件都没发生
+//74140
+message GResFleetEventNine {
+    repeated PSBackpackData item_list = 1; //获得道具
+}
+
+//保存舰队阵容
+//74141
+message GReqVerifyHeroLineUP {
+    repeated PSLineUpData lineData = 1;
+}
+//74141
+message GResVerifyHeroLineUp {
+
+}
+
+//航行结算
+//74142
+message GReqSailingEnd {
+
+}
+//74142
+message GResSailingEnd {
+    repeated PSBackpackData item_list = 1; //结算物品
+    optional int32 level = 2;//新的等级
+    optional int64 exp = 3;//新的经验
+}
+
+//修改航行状态，事件影响航行里程、速度，耐久度增减都会更新航行进度
+//74143
+message GResUpdateSailingProgress {
+    optional int64 not_progress = 1; //已航行里程（用于计算进度）
+    optional int32 end_time = 2; //预计航行结束时间
+}
+
+//事件图鉴
+//74144
+message GReqSailingIllustrate {
+
+}
+//74144
+message GResSailingIllustrate {
+    repeated int32 unlock_event = 1; //解锁事件
+}
+
+//更新解锁图鉴
+//74145
+message GResUpdateIllustrate {
+    optional int32 event_id = 1; //新解锁事件
+}
+
+//发送时间，进度，体力值
+//74146
+message GReqSailingInfo{
+
+}
+//74146
+message GResSailingInfo{
+    optional int32 energy = 1; //剩余体力值
+    optional int64 not_progress = 2; //已航行里程（用于计算进度）
+    optional int32 end_time = 3; //预计航行结束时间
+}
+
+//航线礼包
+//74147
+message GResFleetEventTen{
+    optional int32 product_id = 1;//商品id
+    optional int32 product_end_time = 2;//结束时间
+}
+//疾风之力
+//74148
+message GResFleetEventEleven{
+    repeated PSFleetBuff buff = 1; //减增益效果
+    optional int32 durability = 2;//当前剩余耐久度
+}
+//礼包购买返回
+//74149
+message GResFleetGiftBuy{
+    optional int32 product_end_time = 1;//超值礼包结束时间
+    optional int32 product_id = 2;//超值礼包id
+    optional int32 product_buy = 3;//超值礼包已购次数
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,69 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加渠道</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('channel/ajax_add')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                            <div class="tab-pane active">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>渠道ID：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" name="id" type="text" required="" aria-required="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>渠道名称：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" name="name" type="text" required="" aria-required="true">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">大渠道：</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="parent_id">
+                                            <option value="0">我是大渠道</option>
+                                            <volist name="parent_channels" id="parent_channels_vo">
+                                                <option value="{$parent_channels_vo.id}">{$parent_channels_vo.id}-{$parent_channels_vo.name}</option>
+                                            </volist>
+                                            </if>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">渠道备注：</label>
+                                    <div class="col-sm-8">
+                                        <input class="configInput form-control" name="desc" type="text" required="" aria-required="true">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('channel/ajax_add')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+
+</script>
+
+<include file="Public:footer" />

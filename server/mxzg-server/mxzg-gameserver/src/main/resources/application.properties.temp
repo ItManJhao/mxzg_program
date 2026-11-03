@@ -1,0 +1,124 @@
+
+spring.profiles.active=dev
+#debug
+server.debug=true
+#gm命令开关
+gm.cmd.open=true
+#服务器id
+server.id=1001
+#子服务器
+sub.server.id=[1005,1105,7,8,9,10]
+#向第三方推送聊天消息开关
+external.chat.switch=false
+
+#服务器的语言版本 1:cn 简体中文  2:CN_TRAD 繁体中文 3:IDN 印度尼西亚 4:en 英文 5:jp 日文 6:kor 韩文 7 vn越南 8 THAI 泰国
+server.lang=3
+#敏感字过滤
+sensitive.server.lang=[1,2]
+#服务器平台ID
+server.platformId=1
+#服务器平台ID
+server.platformSonId=10001
+#tcpsocket绑定的ip地址
+network.tcpSocket.ip=192.168.0.199
+#tcpsocket绑定的端口
+network.tcpSocket.port=9902
+#netty的io线程数
+network.tcpSocket.threads=10
+#netty的空闲检测时间秒
+network.tcpSocket.idle=60
+#逻辑线程池最小线程数量
+network.tcpSocket.logic.threads.min=4
+#逻辑线程池最大线程数量
+network.tcpSocket.logic.threads.max=8
+# web配置
+server.port=9801
+
+#websocket绑定的端口
+network.webSocket.port=13101
+#SSL配置
+network.webSocket.sslFile=/project_home/mxzg-h5.anyaojs.com.jks
+network.webSocket.sslPassword=mxzg-h5.anyaojs.com.Group
+
+# web初始化线程数量
+server.tomcat.min-spare-threads=2
+# management
+management.endpoint.conditions.enabled=true
+management.endpoints.web.exposure.include=*
+management.endpoint.health.show-details=always
+#中心服地址
+center.server.host=182.254.197.214
+#中心服端口
+center.server.port=20001
+
+#超凡段位赛跨服中心服地址
+large.server.host=192.168.0.140
+#超凡段位赛跨服端口
+large.server.port=11422
+
+#定时器线程池线程数量
+scheduler.threads=2
+#定时器任务执行输出日志临界时间
+scheduler.threshold=200
+#扫描包的跟路径
+base.package.path = com.ayjs
+#补丁类路径
+patch.class.path = F:\\patch
+#战报持久化线程数
+battle.report.thread.num = 4
+#战报的缓存容量
+battle.report.cache.capacity = 200
+#战报路径
+battle.report.path = F:\\battle-report
+#配置文件路径
+config.path=D:\\config\\gameconfig\\config-test-xlsx
+#ip文件
+ip2region.file=E:\\project\\github\\mxzg-server\\mxzg-gameserver\\src\\main\\resources\\ip2region.db
+#平台的通信key
+platform.key=^-^ywgame!@#api
+#平台服务器网址
+platform.uri=http://192.168.0.131:8070/
+#延时日志缓冲最大数量
+delayed.log.buffer.max.size=1000
+#延时日志缓冲清空间隔 单位:毫秒
+delayed.log.buffer.flush.period=30000
+#延时日志持久化批量处理数量
+delayed.log.persistence.batch.add.size=200
+#日志持久化线程数量
+log.persistence.threads=2
+#日志输出到数据库
+log.to.db=true
+#日志输出到文件
+log.to.file=true
+#日志输出到文件目录
+log.to.file.dir=gamelog
+#事件总线订阅者派发事件临界时间
+eventbus.threshold=50
+#统计日志路径
+statistic.path=statisticlog
+#服务器心跳url
+management.url=http://192.168.0.184:8090
+
+database.game.saveThreads=5
+database.log.saveThreads=2
+database.slowLog=200
+database.game.file=classpath:database-game.properties
+database.log.file=classpath:database-log.properties
+
+#################redis基础配置#################
+spring.redis.database=0
+spring.redis.host=192.168.0.131
+spring.redis.password=^-^ayjsgame!@#redis&201912
+spring.redis.port=11001
+# 连接超时时间 单位 ms（毫秒）
+spring.redis.timeout=3000
+
+#################redis线程池设置#################
+# 连接池中的最大空闲连接，默认值也是8。
+spring.redis.lettuce.pool.max-idle=500
+#连接池中的最小空闲连接，默认值也是0。
+spring.redis.lettuce.pool.min-idle=50
+# 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
+spring.redis.lettuce.pool.max-active=2000
+# 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
+spring.redis.lettuce.pool.max-wait=1000

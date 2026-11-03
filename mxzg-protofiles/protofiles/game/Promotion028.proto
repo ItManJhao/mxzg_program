@@ -1,0 +1,42 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion028GMsg";
+import "Pvp.proto";
+import "Object.proto";
+
+//查看酒馆常客信息
+//13391
+message GReqTavernCountData
+{
+}
+//13391
+message GResTavernCountData
+{
+	optional int32 count = 1;	//次数
+	repeated PSMapData list = 2;	//已领取奖励信息
+}
+
+//领取酒馆常客奖励
+//13392
+message GReqGetTavernReward
+{
+	optional int32 idx = 1;	//奖励ID
+}
+//13392
+message GResGetTavernReward
+{
+	optional int32 idx = 1;	//奖励ID
+}
+
+//查看酒馆常客排行榜
+//13393
+message GReqScanTavernRank
+{
+	
+}
+//13393
+message GResScanTavernRank
+{
+	optional int32 my_rank = 1;			//我的排名，0未进榜
+	repeated PSRankPlayerData list = 2;	//排行榜
+}

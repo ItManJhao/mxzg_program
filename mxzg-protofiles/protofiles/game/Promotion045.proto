@@ -1,0 +1,22 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion045GMsg";
+//登录有礼
+//13164
+message GReqLoginGiftData {
+}
+//13164
+message GResLoginGiftData {
+    required int32 days = 1; //登录天数
+    repeated int32 reward_ids = 2;
+}
+
+//领取充值奖励
+//13165
+message GReqLoginGiftReward {
+    required int32 idx = 1;
+}
+//13165
+message GResLoginGiftReward {
+	required int32 idx = 1;
+}

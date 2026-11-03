@@ -1,0 +1,532 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroGMsg";
+import "Object.proto";
+import "HeroTalent.proto";
+import "HeroAwaken.proto";
+import "HeroHexagram.proto";
+import "HeroMagicWand.proto";
+
+//英雄进化数据
+message PSHeroEvolve {
+    optional int32 type = 1; //进化类型
+    optional int32 level = 2; //进化等级
+}
+
+message PSHeroConsume {
+    optional int32 index = 1; //索引
+    repeated int64 hero_id = 2; //英雄消耗
+}
+
+//属性变化
+message PSAttrUpdate {
+    optional int32 attr_type = 1; //属性类型
+    optional int64 old_value = 2; //旧值
+    optional int64 new_value = 3; //新值
+}
+
+message ResHeroData {
+    optional int64 hero_id = 1; //英雄ID
+    optional int32 hero_type = 2; //英雄类型
+    optional int32 level = 3; //英雄等级
+    optional int32 stage = 4; //英雄品阶
+    optional int32 star = 5; //英雄星级
+    optional int32 elem = 6; //英雄元素
+    optional int32 occupation = 7; //英雄职业
+    optional int32 is_lock = 8; //是否上锁
+    optional int32 fighting = 9; //战斗力
+    optional int32 alive = 10; //是否还存活，0存活，1死亡
+    repeated PSHeroTalent talents = 11; //英雄天赋，无序列表
+    optional int32 fashion_id = 12; //英雄时装ID，未穿戴为0
+    optional int64 atk = 13; //攻击力
+    optional int64 def = 14; //防御力
+    optional int64 hp = 15; //血量
+    optional int64 spd = 16; //速度
+    repeated int32 reiki_places = 17; //开启的灵器槽位
+    optional PSHeroEvolve evolve = 18; //英雄进化数据
+    optional int32 tweak_cube_lv = 19; //魔方等级
+    optional int32 tweak_cube_stage = 20; //魔方阶级
+    optional PSHeroAwaken awaken = 21; //觉醒属性
+    repeated PSHeroHexagram hexagram = 22; //六芒星
+}
+// 英雄简要信息
+message ResHeroBriefData {
+    optional int32 hero_type = 1; //英雄类型
+    optional int32 level = 2; //英雄等级
+    optional int32 star = 3; //英雄星级
+    optional int64 hero_id = 4; //英雄id
+    optional int32 pos = 5; //上阵英雄位置
+    optional int32 fashion_id = 6; //皮肤(时装)。未穿戴为0
+    optional PSHeroEvolve evolve = 7; //英雄进化数据
+    optional int32 tweak_cube_lv = 8; //魔方等级
+}
+
+message PSHeroEquipData {
+    optional int64 hero_id = 1; //英雄ID
+    repeated PSEquipData equip_list = 2; //装备列表
+    optional MagicWandData magic_info = 3; // 魔杖信息
+}
+
+message PSEquipData {
+    optional int64 equip_id = 1; //装备部位ID
+    optional int32 place = 2; //装备部位
+    optional int32 equip_type = 3; //物品类型
+    optional int32 soul_lv = 4; //附魂等级
+}
+
+message ResIllustratRewardData {
+    optional int32 hero_type = 1; //任务进度
+    optional int32 star = 2;
+    optional bool reward = 3;// 是否领奖
+}
+
+message PSHeroDetail {
+    optional int64 hero_id = 1;
+    optional int64 atk = 2; //攻击力
+    optional int64 def = 3; //防御力
+    optional int64 hp = 4; //血量
+    optional int64 spd = 5; //速度
+    optional int64 skill_damage = 6; //增加伤害--但是但是用了技能增加伤害的字段
+    optional int64 precision = 7; //精准--
+    optional int64 block = 8; //格挡--
+    optional int64 crit = 9; //暴击
+    optional int64 crit_damage = 10; //暴击伤害值
+    optional int64 armor = 11; //破甲
+    optional int64 free_control = 12; //免控率
+    optional int64 reduce_damage = 13; //减伤率
+    optional int64 sacred_damage = 14; //神圣伤害--
+    optional int64 dodge = 15; //闪避
+    optional int64 hit = 16; //命中
+    optional int64 control_percent = 17; //控制率
+    optional int64 treatment_percent = 18; //治疗百分比
+    optional int64 resist_crit_percent = 19; //抗暴比例
+    optional int64 drive = 20;  // 驱使
+    optional int64 incantation = 21; // 咒术
+    optional int64 sacred_crit = 22; // 神圣暴击概率
+    optional int64 sacred_control = 23; // 神圣控制概率
+    optional int64 tenacity = 24; // 韧性
+    optional int64 physical_injury_free = 25; // 物理免伤
+    optional int64 magic_free = 26;         // 法术免伤
+    optional int64 physical_damage_add = 27; // 物理伤害加深
+    optional int64 magic_damage_add = 28;   // 魔法伤害加深
+    optional int64 being_treatment = 29;   // 被治疗百分比
+}
+
+//4001
+message GReqHeroList {
+    optional int32 page = 1; // 页码
+}
+//4001
+message GResHeroList {
+    optional int32 hero_capacity = 1; //英雄容量
+    optional int32 buy_space_times = 2; //购买空间次数
+    repeated ResHeroData list = 3;
+    optional int32 send_status = 4; // 发送状态0,未完成，1已完成
+    optional int32 page = 5; // 页码
+}
+
+//英雄抽奖
+//4002
+message GReqHeroSummon {
+    optional int32 type = 1; //1普通单抽，2普通十抽，3友情单抽，4友情十抽 ，5高级单抽，6高级十抽，8新英雄单抽，9新英雄十抽
+}
+//4002
+message GResHeroSummon {
+    repeated ResHeroData list = 1;
+    repeated int32 idx = 2;
+}
+
+//查看英雄详细属性
+//4003
+message GReqHeroDetail {
+    optional int64 hero_id = 1;
+    optional int64 rid = 2;     // 角色id
+    optional int32 server_id = 3;// 服务器id
+}
+//4003
+message GResHeroDetail {
+    optional PSHeroDetail detail = 1;
+    optional int64 rid = 2;     // 角色id
+    optional int32 server_id = 3;// 服务器id
+    repeated PSTuple3Data addition = 4;// 英雄属性加成项 key-->value1等级-->value2阶级,key:1公会科技2，圣器等级阶级，3，天罡，4地煞
+}
+
+//获取召唤进度
+//4004
+message GReqHeroSummonCount {
+}
+//4004
+message GResHeroSummonCount {
+    optional int32 free_time = 1;
+    optional int32 senior_free_time = 2;
+}
+
+//请求召唤进度奖励
+//4005
+message GReqHeroSummonAward {
+}
+//4005
+message GResHeroSummonAward {
+    repeated ResHeroData list = 1;
+}
+
+// 英雄类型基础数据
+//4006
+message GReqHeroTypeDetail {
+    optional int32 hero_type = 1;// 英雄类型
+}
+//4006
+message GResHeroTypeDetail {
+    optional PSHeroDetail detail = 1;// 英雄详情
+    repeated PSTuple3Data addition = 2;// 英雄属性加成项 key-->value1等级-->value2阶级,key:1公会科技2，圣器等级阶级，3，天罡，4地煞
+}
+
+// 高抽时购买高抽卷
+//4007
+message GReqBuyHeroSummonCard {
+    optional int32 type = 1;// 类型,lotterypoint 配置表的idx
+    optional int32 num = 2;// 数量
+}
+//4007
+message GResBuyHeroSummonCard {
+    optional int32 num = 1;// 数量
+    optional int32 cost_gem = 2;//消耗钻石数量
+}
+
+//4009
+message GReqHeroSkillUnlock {
+    optional int64 hero_id = 1;
+    optional int32 skill_type = 2;
+}
+//4009
+message GResHeroSkillUnlock {
+}
+
+//英雄图鉴领奖
+//4012
+message GReqIllustratGetReward {
+    optional int32 hero_type = 1;// 英雄类型
+}
+//4012
+message GResIllustratGetReward {
+}
+
+//查看图鉴列表
+//4013
+message GReqIllustratReward {
+}
+//4013
+message GResIllustratReward {
+    repeated ResIllustratRewardData list = 1;
+}
+
+//推送图鉴更新
+//4014
+message GResIllustratActive {
+    optional int32 hero_type = 1;
+    optional int32 star = 2;
+}
+
+//英雄上锁、解锁
+//4015
+message GReqHeroLock {
+    optional int64 hero_id = 1;
+    optional int32 is_lock = 2; //0解锁，1锁定
+}
+//4015
+message GResHeroLock {
+    optional int64 hero_id = 1;
+    optional int32 is_lock = 2; //0解锁，1锁定
+}
+
+//英雄升级
+//4018
+message GReqHeroUpLevel {
+    optional int64 hero_id = 1;
+    optional int32 up_level = 2; // 升几级
+}
+//4018
+message GResHeroUpLevel {
+    optional int64 hero_id = 1;
+    optional int32 hero_level = 2;
+}
+
+//英雄升阶
+//4019
+message GReqHeroUpgrade {
+    optional int64 hero_id = 1;
+}
+//4019
+message GResHeroUpgrade {
+    optional int64 hero_id = 1;
+    optional int32 hero_stage = 2;
+}
+
+//英雄升星
+//4020
+message GReqHeroUpStar {
+    optional int64 hero_id = 1; //升星英雄ID
+    repeated int64 list_hero_id = 2; //材料英雄ID列
+}
+//4020
+message GResHeroUpStar {
+    optional int64 hero_id = 1;
+    optional int32 hero_star = 2;
+    repeated PSBackpackData item_list = 3; //返回物品
+    optional int32 tweak_cube_lv = 4; //魔方等级
+    optional int32 tweak_cube_stage = 5; //魔方等级
+}
+
+//返回英雄装备
+//4022
+message GReqHeroEquip {
+}
+//4022
+message GResHeroEquip {
+    repeated PSHeroEquipData equip_list = 1;
+}
+
+//装备穿戴更换
+//4023
+message GReqHeroEquipChange {
+    optional int64 hero_id = 1;
+    optional int32 sys_id = 2; //装备配置表ID
+}
+//4023
+message GResHeroEquipChange {
+    optional int64 hero_id = 1;
+    optional PSEquipData equip = 2; //装备槽位信息
+}
+
+//装备卸下
+//4024
+message GReqHeroEquipDisboard {
+    optional int64 hero_id = 1; //英雄ID
+    optional int64 equip_id = 2; //装备部位的ID
+
+}
+//4024
+message GResHeroEquipDisboard {
+    optional int64 hero_id = 1; //英雄ID
+    optional PSEquipData equip = 2; //装备槽位信息
+}
+
+//装备一键穿戴
+//4025
+message GReqHeroEquipOneKeyWear {
+    optional int64 hero_id = 1;
+    repeated int32 sys_id = 2; //配置ID
+}
+//4025
+message GResHeroEquipOneKeyWear {
+    optional int64 hero_id = 1;
+    repeated PSEquipData equip = 2;
+}
+
+//装备一键卸下
+//4026
+message GReqHeroEquipOneKeyDisboard {
+    optional int64 hero_id = 1;
+}
+//4026
+message GResHeroEquipOneKeyDisboard {
+    optional int64 hero_id = 1;
+    repeated PSEquipData equip = 2;
+}
+
+//增加英雄上限
+//4027
+message GReqShopBuyHeroCapacity {
+}
+//4027
+message GResShopBuyHeroCapacity {
+    optional int32 hero_capacity = 1; //英雄容量
+    optional int32 buy_space_times = 2; //购买空间次数
+}
+
+//英雄战斗力发生变化时推送
+//4028
+message GResHeroFighting {
+    optional int64 hero_id = 1; //英雄ID
+    optional int32 ori_fighting = 2; //英雄本来的战斗力
+    optional int32 new_fighting = 3; //英雄当前的战斗力
+    optional int64 atk = 4; //攻击力
+    optional int64 def = 5; //防御力
+    optional int64 hp = 6; //血量
+    optional int64 spd = 7; //速度
+}
+
+//玩家战斗力发生变化时推送
+//4029
+message GResRoleFighting {
+    optional int32 ori_fighting = 1; //玩家本来的战斗力
+    optional int32 new_fighting = 2; //玩家当前的战斗力
+}
+
+//英雄增加时推送
+//4030
+message GResHeroAdd {
+    repeated ResHeroData heros = 1; //增加的英雄列表
+}
+
+//英雄减少时推送
+//4031
+message GResHeroDelete {
+    repeated int64 heros = 1; //被删除的英雄ID列表
+}
+
+//更新英雄容量
+//4032
+message GResHeroCapacity {
+    optional int32 heroCapacity = 1; //英雄容量
+}
+
+//英雄重生
+//4036
+message GReqHeroReborn {
+    optional int64 hero_id = 1; //英雄id
+}
+//4036
+message GResHeroReborn {
+    optional int32 status = 1; //成功为1;
+}
+
+//请求满足置换条件的英雄列表
+//4037
+message GReqSwitchInfo {
+
+}
+
+//4037
+message GResSwitchInfo {
+    repeated ResHeroData hero = 1; // 满足置换条件的英雄列表
+}
+
+//根据选中的英雄返回可以置换的5星英雄列表
+//4038
+message GReqSwitchTargetList {
+    optional int64 hero_id = 1; //英雄id
+}
+
+//4038
+message GResSwitchTargetList {
+    repeated ResHeroData hero = 1; // 可以置换的5星英雄列表
+}
+
+//置换英雄
+//4039
+message GReqSwitch {
+    optional int64 hero_id = 1; //置换的英雄
+    repeated int64 target_hero_id = 2; //置换的目标英雄列表
+}
+
+// 返回置换后的英雄
+//4039
+message GResSwitch {
+    optional ResHeroData hero = 1; // 置换后的英雄
+}
+
+// 英雄回退
+//4040
+message GReqComeBackInfo {
+
+}
+
+//4040
+message GResComeBackInfo {
+    repeated ResHeroData hero = 1; // 可以回退的英雄列表
+}
+
+// 英雄回退
+//4041
+message GReqComeBack {
+    optional int64 hero_id = 1; //回退的英雄id
+}
+
+//4041
+message GResComeBack {
+    optional ResHeroData hero = 1; // 回退后的英雄
+}
+
+// 选择操作的英雄
+//4042
+message GReqChoose {
+    optional int64 hero_id = 1; // 选择操作的英雄id
+}
+
+//4042
+message GResChoose {
+    optional int32 line_up_type = 1; // 上阵阵容类型 -1代表没上阵
+}
+
+//英雄等级重生
+//4043
+message GReqHeroLevelReset {
+    optional int64 hero_id = 1; //英雄id
+}
+//4043
+message GResHeroLevelReset {
+    optional int64 hero_id = 1; //英雄id
+    optional int32 hero_level = 2;
+}
+
+//获取当天重生次数
+//4044
+message GReqHeroLevelResetTimes {
+}
+//4044
+message GResHeroLevelResetTimes {
+    required int32 times = 1;
+}
+
+//进化，强化进化
+//4070
+message GReqEvolve {
+    optional int64 hero_id = 1; //英雄id
+    optional int32 type = 2; //进化类型
+    repeated PSHeroConsume consume = 3; //消耗的英雄
+}
+//4070
+message GResEvolve {
+    optional PSHeroEvolve evolve = 1; // 进化类型和等级
+    optional int64 hero_id = 2; //英雄id
+    repeated PSAttrUpdate update = 3; //属性变化值
+}
+
+//4071
+message GReqEvolveBack {
+    optional int64 hero_id = 1; //英雄id
+}
+
+//4071
+message GResEvolveBack {
+    optional PSHeroEvolve evolve = 1; // 进化类型和等级
+    optional int64 hero_id = 2; //英雄id
+    repeated PSBackpackData reward = 3; //奖励
+
+}
+
+//附魂升级
+//4080
+message GReqHeroEquipSoulLvUp {
+    optional int64 hero_id = 1; //英雄ID
+    optional int32 place = 2; //装备位置
+}
+//4080
+message GResHeroEquipSoulLvUp {
+    optional int64 hero_id=1;
+    optional PSEquipData equip_data = 2; //装备
+}
+
+//4081
+message GReqHeroEquipSoulReset {
+    optional int64 hero_id = 1; //英雄ID
+    optional int32 place = 2; //装备位置
+}
+
+//4081
+message GResHeroEquipSoulReset {
+    optional int64 hero_id=1;
+    optional PSEquipData equip_data = 2; //装备
+}
+

@@ -1,0 +1,517 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>充值数据--Ltv统计(每14分钟更新一次数据)</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('RechargeData/LtvDay')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <input type="hidden" name="sid" value="{$search_params['sid']}">
+                                            <select class="selectpicker form-control sid" data-style="btn-info" data-title="请选择服务器" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="servers" id="servers_vo">
+                                                    <if condition="!empty($search_params['sid']) && in_array($servers_vo['id'],explode(',', $search_params['sid']))">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">开始时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            <label class="control-label" style="padding-left: 5px;">结束时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['end_time']}">
+                                            
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <div style="margin-top: 12px;"  >
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="16-30数据展开" onclick="dataForward(1)" ><i class="fa fa-fast-forward"></i>16-30数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="16-30数据隐藏" onclick="dataBackward(1)" ><i class="fa fa-fast-backward"></i>16-30数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="31-45数据展开" onclick="dataForward(2)" ><i class="fa fa-fast-forward"></i>31-45数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="31-45数据隐藏" onclick="dataBackward(2)" ><i class="fa fa-fast-backward"></i>31-45数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="46-60数据展开" onclick="dataForward(3)" ><i class="fa fa-fast-forward"></i>46-60数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="46-60数据隐藏" onclick="dataBackward(3)" ><i class="fa fa-fast-backward"></i>46-60数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="61-75数据展开" onclick="dataForward(4)" ><i class="fa fa-fast-forward"></i>61-75数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="61-75数据隐藏" onclick="dataBackward(4)" ><i class="fa fa-fast-backward"></i>61-75数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="76-90数据展开" onclick="dataForward(5)" ><i class="fa fa-fast-forward"></i>76-90数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="76-90数据隐藏" onclick="dataBackward(5)" ><i class="fa fa-fast-backward"></i>76-90数据隐藏</a>
+
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="91-105数据展开" onclick="dataForward(6)" ><i class="fa fa-fast-forward"></i>91-105数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="91-105数据隐藏" onclick="dataBackward(6)" ><i class="fa fa-fast-backward"></i>91-105数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="106-120数据展开" onclick="dataForward(7)" ><i class="fa fa-fast-forward"></i>106-120数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="106-120数据隐藏" onclick="dataBackward(7)" ><i class="fa fa-fast-backward"></i>106-120数据隐藏</a>
+
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="121-135数据展开" onclick="dataForward(8)" ><i class="fa fa-fast-forward"></i>121-135数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="121-135数据隐藏" onclick="dataBackward(8)" ><i class="fa fa-fast-backward"></i>121-135数据隐藏</a>
+                                            <a class="btn btn-primary" href="javascript:void(0)" title="136-150数据展开" onclick="dataForward(9)" ><i class="fa fa-fast-forward"></i>136-150数据展开</a>
+                                            <a class="btn btn-danger" href="javascript:void(0)" title="136-150数据隐藏" onclick="dataBackward(9)" ><i class="fa fa-fast-backward"></i>136-150数据隐藏</a>
+                                        </div>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >服务器：</label>
+                                                <span class="sid-text">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="overflow:scroll;">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>日期</th>
+                                                            <th>创角数</th>
+                                                            <th>新增付费金额</th>
+                                                            <th>1日LTV</th>
+                                                            <th>2日LTV</th>
+                                                            <th>3日LTV</th>
+                                                            <th>4日LTV</th>
+                                                            <th>5日LTV</th>
+                                                            <th>6日LTV</th>
+                                                            <th>7日LTV</th>
+                                                            <th>8日LTV</th>
+                                                            <th>9日LTV</th>
+                                                            <th>10日LTV</th>
+                                                            <th>11日LTV</th>
+                                                            <th>12日LTV</th>
+                                                            <th>13日LTV</th>
+                                                            <th>14日LTV</th>
+                                                            <th>15日LTV</th>
+                                                            <th class="hide-data-one">16日LTV</th>
+                                                            <th class="hide-data-one">17日LTV</th>
+                                                            <th class="hide-data-one">18日LTV</th>
+                                                            <th class="hide-data-one">19日LTV</th>
+                                                            <th class="hide-data-one">20日LTV</th>
+                                                            <th class="hide-data-one">21日LTV</th>
+                                                            <th class="hide-data-one">22日LTV</th>
+                                                            <th class="hide-data-one">23日LTV</th>
+                                                            <th class="hide-data-one">24日LTV</th>
+                                                            <th class="hide-data-one">25日LTV</th>
+                                                            <th class="hide-data-one">26日LTV</th>
+                                                            <th class="hide-data-one">27日LTV</th>
+                                                            <th class="hide-data-one">28日LTV</th>
+                                                            <th class="hide-data-one">29日LTV</th>
+                                                            <th class="hide-data-one">30日LTV</th>
+
+                                                            <th class="hide-data-two">31日LTV</th>
+                                                            <th class="hide-data-two">32日LTV</th>
+                                                            <th class="hide-data-two">33日LTV</th>
+                                                            <th class="hide-data-two">34日LTV</th>
+                                                            <th class="hide-data-two">35日LTV</th>
+                                                            <th class="hide-data-two">36日LTV</th>
+                                                            <th class="hide-data-two">37日LTV</th>
+                                                            <th class="hide-data-two">38日LTV</th>
+                                                            <th class="hide-data-two">39日LTV</th>
+                                                            <th class="hide-data-two">40日LTV</th>
+                                                            <th class="hide-data-two">41日LTV</th>
+                                                            <th class="hide-data-two">42日LTV</th>
+                                                            <th class="hide-data-two">43日LTV</th>
+                                                            <th class="hide-data-two">44日LTV</th>
+                                                            <th class="hide-data-two">45日LTV</th>
+
+                                                            <th class="hide-data-three">46日LTV</th>
+                                                            <th class="hide-data-three">47日LTV</th>
+                                                            <th class="hide-data-three">48日LTV</th>
+                                                            <th class="hide-data-three">49日LTV</th>
+                                                            <th class="hide-data-three">50日LTV</th>
+                                                            <th class="hide-data-three">51日LTV</th>
+                                                            <th class="hide-data-three">52日LTV</th>
+                                                            <th class="hide-data-three">53日LTV</th>
+                                                            <th class="hide-data-three">54日LTV</th>
+                                                            <th class="hide-data-three">55日LTV</th>
+                                                            <th class="hide-data-three">56日LTV</th>
+                                                            <th class="hide-data-three">57日LTV</th>
+                                                            <th class="hide-data-three">58日LTV</th>
+                                                            <th class="hide-data-three">59日LTV</th>
+                                                            <th class="hide-data-three">60日LTV</th>
+
+                                                            <th class="hide-data-four">61日LTV</th>
+                                                            <th class="hide-data-four">62日LTV</th>
+                                                            <th class="hide-data-four">63日LTV</th>
+                                                            <th class="hide-data-four">64日LTV</th>
+                                                            <th class="hide-data-four">65日LTV</th>
+                                                            <th class="hide-data-four">66日LTV</th>
+                                                            <th class="hide-data-four">67日LTV</th>
+                                                            <th class="hide-data-four">68日LTV</th>
+                                                            <th class="hide-data-four">69日LTV</th>
+                                                            <th class="hide-data-four">70日LTV</th>
+                                                            <th class="hide-data-four">71日LTV</th>
+                                                            <th class="hide-data-four">72日LTV</th>
+                                                            <th class="hide-data-four">73日LTV</th>
+                                                            <th class="hide-data-four">74日LTV</th>
+                                                            <th class="hide-data-four">75日LTV</th>
+
+                                                            <th class="hide-data-five">76日LTV</th>
+                                                            <th class="hide-data-five">77日LTV</th>
+                                                            <th class="hide-data-five">78日LTV</th>
+                                                            <th class="hide-data-five">79日LTV</th>
+                                                            <th class="hide-data-five">80日LTV</th>
+                                                            <th class="hide-data-five">81日LTV</th>
+                                                            <th class="hide-data-five">82日LTV</th>
+                                                            <th class="hide-data-five">83日LTV</th>
+                                                            <th class="hide-data-five">84日LTV</th>
+                                                            <th class="hide-data-five">85日LTV</th>
+                                                            <th class="hide-data-five">86日LTV</th>
+                                                            <th class="hide-data-five">87日LTV</th>
+                                                            <th class="hide-data-five">88日LTV</th>
+                                                            <th class="hide-data-five">89日LTV</th>
+                                                            <th class="hide-data-five">90日LTV</th>
+
+                                                            <th class="hide-data-six">91日LTV</th>
+                                                            <th class="hide-data-six">92日LTV</th>
+                                                            <th class="hide-data-six">93日LTV</th>
+                                                            <th class="hide-data-six">94日LTV</th>
+                                                            <th class="hide-data-six">95日LTV</th>
+                                                            <th class="hide-data-six">96日LTV</th>
+                                                            <th class="hide-data-six">97日LTV</th>
+                                                            <th class="hide-data-six">98日LTV</th>
+                                                            <th class="hide-data-six">99日LTV</th>
+                                                            <th class="hide-data-six">100日LTV</th>
+                                                            <th class="hide-data-six">101日LTV</th>
+                                                            <th class="hide-data-six">102日LTV</th>
+                                                            <th class="hide-data-six">103日LTV</th>
+                                                            <th class="hide-data-six">104日LTV</th>
+                                                            <th class="hide-data-six">105日LTV</th>
+
+                                                            <th class="hide-data-seven">106日LTV</th>
+                                                            <th class="hide-data-seven">107日LTV</th>
+                                                            <th class="hide-data-seven">108日LTV</th>
+                                                            <th class="hide-data-seven">109日LTV</th>
+                                                            <th class="hide-data-seven">110日LTV</th>
+                                                            <th class="hide-data-seven">111日LTV</th>
+                                                            <th class="hide-data-seven">112日LTV</th>
+                                                            <th class="hide-data-seven">113日LTV</th>
+                                                            <th class="hide-data-seven">114日LTV</th>
+                                                            <th class="hide-data-seven">115日LTV</th>
+                                                            <th class="hide-data-seven">116日LTV</th>
+                                                            <th class="hide-data-seven">117日LTV</th>
+                                                            <th class="hide-data-seven">118日LTV</th>
+                                                            <th class="hide-data-seven">119日LTV</th>
+                                                            <th class="hide-data-seven">120日LTV</th>
+
+                                                            <th class="hide-data-eight">121日LTV</th>
+                                                            <th class="hide-data-eight">122日LTV</th>
+                                                            <th class="hide-data-eight">123日LTV</th>
+                                                            <th class="hide-data-eight">124日LTV</th>
+                                                            <th class="hide-data-eight">125日LTV</th>
+                                                            <th class="hide-data-eight">126日LTV</th>
+                                                            <th class="hide-data-eight">127日LTV</th>
+                                                            <th class="hide-data-eight">128日LTV</th>
+                                                            <th class="hide-data-eight">129日LTV</th>
+                                                            <th class="hide-data-eight">130日LTV</th>
+                                                            <th class="hide-data-eight">131日LTV</th>
+                                                            <th class="hide-data-eight">132日LTV</th>
+                                                            <th class="hide-data-eight">133日LTV</th>
+                                                            <th class="hide-data-eight">134日LTV</th>
+                                                            <th class="hide-data-eight">135日LTV</th>
+
+                                                            <th class="hide-data-nine">136日LTV</th>
+                                                            <th class="hide-data-nine">137日LTV</th>
+                                                            <th class="hide-data-nine">138日LTV</th>
+                                                            <th class="hide-data-nine">139日LTV</th>
+                                                            <th class="hide-data-nine">140日LTV</th>
+                                                            <th class="hide-data-nine">141日LTV</th>
+                                                            <th class="hide-data-nine">142日LTV</th>
+                                                            <th class="hide-data-nine">143日LTV</th>
+                                                            <th class="hide-data-nine">144日LTV</th>
+                                                            <th class="hide-data-nine">145日LTV</th>
+                                                            <th class="hide-data-nine">146日LTV</th>
+                                                            <th class="hide-data-nine">147日LTV</th>
+                                                            <th class="hide-data-nine">148日LTV</th>
+                                                            <th class="hide-data-nine">149日LTV</th>
+                                                            <th class="hide-data-nine">150日LTV</th>
+
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                        <volist name="list" id="vo">
+                                                            <tr role="row">
+                                                                <td>{$vo.date}</td>
+                                                                <td>{$vo.create_role_total}</td>
+                                                                <td>{$vo.add_money_total}</td>
+                                                                <td>{$vo.one_ltv}</td>
+                                                                <td>{$vo.two_ltv}</td>
+                                                                <td>{$vo.three_ltv}</td>
+                                                                <td>{$vo.four_ltv}</td>
+                                                                <td>{$vo.five_ltv}</td>
+                                                                <td>{$vo.six_ltv}</td>
+                                                                <td>{$vo.seven_ltv}</td>
+                                                                <td>{$vo.eight_ltv}</td>
+                                                                <td>{$vo.nine_ltv}</td>
+                                                                <td>{$vo.ten_ltv}</td>
+                                                                <td>{$vo.eleven_ltv}</td>
+                                                                <td>{$vo.twelve_ltv}</td>
+                                                                <td>{$vo.thirteen_ltv}</td>
+                                                                <td>{$vo.fourteen_ltv}</td>
+                                                                <td>{$vo.fifteen_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.sixteen_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.seventeen_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.eighteen_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.nineteen_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.twenty_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.twenty_one_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.twenty_two_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.twenty_three_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.twenty_four_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.twenty_five_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.twenty_six_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.twenty_seven_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.twenty_eight_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.twenty_nine_ltv}</td>
+                                                                <td class="hide-data-one">{$vo.thirty_ltv}</td>
+
+                                                                <td class="hide-data-two">{$vo.thirty_one_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.thirty_two_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.thirty_three_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.thirty_four_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.thirty_five_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.thirty_six_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.thirty_seven_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.thirty_eight_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.thirty_nine_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.forty_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.forty_one_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.forty_two_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.forty_three_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.forty_four_ltv}</td>
+                                                                <td class="hide-data-two">{$vo.forty_five_ltv}</td>
+
+                                                                <td class="hide-data-three">{$vo.forty_six_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.forty_seven_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.forty_eight_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.forty_nine_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.fifty_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.fifty_one_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.fifty_two_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.fifty_three_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.fifty_four_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.fifty_five_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.fifty_six_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.fifty_seven_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.fifty_eight_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.fifty_nine_ltv}</td>
+                                                                <td class="hide-data-three">{$vo.sixty_ltv}</td>
+
+                                                                <td class="hide-data-four">{$vo.sixty_one_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.sixty_two_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.sixty_three_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.sixty_four_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.sixty_five_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.sixty_six_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.sixty_seven_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.sixty_eight_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.sixty_nine_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.seventy_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.seventy_one_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.seventy_two_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.seventy_three_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.seventy_four_ltv}</td>
+                                                                <td class="hide-data-four">{$vo.seventy_five_ltv}</td>
+
+                                                                <td class="hide-data-five">{$vo.seventy_six_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.seventy_seven_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.seventy_eight_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.seventy_nine_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.eighty_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.eighty_one_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.eighty_two_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.eighty_three_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.eighty_four_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.eighty_five_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.eighty_six_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.eighty_seven_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.eighty_eight_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.eighty_nine_ltv}</td>
+                                                                <td class="hide-data-five">{$vo.ninety_ltv}</td>
+
+                                                                <td class="hide-data-six">{$vo.ninety_one_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.ninety_two_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.ninety_three_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.ninety_four_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.ninety_five_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.ninety_six_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.ninety_seven_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.ninety_eight_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.ninety_nine_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.hundred_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.hundred_one_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.hundred_two_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.hundred_three_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.hundred_four_ltv}</td>
+                                                                <td class="hide-data-six">{$vo.hundred_five_ltv}</td>
+
+                                                                <td class="hide-data-seven">{$vo.hundred_six_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_seven_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_eight_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_nine_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_ten_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_eleven_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_twelve_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_thirteen_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_fourteen_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_fifteen_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_sixteen_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_seventeen_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_eighteen_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_nineteen_ltv}</td>
+                                                                <td class="hide-data-seven">{$vo.hundred_twenty_ltv}</td>
+
+                                                                <td class="hide-data-eight">{$vo.hundred_twenty_one_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_twenty_two_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_twenty_three_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_twenty_four_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_twenty_five_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_twenty_six_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_twenty_seven_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_twenty_eight_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_twenty_nine_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_thirty_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_thirty_one_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_thirty_two_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_thirty_three_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_thirty_four_ltv}</td>
+                                                                <td class="hide-data-eight">{$vo.hundred_thirty_five_ltv}</td>
+
+                                                                <td class="hide-data-nine">{$vo.hundred_thirty_six_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_thirty_seven_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_thirty_eight_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_thirty_nine_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_forty_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_forty_one_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_forty_two_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_forty_three_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_forty_four_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_forty_five_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_forty_six_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_forty_seven_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_forty_eight_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_forty_nine_ltv}</td>
+                                                                <td class="hide-data-nine">{$vo.hundred_fifty_ltv}</td>
+                                                            </tr>
+                                                        </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(function(){
+        $(".hide-data-one").hide();     //数据隐藏
+        $(".hide-data-two").hide();     //数据隐藏
+        $(".hide-data-three").hide();     //数据隐藏
+        $(".hide-data-four").hide();     //数据隐藏
+        $(".hide-data-five").hide();     //数据隐藏
+        $(".hide-data-six").hide();     //数据隐藏
+        $(".hide-data-seven").hide();     //数据隐藏
+        $(".hide-data-eight").hide();     //数据隐藏
+        $(".hide-data-nine").hide();     //数据隐藏
+        doMultipleSelection($('.sid'), 'sid');
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+    });
+    $(".sid").on('change',function(e){
+        doMultipleSelection(this, 'sid');
+    })
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+
+    //数据展开
+    function dataForward(num){
+        if(num == 1){
+            $(".hide-data-one").show();
+        }else if(num == 2){
+            $(".hide-data-two").show();
+        }else if(num == 3){
+            $(".hide-data-three").show();
+        }else if(num == 4){
+            $(".hide-data-four").show();
+        }else if(num == 5){
+            $(".hide-data-five").show();
+        }else if(num == 6){
+            $(".hide-data-six").show();
+        }else if(num == 7){
+            $(".hide-data-seven").show();
+        }else if(num == 8){
+            $(".hide-data-eight").show();
+        }else{
+            $(".hide-data-nine").show();
+        }
+    }
+    //数据隐藏
+    function dataBackward(num){
+        if(num == 1){
+            $(".hide-data-one").hide();
+        }else if(num == 2){
+            $(".hide-data-two").hide();
+        }else if(num == 3){
+            $(".hide-data-three").hide();
+        }else if(num == 4){
+            $(".hide-data-four").hide();
+        }else if(num == 5){
+            $(".hide-data-five").hide();
+        }else if(num == 6){
+            $(".hide-data-six").hide();
+        }else if(num == 7){
+            $(".hide-data-seven").hide();
+        }else if(num == 8){
+            $(".hide-data-eight").hide();
+        }else{
+            $(".hide-data-nine").hide();
+        }
+    }
+</script>
+
+<include file="Public:footer" />

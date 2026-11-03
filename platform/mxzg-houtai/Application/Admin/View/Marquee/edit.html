@@ -1,0 +1,122 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑跑马灯</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form action="{:U('marquee/ajax_updata')}" method="post" id="artkindFrom" class="form-horizontal">
+                        <div class="tab-content">
+                        <div class="tab-pane active">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>跑马灯ID：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" value="{$marquee_info.id}" type="text" required="" aria-required="true" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>标题：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="name" value="{$marquee_info.name}" type="text" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>设备类型：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="device_type">
+                                        <option value="0" <if condition="$marquee_info['device_type'] == 0"> selected </if>>所有设备类型</option>
+                                        <option value="1" <if condition="$marquee_info['device_type'] == 1"> selected </if>>安卓</option>
+                                        <option value="2" <if condition="$marquee_info['device_type'] == 2"> selected </if>>ios</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" style="display:none;">
+                                <label class="col-sm-2 control-label">状态：</label>
+                                <div class="col-sm-8">
+                                    <label class="checkbox-inline i-checks">
+                                        <input type="radio" name="status" value="1" <if condition="$marquee_info['status'] == 1"> checked="checked" </if> >开启</label>
+                                    <label class="checkbox-inline i-checks">
+                                        <input type="radio" name="status" value="0" <if condition="$marquee_info['status'] == 0"> checked="checked" </if> >关闭</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>服务器：</label>
+                                <div class="col-sm-8">
+                                    <volist name="server_list" id="server_list_vo">
+                                        <div class="check-servers">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input style="width: 21px;height: 21px;" class="check-all" type="checkbox" >
+                                                    全选
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <volist name="server_list_vo" id="server_list_vo_vo">
+                                                    <label>
+                                                        <input style="width: 21px;height: 21px;" class="server-check"  type="checkbox" name="server_ids[]" value="{$server_list_vo_vo['id']}"  <if condition="in_array($server_list_vo_vo['id'], $marquee_info['sid'])"> checked  </if>>
+                                                        {$server_list_vo_vo['server_name']}
+                                                    </label>
+                                                </volist>
+                                            </div>
+                                        </div>
+                                    </volist>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>内容：</label>
+                                <div class="col-sm-8">
+                                    <textarea placeholder="请输入内容" name="content" class="configInput form-control" required="" aria-required="true">{$marquee_info.content}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>跑马灯循环次数：</label>
+                                <div class="col-sm-8">
+                                    <input class="configInput form-control" name="loop_count" value="{$marquee_info.loop_count}" type="number" min="1" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')" required="" aria-required="true">
+                                </div>
+                            </div>
+
+                        </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <input type="hidden" name="id" value="{$marquee_info.id}">
+                                    <button class="btn btn-primary" onclick="update_form('artkindFrom','{:U('marquee/ajax_updata')}')" type="button">提交</button>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<script language="javascript">
+$(function(){
+
+    //处理服务器全选
+    $(".check-servers").each(function(){
+        var check_servcers = $(this).find(".server-check").first();
+        isCheckAlls('check-all','server-check', check_servcers);
+    });
+    $(".server-check").click(function(){    
+        isCheckAlls('check-all','server-check', $(this));
+    });
+    $(".check-all").click(function () {
+        doCheckAlls('check-all', 'server-check', $(this));
+    });
+    
+});
+</script>
+
+
+
+<include file="Public:footer" />

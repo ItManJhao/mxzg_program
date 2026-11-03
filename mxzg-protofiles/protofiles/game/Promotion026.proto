@@ -1,0 +1,42 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion026GMsg";
+import "Pvp.proto";
+import "Object.proto";
+
+//查看速战信息
+//13371
+message GReqSpeedFightCountData
+{
+}
+//13371
+message GResSpeedFightCountData
+{
+	optional int32 count = 1;	//点金次数
+	repeated PSMapData list = 2;	//限购信息
+}
+
+//领取速战奖励
+//13372
+message GReqGetSpeedFightReward
+{
+	optional int32 idx = 1;	//奖励ID
+}
+//13372
+message GResGetSpeedFightReward
+{
+	optional int32 idx = 1;	//奖励ID
+}
+
+//查看速战排行榜
+//13373
+message GReqScanSpeedFightRank
+{
+	
+}
+//13373
+message GResScanSpeedFightRank
+{
+	optional int32 my_rank = 1;			//我的排名，0未进榜
+	repeated PSRankPlayerData list = 2;	//速战排行榜
+}

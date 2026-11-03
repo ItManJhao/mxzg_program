@@ -1,0 +1,257 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>聊天管理-实时监控</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="box-header">  
+                            <div class="panel-body">
+                                <form id="formSearch" style="width: auto;display: inline-block;" action="" method="get" class="form-horizontal form-inline">
+
+                                    <label class="control-label" style="padding-left: 7px;">服务器</label>
+                                    <select class="form-control sid" name="sid" >
+                                        <option value="0">请选择服务器</option>
+                                        <volist name="servers" id="servers_vo">
+                                            <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                        </volist>
+                                        </if>
+                                    </select>
+
+                                    <label class="control-label" style="padding-left: 7px;">聊天频道</label>
+                                    <select class="form-control chat_type" name="chat_type">
+                                        <volist name="chat_types" id="chat_types_vo">
+                                            <option value="{$chat_types_vo.id}">{$chat_types_vo.name}</option>
+                                        </volist>
+                                        </if>
+                                    </select>
+                                    <label class="control-label" style="padding-left: 7px;">公会id：</label>
+                                    <input type="text" placeholder="精确" name="clan_id" value="" style="width: 120px;" class="form-control clan-id">
+
+                                    <button type="button" style="margin-left:30px" onclick="ajax_searchs()" id="btn_query" class="btn btn-primary">查询</button>
+
+                                    
+                                </form>
+                                <a class="btn btn-danger open-roll" href="javascript:void(0)" title="开启滚动" onclick="openRoll(this)" ><i class="fa fa-fast-forward"></i>开启滚动</a>
+                                <a class="btn btn-danger close-roll" href="javascript:void(0)" title="关闭滚动" onclick="closeRoll(this)" ><i class="fa fa-fast-backward"></i>关闭滚动</a>
+                                <input type="text" name="is_roll" value="1" class="form-control is-roll" style="display:none;" >
+                                <a style="float: right;" class="btn btn-danger" href="javascript:void(0)" title="删除聊天记录" data-url="{:U('Chat/ajax_DelChatLog')}" data-id="{$vo.role_id}"  onclick="del_chat_log(this,'确定删除聊天记录？','{:U('Chat/ajax_DelChatLog')}')" ><i class="fa fa-trash-o"></i>删除聊天记录</a>
+                            </div>
+                        </div>
+                        <div class="box-body" style="margin-left:40px;border: 1px solid #ccc; width:1400px; overflow-y: scroll; height: 700px;">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script language="javascript">
+    
+    lasttime = 0;
+    sid = 0;
+    chat_type = 0;
+    prohibition_url = "{:U('userServer/oprate')}";
+    play_url = "{:U('userServer/ajax_yes_play')}";
+    chat_url = "{:U('userServer/ajax_yes_chat')}";
+    prohibition_title = '添加封禁';
+
+    //处理查询
+    function ajax_searchs(){
+        lasttime = 0;
+        $('.box-body').empty();
+        sid = $(".sid").find("option:selected").val();
+        if(sid == 0){
+            alert('请选择服务器');
+            return false;
+        }
+        chat_type = $(".chat_type").find("option:selected").val();
+        $.post('/admin.php/Chat/ajax_ChatLog',{sid:sid,chat_type:chat_type,time:lasttime}, function(data){
+            if(data.status == 1){   //拿取数据成功
+                $.each(data.data, function (key, item) {
+                    prohibition_url = "{:U('userServer/oprate')}?rid=" + item.rid;
+                    var htmladd="";
+                    htmladd +='<div style="padding-left:20px;font-size:16px;">';
+                    htmladd +="<button onclick='openYemian(\"" + prohibition_url + "\",\"" + prohibition_title + "\")' type='button' class='btn btn-primary' <i class='fa fa-trash-o'></i>添加封禁</button>&nbsp;&nbsp;";
+                    //是否封号
+                    if(item.is_forbid == 1){    //封号了
+                        htmladd +='<a class="btn btn-danger" href="javascript:void(0)" title="解除封号" data-url="' + play_url + '" data-id="' + item.rid + '"  onclick="offline(this,\'确定解除封号？\',\'' + play_url + '\')" ><i class="fa fa-trash-o"></i>解除封号</a>';
+                    }
+                    //是否禁言
+                    if(item.is_shutup == 1){    //禁言了
+                        htmladd +='<a class="btn btn-danger" href="javascript:void(0)" title="解除禁言" data-url="' + chat_url + '" data-id="' + item.rid + '"  onclick="offline(this,\'确定解除禁言？\',\'' + chat_url + '\')" ><i class="fa fa-trash-o"></i>解除禁言</a>';
+                    }
+                    htmladd +='<span>' + item.serverId + '服&nbsp;&nbsp;</span>';
+                    htmladd +='<span>' + item.date + '&nbsp;&nbsp;</span>';
+                    if(item.chatType == 2){
+                        htmladd +='<span>【世界】&nbsp;&nbsp;</span>';
+                    }else if(item.chatType == 6){
+                        htmladd +='<span>【跨服】&nbsp;&nbsp;</span>';
+                    }else if(item.chatType == 3){
+                        htmladd +='<span>【公会】&nbsp;&nbsp;</span>';
+                    }else if(item.chatType == 7){
+                        htmladd +='<span>【同省】&nbsp;&nbsp;</span>';
+                    }else{
+                        htmladd +='<span>【所有频道】&nbsp;&nbsp;</span>';
+                    }
+                    if(!item.clanName){
+                        item.clanName = '无';
+                    }
+                    if(!item.name){
+                        item.name = '无';
+                    }
+                    htmladd +='<span style="color: cornflowerblue;">' + item.clanName + '--' + '--' + item.name + '&nbsp;&nbsp;</span>';
+                    htmladd +='<span>说：</span>';
+                    htmladd +='<span>' + item.context + '</span>';
+                    htmladd +='</div>';
+                    $('.box-body').append(htmladd);
+                    $(".box-body").scrollTop($(".box-body")[0].scrollHeight);
+                });
+
+                //重置最后的时间戳
+                lasttime = data.lasttime;
+            }
+        });
+
+        //清除与启动定时器
+        if (typeof clock != "undefined") {
+            clearInterval(clock);
+        }
+        clock = setInterval(getChat, 15000);    //15秒执行一次
+
+    }
+
+    function getChat(){
+        $.post('/admin.php/Chat/ajax_ChatLog',{sid:sid,chat_type:chat_type,time:lasttime}, function(data){
+            if(data.status == 1){   //拿取数据成功
+                $.each(data.data, function (key, item) {
+                    prohibition_url = "{:U('userServer/oprate')}?rid=" + item.rid;
+                    var htmladd="";
+                    htmladd +='<div style="padding-left:20px;font-size:16px;">';
+                    htmladd +="<button onclick='openYemian(\"" + prohibition_url + "\",\"" + prohibition_title + "\")' type='button' class='btn btn-primary' <i class='fa fa-trash-o'></i>添加封禁</button>&nbsp;&nbsp;";
+                    //是否封号
+                    if(item.is_forbid == 1){    //封号了
+                        htmladd +='<a class="btn btn-danger" href="javascript:void(0)" title="解除封号" data-url="' + play_url + '" data-id="' + item.rid + '"  onclick="offline(this,\'确定解除封号？\',\'' + play_url + '\')" ><i class="fa fa-trash-o"></i>解除封号</a>';
+                    }
+                    //是否禁言
+                    if(item.is_shutup == 1){    //禁言了
+                        htmladd +='<a class="btn btn-danger" href="javascript:void(0)" title="解除禁言" data-url="' + chat_url + '" data-id="' + item.rid + '"  onclick="offline(this,\'确定解除禁言？\',\'' + chat_url + '\')" ><i class="fa fa-trash-o"></i>解除禁言</a>';
+                    }
+                    htmladd +='<span>' + item.serverId + '服&nbsp;&nbsp;</span>';
+                    htmladd +='<span>' + item.date + '&nbsp;&nbsp;</span>';
+                    if(item.chatType == 2){
+                        htmladd +='<span>【世界】&nbsp;&nbsp;</span>';
+                    }else if(item.chatType == 6){
+                        htmladd +='<span>【跨服】&nbsp;&nbsp;</span>';
+                    }else if(item.chatType == 3){
+                        htmladd +='<span>【公会】&nbsp;&nbsp;</span>';
+                    }else if(item.chatType == 7){
+                        htmladd +='<span>【同省】&nbsp;&nbsp;</span>';
+                    }else{
+                        htmladd +='<span>【所有频道】&nbsp;&nbsp;</span>';
+                    }
+                    htmladd +='<span style="color: cornflowerblue;">' + item.clanName + '--' + item.province + '--' + item.name + '&nbsp;&nbsp;</span>';
+                    htmladd +='<span>说：</span>';
+                    htmladd +='<span>' + item.context + '</span>';
+                    htmladd +='</div>';
+                    $('.box-body').append(htmladd);
+                    var is_roll = $(".is-roll").val();
+                    if( is_roll == 1){
+                        $(".box-body").scrollTop($(".box-body")[0].scrollHeight);
+                    }
+                    
+                });
+
+                //重置最后的时间戳
+                lasttime = data.lasttime;
+            }
+        });
+    }
+
+    $(function(){
+        $(".open-roll").css("background","#337ab7");
+    });
+    //开启滚动
+    function openRoll(obj){
+        $(obj).css("background","#337ab7");
+        $(".close-roll").css("background","#D9534F");
+        $(".is-roll").val(1);
+    }
+    //关闭滚动
+    function closeRoll(obj){
+        $(obj).css("background","#337ab7");
+        $(".open-roll").css("background","#D9534F");
+        $(".is-roll").val(0);
+    }
+
+    function offline(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var role_id=$(obj).attr("data-id");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {role_id:role_id},
+                dataType : "json",
+                success:function(data){
+                    if (data.status == 0) {
+                        top.layer.msg(data.message);
+                    } else {
+                        top.layer.msg(data.message);
+                        // $(obj).parent().parent().remove();
+                    }
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+    function del_chat_log(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            sid = $(".sid").find("option:selected").val();
+            if(sid == 0){
+                alert('请选择服务器');
+                return false;
+            }
+            chat_type = $(".chat_type").find("option:selected").val();
+            if(chat_type == 0){
+                alert('请选择聊天频道');
+                return false;
+            }
+            var clan_id = $(".clan-id").val();
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {sid:sid,chat_type:chat_type,clan_id:clan_id},
+                dataType : "json",
+                success:function(data){
+                    if (data.status == 0) {
+                        top.layer.msg(data.message);
+                    } else {
+                        top.layer.msg(data.message);
+                        // $(obj).parent().parent().remove();
+                    }
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+    
+</script>
+<script src="/Public/static/admin/js/item.js"></script>
+
+
+<include file="Public:footer" />

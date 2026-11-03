@@ -1,0 +1,182 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "BackPackGMsg";
+import "Hero.proto";
+import "Object.proto";
+import "Pet.proto";
+
+message ResBackPackItem
+{
+	optional int64 item_id = 1;		// 数据ID
+	optional int32 item_type = 2;	// 道具类型
+	optional int64 num = 3;		// 道具数量
+}
+
+//期限道具
+message ResTimeLimitItem {
+	optional int64 item_id = 1; //数据id
+	optional int32 item_type = 2; //道具类型
+	optional int32 end_time = 3; //到期时间
+}
+
+
+//背包列表
+//5001
+message GReqBackPackList
+{
+}
+//5001
+message GResBackPackList
+{
+	repeated ResBackPackItem list = 1;
+}
+
+//物品变化推送，增加、扣减都推送
+//5002
+message GResBackpackGain
+{
+	optional int32 type = 1;		//0不做任何显示，1弹窗显示，2文字显示
+	repeated PSBackpackData list = 2;//变化的物品列表，扣减时数量为负数
+}
+
+//装备合成
+//5004
+message GReqMakeEquip
+{
+	optional int32 equip_type = 1;
+	optional int32 make_count = 2;	//合成的数量
+}
+//5004
+message GResMakeEquip
+{
+	repeated PSBackpackData equip = 1;
+}
+
+//装备一键合成
+//5005
+message GReqOneKeyMakeEquip
+{
+	optional int32 equip_type = 1;
+}
+//5005
+message GResOneKeyMakeEquip
+{
+	repeated PSBackpackData equip = 1;
+}
+
+//宝箱开启
+//5006
+message GReqOpenBoxReward
+{
+	optional int32 item_type = 1;
+	optional int32 use_num = 2;
+}
+//5006
+message GResOpenBoxReward
+{
+	optional int32 item_type = 1;
+	optional int32 user_num = 2;
+	repeated PSBackpackData list = 3;
+}
+
+//英雄碎片合成
+//5007
+message GReqPieceReward
+{
+	optional int32 item_type = 1;
+	optional int32 use_num = 2;
+}
+//5007
+message GResPieceReward
+{
+	optional int32 item_type = 1;
+	repeated ResHeroData list = 2;
+}
+
+//精英英雄碎片合成
+//5008
+message GReqElitePieceHero
+{
+    optional int32 item_type = 1;//碎片ID
+    optional int32 num = 2;//合成英雄个数
+}
+//5008
+message GResElitePieceHero
+{
+    optional int32 item_type = 1;
+    repeated ResHeroData list = 2;//英雄集
+}
+
+//自选礼包
+//5009
+message GReqSelfSelectGift
+{
+	optional int32 idx = 1;//selfselectgift.idx
+    optional int32 item_id = 2 ;//道具id
+	optional int32 item_type = 3;	//自选礼包的奖励道具selfselectgift.reward.item_type
+}
+//5009
+message GResSelfSelectGift
+{
+
+}
+
+//期限道具
+//5010
+message GReqTimeLimitList {
+
+}
+//5010
+message GResTimeLimitList {
+	repeated ResTimeLimitItem list = 1;
+}
+
+//道具分解
+//5011
+message GReqDecompositionThing{
+	optional ResBackPackItem item = 1;//分解的道具
+}
+//5011
+message GResDecompositionThing{
+
+}
+
+//充值卡使用
+//5012
+message GReqRechargeCardUse{
+	optional int32 item_id = 1;	// 充值卡的道具id
+}
+
+//5012
+message GResRechargeCardUse{
+	
+}
+
+//5013
+message GReqElitePiecePet{
+	optional int32 item_type = 1;	// 碎片id
+	optional int32 num = 2;	// 合成宠物碎片
+}
+
+//5013
+message GResElitePiecePet{
+	optional int32 item_type = 1;
+	repeated PSPetInfo list = 2;	// 宠物列表
+}
+
+message PSMakeEquipLog {
+    optional int32 time = 1;// 时间
+    repeated PSMapData items = 2;//得到的物品item type->number
+    repeated PSMapData cost = 3;//消耗的物品item type->number
+}
+
+//装备合成日志
+//5014
+message GReqMakeEquipLog
+{
+}
+//5014
+message GResMakeEquipLog
+{
+	repeated PSMakeEquipLog list = 1;//日志
+}

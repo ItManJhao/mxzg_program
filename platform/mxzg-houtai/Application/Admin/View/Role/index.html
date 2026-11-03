@@ -1,0 +1,222 @@
+<include file="Public:header" />
+<style type="text/css">
+    .arrow {
+    margin: 100px auto;
+    width: 300px;
+    height: 150px;
+    }
+    
+    .item {
+    float: left;
+    clear: both;
+    margin-bottom: 23px;
+    }
+    /* 向上的箭头 */
+    
+    .arrow-top {
+    float:right;
+    padding-top: 5px;
+    margin-right:10px;
+    font-size: 0;
+    line-height: 0;
+    border-width: 8px;
+    border-color: black;
+    border-top-width: 0;
+    border-style: dashed;
+    border-bottom-style: solid;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    }
+    /* 向右的箭头 */
+    
+    .arrow-right {
+    font-size: 0;
+    line-height: 0;
+    border-width: 10px;
+    border-color: black;
+    border-right-width: 0;
+    border-style: dashed;
+    border-left-style: solid;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    }
+    /* 向下的箭头 */
+    
+    .arrow-bottom {
+    float:right;
+    padding-top: 5px;
+    margin-right:10px;
+    font-size: 0;
+    line-height: 0;
+    border-width: 8px;
+    border-color: black;
+    border-bottom-width: 0;
+    border-style: dashed;
+    border-top-style: solid;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    }
+    /* 向左的箭头 */
+    
+    .arrow-left {
+    font-size: 0;
+    line-height: 0;
+    border-width: 10px;
+    border-color: black;
+    border-left-width: 0;
+    border-style: dashed;
+    border-right-style: solid;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    }
+    </style>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>角色列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('Role/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">账号id：</label>
+                                            <input type="text" placeholder="精确搜索" name="uid" value="{$search_params.uid}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">角色id：</label>
+                                            <input type="text" placeholder="精确搜索" name="role_id" value="{$search_params.role_id}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">角色名称：</label>
+                                            <input type="text" placeholder="模糊搜索" name="role_name" value="{$search_params.role_name}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">服务器：</label>
+                                            <select class="form-control sid" name="sid">
+                                                <option value="0">请选择服务器</option>
+                                                <volist name="servers" id="servers_vo">
+                                                    <eq name="servers_vo.id" value="$search_params.sid">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+                                            <label class="control-label">渠道：</label>
+                                            <select class="form-control c_son_id" name="c_son_id">
+                                                <option value="0">请选择子渠道</option>
+                                                <volist name="channels" id="channels_vo">
+                                                    <eq name="channels_vo.id" value="$search_params.c_son_id">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+                                            <input type="hidden" class="sort-field-input" name="sort_field" value="">
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <a class="btn btn-primary export" style="float:right;" href="javascript:void(0);" title="导出" ><i class="fa fa-cloud-download"></i>导出</a>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <if condition="empty($list) neq true">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%" >角色id<span style="cursor: pointer;" class="sort-field <if condition="$search_params['sort_field'] == 'role.id,asc'"> selected arrow-top<else />arrow-bottom</if>" data-sort-field="role.id"></span></th>
+                                                            <th>角色名称</th>
+                                                            <th>渠道</th>
+                                                            <th>账号id<span style="cursor: pointer;" class="sort-field <if condition="$search_params['sort_field'] == 'role.user_id,asc'"> selected arrow-top<else />arrow-bottom</if>" data-sort-field="role.user_id"></span></th>
+                                                            <th>渠道uid</th>
+                                                            <th>区服</th>
+                                                            <th>等级<span style="cursor: pointer;" class="sort-field <if condition="$search_params['sort_field'] == 'role.level,asc'"> selected arrow-top<else />arrow-bottom</if>" data-sort-field="role.level"></span></th>
+                                                            <th>总充值<span style="cursor: pointer;" class="sort-field <if condition="$search_params['sort_field'] == 'total_recharge,asc'"> selected arrow-top<else />arrow-bottom</if>" data-sort-field="total_recharge"></span></th>
+                                                            <th>持有钻石<span style="cursor: pointer;" class="sort-field <if condition="$search_params['sort_field'] == 'role.gem,asc'"> selected arrow-top<else />arrow-bottom</if>" data-sort-field="role.gem"></span></th>
+                                                            <th>战斗力<span style="cursor: pointer;" class="sort-field <if condition="$search_params['sort_field'] == 'role.fighting,asc'"> selected arrow-top<else />arrow-bottom</if>" data-sort-field="role.fighting"></span></th>
+                                                            <th>最后登陆时间</th>
+                                                            <th>最后离线时间</th>
+                                                            <th>创号时间<span style="cursor: pointer;" class="sort-field <if condition="$search_params['sort_field'] == 'role.create_time,asc'"> selected arrow-top<else />arrow-bottom</if>" data-sort-field="role.create_time"></span></th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="ajaxList">
+                                                        <volist name="list" id="vo">
+                                                            <tr role="row"> 
+                                                                <td>{$vo.role_id}</td>
+                                                                <td>{$vo.role_name}</td>
+                                                                <td>{$vo.channel_name}（{$vo.parent_name}）</td>
+                                                                <td>{$vo.user_id}</td>
+                                                                <td>{$vo.open_id}</td>
+                                                                <td>{$vo.server_name}</td>
+                                                                <td>{$vo.level}</td>
+                                                                <td>{$vo['total_recharge']}</td>
+                                                                <td>{$vo.gem}</td>
+                                                                <td>{$vo.fighting}</td>
+                                                                <td>{$vo.last_login_date}</td>
+                                                                <td>{$vo.last_offline_date}</td>
+                                                                <td>{$vo.create_date}</td>
+                                                                <td>
+                                                                    <a class="btn btn-primary" href="javascript:;" title="详细信息" onclick="openYemian('/admin.php/Role/info?id={$vo.role_id}&sid={$vo.sid}','详细信息')"><i class="fa fa-pencil"></i>详细信息</a>
+                                                                </td>
+                                                            </tr>
+                                                        </volist>
+                                                    </tbody>
+                                                </table>
+                                            <else />
+                                                <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                            </if>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).on('click', '.sort-field', function() {
+        if($(this).is('.arrow-bottom')){
+            $(this).removeClass('arrow-bottom');
+            $(this).addClass('arrow-top');
+            var value = $(this).attr("data-sort-field");
+            $(".sort-field-input").val(value + ',asc');
+            $('#formSearch').submit();
+        }else{
+            $(this).removeClass('arrow-top');
+            $(this).addClass('arrow-bottom');
+            var value = $(this).attr("data-sort-field");
+            $(".sort-field-input").val(value + ',desc');
+            $('#formSearch').submit();
+        }
+    });
+
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(".export").click(function(){
+        var c_son_id = $(".c_son_id").val();
+        var sid = $(".sid option:selected").val();
+        var uid = $(" input[ name='uid' ] ").val();
+        var role_id = $(" input[ name='role_id' ] ").val();
+        var role_name = $(" input[ name='role_name' ] ").val();
+        var sort_field = $("input[ name='sort_field' ]").val();
+        window.location.href="/admin.php/Role/export?c_son_id=" + c_son_id + "&sid=" + sid + "&uid=" + uid + "&role_id=" + role_id + "&role_name=" + role_name + "&sort_field=" + sort_field;
+    });
+
+</script>
+
+<include file="Public:footer" />

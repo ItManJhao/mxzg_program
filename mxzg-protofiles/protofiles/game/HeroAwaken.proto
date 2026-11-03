@@ -1,0 +1,22 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroAwakenGMsg";
+
+message PSHeroAwaken {
+    repeated int32 base_index = 1; //对应base_attr的索引，索引从0开始
+    repeated int32 special_index = 2; //对应special_attr的索引，索引从0开始
+}
+
+//选择属性
+//4050
+message GReqHeroAwakenSelect {
+    optional int64 hero_id = 1; //英雄id
+    repeated int32 base_index = 2; //对应base_attr的索引，索引从0开始
+    repeated int32 special_index = 3; //对应special_attr的索引，索引从0开始
+}
+
+//4050
+message GResHeroAwakenSelect {
+    optional int64 hero_id = 1;
+    optional PSHeroAwaken awaken = 2;
+}

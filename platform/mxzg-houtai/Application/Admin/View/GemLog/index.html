@@ -1,0 +1,179 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>玩家钻石列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('GemLog/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">角色id</label>
+                                            <input type="text" placeholder="精确搜索" name="role_id" value="{$search_params.role_id}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">操作来源id</label>
+                                            <input type="text" placeholder="精确搜索" name="event" value="{$search_params.event}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">操作类型</label>
+                                            <select class="form-control oprate" name="oprate">
+                                                <option <if condition="$search_params['oprate'] == 'all'"> selected </if> value="all">请选择</option>
+                                                <option <if condition="$search_params['oprate'] == 1"> selected </if> value="1">增加</option>
+                                                <option <if condition="$search_params['oprate'] == 2"> selected </if> value="2">消耗</option>
+                                            </select>
+                                            <label class="control-label">服务器</label>
+                                            <select class="form-control sid" name="sid">
+                                                <option value="0">请选择服务器</option>
+                                                <volist name="servers" id="servers_vo">
+                                                    <eq name="servers_vo.id" value="$search_params.sid">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.server_name}</option>
+                                                    </eq>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">开始时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            <label class="control-label" style="padding-left: 5px;">结束时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required="" aria-required="true" value="{$search_params['end_time']}">
+
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <a class="btn btn-primary export" href="javascript:void(0);" title="导出" ><i class="fa fa-cloud-download"></i>导出</a>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                                <if condition="empty($list) neq true">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>角色id</th>
+                                                                <th>角色名称</th>
+                                                                <th>子渠道</th>
+                                                                <th>大渠道</th>
+                                                                <th>账号id</th>
+                                                                <th>区服id</th>
+                                                                <th>操作来源id</th>
+                                                                <th>操作来源</th>
+                                                                <th>操作类型</th>
+                                                                <th>原有值</th>
+                                                                <th>现有值</th>
+                                                                <th>变化值</th>
+                                                                <th>操作时间</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajaxList">
+                                                            <volist name="list" id="vo">
+                                                                <tr role="row"> 
+                                                                    <td>{$vo.rid}</td>
+                                                                    <td>{$vo.role_name}</td>
+                                                                    <td>{$vo.channel_name_son}</td>
+                                                                    <td>{$vo.channel_name}</td>
+                                                                    <td>{$vo.user_id}</td>
+                                                                    <td>{$search_params.sid}</td>
+                                                                    <td>{$vo.event}</td>
+                                                                    <td>{$vo.event_desc}</td>
+                                                                    <td>{$vo.oprate}</td>
+                                                                    <td>{$vo.old}</td>
+                                                                    <td>{$vo.curr}</td>
+                                                                    <td>{$vo.delta}</td>
+                                                                    <td>{:date('Y-m-d H:i:s', $vo['time'])}</td>
+                                                                </tr>
+                                                            </volist>
+                                                        </tbody>
+                                                    </table>
+                                                <else />
+                                                    <p style="text-align: center; color: red;font-size:20px;">{$error_msg}</p>
+                                                </if>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                            <script>
+                                                // 点击分页触发的事件
+                                                $(".pagination a").click(function(){
+                                                    url = $(this).attr('href');
+                                                    ajax_get_table('formSearch',url);
+                                                    return false;
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Public/static/admin/js/webupload.js"></script>
+ 
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,url){
+        // cur_page = page; //当前页面 保存为全局变量
+        // var info = $('#page_info').val();
+        $.ajax({
+            type : "POST",
+            url:url,
+            data : $('#'+form).serialize(),// 你的formid
+            success: function(data){
+                $("#ajaxList").html('');
+                $("#ajaxList").append(data);
+            }
+        });
+        return false;
+    }
+
+    function offline(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var role_id=$(obj).attr("data-id");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {role_id:role_id},
+                dataType : "json",
+                success:function(data){
+                    if (data.status == 0) {
+                        top.layer.msg(data.message);
+                    } else {
+                        top.layer.msg(data.message);
+                        // $(obj).parent().parent().remove();
+                    }
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+    $(".export").click(function(){
+        var sid = $(".sid option:selected").val();
+        var role_id = $(" input[ name='role_id' ] ").val();
+        var event = $(" input[ name='event' ] ").val();
+        var oprate = $(".oprate option:selected").val();
+        var start_time = $("#start_time").val();
+        var end_time = $("#end_time").val();
+        window.location.href="/admin.php/GemLog/export?sid=" + sid + "&role_id=" + role_id + "&event=" + event + "&oprate=" + oprate + "&start_time=" + start_time + "&end_time=" + end_time;
+    });
+</script>
+
+<include file="Public:footer" />

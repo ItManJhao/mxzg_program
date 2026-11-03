@@ -1,0 +1,23 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion046GMsg";
+import "Object.proto";
+
+//碎片进化
+//13162
+message GReqExchangeShopData {
+}
+//13162
+message GResExchangeShopData {
+    repeated PSMapData exchange_record = 1; //兑换记录
+}
+
+//领取奖励
+//13163
+message GReqExchangeShopReward {
+    required int32 idx = 1;
+}
+//13163
+message GResExchangeShopReward {
+	required int32 idx = 1;
+}

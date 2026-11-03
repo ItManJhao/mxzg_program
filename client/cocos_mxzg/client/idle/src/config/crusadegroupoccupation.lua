@@ -1,0 +1,68 @@
+cfg.crusadegroupoccupation = {
+	["crusadegroupoccupation"] = {
+		[1] = {
+			id = 1,
+			shenbinCore = 1,
+			landNum = 20,
+			heroNum = 12,
+			des = 77401,
+			reward = {},
+		},
+		[2] = {
+			id = 2,
+			shenbinCore = 2,
+			landNum = 25,
+			heroNum = 12,
+			des = 77402,
+			reward = {{item_num=50,item_type=901501},{item_num=30,item_type=20004000}},
+		},
+		[3] = {
+			id = 3,
+			shenbinCore = 3,
+			landNum = 25,
+			heroNum = 18,
+			des = 77403,
+			reward = {{item_num=1,item_type=901811},{item_num=50,item_type=20005000}},
+		},
+		[4] = {
+			id = 4,
+			shenbinCore = 3,
+			landNum = 30,
+			heroNum = 18,
+			des = 77404,
+			reward = {{item_num=2,item_type=900504},{item_num=10,item_type=900202}},
+		},
+		[5] = {
+			id = 5,
+			shenbinCore = 4,
+			landNum = 35,
+			heroNum = 18,
+			des = 77405,
+			reward = {{item_num=1,item_type=905304},{item_num=10,item_type=901503}},
+		},
+		[6] = {
+			id = 6,
+			shenbinCore = 4,
+			landNum = 40,
+			heroNum = 24,
+			des = 77406,
+			reward = {{item_num=1,item_type=1031005},{item_num=1,item_type=900601}},
+		},
+		[7] = {
+			id = 7,
+			shenbinCore = 5,
+			landNum = 40,
+			heroNum = 30,
+			des = 77407,
+			reward = {{item_num=1,item_type=905308},{item_num=2,item_type=900601},{item_num=2,item_type=901904}},
+		},
+		[8] = {
+			id = 8,
+			shenbinCore = 5,
+			landNum = 40,
+			heroNum = 30,
+			des = 77408,
+			reward = {{item_num=1,item_type=905322},{item_num=3,item_type=900601},{item_num=3,item_type=901904}},
+		},
+	}
+}

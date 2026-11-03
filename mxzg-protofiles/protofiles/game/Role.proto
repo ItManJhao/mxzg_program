@@ -1,0 +1,400 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "RoleGMsg";
+import "Hero.proto";
+import "Object.proto";
+
+
+message ResNoticeData
+{
+	optional int32 type = 1; 			// 1,公告，2跑马灯
+	optional int32 interval_time = 2;	// 跑马灯间隔时间（秒）
+	optional string title = 3;			//标题
+	optional string notice = 4;			//内容
+	optional int32 sta_time = 5;		//开始时间
+	optional int32 end_time = 6;		//结束时间
+}
+
+//请求玩家信息
+//2001
+message GReqRoleInfo
+{
+}
+
+//2001
+message GResRoleInfo
+{
+	optional int64 gem = 1;			//宝石
+	optional int64 gold = 2;		//金币
+	optional int32 energy = 3;		//精力
+	optional int64 exp = 4;			//经验
+	optional int32 cup = 5;			//奖杯
+	optional int32 level = 6;		//等级
+	optional int32 head_id = 7;		//头像
+	optional int32 image_id = 8;	//形象ID
+	optional string nick = 9; 		//昵称
+	optional int32 last_request_time = 10;	//最后登录时间时间
+	optional int32 lang = 11;		//语言
+	optional int32 create_time = 12;//创号时间
+	optional int64 clan_id = 13;	//军团ID
+	optional int32 is_edit_name = 14;//玩家是否改名(0.否 1.是)
+	repeated int32 serial = 15;		 //新手指引数字类型
+	optional int32 server_create_time = 16;//开服时间
+	optional int32 goddess_vip = 19;//VIP等级
+	optional int64 hero_exp = 20;	//英雄经验
+	optional int64 recharge = 21;   //累充金额
+	optional int32 border_id = 22;	//头像框
+	optional int32 fighting = 23;	//战斗力
+	repeated string serial_str = 24;//新手指引字符类型
+	optional int32 area_id = 25; 	//区域id,关联到省指定城市
+	optional int64 super_gem = 26;	//超级钻石(虹石)
+	optional int64 clergy_exp = 27;		//神权经验
+	optional int32 clergy_level = 28;		//解锁的神权特权等级
+	optional int32 peerage_status = 29;		//尊贵标识是否在聊天中展示（0.否 1.是）
+	optional int32 peerage_level = 30;		//尊贵标识等级
+	optional int32 recharge_popup = 31;		// (日本版本)充值年龄认证弹窗状态（0.未确认，1.已确认）
+	optional int32 server_lang = 32;		// 服务器语言id:1:cn 简体中文  2:CN_TRAD 繁体中文 3:IDN 印度尼西亚 4:en 英文 5:jp 日文 6:kor 韩文 7 vn越南 8 THAI 泰国
+	optional bool is_merge = 33;		//是否合服true已合
+	optional int32 title = 34;		    //称号id
+	optional int32 gender  = 35;	    //性别0男性1女性
+}
+
+//修改昵称
+//2003
+message GReqRoleEditNick
+{
+	optional string nick = 1;
+    optional int32 gender  = 2;	    //性别0男性1女性
+    optional string invite_code = 3;//邀请码
+}
+//2003
+message GResRoleEditNick
+{
+	optional int32 revise_type = 1; // 0：修改成功， 1 为重复， 2 为敏感， 3  推荐码错误或已使用不能创建角色
+}
+
+//玩家详细信息
+//2004
+message GReqPlayerDetaile
+{
+	optional int64 rid = 1;
+	optional int32 server_id = 2;//服务器id
+}
+//2004
+message GResPlayerDetaile
+{
+	optional int64 player_id = 1;	// 玩家的rid
+	optional int32 head_id = 2;		// 头像id
+	optional int64 clan_id = 3;		// 军团id
+	optional string nick = 4;		// 玩家名字
+	optional int32 level = 5;		// 等级
+	optional int32 server_id = 6;	// 玩家区号
+	optional string clan_name = 7;	// 军团名字
+	optional int32 rank = 8;		// pvp分数
+	optional int32 fighting = 9;	// 战斗力
+	repeated ResHeroBriefData hero_data = 10; // 上阵英雄的信息
+	optional int32 border_id = 11;	//头像框id
+	optional int32 formation_id = 12;	//阵容ID
+	optional bool assistance_unlock = 13;	//援助是否解锁
+	optional int32 area_id = 14; 	//区域id,关联到省指定城市
+	optional int32 stage_id = 15;	//冠军赛段位
+	optional int32 vip = 16;        //VIP等级
+	optional int32 gender  = 17;	//性别0男性1女性
+}
+
+//新手指引
+//2005
+message GReqGuideSerial
+{
+	repeated int32 serial = 1;		//指引的步骤
+	repeated string serial_str = 2;	//指引的步骤
+}
+//2005
+message GResGuideSerial
+{
+}
+
+//新手指引首次PVE奖励
+//2007
+message GReqGuideFirstPveReward
+{
+}
+//2007
+message GResGuideFirstPveReward
+{
+}
+
+//GM指令
+//2008
+message GReqGMCommand
+{
+	optional int64 gem = 1; 			//需要多少钻石
+	optional int64 gold = 2;			//需要多少金币
+	repeated PSBackpackData item_list = 3;//需要什么物品
+	repeated ResHeroData hero_list = 4;	//英雄类型
+}
+//2008
+message GResGMCommand
+{
+}
+
+//GM删除背包
+//2009
+message GReqGMRemovebackpack
+{
+	optional int32 type = 1;//0为英雄 1为背包
+}
+//2009
+message GResGMRemovebackpack
+{
+}
+
+//GM充值
+//2010
+message GReqGMRecharge
+{
+	optional int32 product_id = 1;	//商品ID
+}
+//2010
+message GResGMRecharge
+{
+}
+
+//修改形象
+//2011
+message GReqRoleChangeHead
+{
+    optional int32 image_id = 1;//形象
+    optional int32 skin_id = 2;//skin config type
+}
+//2011
+message GResRoleChangeHead
+{
+    optional int32 image_id = 1;//形象
+}
+
+//随机昵称
+//2013
+message GReqRoleRandNick
+{
+}
+//2013
+message GResRoleRandNick
+{
+	optional string nick = 1;
+}
+
+//升级奖励
+//2014
+message GResRoleUpgradeReward
+{
+	optional int32 level_beford = 1;
+	optional int32 level_current = 2;
+	optional int64 now_exp = 3;
+	repeated PSBackpackData list = 4; // 升级奖励内容
+}
+
+// 与道具配置表ItemID对应
+enum RoleAttribute {
+    NONE = 0;  // 无
+    GOLD        = 900001; // 金币
+    GEM         = 900002; // 钻石
+    EXP         = 900003; // 经验
+    CLAN_EXP    = 900004; // 工会经验
+    HERO_EXP    = 900101; // 英雄经验
+    LEVEL       = 201; // 等级
+    GODDESS_VIP = 202; // Vip等级？
+    FIGHTING    = 203; // 布阵英雄战力
+}
+// 单个属性值
+message RoleAttributeValue {
+    required RoleAttribute attribute = 1;    // 属性
+    optional int64 value             = 2;    // 值
+}
+
+//调试指令
+//2015
+message GReqGMCommandNew {
+	required string command = 1; //调试命令
+	repeated string param = 2; //参数
+}
+
+//2015
+message GResGMCommandNew
+{
+}
+
+//领取新手指引奖励
+//2016
+message GReqGetNewbieReward
+{
+}
+//2016
+message GResGetNewbieReward
+{
+	repeated PSBackpackData list = 1;	//领取到的物品列表
+}
+
+//禁言
+//2017
+message GResRoleForbidChat {
+	optional int32 forbid_words_end_time = 1; // 禁言结束时间
+}
+
+//封号
+//2018
+message GResRoleForbid {
+	optional int32 forbid_end_time = 1; // 封号结束时间
+}
+
+//修改省市数据
+//2019
+message GReqUpdateAreaId {
+	optional int32 area_id = 1; // 省市对应的id
+}
+//2019
+message GResUpdateAreaId {
+	optional int32 area_id = 1; // 省市对应的id
+}
+
+//花费道具二次改名
+//2020
+message GReqRoleRename
+{
+    optional string nick = 1;//新昵称
+    optional int32 type = 2;//改名类型 1：钻石  2：道具
+}
+//2020
+message GResRoleRename
+{
+    optional string nick = 1;
+}
+
+// 单个评论分享类型状态
+message RoleCommentSharedState {
+    optional int32 type     = 1;   // 类型100:app store 评价,200:facebook 点赞,300:facebook 分享
+    optional int32 state   = 2;   // 状态0:还没发生,1:已完成,2:已领取
+}
+//第三方评论点评分享奖励查询
+//2021
+message GReqCommentSharedState {
+}
+//2021
+message GResCommentSharedState {
+    repeated RoleCommentSharedState list = 1; // 评价分享状态
+}
+
+//第三方评论点评分享完成
+//2022
+message GReqCommentSharedComment {
+    optional int32 type     = 1;   // 完成类型100:app store 评价,200:facebook 点赞,300:facebook 分享
+}
+//2022
+message GResCommentSharedComment {
+    repeated RoleCommentSharedState list = 1; // 评价分享状态
+}
+
+//第三方评论点评分享奖励领取
+//2023
+message GReqCommentSharedReward {
+    optional int32 type     = 1;   // 领取类型100:app store 评价,200:facebook 点赞,300:facebook 分享
+}
+//2023
+message GResCommentSharedReward {
+    repeated RoleCommentSharedState list = 1; // 评价分享状态
+}
+
+//激活新的贵族等级
+//2024
+message GResActivePeerage{
+	optional int32 level = 1;
+}
+
+//设置聊天是否展示贵族标识
+//2025
+message GReqUpdatePeerageStatus{
+
+}
+//2025
+message GResUpdatePeerageStatus{
+	optional int32 status = 1;
+}
+
+//修改充值年龄确认弹窗状态
+//2026
+message GReqUpdateRechargePopup{
+
+}
+//2026
+message GResUpdateRechargePopup{
+	optional int32 recharge_popup = 1;
+}
+
+//推送开关获取
+//2027
+message GReqPushOnOffGet{
+
+}
+//2027
+message GResPushOnOffGet{
+	repeated int32 off_ids = 1;// 已关闭的id列表
+}
+
+//推送开关更新
+//2028
+message GReqPushOnOffUpdate{
+	repeated int32 off_ids = 1;// 需要关闭的id列表
+}
+//2028
+message GResPushOnOffUpdate{
+	repeated int32 off_ids = 1;// 已关闭的id列表
+}
+
+//新手指引埋点
+//2029
+message GReqBuryingPoint {
+	optional int32 idx = 1;	//guideType.idx
+}
+
+//2029
+message GResBuryingPoint {
+}
+
+//设置称号
+//2030
+message GReqSetTitle {
+	optional int32 idx = 1;	//称号id title.idx
+}
+
+//2030
+message GResSetTitle {
+    optional int32 idx = 1;	//称号id title.idx
+}
+
+//提建议bug
+//2031
+message GReqMakeAdvise {
+	optional int32 type = 1;	// 1建议,2BUG
+	optional string title = 2;  // 标题
+	optional string content = 3;// 内容
+}
+
+//2031
+message GResMakeAdvise {
+}
+
+message PSMainProcessRecord {
+    optional int32 idx = 1;//功能id
+    optional int32 use_times = 2;//已经使用次数
+    optional int32 total_times = 3;//总次数
+    optional int32 state = 4;//状态0可挑战，1可购买，2可报名，3已报名，4已完成
+}
+
+// 主城-总览信息
+//2032
+message GReqMainProcess {
+}
+//2032
+message GResMainProcess {
+    repeated PSMainProcessRecord list = 1;//总览信息
+}

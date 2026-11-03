@@ -1,0 +1,110 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "SevenDayTargetGMsg";
+import "Achievement.proto";
+
+message PSSevenDayData {
+    optional int32 idx = 1;
+    optional int32 num = 2;
+    optional int32 day = 3;
+}
+
+message PSSevenDayBox {
+    optional int32 idx = 1;
+    optional int32 status = 2;
+}
+
+message PSSevenDayStatus {
+    optional int32 idx = 1;
+    optional int32 status = 2;
+}
+
+////七天目标数据
+////21000
+//message GReqSevenDayTargetData {
+//}
+////21000
+//message GResSevenDayTargetData {
+//    optional int32 end_time = 1;
+//    optional int32 cur_day = 2;
+//    optional int32 point = 3;
+//    repeated PSSevenDayData list = 4;
+//    repeated PSSevenDayBox box = 5;
+//    repeated PSSevenDayStatus status_list = 6;
+//}
+//
+////七日目标更新返回包
+////21001
+//message GResUpdateSevenDayTargetData {
+//    repeated PSSevenDayData data = 1;
+//}
+//
+////领取七天目标任务奖励
+////21002
+//message GReqSevenDayTargetReward {
+//    optional int32 idx = 1;
+//}
+////21002
+//message GResSevenDayTargetReward {
+//    optional int32 point = 1;
+//    optional PSSevenDayStatus status = 2;
+//    repeated PSBackpackData data = 3;
+//}
+//
+////领取七天任务宝箱
+////21003
+//message GReqSevenDayTargetBoxReward {
+//    optional int32 idx = 1;
+//}
+////21003
+//message GResSevenDayTargetBoxReward {
+//    repeated PSBackpackData data = 1;
+//    optional PSSevenDayBox box = 2;
+//}
+//
+////七日目标登陆天数
+////21004
+//message GResSevenDayTargetUpdataDay {
+//    optional int32 cur_day = 1; //总登陆天数
+//}
+
+//---------------------新版-----------------------------
+
+//七日目标列表
+//21010
+message GReqSevenDayTargetList {
+
+}
+//21010
+message GResSevenDayTargetList {
+    repeated PSTaskData task = 1; //任务列表
+    repeated int32 reward_box_idx = 2; //宝箱领奖记录
+    required int32 seven_day_value = 3; //七日目标值
+    required int32 curr_day = 4; //当前天数
+}
+
+//七日目标任务领奖
+//21011
+message GReqSevenDayTargetGetReward {
+    required int32 task_id = 1;
+}
+//21011
+message GResSevenDayTargetGetReward {
+    required int32 seven_day_value = 1;
+    repeated PSTaskData task = 2;
+}
+//宝箱领奖
+//21012
+message GReqSevenDayTargetBoxGetReward {
+    required int32 box_id = 1;
+}
+//21012
+message GResSevenDayTargetBoxGetReward {
+    optional int32 box_id = 1;
+}
+
+//推送目标进度更新
+//21013
+message GResUpdateSevenDayTarget {
+    repeated PSTaskData update_tasks = 1; //
+}

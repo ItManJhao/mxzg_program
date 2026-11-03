@@ -1,0 +1,27 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion031GMsg";
+import "Object.proto";
+
+
+//13078
+message GReqPvpwinList
+{
+}
+//13078
+message GResPvpwinList
+{
+    optional int32 nvalue=1;
+    repeated PSMapData list = 2;
+}
+
+
+//13079
+message GReqPvpwinTimesGift
+{
+    optional int32 idx = 1;
+}
+//13079
+message GResPvpwinTimesGift
+{
+}

@@ -1,0 +1,219 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Task4GMsg";
+
+
+// 请求活动信息
+//13130
+message GReqActivityInfo
+{
+	repeated int32 idxs = 1;
+}
+
+// 活动信息单体数据
+message PSActivityUnit
+{
+	required int32 idx = 1;				// 活动表idx字段
+	required int32 progress = 2;		// 活动进度
+	required int32 is_got = 3;			// 是否领取
+	optional string ext_info = 4;		// 扩展信息
+}
+
+// 指定类型活动信息
+message PSActivityInfo
+{
+	required int32 idx = 1;				// 活动类型枚举对应promotioncontrol表中id字段
+	required int32 start_time = 2;		// 开始时间
+	required int32 end_time = 3;		// 结束时间
+	required int32 clear_time=4;		// 清楚时间
+	required int32 turns = 5;			// 活动轮次（没有轮次的活动就填写-1）
+	repeated PSActivityUnit list = 6;	// 活动列表数据
+	optional string ext_info = 7;		// 扩展数据
+}
+
+// 响应活动信息
+//13130
+message GResActivityInfo
+{
+	repeated PSActivityInfo list = 1;	// 活动信息列表
+}
+
+// 请求活动条目领取、兑换等操作
+//13131
+message GReqActivityItemGet
+{
+	required int32 activity_idx = 1;	// 活动对应枚举
+	required int32 idx = 2;				// 活动表idx字段
+	optional string ext_info = 3;		// 扩展数据
+}
+
+// 响应活动条目领取、兑换等操作
+//13131
+message GResActivityItemGet
+{
+	required int32 activity_idx = 1;	// 活动对应枚举
+	required PSActivityUnit unit = 2;	// 活动对应枚举
+	optional string ext_info = 3;		// 扩展数据
+}
+
+///////////////////////////冒险日记///////////////////////////
+// 请求冒险日记全部信息
+//13132
+message GReqAdventureNoteInfo
+{
+
+}
+
+// 响应冒险日记全部信息
+//13132
+message GResAdventureNoteInfo
+{
+	required int32 idx = 1;					// 活动类型枚举对应promotioncontrol表中id字段
+	required int32 start_time = 2;			// 开始时间
+	required int32 end_time = 3;			// 结束时间
+	required int32 clear_time=4;		// 清楚时间
+	required int32 turns = 5;				// 活动轮次（没有轮次的活动就填写-1）
+	repeated PSActivityUnit list = 6;		// 活动列表数据
+
+	required int32 total_recharge = 7;		// 本轮活动到目前为止充值数
+	repeated int32 idx_recharge_reward = 8;	// 当前领取到的充值奖励idx(奖励配置表的idx)
+
+	required int32 exp = 9;				// 冒险经验
+	repeated int32 lv_rewards = 10;		// 冒险经验等级奖励领取状态数组
+
+	required int32 curr_day=11;				// 当前开启天数
+}
+
+// 请求冒险日记任务奖励
+//13133
+message GReqAdventureNoteGet
+{
+	required int32 idx = 1;				// 活动表idx字段
+}
+
+// 响应冒险日记任务奖励
+//13133
+message GResAdventureNoteGet
+{
+	required PSActivityUnit unit = 1;	// 活动对应枚举
+	required int32 exp = 2 ;			// 经验值
+}
+
+// 请求冒险日记充值奖励
+//13134
+message GReqAdventureNoteRechargeGet
+{
+	required int32 idx = 1;				// 活动表idx字段
+}
+
+// 响应冒险日记充值奖励
+//13134
+message GResAdventureNoteRechargeGet
+{
+	required int32 idx = 1;				// 活动表idx字段
+}
+
+// 请求冒险日记冒险经验等级奖励
+//13135
+message GReqAdventureNoteAdvGet
+{
+	required int32 idx = 1;				// 活动表idx字段
+}
+
+// 响应冒险日记冒险经验等级奖励
+//13135
+message GResAdventureNoteAdvGet
+{
+	required int32 idx = 1;				// 活动表idx字段
+}
+
+// 响应冒险日记充值等级奖励
+//13136
+message GResAdventureNoteRechargeUpdate
+{
+	required int32 total_recharge = 1;				// 活动表idx字段
+}
+
+/////////////////////////神秘魔盒/////////////////////////
+// 请求神秘魔盒全部信息
+//13137
+message GReqMysteryBoxInfo
+{
+
+}
+
+// 响应神秘魔盒全部信息
+//13137
+message GResMysteryBoxInfo
+{
+	required int32 idx = 1;					// 活动类型枚举对应promotioncontrol表中id字段
+	required int32 start_time = 2;			// 开始时间
+	required int32 end_time = 3;			// 结束时间
+	required int32 clear_time = 4;			// 清除时间
+	required int32 turns = 5;				// 活动轮次（没有轮次的活动就填写-1）
+	repeated PSActivityUnit list = 6;		// 活动列表数据
+
+	required int32 total_recharge = 7;		// 本轮活动到目前为止充值数
+	repeated int32 idx_recharge_reward = 8;	// 当前领取到的充值奖励idx(奖励配置表的idx)
+
+	required int32 exp = 9;				// 冒险经验
+	repeated int32 lv_rewards = 10;		// 冒险经验等级奖励领取状态数组
+
+	required int32 curr_day=11;				// 当前开启天数
+}
+
+// 请求神秘魔盒任务奖励
+//13138
+message GReqMysteryBoxGet
+{
+	required int32 idx = 1;				// 活动表idx字段
+}
+
+// 响应神秘魔盒任务奖励
+//13138
+message GResMysteryBoxGet
+{
+	required PSActivityUnit unit = 1;	// 活动对应枚举
+	required int32 exp = 2;				// 经验值
+}
+
+// 请求神秘魔盒充值奖励
+//13139
+message GReqMysteryBoxRechargeGet
+{
+	required int32 idx = 1;				// 活动表idx字段
+	
+}
+
+// 响应神秘魔盒充值奖励
+//13139
+message GResMysteryBoxRechargeGet
+{
+	required int32 idx = 1;				// 活动表idx字段
+}
+
+// 请求神秘魔盒经验奖励
+//13140
+message GReqMysteryBoxExpGet
+{
+	required int32 idx = 1;				// 活动表idx字段
+}
+
+// 响应神秘魔盒经验奖励
+//13140
+message GResMysteryBoxExpGet
+{
+	required int32 idx = 1;				// 活动表idx字段
+}
+
+// 响应神秘魔盒充值等级奖励
+//13141
+message GResMysteryBoxRechargeUpdate
+{
+	required int32 total_recharge = 1;				// 活动表idx字段
+}
+
+
+
+
+

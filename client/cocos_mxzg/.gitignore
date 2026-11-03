@@ -1,0 +1,74 @@
+# mac osx
+**/.DS_Store
+
+# vim
+.*.swp
+
+# vscode
+.vscode/
+.svn/
+
+# office
+~$*.*
+# ExTools
+/ExTools/*
+
+# svn
+.svn
+
+/client/idle/runtime
+/doc
+/doc/增量更新文件
+/doc/*
+/doc/程序工具/app/cfg.ini
+/client/idle/frameworks/runtime-src/proj.ios_mac/idle.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad
+/doc/.svn
+*.DS_Store
+*__MACOSX
+*.tmp
+*.~*
+/client/idle/frameworks/runtime-src/proj.android
+client/idle/frameworks/cocos2d-x/build/cocos2d_libs.xcodeproj/xcuserdata/windy.xcuserdatad/xcschemes/xcschememanagement.plist
+client/idle/frameworks/cocos2d-x/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/windy.xcuserdatad/xcschemes/xcschememanagement.plist
+client/idle/frameworks/runtime-src/proj.ios_mac/idle.xcodeproj/xcuserdata/windy.xcuserdatad/xcschemes/xcschememanagement.plist
+
+client/idle/frameworks/cocos2d-x/build/cocos2d_libs.xcodeproj/xcuserdata/anyaojingshi.xcuserdatad/xcschemes/xcschememanagement.plist
+client/idle/frameworks/cocos2d-x/tools/simulator/libsimulator/proj.ios_mac/libsimulator.xcodeproj/xcuserdata/anyaojingshi.xcuserdatad/xcschemes/xcschememanagement.plist
+client/idle/frameworks/runtime-src/proj.ios_mac/idle.xcodeproj/xcuserdata/anyaojingshi.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+client/idle/frameworks/runtime-src/proj.ios_mac/idle.xcodeproj/xcuserdata/anyaojingshi.xcuserdatad/xcschemes/xcschememanagement.plist
+client/idle/frameworks/runtime-src/proj.ios_mac/idle.xcodeproj/xcuserdata/apple.xcuserdatad/xcschemes/xcschememanagement.plist
+client/idle/frameworks/runtime-src/proj.ios_mac/idle.xcodeproj/project.xcworkspace/xcuserdata/apple.xcuserdatad/UserInterfaceState.xcuserstate
+client/idle/frameworks/cocos2d-x/build/cocos2d_libs.xcodeproj/xcuserdata/apple.xcuserdatad/xcschemes/xcschememanagement.plist
+client/idle/frameworks/cocos2d-x/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/apple.xcuserdatad/xcschemes/xcschememanagement.plist
+lfs.so
+proto_file
+generator_protocol_id.lua
+client/idle/frameworks/runtime-src/proj.android.zip
+client/idle/publish/android/hxqy-release-signed-12-11-18-50.apk
+client/idle/publish/android/hxqy-release-signed-12-11-19-00.apk
+client/idle/publish/android/hxqy-release-signed-12-11-21-40.apk
+client/idle/publish/android/hxqy-release-signed-12-12-12-12.apk
+client/idle/publish/android/idle-release-signed.apk
+client/idle/simulator/android/hxqy-debug-12-11-20-12.apk
+client/idle/simulator/android/hxqy-debug-12-12-14-50.apk
+client/idle/simulator/android/idle-debug-12-12-01-40.apk
+client/idle/simulator/android/idle-debug-develop-12-16-12-00.apk
+client/idle/frameworks/runtime-src/proj.ios_mac/mac/alahaimugame/LiMing.framework/
+client/idle/frameworks/runtime-src/proj.ios_mac/mac/alahaimugame/RangeAllocatorMastersManufacturing.bundle/
+client/idle/publish/
+client/idle/simulator/
+client/idle/frameworks/runtime-src/proj.android-studio-tw-kor-gp/app/build/
+client/idle/frameworks/runtime-src/proj.android-studio-tw-kor-gp/build/
+client/idle/frameworks/runtime-src/proj.android-studio-tw-kor-gp/app/.externalNativeBuild/
+client/idle/frameworks/runtime-src/proj.android-studio-tw-kor-gp/.idea/
+client/idle/frameworks/runtime-src/proj.android-studio-tw-kor-gp/.gradle/
+fixpath.txt
+
+
+
+
+client/idle/frameworks/runtime-src/proj.android-studio-tw-jpn-gp/app/build/
+client/idle/frameworks/runtime-src/proj.android-studio-tw-jpn-gp/build/
+client/idle/frameworks/runtime-src/proj.android-studio-tw-jpn-gp/app/.externalNativeBuild/
+client/idle/frameworks/runtime-src/proj.android-studio-tw-jpn-gp/.idea/
+client/idle/frameworks/runtime-src/proj.android-studio-tw-jpn-gp/.gradle/

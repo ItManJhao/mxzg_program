@@ -1,0 +1,203 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "FriendGMsg";
+import "Object.proto";
+
+
+message ResFriendData {
+    optional int64 role_id = 1; // 角色id
+    optional string player_name = 2; // 玩家名称
+    optional int32 player_level = 3; // 玩家等级
+    optional int32 cup = 4; // 奖杯
+    optional int32 is_vip = 5; // 是否VIP
+    optional int32 head_id = 6; // 头像ID
+    optional int32 battle = 7; // 战力
+    optional int64 clan_id = 8; // 军团id
+    optional int32 clan_icon_id = 9; // 军团icon id
+    optional string clan_name = 10; // 军团名称
+    optional int32 online_status = 11; // 在线状态
+    optional int32 offline_time = 12; // 离线时间
+    optional int32 is_gived = 13; // 是否赠送过友情点，0没有，1有
+    optional int32 has_gift = 14; // 是否有友情点可以领取，0没有，1有，2已领取
+    optional int32 border_id = 15; // 头像框ID
+    optional int32 server_id = 16; //服务器id
+    optional int32 gender = 17; //角色性别
+}
+
+message ResFriendChatData {
+    optional int64 friend_id = 1; // 好友ID
+    optional int64 manage_id = 2; // 消息发送者ID
+    optional int32 time = 3; // 时间
+    optional int32 head_id = 4;
+    optional string msg = 5;
+    optional int32 border_id = 6; // 头像框ID
+}
+
+//9001
+message GReqFriendsList {
+
+}
+//9001
+message GResFriendsList {
+    optional int32 give_count = 1; //今天已赠送次数
+    repeated ResFriendData list = 2;
+}
+
+//9002
+message GReqFriendsRequestList {
+}
+//9002
+message GResFriendsRequestList {
+    repeated ResFriendData list = 1;
+}
+
+//9003
+message GReqFriendsSearch {
+    optional string rName = 1;
+}
+//9003
+message GResFriendsSearch {
+    repeated ResFriendData list = 1;
+}
+
+//申请好友
+//9004
+message GReqFriendsAdd {
+    optional int64 rid = 1;
+}
+//9004
+message GResFriendsAdd {
+    optional string target_nick = 1; //对方的名字
+}
+
+//9005
+message GReqFriendsAgree {
+    optional int64 role_id = 1;
+    optional int32 agree_status = 2; // 同意状态
+}
+//9005
+message GResFriendsAgree {
+    optional ResFriendData resFriendData = 1;
+}
+
+//9006
+message GReqFriendsDelete {
+    optional int64 rid = 1;
+}
+//9006
+message GResFriendsDelete {
+    optional int64 rid = 1;
+}
+
+//获取好友私聊信息
+//9007
+message GReqFriendChatList {
+}
+//9007
+message GResFriendChatList {
+    repeated ResFriendChatData list = 1;
+}
+
+//好友赠送
+//9008
+message GReqFriendsGive {
+    optional int64 rid = 1;
+}
+//9008
+message GResFriendsGive {
+    optional int64 rid = 1;
+    optional string name = 2; //好友名字
+    repeated PSBackpackData rewards = 3; //单份礼物
+    optional int32 give_count = 4; //今天已赠送次数
+}
+
+//好友一键赠送
+//9010
+message GReqFriendsGiveAll {
+}
+//9010
+message GResFriendsGiveAll {
+    repeated int64 rids = 1;
+    repeated string names = 2; //好友名字
+    repeated PSBackpackData rewards = 3; //单份礼物
+    optional int32 give_count = 4; //今天已赠送次数
+}
+
+//领取好友赠送友情点
+//9011
+message GReqFriendsReward {
+    optional int64 rid = 1;
+}
+//9011
+message GResFriendsReward {
+    optional int64 rid = 1;
+    repeated PSBackpackData rewards = 2; //单份礼物
+}
+
+//一键领取好友赠送友情点
+//9012
+message GReqFriendsRewardAll {
+}
+//9012
+message GResFriendsRewardAll {
+    repeated int64 rids = 1;
+    optional int32 reward_num = 2; //获取到奖励的份数
+    repeated PSBackpackData rewards = 3; //单份奖励礼物
+    optional int32 over_reward_num = 4; //获取到的超额奖励的份数
+    repeated PSBackpackData over_rewards = 5; //单份超额奖励礼物
+}
+
+//收到赠送道具时推送
+//9013
+message GResFriendsGift {
+    optional int64 rid = 1; //送礼物的玩家ID
+}
+
+//好友上下线广播
+//9014
+message GResFriendsOnlineRadio {
+    optional int64 rid = 1;
+    optional int32 online = 2; //0下线，1上线
+    optional int32 offline_time = 3;
+}
+
+//有好友申请时的推送
+//9015
+message GResFriendApplying {
+    optional ResFriendData resFriendData = 1;
+}
+
+//黑名单列表
+//9016
+message GReqBlackList {
+
+}
+//9016
+message GResBlackList {
+    repeated ResFriendData black_list = 1;
+}
+
+//添加到黑名单
+//9017
+message GReqAddBlackList {
+    optional int64 rid = 1; //玩家id
+    optional int32 server_id = 2; //服务器id
+}
+
+//新增对象
+//9017
+message GResAddBlackList {
+    optional ResFriendData black = 1;
+}
+
+//移除到黑名单
+//9018
+message GReqRemoveBlackList {
+    optional int64 remove_id = 1;
+}
+
+//移除对象
+//9018
+message GResRemoveBlackList {
+    optional int64 remove_id = 1;
+}

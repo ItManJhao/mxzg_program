@@ -1,0 +1,9 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ClickGMsg";
+
+//点击请求
+//60001
+message GResClick {
+    optional int32 click_code = 1; //点击码
+}

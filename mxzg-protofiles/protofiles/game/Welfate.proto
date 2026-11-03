@@ -1,0 +1,26 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "WelfareGMsg";
+import "Object.proto";
+
+//月礼包
+//26001
+message GReqMouthWelfareList
+{
+}
+//26001
+message GResMouthWelfareList
+{
+	repeated PSMapData list = 1; 
+}
+
+//全民日礼包
+//26002
+message GReqDailyWelfareList
+{
+}
+//26002
+message GResDailyWelfareList
+{
+	repeated PSMapData list = 1;
+}

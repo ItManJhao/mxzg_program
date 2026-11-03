@@ -1,0 +1,66 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "TimeTower";
+
+import "Battle.proto";
+import "Object.proto";
+
+message PSTimeTowerRank
+{
+	optional int64 player_id = 1;		// 玩家的rid
+	optional int32 server_id = 2;		// 玩家区号
+	optional int32 player_lv = 3;		// 玩家等级
+	optional string player_name	= 4;	// 玩家名字
+	optional int32 head_id = 5; 		// 头像ID
+	optional int32 max_pass = 6; 		// 最高通过关卡
+	optional int32 rank = 7;			// 排行			
+	optional int32 image_id = 8;		// 英雄形象
+	optional int32 border_id = 9; 		// 头像框ID
+	optional int32 fighting = 10;		// 战斗力
+}
+
+//查看时空魔塔信息
+//74001
+message GReqTimeTowerInfo
+{
+}
+//74001
+message GResTimeTowerInfo
+{
+	optional int32 mission_id = 1;		// 最后通关的关卡ID
+	optional int32 accumulate_pass = 2;	// 本周累计通过
+	optional int32 max_pass = 3;		// 最高通过关数
+	optional int32 heart = 4;			// 当前心心数
+	repeated int32 mission_mark = 5;	// 最后通关的关卡评分
+	optional int32 startTime = 6;		// 赛季开始时间，时间为0时不做处理
+	optional int32 endTime = 7;			// 赛季结束时间，时间为0时不做处理
+}
+
+// 挑战关卡
+//74002
+message GReqTimeTowerChallenge
+{
+}
+//74002
+message GResTimeTowerChallenge
+{
+	required BattleReport report = 1;       // 战报
+    repeated PSBackpackData reward = 2;	    // 奖励
+	optional int32 heart = 3;				// 当前心心数
+	optional int32 comment = 4;				// 评分类型
+	optional int32 cur_mission_id = 5;		// 最后通关的关卡ID
+	repeated PSBackpackData jump_reward = 6;// 触发跳关时的奖励
+}
+
+// 时空魔塔排行信息
+//74003
+message GReqTimeTowerRankInfo
+{
+}
+
+//74003
+message GResTimeTowerRankInfo
+{
+	optional int32 my_rank = 1;					//我的排名，0未进榜
+	repeated PSTimeTowerRank rank_list = 2;	//排行榜 
+}

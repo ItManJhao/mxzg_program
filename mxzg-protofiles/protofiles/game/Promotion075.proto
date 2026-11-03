@@ -1,0 +1,21 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion075GMsg";
+import "Object.proto";
+
+//赏月佳肴数据
+//75131
+message GReqMidFoodInfo{
+
+}
+//75131
+message GResMidFoodInfo{
+    repeated PSMapData buy = 1; //购买记录
+}
+
+//购买推送
+//75132
+message GResMidFoodBuy{
+    optional PSMapData buy = 1; //购买记录
+}
+

@@ -1,0 +1,15 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion054GMsg";
+import "Object.proto";
+
+//限时购买
+//54001
+message GReqFlashSaleData {
+
+}
+
+//54001
+message GResFlashSaleData {
+    repeated PSMapData reward_count = 1; //领奖记录,idx->count
+}

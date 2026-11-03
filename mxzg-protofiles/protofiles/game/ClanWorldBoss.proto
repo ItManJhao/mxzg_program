@@ -1,0 +1,177 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ClanWorldBossGMsg";
+import "Hero.proto";
+import "Battle.proto";
+
+//可掠夺的玩家信息
+message PSRobableRole
+{
+	optional int64 rid = 1;			//玩家ID
+	optional string nick = 2;		//昵称
+	optional int32 fighting = 3;	//战力
+	optional string clan_name = 4;	//公会名字
+	repeated ResHeroData heros = 5;	//英雄列表
+	optional int64 point = 6;		//积分
+	optional int32 rank = 7;		//排名
+	optional int32 server_id = 8;	//服务器ID
+}
+
+//世界BOSS公会排名信息
+message PSBossClanRank
+{
+	optional int64 clan_id = 1;		//公会ID
+	optional string clan_name = 2;	//公会名字
+	optional int32 rank = 3;		//排名
+	optional int64 point = 4;		//积分
+	optional int32 server_id = 5;	//服务器ID
+}
+
+//世界BOSS玩家排名信息
+message PSBossRoleRank
+{
+	optional int64 rid = 1;		//角色ID
+	optional string nick = 2;	//角色名字
+	optional int32 rank = 3;	//排名
+	optional int64 point = 4;	//积分
+	optional int32 server_id = 5;//服务器ID
+}
+
+//掠夺记录
+message PSRobRecord
+{
+	optional string battle_id = 1;	//战斗ID
+	optional string nick = 2;		//昵称
+	optional int32 strength = 3;	//战斗力
+	optional int32 head_id = 4;		//头像
+	optional int32 border_id = 5;	//头像框
+	optional int32 level = 6;		//等级
+	optional int32 time = 7;		//时间
+	optional int32 type = 8;		//进攻或防守类型，1掠夺，2防守
+	optional int32 delta = 9;		//积分变化，0积分不变
+	optional int32 win = 10;		//胜利失败，1胜利，2失败
+	optional int64 rid = 11;		//玩家ID
+	optional int32 server_id = 12;	//服务器ID
+}
+
+//查看公会世界BOSS信息
+//33001
+message GReqScanWorldBoss
+{
+}
+//33001
+message GResScanWorldBoss
+{
+	optional int32 boss_id = 1;			//BOSS配置ID
+	optional int32 challenge_count = 2;	//已挑战次数
+	optional int32 challenge_cd = 3;	//挑战冷却时间
+	optional int32 rob_count = 4;		//已掠夺次数
+	optional int32 rob_cd = 5;			//掠夺冷却时间
+	optional int32 stage = 6;			//当前阶段，1预告阶段，2挑战阶段，3掠夺阶段，4休战阶段
+	optional int32 next_stage_time = 7;	//当前阶段的结束时间
+	optional int32 round_start_time = 8;//本轮活动的开始时间
+	optional int32 round_end_time = 9;	//本轮活动的结束时间
+	optional int32 has_new_record = 10;	//是否有新的掠夺数据，0没有，1有
+}
+
+//挑战公会世界BOSS
+//33002
+message GReqChallengeBoss
+{
+}
+//33002
+message GResChallengeBoss
+{
+	optional int32 challenge_count = 1;	//已挑战次数
+	optional int32 challenge_cd = 2;	//挑战冷却时间
+	optional int64 point = 3;			//积分
+	optional BattleReport report = 4;	//战报
+	optional int64 addPoint = 5;		//本地战斗获得的积分
+	optional int64 damage = 6;			//本次战斗造成的伤害量
+}
+
+//查看可掠夺的玩家列表
+//33003
+message GReqGetRobableRole
+{
+}
+//33003
+message GResGetRobableRole
+{
+	repeated PSRobableRole roles = 1;	//玩家列表
+}
+
+//掠夺玩家
+//33004
+message GReqRobOtherRole
+{
+	optional int64 rid = 1;		//玩家ID
+}
+//33004
+message GResRobOtherRole
+{
+	optional int32 rob_count = 1;	//已掠夺次数
+	optional int32 rob_cd = 2;		//掠夺冷却时间
+	optional int64 point = 3;		//积分
+	optional BattleReport report = 4;//战报
+	optional int64 addPoint = 5;	//本地战斗获得的积分
+	optional int64 damage = 6;		//本次战斗造成的伤害量
+}
+
+//查看公会排名
+//33005
+message GReqScanClanRank
+{
+}
+//33005
+message GResScanClanRank
+{
+	optional PSBossClanRank my_clan = 1;	//我的公会排名
+	repeated PSBossClanRank ranks = 2;		//公会排行榜信息
+}
+
+//查看玩家排名
+//33006
+message GReqScanRoleRank
+{
+}
+//33006
+message GResScanRoleRank
+{
+	optional PSBossRoleRank my_rank = 1;	//我的排名
+	repeated PSBossRoleRank ranks = 2;		//角色排行榜信息
+}
+
+//被其他玩家掠夺后服务器进行推送
+//33007
+message GResRobByOtherRole
+{
+	optional int64 point = 1;
+}
+
+//boss积分发生变化时推送
+//33008
+message GResBossPointChange
+{
+}
+
+//查看掠夺日志
+//33009
+message GReqScanRobHis
+{
+}
+//33009
+message GResScanRobHis
+{
+	repeated PSRobRecord records = 1;	//战斗记录
+}
+
+//已读所有掠夺记录
+//33010
+message GReqReadNewRecord
+{
+}
+//33010
+message GResReadNewRecord
+{
+}

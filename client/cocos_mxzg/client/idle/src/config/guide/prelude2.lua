@@ -1,0 +1,26 @@
+local data = {
+	{call = "waitSceneLoadingEnd"},
+	{call = "wait", time=1},
+	{call = "findNodeByName",name="main_chat"},
+	{call = "setNodeVisible",visible=0},
+	{call = "clearBattle"},
+	{call = "wait", time=1, finial=1},
+	{call = "setSwallow", is_swallow_touch = false},
+	{call = "showSubtitle", vec_text = {
+		"「喂，冒险者，快醒醒。」",
+		"你想睁开双眼，却有些乏力。",
+		"「时间裂痕的碎片……？是传说中的那位大人！」",
+		"时间……碎片……女神……",
+		"你的思绪回转而来，视线慢慢明朗。",
+		"「传说中的那位大人，你终于醒了！」",
+		},movie="movie/guide-2.mp4"},
+	{call = "addCloseWindowListen", next=false, step=10, ccbi_path="ccbi/SubtitleLayer.ccbi"},
+	{call = "setSwallow", is_swallow_touch = true, finial=1},
+	{call = "changeMainLayer", layer_type=MainSceneType.MAINCITY_LAYER, is_fast=true, finial=1},
+	{call = "setSwallow", is_swallow_touch = true, finial=1},
+	{call = "setSwallow", is_swallow_touch = true, finial=1},
+	{call = "setSwallow", is_swallow_touch = true, finial=1},
+	{call = "setSwallow", is_swallow_touch = true, finial=1},
+	{call = "setSwallow", is_swallow_touch = true, finial=1},
+}
+return data

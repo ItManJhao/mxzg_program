@@ -1,0 +1,171 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>服务器列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('server/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">区服ID：</label>
+                                            <input type="text" placeholder="精准搜索" name="id" value="{$search_params.id}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">&nbsp;&nbsp;区服名称：</label>
+                                            <input type="text" placeholder="模糊搜索" name="server_name" value="{$search_params.server_name}" style="width: 120px;" class="form-control">
+                                            <label class="control-label" style="margin-left: 10px;">区服状态：</label>
+                                            <select style="display: inline-block;" class="form-control" name="status">
+                                                <option <if condition="$search_params['status'] == -1"> selected </if> value="-1">全部</option>
+                                                <option <if condition="$search_params['status'] == 0"> selected </if> value="0">未开放</option>
+                                                <option <if condition="$search_params['status'] == 1"> selected </if> value="1">爆满</option>
+                                                <option <if condition="$search_params['status'] == 2"> selected </if> value="2">流畅</option>
+                                                <option <if condition="$search_params['status'] == 3"> selected </if> value="3">维护</option>
+                                            </select>
+                                             
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()"  id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <button onclick="openYemian('{:U('server/add')}','添加游戏区服')"  type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>添加</button>
+                                        <button onclick="openYemian('{:U('server/defend')}','维护（踢下线）')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>维护（踢下线）</button>
+<!--                                        <button onclick="offlineAll()"  type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>维护（提下线）</button>-->
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'ids\']').prop('checked', this.checked);"></th>
+                                                        <th width="5%">服务器ID</th>
+                                                        <th>服务器名字</th>
+                                                        <th>是否新服</th>
+                                                        <th>服务器类型</th>
+                                                        <th>创角阈值</th>
+                                                        <th>创角数</th>
+                                                        <th>状态</th>
+                                                        <th>开服时间</th>
+                                                        <th>维护时间</th>
+                                                        <th>维护通知</th>
+                                                        <th>操作</th>
+                                                        <th>其他操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="server_list" id="server_list_vo">
+                                                        <tr role="row"> 
+                                                            <td><input type="checkbox" name="ids[]" value="{$server_list_vo.id}"></td>
+                                                            <td>{$server_list_vo.id}</td>
+                                                            <td>{$server_list_vo.server_name}</td>
+                                                            <td><if condition="$server_list_vo['is_new']">是<else/>否</if></td>
+                                                            <td><if condition="$server_list_vo['type'] == 1">测试服<elseif condition="$server_list_vo['type'] == 2"/>审核服<else/>正式服</if></td>
+                                                            <td>{$server_list_vo.role_nums_limit}</td>
+                                                            <td>{$server_list_vo.role_nums}</td>
+                                                            <td>{$server_list_vo.status_name}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$server_list_vo['open_time'])}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$server_list_vo['defend_end_time'])}</td>
+                                                            <td>{$server_list_vo.msg}</td>
+                                                            <td>
+                                                                <a class="btn btn-primary" href="javascript:;" title="编辑" onclick="openYemian('/admin.php/server/edit?id={$server_list_vo.id}','编辑服务器')" >编辑</a>
+                                                                <!-- <a class="btn btn-danger" href="javascript:void(0)" title="删除" data-url="{:U('channel/ajax_delete')}" data-id="{$vo.id}" <if condition="in_array('3',$user_root['function_id'])">  onclick="delarticle(this,'确定删除该渠道？',{$vo.id},'{:U('channel/ajax_delete')}')" <else/> onclick="layer.msg('没有操作权限', {icon: 5})" </if>><i class="fa fa-trash-o"></i></a> -->
+                                                            </td>
+                                                            <td>
+                                                                <a class="btn btn-danger" href="javascript:void(0)" title="发送开服时间" data-url="{:U('server/ajax_send_optime')}" data-id="{$server_list_vo.id}"  onclick="send_optime(this,'确定发送开服时间？','{:U('server/ajax_send_optime')}')" ><i class="fa fa-trash-o"></i>发送开服时间</a>
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                            <script>
+                                                // 点击分页触发的事件
+                                                $(".pagination a").click(function(){
+                                                    url = $(this).attr('href');
+                                                    ajax_get_table('formSearch',url);
+                                                    return false;
+                                                });
+
+                                                // 全服下线
+                                                // function offlineAll(){
+                                                //     url = window.location.href;
+                                                //     $.ajax({
+                                                //         url:"/admin.php/server/ajax_offlineAll",
+                                                //         data : $('#form-order').serialize(),
+                                                //         success: function(res){
+                                                //             alert(res.message);
+                                                //         }
+                                                //     });
+                                                // }
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,url){
+        // cur_page = page; //当前页面 保存为全局变量
+        // var info = $('#page_info').val();
+        $.ajax({
+            type : "POST",
+            url:url,
+            data : $('#'+form).serialize(),// 你的formid
+            success: function(data){
+                $("#ajaxList").html('');
+                $("#ajaxList").append(data);
+            }
+        });
+        return false;
+    }
+
+    function send_optime(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var id=$(obj).attr("data-id");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {id:id},
+                dataType : "json",
+                success:function(data){
+                    if (data.status == 0) {
+                        top.layer.msg(data.message);
+                    } else {
+                        top.layer.msg(data.message);
+                        // $(obj).parent().parent().remove();
+                    }
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+</script>
+
+
+<include file="Public:footer" />

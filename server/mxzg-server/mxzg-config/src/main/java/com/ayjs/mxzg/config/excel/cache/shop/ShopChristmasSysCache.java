@@ -1,0 +1,17 @@
+package com.ayjs.mxzg.config.excel.cache.shop;
+
+
+import com.ayjs.mxzg.common.excel.BaseExcelCache;
+import com.ayjs.mxzg.config.excel.entity.shop.CShopChristmas;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ShopChristmasSysCache extends BaseExcelCache<CShopChristmas> {
+
+    @Override
+    public String getFileName() {
+        return "shopchristmas";
+    }
+
+
+}

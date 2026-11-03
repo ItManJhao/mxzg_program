@@ -1,0 +1,45 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ThousandSummonGMsg";
+import "Hero.proto";
+
+//------------------------------千抽十连抽------------------------------
+
+//千抽卡组数据
+message ThousandData{
+		optional int32 serial = 1; //编号 1,2,3
+		optional int32 max = 2;//最高星卡 （以后会不会存在同星卡）要问的
+		repeated int32 list = 3;//排好序的 英雄卡id 会出现重复的卡，自定义排序，按星排序
+}
+
+//千抽十连抽查询
+//78101
+message	GReqThousand{
+}
+//78101
+message	GResThousand{
+		optional int32 turns  = 1;//轮次
+		optional int32 remain = 2;//还剩多少次抽卡
+		repeated ThousandData list = 3; //抽卡集合
+}
+
+//千抽十连抽抽
+//78102
+message	GReqThousandSummon{
+		optional int32 serial = 1; //抽卡编号
+}
+
+//78102
+message	GResThousandSummon{
+		optional ThousandData list = 1; //抽卡集合
+}
+
+//千抽十连抽领取
+//78103
+message	GReqThousandSummonGet{
+		optional int32 serial = 1; //抽卡编号
+}
+//78103
+message	GResThousandSummonGet{
+		repeated ResHeroData list = 1; //抽卡集合
+}

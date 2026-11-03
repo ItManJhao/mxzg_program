@@ -1,0 +1,65 @@
+
+#debug
+server.debug=true
+#服务器id
+server.id=1
+#tcpsocket绑定的端口
+network.tcpSocket.port=11322
+#netty的io线程数
+network.tcpSocket.threads=10
+#netty的空闲检测时间秒
+network.tcpSocket.idle=60
+#逻辑线程池最小线程数量
+network.tcpSocket.logic.threads.min=4
+#逻辑线程池最大线程数量
+network.tcpSocket.logic.threads.max=8
+#中心服地址
+center.server.host=127.0.0.1
+#中心服端口
+#center.server.port=11122
+
+# web配置
+server.port=9801
+#定时器线程池线程数量
+scheduler.threads=2
+#定时器任务执行输出日志临界时间
+scheduler.threshold=200
+#扫描包的跟路径
+base.package.path = com.ayjs
+#日志持久化线程数量
+log.persistence.threads=2
+#日志输出到数据库
+log.to.db=true
+#日志输出到文件
+log.to.file=false
+#日志输出到文件目录
+log.to.file.dir=gamelog
+#事件总线订阅者派发事件临界时间
+eventbus.threshold=50
+#是否是中心服
+center.server=true
+#配置文件路径
+config.path=D:/plan/doc/gameconfig/config-test-xlsx
+
+database.game.saveThreads=5
+database.log.saveThreads=2
+database.slowLog=200
+database.game.file=classpath:database.properties
+database.log.file=classpath:database-log.properties
+#################redis基础配置#################
+spring.redis.database=0
+spring.redis.host=192.168.0.131
+spring.redis.password=^-^ayjsgame!@#redis&201912
+spring.redis.port=11001
+# 连接超时时间 单位 ms（毫秒）
+spring.redis.timeout=3000
+#################redis线程池设置#################
+# 连接池中的最大空闲连接，默认值也是8。
+spring.redis.lettuce.pool.max-idle=500
+#连接池中的最小空闲连接，默认值也是0。
+spring.redis.lettuce.pool.min-idle=50
+# 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
+spring.redis.lettuce.pool.max-active=2000
+# 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
+spring.redis.lettuce.pool.max-wait=1000
+

@@ -1,0 +1,27 @@
+local data = {
+	-- 检查签到
+	{call = "waitSceneLoadingEnd"},
+	{call = "wait", time=300},
+	{call = "closeOtherWindow"},
+	{call = "wait", time=10},
+	{call = "findNodeByName",name="main_chat"},
+	{call = "setNodeVisible",visible=0},
+	{call = "openNPCLayer", auto=1,music="music/guide006.mp3",npc_name="Misa",content=930030015},
+	{call = "openNPCLayer", auto=1,npc_name="Misa",content=930030016},
+	{call = "checkLayerType", layer_type=MainSceneType.MAINCITY_DAILY_CHECK, r_beg=1, r_end=3},
+	{call = "findSpriteByFileName", plist="ccbi-res/main-scene-lang.plist",getParent=1,file="main-scene-lang/spr-city.png"},
+	{call = "createMask"},
+	{call = "wait", time=300},
+	{call = "findSpriteByFileName", plist="ccbi-res/main-city.plist",getParent=1,file="main-city/btn-login-2.png"},
+	{call = "createMask"},
+	{call = "wait", time=300},
+	{call = "wait", time=1},
+	{call = "findSpriteByFileName", plist="ccbi-res/promotion.plist",getParent=1,file="promotion/sign-bg.png"},
+	{call = "createMask"},
+	{call = "wait", time=1, finial=1},
+	{call = "waitRecv", protocol=13011},
+	{call = "wait", time=300},
+	{call = "findSpriteByFileName",plist="ccbi-res/common-ui.plist",getParent=1,file="button/btn-buy-2.png"},
+	{call = "createMask"},
+}
+return data

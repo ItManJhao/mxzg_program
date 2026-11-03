@@ -1,0 +1,58 @@
+stages:
+  - build-hk
+  - build-kor
+  - build-jpn
+  - build-sea
+#  - build-cn
+
+# hk
+build-hk-job:
+  stage: build-hk
+  tags:
+    - mxzg-server
+  script:
+    - mvn clean package -Dmaven.test.skip=true
+    - sh /home/mxzg/test-gameserver/build_script/new_script/update-jar.sh hk
+    - sh /home/mxzg/test-gameserver/build_script/new_script/update-config.sh hk
+    - sh /home/mxzg/test-gameserver/build_script/new_script/rsync-to-dev-server.sh
+  only:
+    - master
+
+# kor
+build-kor-job:
+  stage: build-kor
+  tags:
+    - mxzg-server
+  script:
+    - mvn clean package -Dmaven.test.skip=true
+    - sh /home/mxzg/test-gameserver/build_script/new_script/update-jar.sh kor
+    - sh /home/mxzg/test-gameserver/build_script/new_script/update-config.sh kor
+    - sh /home/mxzg/test-gameserver/build_script/new_script/rsync-to-dev-server.sh
+  only:
+    - mxzg_kor_release
+
+# jpn
+build-jpn-job:
+  stage: build-jpn
+  tags:
+    - mxzg-server
+  script:
+    - mvn clean package -Dmaven.test.skip=true
+    - sh /home/mxzg/test-gameserver/build_script/new_script/update-jar.sh jpn
+    - sh /home/mxzg/test-gameserver/build_script/new_script/update-config.sh jpn
+    - sh /home/mxzg/test-gameserver/build_script/new_script/rsync-to-dev-server.sh
+  only:
+    - mxzg_jpn_release
+
+# sea
+build-sea-job:
+  stage: build-sea
+  tags:
+    - mxzg-server
+  script:
+    - mvn clean package -Dmaven.test.skip=true
+    - sh /home/mxzg/test-gameserver/build_script/new_script/update-jar.sh sea
+    - sh /home/mxzg/test-gameserver/build_script/new_script/update-config.sh sea
+    - sh /home/mxzg/test-gameserver/build_script/new_script/rsync-to-dev-server.sh
+  only:
+    - mxzg_sea_release

@@ -1,0 +1,156 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>跑马灯列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('marquee/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">标题：</label>
+                                            <input type="text" placeholder="模糊搜索" name="name" value="{$search_params.name}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">设备类型：</label>
+                                            <select class="form-control" name="device_type">
+                                                <option <if condition="$search_params['device_type'] == 0"> selected </if> value="0">所有设备类型</option>
+                                                <option <if condition="$search_params['device_type'] == 1"> selected </if> value="1">安卓</option>
+                                                <option <if condition="$search_params['device_type'] == 2"> selected </if> value="2">ios</option>
+                                            </select>
+<!--                                            <label class="control-label">渠道：</label>-->
+<!--                                            <select class="form-control" name="c_son_id">-->
+<!--                                                <option value="0">请选择渠道</option>-->
+<!--                                                <volist name="channels" id="channels_vo">-->
+<!--                                                    <option value="{$channels_vo.id}">{$channels_vo.name}</option>-->
+<!--                                                </volist>-->
+<!--                                                </if>-->
+<!--                                            </select>-->
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <button onclick="openYemian('{:U('marquee/add')}','添加跑马灯')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>添加</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'ids\']').prop('checked', this.checked);"></th>
+                                                        <th width="5%">公告ID</th>
+                                                        <th>标题</th>
+                                                        <th>内容
+                                                        <th>设备类型</th>
+                                                        <th>状态</th>
+                                                        <th>循环次数</th>
+                                                        <th>创建时间</th>
+                                                        <th>操作</th>
+                                                        <th>其他操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row"> 
+                                                            <td><input type="checkbox" name="ids[]" value="{$vo.id}"></td>
+                                                            <td>{$vo.id}</td>
+                                                            <td>{$vo.name}</td>
+                                                            <td>{$vo.content}</td>
+                                                            <td><if condition="$vo['device_type'] == 1">安卓<elseif condition="$vo['device_type'] == 2"/>iod<else/>所有设备</if></td>
+                                                            <td><if condition="$vo['status'] == 1">开启<else/>关闭</if></td>
+                                                            <td>{$vo.loop_count}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['created_at'])}</td>
+                                                            <td>
+                                                                <a class="btn btn-primary" href="javascript:;" title="编辑" onclick="openYemian('/admin.php/marquee/edit?id={$vo.id}','编辑跑马灯')"><i class="fa fa-pencil"></i>编辑跑马灯</a>
+                                                                <!-- <a class="btn btn-danger" href="javascript:void(0)" title="删除" data-url="{:U('channel/ajax_delete')}" data-id="{$vo.id}" <if condition="in_array('3',$user_root['function_id'])">  onclick="delarticle(this,'确定删除该渠道？',{$vo.id},'{:U('channel/ajax_delete')}')" <else/> onclick="layer.msg('没有操作权限', {icon: 5})" </if>><i class="fa fa-trash-o"></i></a> -->
+                                                            </td>
+                                                            <td>
+                                                                <a class="btn btn-danger" href="javascript:void(0)" title="开启" data-url="{:U('marquee/ajax_open')}" data-id="{$vo.id}"  onclick="open_close(this,'确定开启？','{:U('marquee/ajax_open')}')" >开启</a>
+                                                                <a class="btn btn-danger" href="javascript:void(0)" title="关闭" data-url="{:U('marquee/ajax_close')}" data-id="{$vo.id}"  onclick="open_close(this,'确定关闭？','{:U('marquee/ajax_close')}')" >关闭</a>
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                            <script>
+                                                // 点击分页触发的事件
+                                                $(".pagination a").click(function(){
+                                                    url = $(this).attr('href');
+                                                    ajax_get_table('formSearch',url);
+                                                    return false;
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,url){
+        // cur_page = page; //当前页面 保存为全局变量
+        // var info = $('#page_info').val();
+        $.ajax({
+            type : "POST",
+            url:url,
+            data : $('#'+form).serialize(),// 你的formid
+            success: function(data){
+                $("#ajaxList").html('');
+                $("#ajaxList").append(data);
+            }
+        });
+        return false;
+    }
+
+    //开启与关闭跑马灯
+    function open_close(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var id=$(obj).attr("data-id");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {id:id},
+                dataType : "json",
+                success:function(data){
+                    if (data.status == 0) {
+                        top.layer.msg(data.message);
+                    } else {
+                        top.layer.msg(data.message);
+                        // $(obj).parent().parent().remove();
+                    }
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+</script>
+
+
+<include file="Public:footer" />

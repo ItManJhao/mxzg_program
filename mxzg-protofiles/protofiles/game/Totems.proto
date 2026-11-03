@@ -1,0 +1,70 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "TotemsGMsg";
+//图腾信息
+message PSTotemsInfo {
+    optional int64 t_id = 1;//图腾id
+    optional int32 sys_id = 2;//道具id
+    optional int64 hero_id = 3;//英雄id （<=0代表没有英雄穿戴）
+    optional int32 level = 4;//等级
+    optional int32 quality = 5;//品质（品阶）
+}
+
+
+//图腾信息列表
+//74300
+message GReqTotemsInfoList {
+
+}
+//74300
+message GResTotemsInfoList {
+    repeated PSTotemsInfo list = 1;
+}
+
+
+//图腾升级，升阶
+//74301
+message GReqTotemsUp {
+    required int32 type = 1;// 1：升级  2：升阶
+    optional int64 t_id = 2;//升级图腾id
+}
+
+//74301
+message GResTotemsUp {
+    optional PSTotemsInfo totems = 1;
+     required int32 type = 2;// 1：升级  2：升阶
+}
+
+
+//图腾装备、卸下、更换
+//74302
+message GReqTotemsOprea {
+    required int32 type = 1;// 1：装备  2：卸下  3：更换
+    optional int64 t_id = 2;//操作的图腾id
+    optional int64 hero_id = 3;//英雄id  该英雄装备、卸下、更换此图腾
+}
+
+//74302
+message GResTotemsOprea {
+     repeated PSTotemsInfo list = 1;//更新的图腾集合
+     required int32 type = 2;// 1：装备  2：卸下  3：更换
+}
+
+
+//图腾重置
+//74303
+message GReqTotemsReset {
+    optional int64 t_id = 1;//图腾id
+}
+
+//74303
+message GResTotemsReset {
+     optional PSTotemsInfo totems = 1;
+}
+
+
+//图腾添加推送
+//74304
+message GResAddTotemsInfo{
+    repeated PSTotemsInfo list = 1;
+}

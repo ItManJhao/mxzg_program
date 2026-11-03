@@ -1,0 +1,141 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ChatGMsg";
+
+import "Object.proto";
+
+//聊天
+//6001
+message GReqChat {
+    optional int32 type = 1; //聊天类型聊天类型(1.系统2.世界3.军团,4.喇叭,5.私聊，6.跨服，7.同省)
+    optional int64 rid = 2; //私聊对象ID
+    optional string msg = 3; //聊天内容
+    optional int64 toRid = 4; //@角色id
+    optional string toRoleNick = 5; //@角色名
+}
+//6001
+message GResChat {
+    optional int32 chat_type = 1; //聊天类型(1.系统2.世界3.军团,4.喇叭,5.私聊)
+    optional int64 player_id = 2; //发送此聊天消息的玩家角色id(0为系统)
+    optional int64 friend_id = 3; //私聊好友的ID
+    optional int64 clan_id = 4; //军团id(无军团为0)
+    optional int32 send_time = 5; //发送时间
+    optional int32 player_level = 6; //玩家等级
+    optional int32 is_vip = 7; //是否VIP,借用这个字段显示跑马灯在系统聊天中的"传闻"标识
+    optional int32 head_id = 8; //头像
+    optional string player_name = 9; //发送此聊天消息的玩家昵称(系统为空)
+    optional string clan_name = 10; //军团名称
+    optional string chat_content = 11; //消息内容
+    optional int32 border_id = 12; //头像框
+
+    optional int32 idx = 13; //notice配置表ID
+    repeated string params = 14; //参数
+    optional int32 city_id = 15; // 城市id
+    optional int32 server_id = 16; // 服务器id
+
+    optional int32 peerage = 17;//尊贵标识等级（当玩家不展示聊天标识时为0，默认也为0）
+
+    //**********讨伐团相关
+    optional int32 cruGroupT = 18;//讨伐团职位标识  1：团长  2：指挥官 0：其他
+    optional int32 cg_group_id = 19;//城市id(对应 crusadegroupmap 表的group_id)
+
+    optional int64 toRid = 20; //@角色id
+    optional int32 title_id = 21; //称号id
+    optional int32 gender = 22; //角色性别
+}
+
+//请求聊天记录
+//6002
+message GReqChatLog {
+
+}
+//聊天记录返回
+//6002
+message GResChatLog {
+    repeated GResChat chatLog = 1;
+}
+
+//私聊记录
+//6003
+message GReqPrivateChatLog {
+    optional int64 friend_id = 1; //好友id
+}
+//私聊记录
+//6003
+message GResPrivateChatLog {
+    repeated GResChat chatLog = 1;
+    optional int64 friend_id = 2;
+}
+
+//请求正在聊天的列表
+//6004
+message GReqPrivateChatRoles {
+
+}
+//正在聊天的列表
+//6004
+message GResPrivateChatRoles {
+    repeated PrivateChatStatus list = 1;
+}
+
+message PrivateChatStatus {
+    optional int64 rid = 1;
+    optional int32 red_status = 2;
+}
+
+//添加私聊对象
+//6005
+message GReqAddPrivateChat {
+    optional int64 role_id = 1;
+}
+//删除私聊对象
+//6005
+message GResAddPrivateChat {
+    optional int64 role_id = 1;
+}
+
+//移除私聊对象
+//6006
+message GReqRemovePrivateChat {
+    optional int64 role_id = 1;
+}
+//移除私聊对象
+//6006
+message GResRemovePrivateChat {
+    optional int64 role_id = 1;
+}
+
+//请求单个频道聊天记录
+//6007
+message GReqChatLogByType {
+    optional int32 type = 1; //聊天类型聊天类型(1.系统2.世界3.军团,4.喇叭,5.私聊，6.跨服，7.同省)
+}
+//请求单个频道聊天记录
+//6007
+message GResChatLogByType {
+    repeated GResChat chatLog = 1;
+    optional int32 type = 2; //聊天类型聊天类型(1.系统2.世界3.军团,4.喇叭,5.私聊，6.跨服，7.同省)
+}
+
+//6008
+message GReqChatLogRead {
+    optional int64 friend_id = 1;
+    optional int32 type = 2; //请求频道阅读，私聊频道要传阅读id
+}
+
+//请求聊天数量
+//6009
+message GReqChatNum {
+    repeated int32 type = 1; //聊天类型聊天类型(1.系统2.世界3.军团,4.喇叭,5.私聊，6.跨服，7.同省)
+}
+
+//6009
+message GResChatNum {
+    repeated PSMapData typeNum = 1; //聊天数量 type->num,可能会大于99
+}
+
+// 被@的人收到的通知消息
+//6010
+message GResChatNoticeTheRole {
+    optional int32 type = 1; //聊天类型聊天类型(1.系统2.世界3.军团,4.喇叭,5.私聊，6.跨服，7.同省)
+}

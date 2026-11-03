@@ -1,0 +1,57 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "PromotionNewGMsg";
+
+//活动数据
+message PbPromotionData {
+    optional int32 id = 1; //活动ID
+    optional int32 start_time = 2; //活动开启时间
+    optional int32 end_time = 3; //活动截止时间，截止时间到结束时间之间不再记录活动进度数据
+    optional int32 clear_time = 4; //活动结束时间，截止时间到结束时间之间还可以进行兑换、领取、查看
+    optional int32 turns = 5; //活动当前轮数
+}
+
+//请求所有正在进行的活动
+//20101
+message GReqRunningPromotion {
+}
+//20101
+message GResRunningPromotion {
+    repeated PbPromotionData promotions = 1; //所有正在进行的活动
+}
+
+message PbServerActivityConfig {
+    required int32 id = 1; // 活动ID
+    required string config = 2; // 活动配置
+}
+
+// 请求活动配置
+//20102
+message GReqActivityConfig {
+    repeated int32 ids = 1; // 活动ID
+    required int32 is_hotfix = 2;	// 是否是初始协议(前端用)
+}
+
+//20102
+message GResActivityConfig {
+    repeated PbServerActivityConfig configs = 1; // 后台活动配置列表
+    required int32 is_hotfix = 2;	// 是否是初始协议
+}
+
+// 活动配置有修改
+//20103
+message GResActivityConfigHadUpdate {
+    repeated int32 ids = 1; // 活动ID
+}
+
+// 活动时间更新
+//20104
+message GReqActivityBaseInfoUpdate {
+	repeated int32 ids = 1;	// 活动ID
+}
+
+// 活动时间更新
+//20104
+message GResActivityBaseInfoUpdate {
+	repeated PbPromotionData promotions = 1; //所有正在进行的活动
+}

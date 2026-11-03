@@ -1,0 +1,152 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>白名单列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('whiteList/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">用户uid：</label>
+                                            <input type="text" placeholder="精确搜索" name="uid" value="{$search_params.uid}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">&nbsp;&nbsp;ip：</label>
+                                            <input type="text" placeholder="精确搜索" name="ip" value="{$search_params.ip}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">&nbsp;&nbsp;是否启用：</label>
+                                            <select class="form-control" name="status">
+                                                <option <if condition="$search_params['status'] == -1"> selected </if> value="-1">所有数据</option>
+                                                <option <if condition="$search_params['status'] == 0"> selected </if> value="0">弃用</option>
+                                                <option <if condition="$search_params['status'] == 1"> selected </if> value="1">启用</option>
+                                            </select>
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <button onclick="openYemian('{:U('whiteList/add')}','添加白名单')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>添加</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'ids\']').prop('checked', this.checked);"></th>
+                                                        <th width="5%">主键ID</th>
+                                                        <th>用户uid</th>
+                                                        <th>大渠道</th>
+                                                        <th>子渠道</th>
+                                                        <th>备注</th>
+                                                        <th>ip</th>
+                                                        <th>是否启用</th>
+                                                        <th>创建时间</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row"> 
+                                                            <td><input type="checkbox" name="ids[]" value="{$vo.id}"></td>
+                                                            <td>{$vo.id}</td>
+                                                            <td>{$vo.uid}</td>
+                                                            <td>{$vo.channel_name}</td>
+                                                            <td>{$vo.parent_name}</td>
+                                                            <td>{$vo.note}</td>
+                                                            <td>{$vo.ip}</td>
+                                                            <td><if condition="$vo['status'] == 0">弃用<else/>启用</if></td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['created_at'])}</td>
+                                                            <td>
+                                                                <a class="btn btn-primary" href="javascript:;" title="编辑白名单" onclick="openYemian('/admin.php/whiteList/edit?id={$vo.id}','编辑白名单')">编辑</a>
+                                                                <a class="btn btn-danger" href="javascript:void(0)" title="删除" data-url="{:U('whiteList/ajax_del')}" data-id="{$vo.id}"  onclick="delete_white(this,'确定删除？','{:U('whiteList/ajax_del')}')" ><i class="fa fa-trash-o"></i>删除</a>
+<!--                                                                <a class="btn btn-primary" href="javascript:;" title="删除" onclick="openYemian('/admin.php/notice/edit?id={$vo.id}','删除')"><i class="fa fa-trash-o"></i>删除</a>-->
+                                                                <!-- <a class="btn btn-danger" href="javascript:void(0)" title="删除" data-url="{:U('channel/ajax_delete')}" data-id="{$vo.id}" <if condition="in_array('3',$user_root['function_id'])">  onclick="delarticle(this,'确定删除该渠道？',{$vo.id},'{:U('channel/ajax_delete')}')" <else/> onclick="layer.msg('没有操作权限', {icon: 5})" </if>><i class="fa fa-trash-o"></i></a> -->
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                            <script>
+                                                // 点击分页触发的事件
+                                                $(".pagination a").click(function(){
+                                                    url = $(this).attr('href');
+                                                    ajax_get_table('formSearch',url);
+                                                    return false;
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,url){
+        // cur_page = page; //当前页面 保存为全局变量
+        // var info = $('#page_info').val();
+        $.ajax({
+            type : "POST",
+            url:url,
+            data : $('#'+form).serialize(),// 你的formid
+            success: function(data){
+                $("#ajaxList").html('');
+                $("#ajaxList").append(data);
+            }
+        });
+        return false;
+    }
+
+    //删除
+    function delete_white(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var id=$(obj).attr("data-id");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {id:id},
+                dataType : "json",
+                success:function(data){
+                    top.layer.alert(data.message, {icon: 6});
+                    // if (data.status == 0) {
+                    //     top.layer.msg(data.message);
+                    // } else {
+                    //     top.layer.msg(data.message);
+                    //     // $(obj).parent().parent().remove();
+                    // }
+                    window.location.reload();
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+
+</script>
+
+<include file="Public:footer" />

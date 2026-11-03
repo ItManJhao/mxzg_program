@@ -1,0 +1,15 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion056GMsg";
+import "Object.proto";
+
+//皮肤购买
+//64001
+message GReqFashionBuyData {
+
+}
+
+//64001
+message GResFashionBuyData {
+    repeated PSMapData reward_count = 1; //领奖记录,idx->count
+}

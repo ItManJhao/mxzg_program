@@ -1,0 +1,54 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion074GMsg";
+
+import "Object.proto";
+
+//数据
+//75801
+message GReqMidLotteryGetDataInfo {
+
+}
+//75801
+message GResMidLotteryGetDataInfo {
+    optional PSMapData select_info = 1; //选择记录
+    repeated int32 lottery_reward = 4; //次数领取记录
+    optional int32 lottery_count = 5; //抽奖次数
+    optional int32 lottery_best_remaining_count = 6; //抽中大奖剩余次数
+}
+
+//选择档位奖励
+//75802
+message GReqMidLotterySelect {
+    optional PSMapData select_info = 1;
+}
+//75802
+message GResMidLotterySelect {
+    optional PSMapData select_info = 1;
+}
+
+//抽奖
+//75803
+message GReqMidLotteryLottery {
+    optional int32 num = 1; //抽奖次数
+}
+
+//75803
+message GResMidLotteryLottery {
+    repeated PSBackpackData reward = 1; //本次奖励
+    optional int32 lottery_best_remaining_count = 2; //抽中大奖剩余次数
+    optional int32 idx = 3; //抽中奖励
+    optional int32 lottery_count = 4; //抽奖次数
+}
+
+//领取次数奖励
+//75804
+message GReqMidLotteryGetLotteryCountReward {
+    optional int32 idx = 1;
+}
+
+//75804
+message GResMidLotteryGetLotteryCountReward {
+    optional int32 idx = 1;
+}
+

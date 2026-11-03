@@ -1,0 +1,67 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "TaskObjGMsg";
+
+message MonthCardData
+{
+	optional int32 card_type = 1;//1月卡， 2至尊月卡
+    optional int32 completed = 2;//充值进度
+    optional int32 gain_days = 3;//领取了几天
+    optional int32 end_time = 4;//结束时间
+    optional int32 is_gain = 5;//是否领取
+    optional int32 is_gain_vip = 6;//是否领取至尊VIP奖励
+}
+
+message LimitGiftData
+{
+	optional int64 gift_id = 1; // 礼包独立ID
+	optional int32 idx = 2; // 物品IDX
+	optional int32 num = 3; // 礼包数量
+	optional int32 end_time = 4; // 到期时间
+}
+
+message PSBuyGoldRankData
+{
+	optional int64 rid = 1;
+    optional string nick = 2;
+    optional int32 level = 3;
+    optional int32 head_id = 4;
+    optional int32 rank = 5;
+    optional int32 num = 6;
+	optional int32 border_id=7;//头像框id
+
+}
+
+message PSNewServerLimitData
+{
+	optional int32 idx = 1;
+    optional int32 bought_num = 2;
+}
+
+message PSInvitationMapData
+{
+	optional int32 key = 1;	//玩家等级
+	optional int32 value = 2; // 头像
+	optional int32 cnt = 3; // 战力
+}
+
+message PSSummonCrystalData
+{
+	optional int32 idx = 1;	//配置表idx
+	optional int32 progress = 2; // 进度
+	optional int32 is_bought = 3; //  是否已经领取 0：未领取 1：已领取
+}
+
+message AstrologyTaskData
+{
+	optional int32 idx = 1;	//配置项idx
+	optional int32 status = 2; // 是否已经完成   0:未完成   1:已完成
+}
+
+
+message PSMakeHeroData
+{
+	optional int32 idx = 1;
+	optional int32 combine_num = 2;
+	optional int32 reward_num = 3;
+}

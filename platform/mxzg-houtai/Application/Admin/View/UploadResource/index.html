@@ -1,0 +1,101 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>上传资源管理</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="row">
+
+                        <form action="{:U('active/ajax_add')}" method="post" id="artkindFrom" class="form-horizontal">
+                            <div class="tab-content">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传商品：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('VirtualRecharge/upproduct')}','上传商品')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传商品</button>
+                                        <button onclick="openYemian('{:U('VirtualRecharge/product')}','商品列表')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>商品列表</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传英雄：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('gift/hero')}','上传英雄')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传英雄</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传道具：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('gift/item')}','上传道具')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传道具</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传流水事件：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('gift/gameevent')}','上传流水事件')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传流水事件</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传公会科技配置：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('Role/UpClanSkillConfig')}','上传公会科技配置')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传公会科技配置</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传星盘对应星级：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('UploadResource/UpAstrolabeStar')}','上传星盘对应星级')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传星盘对应星级</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传星盘对应技能：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('UploadResource/UpAstrolabeSkill')}','上传星盘对应技能')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传星盘对应技能</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传属性：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('UploadResource/UpAttribute')}','上传属性')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传属性</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传圣龙等级属性：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('UploadResource/UpDragonLevel')}','上传圣龙等级属性')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传圣龙等级属性</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传圣物属性：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('UploadResource/UpHolyThings')}','上传圣物属性')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传圣物属性</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传宠物属性：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('UploadResource/UpPet')}','上传宠物属性')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传宠物属性</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span style="color: red;">*&nbsp;</span>上传宠物等级属性：</label>
+                                    <div class="col-sm-8">
+                                        <button onclick="openYemian('{:U('UploadResource/UpPetLevel')}','上传宠物等级属性')" type="button" class="btn btn-primary" ><i class="fa fa-plus"></i>上传宠物等级属性</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+<include file="Public:footer" />

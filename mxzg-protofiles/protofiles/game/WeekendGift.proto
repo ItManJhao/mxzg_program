@@ -1,0 +1,35 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "WeekendGiftGMsg";
+
+//------------------------------------------------------------
+
+message RewardStatus {
+    optional int32 idx = 1; //配置id
+    optional int32 status = 2; //0不可领取；1可领取；2以领取
+}
+
+//周末活动数据
+//61001
+message GReqWeekendGiftData {
+
+}
+
+//周末活动数据
+//61001
+message GResWeekendGiftData {
+    optional int32 start_time = 1; //开始时间
+    optional int32 end_time = 2; //结束时间
+    repeated RewardStatus reward_status = 3; //可领取状态
+}
+
+//61002
+message GReqGetReward {
+    optional int32 idx = 1; //配置id
+}
+
+//61002
+message GResGetReward {
+    repeated RewardStatus reward_status = 1;
+}
+

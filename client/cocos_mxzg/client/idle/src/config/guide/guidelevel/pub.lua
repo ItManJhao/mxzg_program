@@ -1,0 +1,22 @@
+local data = {
+	{call = "waitSceneLoadingEnd"},
+	{call = "wait", time=300},
+	{call = "closeOtherWindow"},
+	{call = "wait", time=10},
+	{call = "openNPCLayer", auto=1,npc_name="",content=930030005},
+	{call = "checkLayerType", layer_type=MainSceneType.MLT_BATTLE, r_beg=1, r_end=2},
+	{call = "findSpriteByFileName", plist="ccbi-res/main-scene-lang.plist",getParent=1,file="main-scene-lang/spr-battle.png"},
+	{call = "createMask"},
+	{call = "wait", time=300},
+	{call = "findSpriteByFileName", plist="ccbi-res/common-ui.plist",getParent=1,file="other/spr-pubtask-1.png"},
+	{call = "stayInMiddleStep"},
+	{call = "wait", time=100},
+	{call = "createMask"},
+	{call = "wait", time=300},
+	{call = "wait", time=1},
+	{call = "findNodeByName",name="task_cell1"},
+	{call = "findSpriteByFileName", plist="ccbi-res/common-ui.plist",getParent=1,file="button/btn-green-big-1.png",node_cache=true},
+	{call = "stayInMiddleStep"},
+	{call = "createMask"},
+}
+return data

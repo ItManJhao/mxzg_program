@@ -1,0 +1,33 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion021GMsg";
+
+message PSDailyFirstRecharge
+{
+	optional int32 type = 1;	//类型
+	optional int32 status = 2;	//领取状态，0未领取，1已领取
+	optional int64 money = 3;	//已充值的金额，单位分
+}
+
+//查看每日充值信息
+//13321
+message GReqDailyChargeData
+{
+}
+//13321
+message GResDailyChargeData
+{
+	repeated PSDailyFirstRecharge list = 1;	//数据列表
+}
+
+//领取每日充值奖励
+//13322
+message GReqDailyChargeReward
+{
+	optional int32 type = 1;	//类型
+}
+//13322
+message GResDailyChargeReward
+{
+	optional int32 type = 1;	//类型
+}

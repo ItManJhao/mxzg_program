@@ -1,0 +1,36 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ShareGMsg";
+
+//分享数据
+//76560
+message GReqShareData {
+}
+
+//76560
+message GResShareData {
+    optional int32 share_count=1;//分享次数
+    repeated int32 reward_record=2;//分享人数领奖记录
+    optional bool had_share=3;//是否分享
+}
+
+//分享奖励领取
+//76561
+message GReqShareGet {
+    optional int32 idx = 1;
+}
+//76561
+message GResShareGet {
+    repeated int32 reward_record=2;//分享人数领奖记录
+}
+
+//分享游戏
+//76562
+message GReqShareGame {
+
+}
+
+//76562
+message GResShareGame {
+     optional bool had_share=1;//是否分享
+}

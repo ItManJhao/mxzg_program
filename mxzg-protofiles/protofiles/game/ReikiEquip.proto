@@ -1,0 +1,110 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "ReikiEquipGMsg";
+
+//灵器数据
+message PSReikiEquipData
+{
+    optional int64 hero_id = 1;//英雄id（未穿戴时为0）
+    optional int32 sys_id = 2;//灵器配置表idx
+    optional int64 reiki_equip_id = 3;//灵器id
+}
+
+//灵器数据
+//70001
+message GReqReikiEquipData
+{
+
+
+}
+//70001
+message GResReikiEquipData
+{
+     repeated PSReikiEquipData list = 1;
+}
+
+//灵器槽位激活
+//70002
+message GReqActiveReikiEquipPlace
+{
+    optional int64 hero_id = 1;
+    optional int32 place = 2;//灵器槽位
+}
+//70002
+message GResActiveReikiEquipPlace
+{
+    optional int64 hero_id = 1;
+    optional int32 place = 2;//灵器槽位
+    optional PSReikiEquipData data = 3;
+}
+
+//灵器穿戴(替换)
+//70003
+message GReqWearReikiEquip
+{
+    optional int64 hero_id = 1;
+    optional int64 reiki_equip_id = 2;
+}
+//70003
+message GResWearReikiEquip
+{
+    optional int64 hero_id = 1;
+    optional int64 reiki_equip_id = 2;
+    optional int64 old_reiki_id = 3;
+}
+
+//灵器卸下
+//70004
+message GReqDisboardReikiEquip
+{
+    optional int64 reiki_equip_id = 1;
+}
+//70004
+message GResDisboardReikiEquip
+{
+    optional int64 hero_id = 1;
+    optional int64 reiki_equip_id = 2;
+}
+
+//完美灵器转换
+//70005
+message GReqTransformReikiEquip
+{
+    optional int64 reiki_equip_id = 1;
+}
+//70005
+message GResTransformReikiEquip
+{
+    optional PSReikiEquipData data = 1;
+}
+
+//灵器合成
+//70006
+message GReqCombineReikiEquip
+{
+    optional int32 sys_id = 1;//合成目标
+    optional int64 reiki_id = 2;//本体灵器
+    repeated int64 reiki_equip_ids = 3;//素材灵器
+    repeated int64 heroes = 4;//素材英雄
+    repeated int32 replace_item = 5;//使用素材英雄替代道具
+}
+//70006
+message GResCombineReikiEquip
+{
+    optional PSReikiEquipData reiki_equip = 1;
+}
+
+//灵器增加
+//70007
+message GResAddReikiEquip
+{
+    repeated PSReikiEquipData data = 1;//灵器
+}
+
+//灵器减少
+//70008
+message GResCostReikiEquip
+{
+    repeated int64 reiki_equip_ids = 1;//灵器
+}
+

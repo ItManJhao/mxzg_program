@@ -1,0 +1,16 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion015GMsg";
+import "Object.proto";
+
+//查看新服限购信息
+//旧协议13091
+//13301
+message GReqScanBuyInfo
+{
+}
+//13301
+message GResScanBuyInfo
+{
+	repeated PSMapData data = 1;	//已经购买的商品信息，ID跟数量
+}

@@ -1,0 +1,237 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "LadderGMsg";
+import "Object.proto";
+import "Battle.proto";
+import "Pvp.proto";
+
+//天梯信息
+//43001
+message GReqLadderInfo {
+}
+//43001
+message GResLadderInfo {
+    optional int32 my_rank = 1; // 自己排名，0未上榜
+    optional int32 battle_times = 2; // 挑战次数
+    optional int32 buy_times = 3; // 剩余购买次数
+    repeated PSLadderRankData defends = 4; // 可以挑战的玩家信息
+    optional int32 had_buy_times = 5; //已购买次数
+}
+
+//请求刷新可挑战排名数据
+//43002
+message GReqRefreshDefends {
+
+}
+
+//43002
+message GResRefreshDefends {
+    repeated PSLadderRankData defends = 1; // 可以挑战的玩家信息
+}
+
+//请求挑战
+//43003
+message GReqLadderChallenge {
+    optional int64 defend_id = 1;
+}
+
+//43003
+message GResLadderChallenge {
+
+    optional int32 self_rank = 1; //自己的排名
+    optional string defend_name = 2; // 防守方名字
+    optional int32 battle_result = 3; //战斗结果1.胜利2失败
+    repeated PSBackpackData reward = 4; //奖励列表
+    repeated PSLadderRankData defends = 5; // 新的防守列表
+    optional BattleReport report = 6; //战报
+    optional int32 code = 7; //操作码，0代表成功，1代表排名不一致
+    optional bool rank_up = 8; //排名是否上升
+    optional int32 defend_rank = 9; //防守新排名
+    optional int32 battle_times = 10; //挑战次数
+}
+
+//请求一键挑战
+//43004
+message GReqLadderOneKeyChallenge {
+
+}
+
+//43004
+message GResLadderOneKeyChallenge {
+
+    optional int32 battle_times = 1; //可挑战次数
+}
+
+//我的战报
+//43005
+message GReqMyLadderBattleRecord {
+}
+
+//43005
+message GResMyLadderBattleRecord {
+    repeated PSMyLadderBattle battle_defend_info = 1;
+}
+
+//大神风采
+//43006
+message GReqHighLadderBattleRecord {
+}
+
+//43006
+message GResHighLadderBattleRecord {
+    repeated PSHighLadderBattle battle_defend_info = 1;
+}
+
+//排行榜
+//43007
+message GReqLadderRank {
+    optional int32 page = 1; //1*50
+}
+
+//43007
+message GResLadderRank {
+    repeated PSRankPlayerData list = 1; //排行榜列表
+    optional PSRankPlayerData self_data = 2; //自己的数据
+    optional int32 send_status = 3; // 发送状态0,未完成，1已完成
+    optional int32 page = 4; //页码
+}
+
+//查询玩家阵容数据
+//43008
+message GReqLadderLineUpData {
+    optional int64 rid = 1;
+}
+
+//43008
+message GResLadderLineUpData {
+    optional int32 code = 1; //操作码，如果不为0的话，提示错误，并刷新对手列表信息
+    optional int32 fight = 2; //阵容战斗力
+    repeated PSLadderBriefData hero_data = 3; // 上阵英雄的信息
+    optional int32 formation_id = 4;	//阵容ID
+}
+
+//购买挑战次数
+//43009
+message GReqBuyTimes {
+}
+
+//43009
+message GResBuyTimes {
+    optional int32 had_buy_times = 1; //已购买次数
+    optional int32 battle_times = 2; // 挑战次数
+    optional int32 buy_times = 3; // 剩余购买次数
+}
+
+//点赞
+//43010
+message GReqLikeSuperior {
+    optional int32 rank = 1; //点赞排名
+}
+
+//43010
+message GResLikeSuperior {
+
+}
+
+//被点赞返回
+//43011
+message GResBeLikeSuperior {
+    optional string like_name = 1; //点赞名字
+    optional int32 like_server_id = 2; //点赞的服务器
+}
+
+//点赞列表
+//43013
+message GReqLikeList {
+
+}
+
+//点赞列表
+//43013
+message GResLikeList {
+    repeated PSLikeData like_data = 1; //
+}
+
+//小红点状态
+//43014
+message GReqMyBattleRed {
+
+}
+
+//小红点的状态
+//43014
+message GResMyBattleRed {
+    repeated int32 red_list = 1; //1009900，1010100；
+}
+
+//读战报
+//43015
+message GReqLadderReadReport {
+}
+
+//读战报
+//43015
+message GResLadderReadReport {
+
+}
+
+message PSLikeData {
+    optional int32 rank = 1; //排名
+    optional string nick = 2; //名字
+    optional string clan_name = 3; //公会名
+    optional int32 like_num = 4; //被点赞数
+    optional bool can_like = 5; //是否可以点赞
+    optional int32 image = 6; //形象
+    optional int32 server_id = 7; //服务器
+}
+
+
+message PSLadderRankData {
+    optional PSLadderRoleInfo role_info = 1; //排行榜数据
+    optional int32 rank = 2;
+    //    repeated PSLadderBriefData hero_data = 3; // 上阵英雄的信息
+}
+
+// 英雄简要信息
+message PSLadderBriefData {
+    optional int32 hero_type = 1; //英雄类型
+    optional int32 level = 2; //英雄等级
+    optional int32 star = 3; //英雄星级
+    optional int64 hero_id = 4; //英雄id
+    optional int32 pos = 5; //位置信息
+}
+
+message PSMyLadderBattle {
+    optional string battle_id = 1; //战报id
+    optional int32 new_rank = 2; //新排名
+    optional int32 old_rank = 3; //旧排名
+    optional PSLadderRoleInfo defend_info = 4; //对手
+    optional int32 battle_time = 5; //挑战时间
+    optional int32 battle_type = 6; //1挑战；2防守
+    optional int32 is_win = 7; //是否胜利,1胜利；0失败
+    optional int32 is_read = 8; //是否已读
+}
+
+message PSLadderRoleInfo {
+    optional int64 rid = 1; //玩家id
+    optional string nick = 2; //玩家名字
+    optional int32 image_id = 3; //玩家形象
+    optional int32 border_id = 4; //头像框
+    optional int32 head_id = 5; //头像id
+    optional int32 ladder_rank = 6; //天梯排名
+    optional int32 server_id = 7; //服务器
+    optional int64 fight = 8; //战力
+    optional int32 level = 9; //玩家等级
+    optional string clan_name = 10; //公会名
+    optional int32 gender  = 11;	    //性别0男性1女性
+}
+
+message PSHighLadderBattle {
+    optional string battle_id = 1; //战报id
+    optional PSLadderRoleInfo attack_info = 2; //攻击方
+    optional PSLadderRoleInfo defend_info = 3; //防守方
+    optional int64 win_team = 4; //胜利队伍
+    optional int32 battle_time = 5; //战斗时间
+
+}
+

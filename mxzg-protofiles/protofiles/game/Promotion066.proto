@@ -1,0 +1,27 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "promotion066GMsg";
+
+//功能预告数据
+//13260
+message GReqNewGamePlayInfo {
+
+}
+//13260
+message GResNewGamePlayInfo {
+    optional int32 receive_time = 1; //上次领取时间
+    optional int32 start_time = 2;//开启时间
+    optional int32 end_time = 3;//结束时间
+}
+
+
+//领取功能预告奖励
+//13261
+message GReqGetEveryDayReward {
+
+}
+//13261
+message GResGetEveryDayReward {
+    optional int32 receive_time = 1; //领取时间
+}
+

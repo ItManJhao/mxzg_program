@@ -1,0 +1,1 @@
+cocos luacompile -s /Users/apple/Development/cocos_mxzg/client/src -d /Users/apple/Development/cocos_mxzg/client/idle/src -e -k 5c44afa98c8 -b c91b5eceab5 --disable-compile

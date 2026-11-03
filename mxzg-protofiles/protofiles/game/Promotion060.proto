@@ -1,0 +1,29 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion060GMsg";
+
+import "Promotion049.proto";
+
+
+//查看积天累充2数据
+//69001
+message GReqRechargeDaysBList
+{
+}
+//69001
+message GResRechargeDaysBList
+{
+    repeated PSRechargeDaysInfo list = 1;
+}
+
+//领取积天累充2奖励
+//69002
+message GReqRechargeDaysBReward
+{
+    optional int32 day = 1;
+}
+//69002
+message GResRechargeDaysBReward
+{
+	optional PSRechargeDaysInfo data = 1;
+}

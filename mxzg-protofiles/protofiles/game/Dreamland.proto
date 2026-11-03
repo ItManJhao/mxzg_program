@@ -1,0 +1,201 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "DreamlandGMsg";
+import "Battle.proto";
+import "Hero.proto";
+import "Pvp.proto";
+import "Object.proto";
+
+//永恒秘境信息
+//40001
+message GReqDreamlandData {
+}
+
+//40001
+message GResDreamlandData {
+    optional int32 max_lv = 1; //历史最大关卡
+    optional int32 cur_lv = 2; //当前关卡
+    optional int32 today_challenge_count = 3; //今日挑战结束次数
+    optional int32 today_max_lv = 4; //今日最大通关数数
+    optional int32 today_init_lv = 5; //今天初始层数
+    optional int32 reward_lv = 6; //领奖层数
+
+    optional PSBattleStatus status = 7; //当前状态
+    repeated int32 next_buff_id = 8; //选择buff集合
+    optional int32 curr_buff_id = 9; //当前buff
+
+}
+
+//好友助战列表
+//40002
+message GReqFriendAssistHeroList {
+
+}
+//40002
+message GResFriendAssistHeroList {
+    optional ResHeroData hero_data = 1; //派出助战的英雄
+    optional PSFriendAssistData friend_hero = 2; //选择的好友英雄
+    repeated PSFriendAssistData assist_data = 3; //好友助战列表
+}
+
+//永恒梦境选择助站英雄
+//40006
+message GReqDreamlandSelectFriend {
+    optional int64 rid = 1;
+}
+
+//40006
+message GResDreamlandSelectFriend {
+    optional int64 rid = 1;
+}
+//永恒梦境排行榜
+//40003
+message GReqDreamlandRank {
+
+}
+//40003
+message GResDreamlandRank {
+    repeated PSRankPlayerData list = 1;
+    optional PSRankPlayerData self_data = 2;
+}
+//永恒梦境关卡奖励
+//40004
+message GReqDreamlandGetLevel {
+    optional int32 idx = 1; //关卡配置id
+}
+//40004
+message GResDreamlandGetLevel {
+    optional int32 idx = 1; //关卡配置id
+}
+//永恒梦境开始战斗
+//40005
+message GReqDreamlandBattle {
+}
+
+//40005
+message GResDreamlandBattle {
+    optional BattleReport report = 1; //战报
+    repeated PSBackpackData rewards = 3; // 奖励
+    optional int32 cur_lv = 4; //当前关卡
+    optional int32 today_max_lv = 5; //今日最大通关关卡数
+    optional int32 max_lv = 6; //历史最大关卡
+    //    optional PSBattleStatus status = 7; //当前状态
+    optional int32 curr_battle_lv = 8;
+}
+
+//选择buff并进入战斗
+//40007
+message GReqDreamlandSelectBuff {
+    optional int32 idx = 1;
+}
+
+//40007
+message GResDreamlandSelectBuff {
+    optional int32 curr_buff_id = 1; //当前buff
+    repeated int32 next_buff_id = 2; //下一轮可选择buff
+    optional GResDreamlandBattle battle = 3;
+}
+
+//开始战斗
+//40008
+message GReqDreamlandStartBattle {
+}
+
+//40008
+message GResDreamlandStartBattle {
+    repeated PSDreamlandHeroData line_up = 1; // 阵容信息
+    optional int32 formation_id = 2;//阵型ID
+}
+
+//派遣己方好友助阵英雄
+//40009
+message GReqDreamlandDispatchHero {
+    optional int64 hero_id = 1; //派遣助战的英雄id
+}
+//40009
+message GResDreamlandDispatchHero {
+    optional ResHeroData hero = 2; //英雄信息
+}
+
+//推送战斗状态
+//40010
+message GReqDreamlandBattleStatus {
+}
+
+//40010
+message GResDreamlandBattleStatus {
+    optional PSBattleStatus status = 1; //当前状态
+    optional int32 curr_battle_lv = 2; //即将挑战的层数
+}
+
+//推送最后一条战报
+//40011
+message GReqDreamlandBattleReport {
+}
+//40011
+message GResDreamlandBattleReport {
+    optional BattleReport report = 1; //战报
+    repeated PSBackpackData rewards = 2; // 奖励
+    optional int32 curr_battle_lv = 3; //当前战斗关卡
+    optional int32 curr_buff_id = 4; //当前选择的buff
+}
+
+//结束战斗
+//40012
+message GReqDreamlandEndBattle {
+}
+//40012
+message GResDreamlandEndBattle {
+    optional PSBattleStatus battle_state = 1; //战斗状态
+    repeated PSBackpackData rewards = 2; // 奖励
+}
+
+//请求通关这一层
+//40013
+message GReqDreamlandWinAddLv {
+
+}
+//40013
+message GResDreamlandWinAddLv {
+    optional PSBattleStatus status = 1; //当前状态
+    optional int32 curr_battle_lv = 2; //即将挑战的层数
+    optional int32 cur_lv = 4; //当前关卡
+    optional int32 today_max_lv = 5; //今日最大通关关卡数
+    optional int32 max_lv = 6; //历史最大关卡
+}
+
+// 好友英雄数据
+message PSFriendAssistData {
+    optional ResHeroData hero = 1; //助战英雄数据
+    optional string friend_nick = 2; //好友名字
+    optional int64 friend_id = 3; //好友id
+}
+
+message PSDreamlandHeroData {
+    required int32 pos = 1; // 位置
+    required int32 type = 2; // 英雄类型
+    required int32 star = 3; // 星级
+    required int32 level = 4; // 等级
+    required int32 elem = 5; // 元素
+    required int64 hp = 6; // 血量
+    required int64 max_hp = 7; // 最大血量
+    required int32 fashion_id = 8;//皮肤id
+    optional PSHeroEvolve evolve=9;//进化
+}
+
+
+enum PSBattleStatus {
+    NORMAL = 1; //为战斗战斗
+    BATTLE = 2; //进入下一场
+    SELECT = 3; //选择buff状态
+}
+
+//永恒梦境取消选择助站英雄
+//40014
+message GReqDreamlandDeSelectFriend {
+    optional int64 rid = 1;
+}
+
+//40014
+message GResDreamlandDeSelectFriend {
+}

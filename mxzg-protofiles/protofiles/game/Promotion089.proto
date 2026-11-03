@@ -1,0 +1,26 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion089GMsg";
+
+//圣诞感谢信
+//数据
+//76161
+message GReqChristmasNote {
+
+}
+//76161
+message GResChristmasNote {
+    optional int32 reward_time = 1; //奖励时间
+}
+
+
+//领奖
+//76162
+message GReqChristmasNoteReward {
+
+}
+
+//76162
+message GResChristmasNoteReward {
+    optional int32 reward_time = 1; //奖励时间
+}

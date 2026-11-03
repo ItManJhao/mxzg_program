@@ -1,0 +1,230 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>订单列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('recharge/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">角色id：</label>
+                                            <input type="text" placeholder="精确搜索" name="role_id" value="{$search_params.role_id}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">游戏订单号：</label>
+                                            <input type="text" placeholder="精确搜索" name="game_order_id" value="{$search_params.game_order_id}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">SDK订单号：</label>
+                                            <input type="text" placeholder="精确搜索" name="sdk_order_id" value="{$search_params.sdk_order_id}" style="width: 120px;" class="form-control">
+                                            
+
+                                            <label class="control-label">渠道</label>
+                                            <input type="hidden" name="c_son_id" value="{$search_params['c_son_id']}">
+                                            <select class="selectpicker form-control c_son_id" data-style="btn-info" data-title="请选择子渠道" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="channels" id="channels_vo">
+                                                    <if condition="!empty($search_params['c_son_id']) && in_array($channels_vo['id'],explode(',', $search_params['c_son_id']))">
+                                                        <option value="{$channels_vo.id}" selected>{$channels_vo.id}--{$channels_vo.name}</option>
+                                                        <else />
+                                                        <option value="{$channels_vo.id}">{$channels_vo.id}--{$channels_vo.name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">服务器</label>
+                                            <input type="hidden" name="sid" value="{$search_params['sid']}">
+                                            <select class="selectpicker form-control sid" data-style="btn-info" data-title="请选择服务器" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="servers" id="servers_vo">
+                                                    <if condition="!empty($search_params['sid']) && in_array($servers_vo['id'],explode(',', $search_params['sid']))">
+                                                        <option value="{$servers_vo.id}" selected>{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                        <else />
+                                                        <option value="{$servers_vo.id}">{$servers_vo.id}--{$servers_vo.server_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 5px;">商品</label>
+                                            <input type="hidden" name="product_id" value="{$search_params['product_id']}">
+                                            <select class="selectpicker form-control product_id" data-style="btn-info" data-title="请选择商品" multiple data-live-search="true" data-selected-text-format="count>3" data-actions-box="true">
+                                                <volist name="product_list" id="product_list_vo">
+                                                    <if condition="!empty($search_params['product_id']) && in_array($product_list_vo['id'],explode(',', $search_params['product_id']))">
+                                                        <option value="{$product_list_vo.id}" selected>{$product_list_vo.id}--{$product_list_vo.product_name}</option>
+                                                        <else />
+                                                        <option value="{$product_list_vo.id}">{$product_list_vo.id}--{$product_list_vo.product_name}</option>
+                                                    </if>
+                                                </volist>
+                                                </if>
+                                            </select>
+
+                                            <label class="control-label" style="padding-left: 7px;">状态</label>
+                                            <select class="form-control status" name="status">
+                                                <option value="0" <if condition="$search_params['status'] == 0"> selected </if>>所有订单</option>
+                                                <option value="1" <if condition="$search_params['status'] == 1"> selected </if>>支付成功</option>
+                                                <option value="2" <if condition="$search_params['status'] == 2"> selected </if>>支付失败</option>
+                                                <option value="3" <if condition="$search_params['status'] == 3"> selected </if>>发货成功</option>
+                                                <option value="4" <if condition="$search_params['status'] == 4"> selected </if>>发货失败</option>
+                                            </select>
+                                            
+                                            <div></div>
+
+                                            <label class="control-label" style="padding-left: 5px;">时间</label>
+                                            <input class="configInput form-control" style="width: 160px;" id="start_time" name="start_time" type="text" onclick="laydate({elem: '#start_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['start_time']}">
+                                            ~~
+                                            <input class="configInput form-control" style="width: 160px;" id="end_time" name="end_time" type="text" onclick="laydate({elem: '#end_time', istime: true, format: 'YYYY-MM-DD'})" required="" aria-required="true" value="{$search_params['end_time']}">
+                                            
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                            
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <a class="btn btn-primary export" style="float: right;margin-right:10px;" href="javascript:void(0);" title="导出" ><i class="fa fa-cloud-download"></i>导出</a>
+                                        <div style="background:#C0C0C0; font-size: 14px; margin-top: 12px;"  >
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >子渠道：</label>
+                                                <span class="c_son_id-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >服务器：</label>
+                                                <span class="sid-text">
+                                                </span>
+                                            </div>
+                                            <div style="padding-top: 10px;padding-left: 15px;">
+                                                <label class="control-label" >商品：</label>
+                                                <span class="product_id-text">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>平台订单号</th>
+                                                        <th>游戏订单号</th>
+                                                        <th>SDK订单号</th>
+                                                        <th>角色id</th>
+                                                        <th>角色名字</th>
+                                                        <th>区服</th>
+                                                        <th>商品</th>
+                                                        <th>金额</th>
+                                                        <th>状态</th>
+                                                        <th>发货返回值</th>
+                                                        <th>创建时间</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row"> 
+                                                            <td>{$vo.id}</td>
+                                                            <td>{$vo.game_order_id}</td>
+                                                            <td>{$vo.sdk_order_id}</td>
+                                                            <td>{$vo.role_id}</td>
+                                                            <td>{$vo.role_name}</td>
+                                                            <td>{$vo.sid}--{$vo.server_name}</td>
+                                                            <td>{$vo.goods_id}--{$vo.product_name}</td>
+                                                            <td>{$vo.money}</td>
+                                                            <td><if condition="$vo['status'] == 1">支付成功
+                                                                <elseif condition="$vo['status'] == 2"/>支付失败
+                                                                <elseif condition="$vo['status'] == 3"/>发货成功
+                                                                <elseif condition="$vo['status'] == 4"/>发货失败
+                                                                <else/>未支付</if>
+                                                            </td>
+                                                            <td>{$vo.debug}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['created_at'])}</td>
+                                                            <td>
+                                                                <if condition="$vo['status'] == 4">
+                                                                    <a class="btn btn-danger" href="javascript:void(0)" title="补单" data-url="{:U('recharge/ajax_supply_order')}" data-id="{$vo.id}"  onclick="offline(this,'确定补单？','{:U('recharge/ajax_supply_order')}')" ><i class="fa fa-trash-o"></i>补单</a>
+                                                                </if>
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    $(function(){
+        doMultipleSelection($('.sid'), 'sid');
+        doMultipleSelection($('.c_son_id'), 'c_son_id');
+        doMultipleSelection($('.product_id'), 'product_id');
+    });
+    $(".sid").on('change',function(e){
+        doMultipleSelection(this, 'sid');
+    })
+    $(".c_son_id").on('change',function(e){
+        doMultipleSelection(this, 'c_son_id');
+    })
+    $(".product_id").on('change',function(e){
+        doMultipleSelection(this, 'product_id');
+    })
+
+    function offline(obj,name,url) {
+        top.layer.confirm(name,{
+            icon : 3,
+            btn:['确定','取消'],
+        } , function(){
+            var id=$(obj).attr("data-id");
+            $.ajax({
+                url : url,
+                type : "post",
+                data : {id:id},
+                dataType : "json",
+                success:function(data){
+                    // alert(data.message);
+                    top.layer.alert(data.message, {icon: 6});
+                    // if (data.status == 0) {
+                    //     alert(data.message);
+                    //     top.layer.msg(data.message);
+                    // } else {
+                    //     top.layer.msg(data.message);
+                    //     // $(obj).parent().parent().remove();
+                    // }
+                }
+            });
+        } , function(){
+            layer.close(); //再执行关闭
+        })
+    }
+
+    $(".export").click(function(){
+        var c_son_id = $("input[ name='c_son_id' ]").val();
+        var sid = $("input[ name='sid' ]").val();
+        var role_id = $(" input[ name='role_id' ] ").val();
+        var game_order_id = $(" input[ name='game_order_id' ] ").val();
+        var status = $(".status option:selected").val();
+        var product_id = $("input[ name='product_id' ]").val();
+        var start_time = $("#start_time").val();
+        var end_time = $("#end_time").val();
+        window.location.href="/admin.php/recharge/export?c_son_id=" + c_son_id + "&sid=" + sid + "&role_id=" + role_id + "&game_order_id=" + game_order_id + "&status=" + status + "&product_id=" + product_id + "&start_time=" + start_time + "&end_time=" + end_time;
+    });
+</script>
+
+<include file="Public:footer" />

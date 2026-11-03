@@ -1,0 +1,69 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>跨服分组列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <div class="panel-body">
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <a class="btn btn-primary export" href="javascript:void(0);" title="导出" ><i class="fa fa-cloud-download"></i>导出</a>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" οnsubmit="return false;" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>分组ID</th>
+                                                        <th>分组类型</th>
+                                                        <th>区服集合（id-区服名称-世界等级-活跃玩家数量）</th>
+                                                        <th>是否已满</th>
+                                                        <th>上次分组时间</th>
+                                                        <th>下次分组时间</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row"> 
+                                                            <td>{$vo.group_id}</td>
+                                                            <td>{$vo.groupType}</td>
+                                                            <td>{$vo.server_info}</td>
+                                                            <td>{$vo.full}</td>
+                                                            <td>{$last_time}</td>
+                                                            <td>{$next_time}</td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".export").click(function(){
+        window.location.href="/admin.php/ServerGroup/index?is_export=1";
+    });
+</script>
+
+<include file="Public:footer" />
+

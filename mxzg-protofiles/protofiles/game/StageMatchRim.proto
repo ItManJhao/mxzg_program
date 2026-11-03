@@ -1,0 +1,137 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "StageMatchRimGMsg";
+
+import "Hero.proto";
+
+//72100---72200
+//对手信息
+message PSOpponent {
+    optional int64 rid = 1; //最强对手id
+    optional int64 fighting = 2; //队伍一的战力
+    optional int64 fighting2 = 3; //队伍二的战力
+    optional string name = 4; //对手名
+    optional int32 server = 5; //服务器
+    optional int32 head_id = 6; //头像
+    optional int32 border_id = 7; //头像框
+    optional int32 level = 8; //等级
+}
+
+message PSMvpHero {
+    optional int32 hero_type = 1; //英雄类型
+    optional int32 star = 2; //英雄星级
+    optional int32 fashion_id = 3; //皮肤id
+    optional int32 level = 4; //英雄等级
+    optional PSHeroEvolve evolve=5;//进化
+}
+
+message PSSeasonUnit {
+    optional int32 season_id = 1; //赛季id,-1代表总赛季
+    optional int32 history_stage_id = 2; //历史最高段位
+    optional int32 history_score = 3; //历史最高分数
+    optional int32 normal_win_count = 4; //常规赛胜场数
+    optional int32 normal_win_rate = 5; //常规赛胜率百分数
+    optional int64 history_max_dmg = 6; //历史最高伤害
+    optional int32 history_winning_streak = 7; //连胜数
+
+    optional PSOpponent strongest_opponent = 8; //最强对手
+
+    optional PSMvpHero mvp_hero = 9; //mvp对象
+
+    optional int32 elite_win_count = 10; //精英赛胜场数
+    optional int32 elite_win_rate = 11; //精英赛胜率百分数
+
+    optional int32 curr_stage_id = 12; //当前段位
+    optional int32 curr_score = 13; //当前分数
+
+
+}
+
+//段位战令
+//72101
+message GReqStageToken {
+
+}
+
+//72101
+message GResStageToken {
+    optional bool had_buy = 1; //是否购买
+    optional int32 win_count = 2; //胜场次数
+    repeated int32 reward_id = 3; //挑战领取记录
+    repeated int32 token_reward_id = 4; //战令领取记录
+    repeated int32 df_reward_id = 5; //巅峰赛领取记录
+    optional int32 df_win_count = 6;  // 巅峰赛胜次数
+    optional int32 df_rank = 7; // 巅峰赛名次
+}
+
+//领取奖励
+//72102
+message GReqStageTokenGetReward {
+    optional int32 idx = 1; //领取id
+    optional int32 one_key = 2; // 一键领取时不为0
+}
+
+//72102
+message GResStageTokenGetReward {
+    repeated int32 reward_ids = 1;
+}
+
+//总战绩
+//72103
+message GReqTotalSeason {
+
+}
+
+//72103
+message GResTotalSeason {
+    optional PSSeasonUnit total_Season = 1;
+}
+
+//赛季战绩
+//72104
+message GReqDetailSeason {
+    optional int32 season_id = 1; //赛季id
+    optional int64 rid = 2;
+    optional int32 server_id = 3;
+}
+
+//72104
+message GResDetailSeason {
+    optional int32 max_season_id = 1; //最大赛季id
+    optional PSSeasonUnit season = 2; //可能会存在赛季没有数据，需要客户端默认显示
+}
+
+//赛季分享
+//72105
+message GReqDetailSeasonShare {
+    optional int32 chat_type = 1; //值，对应聊天类型
+}
+
+//巅峰赛结束，前三服务器收到此协议弹出红包界面
+//72106
+message GResTopThreeGift {
+}
+
+//领取巅峰赛前三的红包
+//72107
+message GReqTopThreeGiftReward {
+    
+}
+
+//72107
+message GResTopThreeGiftReward {
+    optional int32 top_three_gift = 1;  // 标志位变化
+}
+
+//巅峰赛任务领取奖励
+//72108
+message GReqStageTokenDfReward {
+    optional int32 idx = 1; //领取id
+}
+
+//7218
+message GResStageTokenDfReward {
+    optional int32 idx = 1; //领取id
+}
+
+

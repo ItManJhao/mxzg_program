@@ -1,0 +1,50 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Promotion093GMsg";
+
+import "Object.proto";
+
+//春日踏青
+//数据
+//76251
+message GReqSpringOutingGrid {
+
+}
+
+//76251
+message GResSpringOutingGrid {
+    optional int32 curr_idx = 1; //当前格子位置
+    repeated int32 scenic_record = 2; //景点成就领取记录
+    repeated PSMapData scenic_count = 3; //景点次数
+}
+
+//丢骰子
+//76252
+message GReqSpringOutingGridDice {
+
+}
+//76252
+message GResSpringOutingGridDice {
+    optional int32 curr_idx = 1; //当前格子位置
+    optional int32 point = 2; //骰子点数
+    repeated PSMapData scenic_count = 3; //景点次数
+    repeated PSBackpackData reward = 4;
+}
+
+//领取景点成就奖励
+//76253
+message GReqSpringOutingGridScenicReward {
+    optional int32 idx = 1;
+}
+//76253
+message GResSpringOutingGridScenicReward {
+    repeated int32 scenic_record = 1; //景点成就领取记录
+}
+
+////踏青重置
+//message GReqSpringOutingGridReset {
+//}
+////76254
+//message GResSpringOutingGridReset {
+//    optional int32 curr_idx = 1; //当前格子位置
+//}

@@ -1,0 +1,138 @@
+<include file="Public:header" />
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>礼包列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">  
+                                    <div class="panel-body">
+                                        <form id="formSearch" style="width: auto;display: inline-block;" action="{:U('gift/index')}" method="get" class="form-horizontal form-inline">
+                                            <label class="control-label">礼包名称：</label>
+                                            <input type="text" placeholder="模糊搜索" name="name" value="{$search_params.name}" style="width: 120px;" class="form-control">
+                                            <label class="control-label">礼包类型：</label>
+                                            <select class="form-control" name="type">
+                                                <option <if condition="$search_params['type'] == -1"> selected </if> value="-1">所有礼包类型</option>
+                                                <option <if condition="$search_params['type'] == 0"> selected </if> value="0">普通码</option>
+                                                <option <if condition="$search_params['type'] == 1"> selected </if> value="1">通码</option>
+                                                <option <if condition="$search_params['type'] == 2"> selected </if> value="2">固定码</option>
+                                            </select>
+                                            <label class="control-label">设备类型：</label>
+                                            <select class="form-control" name="device_type">
+                                                <option value="0">所有设备类型</option>
+                                                <option value="1">安卓</option>
+                                                <option value="2">ios</option>
+                                            </select>
+                                            <button type="button" style="margin-left:30px" onclick="ajax_search()" id="btn_query" class="btn btn-primary">查询</button>
+                                        </form>
+                                        <button onclick="window.location.href=location.href;"  class="btn btn-primary " style="float: right;margin-right:10px;"><i class="glyphicon glyphicon-refresh"></i>刷新</button>
+                                        <button onclick="openYemian('{:U('gift/add')}','添加礼包')" type="button" class="btn btn-primary" style="float: right;margin-right:10px;"><i class="fa fa-plus"></i>添加</button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'ids\']').item('checked', this.checked);"></th>
+                                                        <th width="5%">主键ID</th>
+                                                        <th>礼包名称</th>
+                                                        <th>礼包类型</th>
+                                                        <th>设备类型</th>
+                                                        <th>数量</th>
+                                                        <th>状态</th>
+                                                        <th>开始时间</th>
+                                                        <th>结束时间</th>
+                                                        <th>创建时间</th>
+                                                        <th>操作</th>
+                                                        <th>特殊操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="list" id="vo">
+                                                        <tr role="row"> 
+                                                            <td><input type="checkbox" name="ids[]" value="{$vo.id}"></td>
+                                                            <td>{$vo.id}</td>
+                                                            <td>{$vo.name}</td>
+                                                            <td><if condition="$vo['type'] == 0">普通码<elseif condition="$vo['type'] == 1"/>通码<elseif condition="$vo['type'] == 2"/>固定码<else/>无</if></td>
+                                                            <td><if condition="$vo['device_type'] == 1">安卓<elseif condition="$vo['device_type'] == 2"/>ios<else/>所有设备</if></td>
+                                                            <td>{$vo.num}</td>
+                                                            <if condition="$vo['status'] == 1">
+                                                                <td>生效</td>
+                                                            <else/>
+                                                                <td style="color: red;">失效</td>
+                                                            </if>
+                                                            
+                                                            <td>{:date('Y-m-d H:i:s',$vo['start_time'])}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['end_time'])}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['created_at'])}</td>
+                                                            <td>
+                                                                <a class="btn btn-primary" href="javascript:;" title="编辑" onclick="openYemian('/admin.php/gift/edit?id={$vo.id}','编辑礼包')"><i class="fa fa-pencil"></i>编辑</a>
+                                                                <!-- <a class="btn btn-danger" href="javascript:void(0)" title="删除" data-url="{:U('channel/ajax_delete')}" data-id="{$vo.id}" <if condition="in_array('3',$user_root['function_id'])">  onclick="delarticle(this,'确定删除该渠道？',{$vo.id},'{:U('channel/ajax_delete')}')" <else/> onclick="layer.msg('没有操作权限', {icon: 5})" </if>><i class="fa fa-trash-o"></i></a> -->
+                                                            </td>
+                                                            <td>
+                                                                <a class="btn btn-primary" href="javascript:;" title="兑换码" onclick="openYemian('/admin.php/gift/code?gift_id={$vo.id}','兑换码')" >兑换码</a>
+                                                            </td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                            <div>
+                                                <div style="margin-top:20px;width: 100%;" id="pagelist">{$page}<span style="float:right;">共{$count}条</span></div>
+                                            </div>
+                                            <script>
+                                                // 点击分页触发的事件
+                                                $(".pagination a").click(function(){
+                                                    url = $(this).attr('href');
+                                                    ajax_get_table('formSearch',url);
+                                                    return false;
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script language="javascript">
+
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,url){
+        // cur_page = page; //当前页面 保存为全局变量
+        // var info = $('#page_info').val();
+        $.ajax({
+            type : "POST",
+            url:url,
+            data : $('#'+form).serialize(),// 你的formid
+            success: function(data){
+                $("#ajaxList").html('');
+                $("#ajaxList").append(data);
+            }
+        });
+        return false;
+    }
+
+
+</script>
+
+
+<include file="Public:footer" />

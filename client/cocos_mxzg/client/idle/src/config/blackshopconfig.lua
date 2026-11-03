@@ -1,0 +1,81 @@
+cfg.blackshopconfig = {
+	["blackshopconfig"] = {
+		[1] = {
+			idx = 1,
+			name = "btn_tab_1",
+			level = 1,
+			label = 41220,
+			tag = 100800,
+		},
+		[2] = {
+			idx = 2,
+			name = "btn_tab_2",
+			level = 1,
+			label = 41221,
+			tag = 101000,
+		},
+		[3] = {
+			idx = 3,
+			name = "btn_tab_3",
+			level = 1,
+			label = 41222,
+			tag = 100300,
+		},
+		[4] = {
+			idx = 4,
+			name = "btn_tab_4",
+			level = 95,
+			label = 41359,
+			tag = 102100,
+		},
+		[5] = {
+			idx = 5,
+			name = "btn_tab_5",
+			level = 8,
+			label = 41223,
+			tag = 100500,
+		},
+		[6] = {
+			idx = 6,
+			name = "btn_tab_6",
+			level = 80,
+			label = 75609,
+			tag = 102300,
+		},
+		[7] = {
+			idx = 7,
+			name = "btn_tab_7",
+			level = 1,
+			label = 41224,
+			tag = 101500,
+		},
+		[8] = {
+			idx = 8,
+			name = "btn_tab_8",
+			level = 80,
+			label = 41360,
+			tag = 102200,
+		},
+		[9] = {
+			idx = 9,
+			name = "btn_tab_9",
+			level = 1,
+			label = 76570,
+			tag = 102500,
+		},
+		[10] = {
+			idx = 10,
+			name = "btn_tab_10",
+			level = 80,
+			label = 55520,
+			tag = 102800,
+		},
+		[11] = {
+			idx = 11,
+			name = "btn_tab_11",
+			level = 60,
+			label = 71109,
+			tag = 101700,
+		},
+	}
+}

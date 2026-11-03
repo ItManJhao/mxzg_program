@@ -1,0 +1,76 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "Task1GMsg";
+import "Object.proto";
+import "TaskObj.proto";
+
+message RechargeWeekData {
+    required int32 idx = 1;
+    required int32 is_award = 2;
+}
+
+//每日充值奖励
+//13014
+message GResRechargeDaysGain {
+    optional int32 idx = 1;
+    repeated PSBackpackData list = 2;
+}
+
+//月卡
+//13017
+message GReqMonthCardList {
+}
+//13017
+message GResMonthCardList {
+    repeated MonthCardData award = 1;
+}
+
+//至尊月卡VIP等级奖励
+//13018
+message GReqMonthVipReward {
+}
+//13018
+message GResMonthVipReward {
+    optional int32 card_type = 1;
+}
+
+//领取月卡每日奖励
+//13025
+message GReqMonthCardReward {
+    optional int32 idx = 1; //配置id
+}
+//13025
+message GResMonthCardReward {
+    optional int32 idx = 1; //
+    optional int32 is_gain = 2; //是否领取
+}
+
+//英雄献祭
+//13051
+message GReqAltarHero {
+    repeated int64 hero_id = 1;
+}
+//13051
+message GResAltarHero {
+    repeated PSBackpackData award = 1;
+}
+
+//英雄碎片献祭
+//13052
+message GReqAltarHeroPiece {
+    optional int32 item_id = 1;// 碎片道具id
+    optional int32 item_num = 2;// 碎片数量
+}
+//13052
+message GResAltarHeroPiece {
+    repeated PSBackpackData award = 1;
+}
+
+//限时礼包
+//13060
+message GReqLimitGiftList {
+}
+//13060
+message GResLimitGiftList {
+    repeated LimitGiftData list = 1;
+}

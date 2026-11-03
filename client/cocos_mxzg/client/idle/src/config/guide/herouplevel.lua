@@ -1,0 +1,27 @@
+local data = {
+	{call = "waitSceneLoadingEnd"},
+	{call = "wait", time=300},
+	{call = "closeOtherWindow"},
+	{call = "wait", time=10},
+	{call = "findNodeByName",name="main_chat"},
+	{call = "setNodeVisible",visible=0},
+	{call = "openNPCLayer", auto=1,music="music/guide010.mp3",npc_name="Misa",content=930030019},
+	{call = "checkLayerType", layer_type=MainSceneType.HERO_INFO_LAYER, r_beg=1, r_end=6},
+	{call = "findSpriteByFileName", plist="ccbi-res/main-scene-lang.plist",getParent=1,file="main-scene-lang/spr-hero.png"},
+	{call = "createMask"},
+	{call = "wait", time=300},
+	{call = "wait", time=1},
+	{call = "findSpriteByFileName", plist="ccbi-res/hero-icon-3.plist",getParent=1,file="hero-icon/20304012.png", system_hero_config="first_ordinary_lottery"},
+	{call = "createMask"},
+	-- {call = "findNodeByName",name="menu_hero"},
+	-- {call = "getNodeChildren",index=1},
+	-- {call = "createMask"},
+	{call = "wait", time=300},
+	-- btn_up_grade
+	{call = "findNodeByName",name="btn_up_grade"},
+	-- {call = "findSpriteByFileName", plist="ccbi-res/common-ui.plist",getParent=1,file="button/btn-old-1.png",count=3},
+	{call = "createMask",mask=false},
+	{call = "rollStep",type="hero_level",value=9,step_back=-2},
+	{call = "wait", time=1, finial=1},
+}
+return data

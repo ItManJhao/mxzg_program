@@ -1,0 +1,541 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "BattleGMsg";
+
+import "Hero.proto";
+import "Clan.proto";
+import "Fetter.proto";
+import "Object.proto";
+
+message PSPlayerBattleData
+{
+	optional int32 idx = 1;
+	repeated ResHeroData enemy_list = 2; // 对手数据
+	repeated PSHeroEquipData equip_list = 3;
+	repeated PSClanSkillData enemy_clan = 4;
+	optional PSFetterData enemy_fetter = 5;
+}
+
+message PSLineUpHeroData
+{
+	optional int64 hero_id = 1;	//英雄ID
+	optional int32 hp = 2;		//剩余血量
+	optional int32 position = 3;//位置 9标识该英雄为助阵英雄
+}
+
+message PSLineUpData
+{
+	optional int32 type = 1;  // 布阵类型   0：主线战斗 1:幻境之塔 2：地牢 3：试炼 4：PVP防守  5： 工会BOSS
+	optional int32 time = 2; // 布阵的时间
+	optional int32 goddess_type = 3;//神器类型
+	repeated PSLineUpHeroData hero_list = 4;
+	optional int32 formation_id = 5;	//阵法id
+}
+
+message PSItemData
+{
+	optional int64 rid = 1;//奖励者ID
+	optional int32 type = 2;//道具类型
+	optional int32 num = 3;//数量
+}
+
+// 战场对战单位
+message BattlerUnit 
+{
+	optional int64 player_id = 1;	//玩家id如果是pve则这里是怪物id
+	optional string name = 2;		//玩家名称
+	optional GoddessUnit goddess = 3;	//女神
+	repeated HeroUnit heros = 4;	//英雄列表
+	optional int32 formation_id = 5;	// 阵法id
+	optional DragonUnit dragon = 6;	//圣龙
+}
+
+// 战场英雄单位
+message HeroUnit
+{
+	optional int32 unit_id = 1; //单位id
+	optional int32 hero_id = 2; //英雄id
+	optional int32 level = 3; //等级
+	optional int32 star = 4; //星级
+	optional int32 element = 5; //元素
+	optional int32 position = 6; //位置
+	optional int64 hp = 7; //血量
+	optional int64 max_hp = 8; //最大血量
+	optional int32 energy = 9; //能量
+	optional int32 max_energy = 10; //最大能量
+	optional int32 status = 11; //状态 0 - 存活 1 - 死亡 2-隐藏
+    optional int64 id = 12; //主键id npc则该值为-1
+	optional int32 fashion_id = 13;	//皮肤id
+	optional PSHeroEvolve evolve=14;//进化
+}
+
+// 女神
+message GoddessUnit
+{
+	optional int32 unit_id = 1;	//单位id	
+	optional int32 goddess_id = 2;	//羁绊女神id
+	optional int32 energy = 3;	//能量
+	optional int32 max_energy = 4;	//最大能量
+	optional int32 uplimit_level = 5;	// 突破等级
+	optional int32 fashion_id = 6;			//皮肤id
+}
+
+// 圣龙
+message DragonUnit
+{
+	optional int32 unit_id = 1;	//单位id
+	optional int32 dragonId = 2;	// 神龙主键id
+	repeated int32 skillId = 3;	// 技能列表
+}
+
+// 战斗日志
+message BattleLog {
+	optional BattlerFightLog attacker_log = 1; //攻方日志
+	optional BattlerFightLog defender_log = 2; //守方日志
+	optional int64 win_id = 3; //胜利方id
+	optional string battleId = 4; //战斗id
+	optional int32 battle_duration = 5;	//战斗时长（ms）
+	optional int32 round = 6;	    //战斗回合数
+}
+
+// Battler战斗日志
+message BattlerFightLog {
+	optional int64 rid = 1;			//角色ID
+	optional string name = 2;		//角色名
+    repeated HeroLog hero_log = 3;	//英雄战斗日志
+	optional int32 border_id = 4;	//角色头像框
+	optional int32 fighting = 5;	//战斗力
+	optional int32 serverId = 6;	//服务器ID
+	optional int32 level = 7;		//角色等级
+	optional int32 head_id = 8;		//角色头像
+	optional int32 formation_id = 9;//阵型ID
+	repeated PSTuple2Data buff_stat = 10;//指定buff统计(伤害或者触发次数)
+}
+
+// 英雄战斗日志
+message HeroLog {
+	optional int64 hero_id = 1;				//主键id
+	optional int64 total_damage = 2;		//总伤害
+	optional int64 total_take_damage = 3;	//总承受伤害
+	optional int64 total_recovery = 4;		//总治疗
+	optional int32 star = 5;				//星级
+	optional int32 level = 6;				//等级
+	optional int32 hero_type = 7;			//英雄类型
+    optional int32 position = 8;			//英雄位置
+	optional int32 fashion_id = 9;			//皮肤id
+	optional PSHeroEvolve evolve=10;//进化
+	optional int64 hp = 11;	//当前血量
+	optional int64 max_hp = 12;	//最大血量
+}
+
+// 战斗回合
+message CombatRound
+{
+	optional int32 round = 1;		//回合从1开始
+	repeated BuffInfo buffInfo = 2;	// 出手前的buff列表
+	repeated GoddessAttack goddess_attack = 3;	//女神攻击信息
+	repeated AttackInfo attack_info = 4;	//英雄攻击信息
+	repeated BuffInfo afterRoundBuffs = 5;	// 出手后的buff效果列表
+	repeated DragonAttack dragon_attack = 6;	//圣物攻击信息
+
+}
+
+// 女神攻击信息
+message GoddessAttack
+{
+	optional int32 unit_id =1;	//出手的女神单位id
+	optional int32 energy = 2;	//本回合增加的能量
+	optional AttackInfo attackInfo = 3;	//女神出手信息
+}
+
+// 圣龙攻击信息
+message DragonAttack
+{
+	optional int32 unit_id = 1;	// 出手的神龙id
+	optional AttackInfo attackInfo = 2;	//女神出手信息
+	optional int32 next_attack_round = 3;	//下次攻击的回合数
+}
+
+// 进攻信息
+message AttackInfo
+{
+	optional int32 unit_id = 1;	// 出手的英雄id
+	optional Skill skill = 2;	// 使用的技能
+	optional int32 skill_type = 3; // 1技能 2 普攻
+}
+
+
+// 技能信息
+message Skill 
+{
+	optional int32 skill_id = 1;		//技能id
+	repeated EffectInfo effect_info = 2;	//技能效果列表
+	optional int32 energyUpdate = 3;	//能量修改 大于0则为增加，小于0则为减少
+}
+
+// 技能效果列表
+message EffectInfo 
+{
+	optional int32 buff_id = 1;		//buffId
+	repeated BuffInfo buff_info = 2;	//buff效果列表
+}
+
+// buff信息
+message BuffInfo
+{
+	required int32 unit_id = 1;	// buff单位id
+	required int32 target_unitId = 2;	//buff所属英雄的单位id
+	required int32 buff_id = 3;	//buffId
+	optional int32 expired_round = 4;	//过期回合
+	optional int32 hit = 5;		// 命中 0 未命中 1 命中 2暴击, 3斩杀, 4格挡
+	optional int32 status = 6;	// 状态变化 0 - 存活 1 - 死亡 2-进场
+	repeated AttributeUpdate update = 7;// 属性变化列表
+	repeated int32 resistances = 8;		// 1、有小熊分担伤害
+}
+
+
+// 属性变更信息
+message AttributeUpdate
+{
+	optional int32 type = 1;	//属性类型
+	optional int64 value = 2;	//属性值
+}
+
+
+// 战报
+message BattleReport
+{
+	optional string battle_id = 1; //战斗ID
+	optional int32 battle_type = 2; //战斗类型
+	optional BattlerUnit attacker = 3; //攻方
+	optional BattlerUnit defender = 4; //守方
+	repeated CombatRound rounds = 5; //战斗回合信息
+	optional int64 win_id = 6; //胜利方的单位id
+	optional int64 start_time = 7; //战斗开始时间
+    optional BattleLog log = 8; //战斗日志
+}
+
+
+//战斗测试
+//3000
+message GReqBattleTest
+{
+	optional int32 type = 1;	//类型
+}
+//测试返回
+//3000
+message GResBattleTest
+{
+	optional BattleReport report = 1;	// 战报
+}
+
+
+
+//战斗
+//3001
+message GReqBattleMatch
+{
+}
+//3001
+message GResBattleMatch
+{
+	optional BattleReport report = 1;	// 战报
+}
+
+//关卡结束
+//3002
+message GReqChapterEnd
+{
+
+}
+//3002
+message GResChapterEnd
+{
+	optional int32 idx = 1;
+	repeated PSBackpackData list = 2;
+}
+
+//更换挂机关卡
+//3003
+message GReqChapterChangeMission
+{
+	optional int32 idx = 1;	//关卡ID
+}
+//3003
+message GResChapterChangeMission
+{
+	
+}
+
+//获取挂机奖励列表
+//3004
+message GReqChapterItemList
+{
+}
+//3004
+message GResChapterItemList
+{
+	optional int32 reward_time = 1;	//上一次邻取资源时间
+	optional int32 max_reward_time = 2;//最大挂机时间
+}
+
+//领取挂机奖励物品
+//3005
+message GReqChapterItemReward
+{
+}
+//3005
+message GResChapterItemReward
+{
+	optional int32 reward_time = 1;//上一次领取资源的时间
+}
+
+//请求挂机战报
+//3006
+message GReqChapterReport
+{
+	optional int32 chapterIdx = 1;	//关卡奖励表的idx
+	optional int32 firstPos = 2;	//先手攻击的位置
+}
+
+//返回关卡挂机战报
+//3006
+message GResChapterReport
+{
+	optional BattleReport report = 1;	// 战报
+	optional int32 chapterIdx = 2;		// 关卡奖励表的idx
+	optional int32 firstPos = 3;	//先手攻击的位置
+}
+
+//获取关卡数据
+//3007
+message GReqChapterData
+{
+}
+//3007
+message GResChapterData
+{
+	optional int32 res_reward_time = 1;//上一次领取资源的时间
+	optional int32 now_idx = 2;
+	optional int32 max_idx = 3;
+	repeated int32 extra_reward_id =4;	//已经领取的额外奖励id
+}
+
+//领取关卡额外奖励
+//3008
+message GReqExtraReward 
+{
+	optional int32 rewardId = 1;	//额外奖励表的主键id
+}
+//返回领取奖励后新的数据
+//3008
+message GResExtraReward 
+{
+	repeated int32 reward_id = 1;	//额外奖励表的新的主键id列表
+	repeated PSBackpackData list = 2;//奖励
+    repeated ResHeroData heroList = 3;//英雄集
+}
+
+//战斗队伍
+//3009
+message GReqChapterBattleLineup
+{
+	repeated int64 list = 1;	//英雄ID
+}
+//3009
+message GResChapterBattleLineup
+{
+}
+
+//关卡奖励列表
+//3010
+message GReqChapterRewardList
+{
+}
+//3010
+message GResChapterRewardList
+{
+	repeated int32 list = 1; 
+}
+
+//关卡首次奖励
+//3011
+message GReqChapterFirstReward
+{
+	optional int32 idx = 1; 
+}
+//3011
+message GResChapterFirstReward
+{
+}
+
+
+//请求快速战斗次数
+//3012
+message GReqQuickBattleInitData
+{
+}
+//3012
+message GResQuickBattleInitData
+{
+	optional int32 battle_count = 1;	//已快速战斗次数
+	optional int32 max_battle_count = 2;//当前可使用最大挑战次数
+	optional int32 promotion = 3;		//活动是否进行中，0没有活动，1活动中
+	optional int32 privilege = 4;		//是否有特权，0没有，1有
+}
+
+//领取快速战斗奖励
+//3013
+message GReqQuickBattleReward
+{
+	optional int32 idx = 1;	//关卡ID
+}
+//3013
+message GResQuickBattleReward
+{
+	optional int32 battle_count = 1;//已快速战斗次数
+	optional int32 max_battle_count = 2;//当前可使用最大挑战次数
+	repeated PSBackpackData list = 3;//奖励
+}
+
+//新手指引神仙战
+//3020
+message GReqGuideBattle
+{
+}
+//新手指引神仙战
+//3020
+message GResGuideBattle
+{
+ optional BattleReport report = 1; //战报
+}
+
+// 切磋
+//3030
+message GReqStudy
+{
+	optional int32 type = 1;	// 0、本服 1、跨服
+	optional int64 opponent_id = 2;	//对手id
+	optional int32 server_id = 3;	//服务器id
+}
+
+//3030
+message GResStudy
+{
+	optional int32 type = 1;	// 0、本服 1、跨服
+	optional BattleReport report = 2;	// 战报
+}
+
+// 解锁第二契约
+//3097
+message GReqUnlock
+{
+}
+
+// 解锁返回，如果有返回则解锁成功，没解锁成功就是推送错误码
+//3097
+message GResUnlock
+{
+}
+
+//解锁阵法
+//3098
+message GReqUnlockFormation
+{
+	optional int32 unlockId = 1;	//解锁的阵法id
+}
+
+//解锁结果
+//3098
+message GResUnlockFormation
+{
+	optional int32 unlockId = 1;	//解锁的阵法id
+}
+
+//查询阵法
+//3099
+message GReqQueryFormation
+{
+}
+
+//返回阵法查询结果
+//3099
+message GResQueryFormation
+{
+	repeated int32 unlockIds = 1;	//已解锁的阵法ID列表
+}
+
+//保存各种类型战斗队列
+//3100
+message GReqLineUpSave
+{
+	optional PSLineUpData lineData = 1;
+}
+//3100
+message GResLineUpSave
+{
+}
+
+//获取队列
+//3101
+message GReqLineUp
+{
+}
+//3101
+message GResLineUp
+{
+	repeated PSLineUpData list = 1;
+	optional bool assistance_unlock = 2;	//援助是否解锁
+}
+
+//请求战报
+//3102
+message GReqBattleReport
+{
+	optional string battle_id = 1;	//战报ID
+	optional string type = 2;		//类型
+}
+//3102
+message GResBattleReport
+{
+	optional BattleReport report = 1;	//战报
+	optional string type = 2;			//类型
+}
+
+//预计算战力
+//3103
+message GReqPreComputeStrength
+{
+	repeated int64 hero_ids = 1;	//
+	optional string type = 2;		//界面类型
+	optional int32 line_up_type = 3;	//布阵类型
+}
+//3103
+message GResPreComputeStrength
+{
+	optional int32 fighting = 1;	//战斗力
+	optional string type = 2;		//界面类型
+}
+
+message PSPassReportRecord
+{
+    optional int32 type = 1; 	        //类型：1最近,2最快,3最低战力
+    optional int64 rid = 2; 		    //玩家ID
+    optional string name = 3; 	        //玩家名字
+    optional int32 head_id = 4; 	    //玩家头像
+    optional int32 border_id = 5;		//头像框id
+    optional int32 complete_time = 6; 	//通关时间
+    optional int32 fighting = 7; 	//通关战力
+    optional string report_id = 8; 		//战报id
+}
+//通关战报列表
+//3104
+message GReqPassReportList
+{
+	optional int32 idx = 1;
+}
+//3104
+message GResPassReportList
+{
+	repeated PSPassReportRecord list = 1;//战报列表
+}

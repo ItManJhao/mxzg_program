@@ -1,0 +1,73 @@
+<include file="Public:header" />
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>公会成员列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <form method="post" enctype="multipart/form-data" id="form-order">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>账号id</th>
+                                                        <th>角色id</th>
+                                                        <th>角色名称</th>
+                                                        <th>职位</th>
+                                                        <th>角色等级</th>
+                                                        <th>战力</th>
+                                                        <th>公会贡献</th>
+                                                        <th>今日贡献</th>
+                                                        <th>充值金额</th>
+                                                        <th>最后登录时间</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ajaxList">
+                                                    <volist name="clan_members" id="vo">
+                                                        <tr role="row"> 
+                                                            <td>{$vo.user_id}</td>
+                                                            <td>{$vo.rid}</td>
+                                                            <td>{$vo.role_name}</td>
+                                                            <td><if condition="$vo['position'] == 1">会长<elseif condition="$vo['position'] == 2"/>副会长<else/>普通成员</if></td>
+                                                            <td>{$vo.level}</td>
+                                                            <td>{$vo.fighting}</td>
+                                                            <td>{$vo.total_donate}</td>
+                                                            <td>{$vo.today_donate}</td>
+                                                            <td>{$vo.total_recharge}</td>
+                                                            <td>{:date('Y-m-d H:i:s',$vo['last_login_time']*0.001)}</td>
+                                                         </tr>
+                                                    </volist>
+                                                </tbody>
+                                            </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script language="javascript">
+
+    function ajax_search(){
+        $('#formSearch').submit();
+    }
+
+</script>
+
+
+<include file="Public:footer" />

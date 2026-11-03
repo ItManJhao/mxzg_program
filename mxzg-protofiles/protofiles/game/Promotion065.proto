@@ -1,0 +1,41 @@
+package protocol;
+option java_package = "com.ayjs.mxzg.protocol";
+option java_outer_classname = "HeroRollingGMsg";
+
+//新英雄抽卡活动数据
+//13271
+message GReqHeroRollingData
+{
+
+}
+//13271
+message GResHeroRollingData
+{
+    optional int32 summon_num = 1;	//本次活动已抽奖次数
+	repeated int32 rewards = 2;		//已领取的奖励
+	optional int32 free_time = 3;	//下一次免费单抽的时间
+	optional int32 hero_out_num = 4;//新英雄必出的剩余抽奖次数
+}
+
+//新英雄抽卡召唤英雄使用4002协议
+
+//新英雄抽卡领取奖励
+//13272
+message GReqHeroRollingReward
+{
+	optional int32 idx = 1;	//领取的奖励ID
+}
+//13272
+message GResHeroRollingReward
+{
+	optional int32 idx = 1;	//领取的奖励ID
+}
+
+//新英雄抽卡召唤成功后推送数据
+//13273
+message GResHeroRollingSummon
+{
+	optional int32 summon_num = 1;	//本次活动已抽奖次数
+	optional int32 free_time = 2;	//下一次免费单抽的时间
+	optional int32 hero_out_num = 3;//新英雄必出的剩余抽奖次数
+}
